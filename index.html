@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>47都道府県の人口</title>
+<style>
+  body {
+    font-family: sans-serif;
+  }
+  .chart-container {
+    width: 95%;
+    overflow-x: auto; /* 横スクロールを有効にする */
+    margin: 20px;
+    border: 1px solid #ccc;
+  }
+  .bar-chart {
+    display: flex; /* 横並びにする */
+    align-items: flex-end; /* 下揃えにする */
+    height: 400px; /* グラフの高さを少し大きく */
+    /* 横幅はコンテンツ（棒グラフ）に応じて自動的に広がるようにする */
+    min-width: 2000px; /* 最小幅を設定（都道府県数に応じて調整）*/
+    padding: 20px 10px 50px 50px; /* 下と左に余白を多めに（ラベルのため） */
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+    position: relative;
+  }
+  .bar {
+    background-color: steelblue;
+    margin: 0 4px; /* 棒の間隔 */
+    text-align: center;
+    color: white;
+    font-size: 9px; /* 人口数値のフォントを小さく */
+    position: relative;
+    width: 25px; /* 棒の幅を細く */
+    flex-shrink: 0; /* 縮まないようにする */
+  }
+  .bar .label {
+    position: absolute;
+    bottom: -40px; /* 棒の下にラベルを表示 */
+    left: 50%;
+    transform: translateX(-50%) rotate(270deg); /* ラベルを縦書き（左90度回転）*/
+    transform-origin: center;
+    font-size: 10px;
+    color: black;
+    white-space: nowrap;
+    writing-mode: vertical-rl; /* 縦書きにする（ブラウザ互換性注意） */
+    text-orientation: mixed;
+    padding-top: 5px;
+  }
+  .bar .value {
+    position: absolute;
+    top: -18px; /* 棒の上に数値を表示 */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: black;
+    white-space: nowrap;
+    background-color: rgba(255,255,255,0.7); /* 背景を少し白くして読みやすく */
+    padding: 1px 3px;
+    border-radius: 2px;
+  }
+  .y-axis-label-container {
+    position: absolute;
+    left: 5px;
+    top: 0;
+    bottom: 50px; /* X軸ラベルスペースを考慮 */
+    width: 40px; /* Y軸ラベル用のスペース */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 10px;
+    color: #333;
+  }
+  .y-axis-label-container span {
+    display: block;
+    height: 0; /* 線とテキストの位置合わせのため */
+    border-top: 1px dashed #ccc;
+    width: calc(2000px - 50px); /* グラフエリア幅に合わせる、min-widthに依存 */
+    position: relative;
+    left: 0px; /* Y軸線に合わせる */
+  }
+  .y-axis-label-container span::before {
+    content: attr(data-value);
+    position: absolute;
+    right: calc(2000px - 45px); /* Y軸の左側に数値を表示 */
+    top: -7px; /* テキストの位置調整 */
+    white-space: nowrap;
+  }
+  .axis-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .x-axis-title {
+     position: absolute;
+     bottom: 5px;
+     left: 50%;
+     transform: translateX(-50%);
+     font-size: 12px;
+     font-weight: bold;
+  }
+   .y-axis-title {
+     position: absolute;
+     top: 50%;
+     left: 5px;
+     transform: translateY(-50%) rotate(-90deg);
+     font-size: 12px;
+     font-weight: bold;
+     white-space: nowrap;
+  }
+
+</style>
+</head>
+<body>
+
+<h2 style="text-align: center;">47都道府県 人口（簡易棒グラフ）</h2>
+<p style="text-align: center; font-size: 0.9em;">出典参考: 各種統計データに基づく都道府県人口ランキング (例: 令和2年国勢調査等)</p>
+
+<div class="chart-container">
+  <div class="bar-chart">
+    <div class="y-axis-title">人口（万人）</div>
+    <div class="x-axis-title">都道府県</div>
+    <div class="y-axis-label-container">
+      <span data-value="1500"></span> <span data-value="1200"></span>
+      <span data-value="900"></span>
+      <span data-value="600"></span>
+      <span data-value="300"></span>
+      <span data-value="0" style="border-top: none;"></span> </div>
+
+    <div class="bar" style="height: calc(1404 / 1500 * 100%);"> <span class="value">1404万</span>
+      <span class="label">東京都</span>
+    </div>
+    <div class="bar" style="height: calc(924 / 1500 * 100%);"> <span class="value">924万</span>
+      <span class="label">神奈川県</span>
+    </div>
+    <div class="bar" style="height: calc(884 / 1500 * 100%);"> <span class="value">884万</span>
+      <span class="label">大阪府</span>
+    </div>
+    <div class="bar" style="height: calc(754 / 1500 * 100%);"> <span class="value">754万</span>
+      <span class="label">愛知県</span>
+    </div>
+    <div class="bar" style="height: calc(734 / 1500 * 100%);"> <span class="value">734万</span>
+      <span class="label">埼玉県</span>
+    </div>
+    <div class="bar" style="height: calc(621 / 1500 * 100%);"> <span class="value">621万</span>
+      <span class="label">千葉県</span>
+    </div>
+    <div class="bar" style="height: calc(547 / 1500 * 100%);"> <span class="value">547万</span>
+      <span class="label">兵庫県</span>
+    </div>
+    <div class="bar" style="height: calc(507 / 1500 * 100%);"> <span class="value">507万</span>
+      <span class="label">北海道</span>
+    </div>
+    <div class="bar" style="height: calc(490 / 1500 * 100%);"> <span class="value">490万</span>
+      <span class="label">福岡県</span>
+    </div>
+    <div class="bar" style="height: calc(363 / 1500 * 100%);"> <span class="value">363万</span>
+      <span class="label">静岡県</span>
+    </div>
+    <div class="bar" style="height: calc(284 / 1500 * 100%);"> <span class="value">284万</span>
+      <span class="label">茨城県</span>
+    </div>
+    <div class="bar" style="height: calc(279 / 1500 * 100%);"> <span class="value">279万</span>
+      <span class="label">広島県</span>
+    </div>
+    <div class="bar" style="height: calc(258 / 1500 * 100%);"> <span class="value">258万</span>
+      <span class="label">京都府</span>
+    </div>
+    <div class="bar" style="height: calc(223 / 1500 * 100%);"> <span class="value">223万</span>
+      <span class="label">宮城県</span>
+    </div>
+    <div class="bar" style="height: calc(205 / 1500 * 100%);"> <span class="value">205万</span>
+      <span class="label">新潟県</span>
+    </div>
+    <div class="bar" style="height: calc(198 / 1500 * 100%);"> <span class="value">198万</span>
+      <span class="label">長野県</span>
+    </div>
+    <div class="bar" style="height: calc(194 / 1500 * 100%);"> <span class="value">194万</span>
+      <span class="label">岐阜県</span>
+    </div>
+    <div class="bar" style="height: calc(192 / 1500 * 100%);"> <span class="value">192万</span>
+      <span class="label">栃木県</span>
+    </div>
+    <div class="bar" style="height: calc(191 / 1500 * 100%);"> <span class="value">191万</span>
+      <span class="label">群馬県</span>
+    </div>
+    <div class="bar" style="height: calc(183 / 1500 * 100%);"> <span class="value">183万</span>
+      <span class="label">岡山県</span>
+    </div>
+    <div class="bar" style="height: calc(177 / 1500 * 100%);"> <span class="value">177万</span>
+      <span class="label">三重県</span>
+    </div>
+    <div class="bar" style="height: calc(165 / 1500 * 100%);"> <span class="value">165万</span>
+      <span class="label">福島県</span>
+    </div>
+    <div class="bar" style="height: calc(153 / 1500 * 100%);"> <span class="value">153万</span>
+      <span class="label">滋賀県</span>
+    </div>
+    <div class="bar" style="height: calc(148 / 1500 * 100%);"> <span class="value">148万</span>
+      <span class="label">鹿児島県</span>
+    </div>
+    <div class="bar" style="height: calc(138 / 1500 * 100%);"> <span class="value">138万</span>
+      <span class="label">熊本県</span>
+    </div>
+    <div class="bar" style="height: calc(137 / 1500 * 100%);"> <span class="value">137万</span>
+      <span class="label">愛媛県</span>
+    </div>
+    <div class="bar" style="height: calc(132 / 1500 * 100%);"> <span class="value">132万</span>
+      <span class="label">沖縄県</span>
+    </div>
+    <div class="bar" style="height: calc(130 / 1500 * 100%);"> <span class="value">130万</span>
+      <span class="label">長崎県</span>
+    </div>
+    <div class="bar" style="height: calc(128 / 1500 * 100%);"> <span class="value">128万</span>
+      <span class="label">奈良県</span>
+    </div>
+    <div class="bar" style="height: calc(122 / 1500 * 100%);"> <span class="value">122万</span>
+      <span class="label">山口県</span>
+    </div>
+    <div class="bar" style="height: calc(117 / 1500 * 100%);"> <span class="value">117万</span>
+      <span class="label">青森県</span>
+    </div>
+    <div class="bar" style="height: calc(112 / 1500 * 100%);"> <span class="value">112万</span>
+      <span class="label">岩手県</span>
+    </div>
+    <div class="bar" style="height: calc(107 / 1500 * 100%);"> <span class="value">107万</span>
+      <span class="label">大分県</span>
+    </div>
+    <div class="bar" style="height: calc(104 / 1500 * 100%);"> <span class="value">104万</span>
+      <span class="label">石川県</span>
+    </div>
+    <div class="bar" style="height: calc(102 / 1500 * 100%);"> <span class="value">102万</span>
+      <span class="label">山形県</span>
+    </div>
+    <div class="bar" style="height: calc(99 / 1500 * 100%);"> <span class="value">99万</span>
+      <span class="label">宮崎県</span>
+    </div>
+    <div class="bar" style="height: calc(98 / 1500 * 100%);"> <span class="value">98万</span>
+      <span class="label">富山県</span>
+    </div>
+    <div class="bar" style="height: calc(96 / 1500 * 100%);"> <span class="value">96万</span>
+      <span class="label">秋田県</span>
+    </div>
+    <div class="bar" style="height: calc(93 / 1500 * 100%);"> <span class="value">93万</span>
+      <span class="label">香川県</span>
+    </div>
+    <div class="bar" style="height: calc(92 / 1500 * 100%);"> <span class="value">92万</span>
+      <span class="label">和歌山県</span>
+    </div>
+    <div class="bar" style="height: calc(81 / 1500 * 100%);"> <span class="value">81万</span>
+      <span class="label">山梨県</span>
+    </div>
+    <div class="bar" style="height: calc(79 / 1500 * 100%);"> <span class="value">79万</span>
+      <span class="label">佐賀県</span>
+    </div>
+    <div class="bar" style="height: calc(76 / 1500 * 100%);"> <span class="value">76万</span>
+      <span class="label">福井県</span>
+    </div>
+    <div class="bar" style="height: calc(70 / 1500 * 100%);"> <span class="value">70万</span>
+      <span class="label">徳島県</span>
+    </div>
+    <div class="bar" style="height: calc(69 / 1500 * 100%);"> <span class="value">69万</span>
+      <span class="label">高知県</span>
+    </div>
+    <div class="bar" style="height: calc(65 / 1500 * 100%);"> <span class="value">65万</span>
+      <span class="label">島根県</span>
+    </div>
+    <div class="bar" style="height: calc(55 / 1500 * 100%);"> <span class="value">55万</span>
+      <span class="label">鳥取県</span>
+    </div>
+    </div>
+</div>
+
+<p style="margin-left: 20px; font-size: 0.9em;">
+  注:
+  <ul>
+    <li>このグラフはHTMLとCSSによる簡易的な表現です。</li>
+    <li>棒の高さは、グラフの高さを400pxとし、最大人口の目安を1500万人として相対的に表示しています。</li>
+    <li>人口データはおおよその数値であり、典拠や調査年によって変動します。</li>
+    <li>都道府県名は縦書きで表示しています。</li>
+    <li>Y軸の目盛り線と数値は目安です。</li>
+  </ul>
+</p>
+
+</body>
+</html>
