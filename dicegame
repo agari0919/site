@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>できないを、できるに変える！</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+      padding: 20px;
+    }
+
+    .theme-box, .ai-card {
+      border: 2px solid #333;
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 15px;
+      margin: 15px auto;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    .ai-card {
+      display: inline-block;
+      width: 200px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    input[type="number"] {
+      font-size: 20px;
+      width: 60px;
+      text-align: center;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>できないを、できるに変える！</h1>
+
+  <div>
+    <p>🎲 サイコロの出目を入力してください（1〜6）</p>
+    <input type="number" id="diceInput" min="1" max="6">
+    <button onclick="showTheme()">できないテーマを表示</button>
+    <div id="themeBox" class="theme-box"></div>
+  </div>
+
+  <hr>
+
+  <div>
+    <button onclick="drawCards()">🤖 AIカードを引く</button>
+    <div id="cards"></div>
+  </div>
+
+  <script>
+    const themes = {
+      1: "世界中の人と友達になる",
+      2: "宇宙に住むための家をつくる",
+      3: "自分の苦手を1日でなくす",
+      4: "1人で100人にプレゼンする",
+      5: "誰もケンカしない学校をつくる",
+      6: "空を飛んで登校する"
+    };
+
+    function showTheme() {
+      const input = document.getElementById("diceInput").value;
+      const theme = themes[input];
+      const box = document.getElementById("themeBox");
+      if (theme) {
+        box.innerHTML = `<h3>できないテーマ 🎲${input}</h3><p>${theme}</p>`;
+      } else {
+        box.innerHTML = `<p style="color:red;">1〜6の数字を入力してください。</p>`;
+      }
+    }
+
+    const aiCards = [
+      { name: "翻訳AI", desc: "世界中の言葉を自動で理解できる" },
+      { name: "空中移動AI", desc: "空を飛んでどこへでも行ける" },
+      { name: "感情分析AI", desc: "人の気持ちを読み取れる" },
+      { name: "建築AI", desc: "未来の家を設計してくれる" },
+      { name: "分身AI", desc: "自分の代わりに説明や活動をしてくれる" },
+      { name: "記憶補助AI", desc: "苦手なことも記憶をサポート" },
+      { name: "モチベーションAI", desc: "やる気を出させてくれるコーチAI" }
+    ];
+
+    function drawCards() {
+      let picked = [];
+      while (picked.length < 2) {
+        let idx = Math.floor(Math.random() * aiCards.length);
+        if (!picked.includes(idx)) picked.push(idx);
+      }
+
+      const html = picked.map(i => `
+        <div class="ai-card">
+          <h3>${aiCards[i].name}</h3>
+          <p>${aiCards[i].desc}</p>
+        </div>
+      `).join("");
+
+      document.getElementById("cards").innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>
