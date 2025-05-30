@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram編: Broadcast Channel - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            overflow-y: auto;
+        }
+        .insta-header {
+            position: relative;
+            display: inline-block;
+        }
+        .insta-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(186, 104, 200, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .calendar-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .calendar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .insta-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .day-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .day-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        .day-header {
+            padding: 15px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+        }
+        .monday {
+            background: linear-gradient(45deg, #9c27b0, #ab47bc);
+        }
+        .tuesday {
+            background: linear-gradient(45deg, #2196f3, #42a5f5);
+        }
+        .wednesday {
+            background: linear-gradient(45deg, #009688, #4db6ac);
+        }
+        .thursday {
+            background: linear-gradient(45deg, #ff9800, #ffb74d);
+        }
+        .friday {
+            background: linear-gradient(45deg, #e91e63, #f48fb1);
+        }
+        .day-content {
+            padding: 20px;
+        }
+        .day-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .message-preview {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .message-preview::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            top: -10px;
+            left: 30px;
+            transform: rotate(45deg);
+            box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.05);
+        }
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: linear-gradient(45deg, #f09433, #bc1888);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .broadcast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #9c27b0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        .emoji {
+            font-size: 1.4em;
+            margin: 0 2px;
+            vertical-align: middle;
+        }
+        .connection-line {
+            position: relative;
+            height: 50px;
+        }
+        .connection-line::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 50px;
+            background: rgba(156, 39, 176, 0.3);
+        }
+        .bc-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(156, 39, 176, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #9c27b0;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .benefit-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #9c27b0, #e91e63);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-6">
+                <div class="insta-icon mr-4">
+                    <i class="fab fa-instagram text-white text-4xl"></i>
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="insta-header">Instagram編: Broadcast Channel</span>
+                </h1>
+            </div>
+
+            <!-- Introduction -->
+            <div class="mb-6">
+                <p class="text-2xl text-gray-700">Broadcast Channelは、1対Nの効率的な情報発信とコミュニティ醸成に役立ちます。週次の配信計画でフォロワーに価値ある情報を提供しましょう。</p>
+            </div>
+
+            <!-- Weekly Calendar -->
+            <div class="calendar-card bg-white rounded-2xl p-6 shadow-md mb-6">
+                <h2 class="text-3xl font-bold text-purple-800 mb-6 text-center">
+                    <i class="far fa-calendar-alt mr-2"></i> 週次配信カレンダー
+                </h2>
+                <div class="grid grid-cols-5 gap-4">
+                    <!-- Monday -->
+                    <div class="day-card">
+                        <div class="day-header monday">月曜日</div>
+                        <div class="day-content">
+                            <div class="day-icon monday">
+                                <i class="fas fa-flag text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-purple-800 text-center mb-3">今週のテーマ発表</h3>
+                            <p class="text-lg text-gray-700 text-center">週の目標設定と共有。フォロワーのモチベーション向上。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tuesday -->
+                    <div class="day-card">
+                        <div class="day-header tuesday">火曜日</div>
+                        <div class="day-content">
+                            <div class="day-icon tuesday">
+                                <i class="fas fa-lightbulb text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-blue-700 text-center mb-3">お役立ち情報</h3>
+                            <p class="text-lg text-gray-700 text-center">Tips紹介、ハウツーなど。リールと連携した内容。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Wednesday -->
+                    <div class="day-card">
+                        <div class="day-header wednesday">水曜日</div>
+                        <div class="day-content">
+                            <div class="day-icon wednesday">
+                                <i class="fas fa-users text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-teal-700 text-center mb-3">ユーザー参加型企画</h3>
+                            <p class="text-lg text-gray-700 text-center">Q&A募集、投稿コンテスト、アンケートなど。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Thursday -->
+                    <div class="day-card">
+                        <div class="day-header thursday">木曜日</div>
+                        <div class="day-content">
+                            <div class="day-icon thursday">
+                                <i class="fas fa-box-open text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-yellow-800 text-center mb-3">商品・サービスの裏側</h3>
+                            <p class="text-lg text-gray-700 text-center">開発ストーリー、インタビュー、舞台裏公開。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Friday -->
+                    <div class="day-card">
+                        <div class="day-header friday">金曜日</div>
+                        <div class="day-content">
+                            <div class="day-icon friday">
+                                <i class="fas fa-gift text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-pink-700 text-center mb-3">週末の過ごし方提案</h3>
+                            <p class="text-lg text-gray-700 text-center">限定オファー予告、イベント告知など。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Broadcast Message Example -->
+            <div class="grid grid-cols-2 gap-8 flex-grow">
+                <div class="flex flex-col">
+                    <h3 class="text-2xl font-bold text-purple-800 mb-4">
+                        <i class="fas fa-megaphone mr-2"></i> Broadcast Message例
+                    </h3>
+                    <div class="message-preview flex-grow">
+                        <div class="message-header">
+                            <div class="profile-image">
+                                <i class="fas fa-coffee"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold">Café Bloom</h4>
+                                <p class="text-gray-500">Broadcast Channel</p>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            <p class="text-xl mb-3"><span class="emoji">🌟</span> みなさん、おはようございます！</p>
+                            <p class="text-xl mb-3">今週は「サステナブルな生活習慣」がテーマです。</p>
+                            <p class="text-xl mb-3">木曜日には製品開発者による舞台裏インタビューも公開予定！</p>
+                            <p class="text-xl">お楽しみに <span class="emoji">✨</span></p>
+                            <div class="mt-5 flex items-center text-gray-500">
+                                <i class="far fa-clock mr-2"></i>
+                                <span>今日 9:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col">
+                    <h3 class="text-2xl font-bold text-purple-800 mb-4">
+                        <i class="fas fa-rocket mr-2"></i> Broadcast Channel のメリット
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center bg-white p-4 rounded-xl shadow-sm">
+                            <div class="bc-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">セグメント別招待配信</h4>
+                                <p class="text-lg text-gray-700">興味セグメントごとに招待リンクを分けると擬似メルマガ化</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center bg-white p-4 rounded-xl shadow-sm">
+                            <div class="bc-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">コンテンツ接触頻度向上</h4>
+                                <p class="text-lg text-gray-700">通常の投稿と併用すると、タッチポイントが2倍に</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center bg-white p-4 rounded-xl shadow-sm">
+                            <div class="bc-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-800">公式サイト・ECサイトへの誘導</h4>
+                                <p class="text-lg text-gray-700">リンク付きで商品購入やサイト訪問を直接促進</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-purple-50 p-4 rounded-xl flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-500 text-3xl mr-4"></i>
+                        <div>
+                            <span class="benefit-badge">成功ポイント</span>
+                            <span class="text-xl text-gray-800 font-bold">週1回の投稿を確実に継続すること</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-6 flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</div>
+                <div class="text-xl text-gray-600">3 / 8</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
