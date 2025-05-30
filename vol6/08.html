@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram編: セグメンテーションと自動DM - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            overflow-y: auto;
+        }
+        .insta-header {
+            position: relative;
+            display: inline-block;
+        }
+        .insta-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(186, 104, 200, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .segment-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .segment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .insta-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .process-arrow {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9c27b0;
+            font-size: 1.75rem;
+        }
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .step-1 {
+            background: linear-gradient(135deg, #8e24aa, #ab47bc);
+        }
+        .step-2 {
+            background: linear-gradient(135deg, #e91e63, #f48fb1);
+        }
+        .step-3 {
+            background: linear-gradient(135deg, #2196f3, #90caf9);
+        }
+        .dm-funnel-step {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        .dm-funnel-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+        .highlight-point {
+            background: linear-gradient(to right, rgba(233, 30, 99, 0.2), transparent);
+            border-left: 4px solid #e91e63;
+        }
+        .funnel-icon {
+            font-size: 2rem;
+            color: #9c27b0;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+        }
+        .table-header {
+            background-color: rgba(156, 39, 176, 0.2);
+            font-weight: bold;
+        }
+        .table-row:nth-child(odd) {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        .table-row:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .example-bubble {
+            max-width: 80%;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .message-out {
+            background-color: #ddf4ff;
+            border-left: 4px solid #0ea5e9;
+            margin-left: auto;
+        }
+        .message-in {
+            background-color: #f5f3ff;
+            border-right: 4px solid #8b5cf6;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-6">
+                <div class="insta-icon mr-4">
+                    <i class="fab fa-instagram text-white text-4xl"></i>
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="insta-header">Instagram編: セグメンテーションと自動DM</span>
+                </h1>
+            </div>
+
+            <!-- Main content grid -->
+            <div class="grid grid-cols-2 gap-8 flex-grow">
+                <!-- Left column: Segmentation Process -->
+                <div class="flex flex-col">
+                    <h2 class="text-3xl font-bold text-purple-800 mb-4">
+                        <i class="fas fa-puzzle-piece mr-2"></i> セグメンテーションの仕組み
+                    </h2>
+                    
+                    <!-- Segmentation Process -->
+                    <div class="segment-card bg-white rounded-xl p-5 mb-4">
+                        <div class="flex items-center mb-3">
+                            <div class="step-icon step-1">
+                                <i class="fas fa-poll"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-purple-700">① 興味を測る</h3>
+                                <p class="text-lg text-gray-700">Pollステッカーで興味関心を収集</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center my-2">
+                            <div class="process-arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-3">
+                            <div class="step-icon step-2">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-pink-700">② 親しい友だちリストへ</h3>
+                                <p class="text-lg text-gray-700">回答ユーザーをClose Friendsに追加</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center my-2">
+                            <div class="process-arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="step-icon step-3">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-blue-700">③ 限定配信でパーソナル化</h3>
+                                <p class="text-lg text-gray-700">各セグメント向け限定コンテンツを配信</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-purple-50 p-4 rounded-xl shadow-md">
+                        <h4 class="text-xl font-bold text-purple-800 mb-2">キーとなる機能</h4>
+                        <div class="flex items-start mb-3">
+                            <div class="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-star text-purple-700"></i>
+                            </div>
+                            <p class="text-lg text-gray-700"><span class="font-bold">Close Friends:</span> 限定コンテンツで閲覧率<span class="text-green-600 font-bold"> +20〜30%</span></p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-purple-200 flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-poll text-purple-700"></i>
+                            </div>
+                            <p class="text-lg text-gray-700"><span class="font-bold">インタラクティブ・ステッカー:</span> 回答率は通常Storyの<span class="text-green-600 font-bold"> 3〜5倍</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right column: Automated DM Funnel -->
+                <div class="flex flex-col">
+                    <h2 class="text-3xl font-bold text-purple-800 mb-4">
+                        <i class="fas fa-robot mr-2"></i> 営業くさくない自動DMファネル
+                    </h2>
+                    
+                    <!-- DM Funnel Design Table -->
+                    <div class="segment-card bg-white rounded-xl p-5 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th class="p-3 text-left rounded-tl-lg">フェーズ</th>
+                                        <th class="p-3 text-left">失敗例</th>
+                                        <th class="p-3 text-left rounded-tr-lg">成功ポイント</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-row">
+                                        <td class="p-3 font-bold text-purple-800">Welcome<br>(フォロー直後)</td>
+                                        <td class="p-3 text-red-600">いきなり商品の宣伝DM</td>
+                                        <td class="p-3 text-green-600">ステッカーで「資料ほしい？」にYESした人だけに送信</td>
+                                    </tr>
+                                    <tr class="table-row">
+                                        <td class="p-3 font-bold text-purple-800">Consideration<br>(商品タップ時)</td>
+                                        <td class="p-3 text-red-600">全員に同じクーポン自動送信</td>
+                                        <td class="p-3 text-green-600">タップした商品に関連するコンテンツを個別提案</td>
+                                    </tr>
+                                    <tr class="table-row">
+                                        <td class="p-3 font-bold text-purple-800">Win-Back<br>(30-90日無反応)</td>
+                                        <td class="p-3 text-red-600">毎週クーポン連投</td>
+                                        <td class="p-3 text-green-600">「これが最後のご案内」と期間を明示</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Guardrail Tips -->
+                    <div class="mt-4 bg-pink-50 p-4 rounded-xl shadow-md">
+                        <h4 class="text-xl font-bold text-purple-800 mb-3">営業くさくならない4つのガードレール</h4>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="highlight-point p-3 rounded-lg">
+                                <p class="text-lg text-gray-800 font-bold">①自発アクションをトリガーに</p>
+                            </div>
+                            
+                            <div class="highlight-point p-3 rounded-lg">
+                                <p class="text-lg text-gray-800 font-bold">②1通目は"Give"で終わる</p>
+                            </div>
+                            
+                            <div class="highlight-point p-3 rounded-lg">
+                                <p class="text-lg text-gray-800 font-bold">③頻度管理（週1回以下）</p>
+                            </div>
+                            
+                            <div class="highlight-point p-3 rounded-lg">
+                                <p class="text-lg text-gray-800 font-bold">④停止オプションを常設</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Example Message -->
+                        <div class="flex mt-3">
+                            <div class="example-bubble message-out p-3">
+                                <p class="text-lg">私たちのガイドPDFを無料でお届けします！</p>
+                            </div>
+                        </div>
+                        <div class="flex mt-2">
+                            <div class="example-bubble message-in p-3">
+                                <p class="text-lg">ありがとう！まさに探していた情報です</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-6 flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</div>
+                <div class="text-xl text-gray-600">8 / 12</div>
+            </div>
+        </div>
+    </div>
+  <a herf="09.html">次へ</a>
+</body>
+</html>
