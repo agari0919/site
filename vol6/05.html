@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE編: 重要シナリオ解説 - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #e1f5fe 0%, #bbdefb 100%);
+            overflow-y: auto;
+        }
+        .line-header {
+            position: relative;
+            display: inline-block;
+        }
+        .line-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(33, 150, 243, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .scenario-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        .stat-badge {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .steps-container {
+            position: relative;
+        }
+        .step-line {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            bottom: 40px;
+            width: 4px;
+            background-color: #90CAF9;
+            z-index: 1;
+        }
+        .step-item {
+            position: relative;
+            z-index: 2;
+            margin-left: 20px;
+        }
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-right: 15px;
+        }
+        .comparison-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .comparison-table th {
+            background-color: #E3F2FD;
+            font-weight: bold;
+            text-align: left;
+            padding: 0.75rem 1rem;
+        }
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .line-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: #06C755;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .highlight-text {
+            background: linear-gradient(transparent 50%, #FFECB3 50%);
+            padding: 0 4px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-6">
+                <div class="line-icon mr-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-10 h-10">
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="line-header">LINE編: 重要シナリオ解説</span>
+                </h1>
+            </div>
+
+            <!-- Main content grid -->
+            <div class="grid grid-cols-2 gap-8 flex-grow">
+                <!-- Left column: Post-Visit Scenario -->
+                <div class="scenario-card bg-white rounded-2xl p-6 flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-store text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-blue-700">Post-Visitシナリオ</h2>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-xl text-gray-700">来店・購入後のコミュニケーションで顧客満足度を向上させ、再来店を促進するシナリオ。</p>
+                    </div>
+                    
+                    <div class="stats-row flex items-center justify-between mb-5 p-3 bg-blue-50 rounded-xl">
+                        <span class="stat-badge text-xl">再来率 <span class="text-2xl">+25%</span> 向上</span>
+                        <span class="font-bold text-blue-600 text-xl">体験直後が最も反応率が高い</span>
+                    </div>
+                    
+                    <div class="steps-container flex-grow relative mb-3 pl-6">
+                        <div class="step-line"></div>
+                        
+                        <div class="step-item flex items-center mb-4">
+                            <div class="step-icon"><i class="fas fa-check"></i></div>
+                            <span class="text-xl font-bold text-gray-800">体験満足度の確認 / NPS回収</span>
+                        </div>
+                        
+                        <div class="step-item flex items-center mb-4">
+                            <div class="step-icon"><i class="fas fa-comment"></i></div>
+                            <span class="text-xl font-bold text-gray-800">口コミ・レビュー依頼</span>
+                        </div>
+                        
+                        <div class="step-item flex items-center">
+                            <div class="step-icon"><i class="fas fa-ticket-alt"></i></div>
+                            <span class="text-xl font-bold text-gray-800">再訪クーポン提供</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-100 p-3 rounded-xl flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-500 text-3xl mr-3"></i>
+                        <p class="text-lg text-gray-800">STDCモデルの<span class="font-bold highlight-text">Careフェーズ</span>を実装する最短ルート</p>
+                    </div>
+                </div>
+                
+                <!-- Right column: Win-Back Scenario -->
+                <div class="scenario-card bg-white rounded-2xl p-6 flex flex-col">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-undo text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-orange-700">Win-Backシナリオ</h2>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-xl text-gray-700">離反した顧客を再びアクティブな状態に呼び戻すための自動化されたコミュニケーション。</p>
+                    </div>
+                    
+                    <div class="rounded-xl overflow-hidden mb-4">
+                        <table class="comparison-table w-full text-lg">
+                            <tr>
+                                <th class="w-1/4">メリット</th>
+                                <td>新規獲得コストの <span class="font-bold highlight-text">1/5</span> で済む</td>
+                            </tr>
+                            <tr>
+                                <th>平均開封率</th>
+                                <td><span class="font-bold highlight-text">29%</span> (全メール平均 21%)</td>
+                            </tr>
+                            <tr>
+                                <th>平均CVR</th>
+                                <td><span class="font-bold highlight-text">10.3%</span> (再購入率)</td>
+                            </tr>
+                            <tr>
+                                <th>トリガー</th>
+                                <td>最終購入から<span class="font-bold">30/60/90日</span>無反応</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="bg-orange-100 p-3 rounded-xl flex items-center mt-auto">
+                        <i class="fas fa-exclamation-triangle text-orange-500 text-3xl mr-3"></i>
+                        <div>
+                            <p class="text-lg font-bold text-gray-800">配信のリスク</p>
+                            <p class="text-lg text-gray-700">配信過多でブロック率急増 → 推奨「月2通まで」「シリーズ4通以内」</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-6 flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</div>
+                <div class="text-xl text-gray-600">5 / 12</div>
+            </div>
+        </div>
+    </div>
+  <a href="06.html">次へ</a>
+</body>
+</html>
