@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPIと統合: CDP連携 - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            overflow-y: auto;
+        }
+        .kpi-header {
+            position: relative;
+            display: inline-block;
+        }
+        .kpi-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(100, 116, 139, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .integration-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .integration-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .kpi-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #475569, #64748b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            color: white;
+            font-size: 2.5rem;
+            transition: all 0.3s ease;
+        }
+        .platform-icon:hover {
+            transform: scale(1.05);
+        }
+        .line-platform {
+            background: #06C755;
+        }
+        .insta-platform {
+            background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+        }
+        .cdp-platform {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+        .connection-line {
+            height: 6px;
+            background: linear-gradient(90deg, #94a3b8, #64748b);
+            border-radius: 3px;
+            position: relative;
+        }
+        .connection-line::before, .connection-line::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #64748b;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .connection-line::before {
+            left: -2px;
+        }
+        .connection-line::after {
+            right: -2px;
+        }
+        .data-flow {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #059669, #10b981);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .data-flow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            animation: flow 3s infinite;
+        }
+        @keyframes flow {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .benefit-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .benefit-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .glow-effect {
+            animation: pulse 2s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px rgba(5, 150, 105, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(5, 150, 105, 0.8); }
+        }
+        .rotating-circle {
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-8">
+                <div class="kpi-icon mr-4">
+                    <i class="fas fa-link text-white text-3xl"></i>
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="kpi-header">KPIと統合: CDP連携</span>
+                </h1>
+            </div>
+
+            <!-- Introduction -->
+            <div class="mb-6">
+                <p class="text-2xl text-gray-700">LINE UIDとInstagram IDをCDP（Customer Data Platform）で統合し、チャネルを横断した顧客行動を把握することで、より精度の高いパーソナライズを実現します。</p>
+            </div>
+
+            <!-- CDP Integration Diagram -->
+            <div class="integration-card bg-white rounded-2xl p-6 shadow-md mb-8">
+                <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">LINE×Instagram クロスチャネル統合</h2>
+                
+                <div class="flex items-center justify-center space-x-6 mb-12 relative">
+                    <!-- Rotating Circle BG -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="w-[600px] h-[600px] border-2 border-dashed border-slate-200 rounded-full opacity-30 rotating-circle"></div>
+                    </div>
+                    
+                    <!-- LINE Platform -->
+                    <div class="flex flex-col items-center z-10">
+                        <div class="platform-icon line-platform mb-3">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-12 h-12">
+                        </div>
+                        <span class="text-2xl font-bold text-gray-700">LINE UID</span>
+                        <div class="text-center mt-2 text-gray-500">
+                            <p>友だち追加</p>
+                            <p>メッセージ開封</p>
+                            <p>クリック</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Connection Line Left -->
+                    <div class="w-32 connection-line">
+                        <div class="data-flow"></div>
+                    </div>
+                    
+                    <!-- CDP Platform -->
+                    <div class="flex flex-col items-center z-10">
+                        <div class="platform-icon cdp-platform mb-3 glow-effect">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-emerald-600">CDP</span>
+                        <div class="text-center mt-2 text-gray-500">
+                            <p>ID統合</p>
+                            <p>行動データ蓄積</p>
+                            <p>セグメント管理</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Connection Line Right -->
+                    <div class="w-32 connection-line">
+                        <div class="data-flow"></div>
+                    </div>
+                    
+                    <!-- Instagram Platform -->
+                    <div class="flex flex-col items-center z-10">
+                        <div class="platform-icon insta-platform mb-3">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-gray-700">Instagram ID</span>
+                        <div class="text-center mt-2 text-gray-500">
+                            <p>フォロー</p>
+                            <p>ストーリー閲覧</p>
+                            <p>DM返信</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Result: Single Customer View -->
+                <div class="flex flex-col items-center">
+                    <div class="w-24 h-12 flex justify-center">
+                        <i class="fas fa-chevron-down text-4xl text-gray-500"></i>
+                    </div>
+                    
+                    <div class="bg-slate-100 rounded-xl p-5 shadow-md flex items-center justify-center mb-6 w-1/2">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-sky-500 to-emerald-500 flex items-center justify-center mr-4">
+                            <i class="fas fa-user text-white text-3xl"></i>
+                        </div>
+                        <span class="text-3xl font-bold text-gray-800">単一顧客ビュー</span>
+                    </div>
+                    
+                    <div class="w-24 h-12 flex justify-center">
+                        <i class="fas fa-chevron-down text-4xl text-gray-500"></i>
+                    </div>
+                    
+                    <div class="bg-emerald-100 rounded-xl p-5 shadow-md flex items-center justify-center w-2/3">
+                        <div class="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-line text-white text-3xl"></i>
+                        </div>
+                        <span class="text-3xl font-bold text-emerald-700">LTV & NPS 常時可視化・改善</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Benefits of Integration -->
+            <div class="grid grid-cols-3 gap-6 mb-4">
+                <div class="benefit-card border-blue-500 bg-white p-5 rounded-xl shadow-md">
+                    <div class="flex items-center mb-3">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-fingerprint text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">ID統合のメリット</h3>
+                    </div>
+                    <ul class="text-lg text-gray-700 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-500 mt-1 mr-2"></i>
+                            <span>チャネル横断での顧客理解</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-500 mt-1 mr-2"></i>
+                            <span>重複カウント防止で正確な分析</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="benefit-card border-emerald-500 bg-white p-5 rounded-xl shadow-md">
+                    <div class="flex items-center mb-3">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-exchange-alt text-emerald-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">データフロー</h3>
+                    </div>
+                    <div class="mb-3">
+                        <p class="text-lg text-gray-700 mb-2">リアルタイムデータ連携</p>
+                        <div class="data-flow"></div>
+                    </div>
+                    <div class="text-lg text-gray-700 flex items-center">
+                        <i class="fas fa-code-branch text-emerald-500 mr-2"></i>
+                        <span>CRM/MAツールとの連携</span>
+                    </div>
+                </div>
+                
+                <div class="benefit-card border-purple-500 bg-white p-5 rounded-xl shadow-md">
+                    <div class="flex items-center mb-3">
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-bullseye text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">KPI改善サイクル</h3>
+                    </div>
+                    <ul class="text-lg text-gray-700 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-chart-pie text-purple-500 mt-1 mr-2"></i>
+                            <span>CVRの継続的な分析と改善</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-heart text-purple-500 mt-1 mr-2"></i>
+                            <span>NPSフィードバックに基づく施策</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Implementation Steps -->
+            <div class="bg-white p-5 rounded-xl shadow-md">
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">
+                    <i class="fas fa-tasks text-blue-600 mr-2"></i> 実装ステップ
+                </h3>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="p-3 bg-slate-50 rounded-lg text-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-slate-700">1</span>
+                        </div>
+                        <p class="text-lg text-gray-700">データ収集設計</p>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg text-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-slate-700">2</span>
+                        </div>
+                        <p class="text-lg text-gray-700">CDP選定・導入</p>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg text-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-slate-700">3</span>
+                        </div>
+                        <p class="text-lg text-gray-700">ID紐付けルール設定</p>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg text-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-slate-700">4</span>
+                        </div>
+                        <p class="text-lg text-gray-700">施策自動化・改善</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-auto flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</div>
+                <div class="text-xl text-gray-600">8 / 8</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
