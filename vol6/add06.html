@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE編: ワークショップ2 - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #e1f5fe 0%, #bbdefb 100%);
+            overflow-y: auto;
+        }
+        .line-header {
+            position: relative;
+            display: inline-block;
+        }
+        .line-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(33, 150, 243, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .workshop-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .workshop-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .line-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: #06C755;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .worksheet {
+            border: 3px dashed #2196F3;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232196f3' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .worksheet::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 70px;
+            height: 70px;
+            background: #2196F3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: -1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .message-box {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+            position: relative;
+        }
+        .message-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .message-1 {
+            border-color: #2196F3;
+        }
+        .message-2 {
+            border-color: #4CAF50;
+        }
+        .form-field {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .form-field:focus {
+            background-color: white;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+            outline: none;
+        }
+        .form-field::placeholder {
+            color: #aaa;
+        }
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .step-1 {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+        }
+        .step-2 {
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+        }
+        .highlight-text {
+            background: linear-gradient(transparent 60%, #FFECB3 40%);
+            padding: 0 4px;
+        }
+        .point-card {
+            border-left: 5px solid #2196F3;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .point-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .paperclip {
+            position: absolute;
+            top: -10px;
+            right: 30px;
+            width: 30px;
+            height: 60px;
+            border: 4px solid #90A4AE;
+            border-radius: 30px 30px 0 0;
+            border-bottom: 0;
+            transform: rotate(10deg);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-6">
+                <div class="line-icon mr-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-10 h-10">
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="line-header">LINE編: ワークショップ2</span>
+                </h1>
+            </div>
+
+            <div class="workshop-card bg-white rounded-xl p-6 shadow-md mb-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center mr-4">
+                        <i class="fas fa-tasks text-white text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-blue-700">Post-Visitシナリオ設計</h2>
+                </div>
+                <p class="text-xl text-gray-700 mb-4">商品購入後や来店後の顧客に対し、送るメッセージを2通設計し、KPIを設定します。<span class="highlight-text">感謝と共感を伝え、次のアクション</span>へ繋げましょう。</p>
+            </div>
+
+            <!-- Main content: Worksheet -->
+            <div class="worksheet flex-grow relative">
+                <div class="paperclip"></div>
+                <h3 class="text-center text-3xl font-semibold text-blue-700 mb-6">💌 Post-Visit シナリオ設計ワークシート</h3>
+
+                <!-- Message 1 Section -->
+                <div class="message-box message-1 mb-6">
+                    <div class="flex items-center mb-4">
+                        <div class="step-icon step-1">
+                            <span>1</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-blue-700">メッセージ1通目 (購入・来店直後～3日以内)</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2 text-lg">目的:</label>
+                            <input type="text" class="form-field w-full" placeholder="例: 購入・来店のお礼と満足度確認" />
+                            
+                            <label class="block text-gray-700 font-bold mb-2 mt-4 text-lg">CTA (Call To Action):</label>
+                            <input type="text" class="form-field w-full" placeholder="例: 満足度アンケートへの回答" />
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2 text-lg">メッセージ案:</label>
+                            <textarea class="form-field w-full h-24" placeholder="例: 〇〇様、本日はご購入ありがとうございました！商品の感想をお聞かせください。"></textarea>
+                            
+                            <label class="block text-gray-700 font-bold mb-2 mt-2 text-lg">KPI:</label>
+                            <div class="flex space-x-2">
+                                <div class="w-1/2">
+                                    <select class="form-field w-full">
+                                        <option>既読率</option>
+                                        <option>クリック率</option>
+                                        <option>回答率</option>
+                                    </select>
+                                </div>
+                                <div class="w-1/2">
+                                    <input type="text" class="form-field w-full" placeholder="例: 70%" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Message 2 Section -->
+                <div class="message-box message-2">
+                    <div class="flex items-center mb-4">
+                        <div class="step-icon step-2">
+                            <span>2</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-green-700">メッセージ2通目 (1通目送信後1～2週間後)</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2 text-lg">目的:</label>
+                            <input type="text" class="form-field w-full" placeholder="例: レビュー依頼と再来店促進" />
+                            
+                            <label class="block text-gray-700 font-bold mb-2 mt-4 text-lg">CTA (Call To Action):</label>
+                            <input type="text" class="form-field w-full" placeholder="例: レビュー投稿とクーポン利用" />
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2 text-lg">メッセージ案:</label>
+                            <textarea class="form-field w-full h-24" placeholder="例: 先日はご利用ありがとうございました。ぜひレビューをお願いします。次回使える15%OFFクーポンをプレゼント！"></textarea>
+                            
+                            <label class="block text-gray-700 font-bold mb-2 mt-2 text-lg">KPI:</label>
+                            <div class="flex space-x-2">
+                                <div class="w-1/2">
+                                    <select class="form-field w-full">
+                                        <option>クリック率</option>
+                                        <option>クーポン利用率</option>
+                                        <option>レビュー投稿率</option>
+                                    </select>
+                                </div>
+                                <div class="w-1/2">
+                                    <input type="text" class="form-field w-full" placeholder="例: 15%" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="point-card mt-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-lightbulb text-blue-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-blue-700">設計のポイント</h4>
+                            <div class="grid grid-cols-2 gap-4 mt-2">
+                                <p class="text-lg text-gray-700 flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    感謝の気持ちを伝える
+                                </p>
+                                <p class="text-lg text-gray-700 flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    適切なフィードバック収集
+                                </p>
+                                <p class="text-lg text-gray-700 flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    次のアクションへの誘導
+                                </p>
+                                <p class="text-lg text-gray-700 flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    反応に基づくセグメント分け
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-6 flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</div>
+                <div class="text-xl text-gray-600">6 / 8</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
