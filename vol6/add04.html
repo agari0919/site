@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE編: UI4種と活用法 - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #e1f5fe 0%, #bbdefb 100%);
+            overflow-y: auto;
+        }
+        .line-header {
+            position: relative;
+            display: inline-block;
+        }
+        .line-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(33, 150, 243, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .ui-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+        }
+        .ui-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: #2196F3;
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .line-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: #06C755;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .ui-type-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #2196F3, #64B5F6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .feature-badge {
+            background: rgba(33, 150, 243, 0.15);
+            color: #0d47a1;
+            border-radius: 20px;
+            padding: 4px 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        .use-case-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .use-case-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .mockup {
+            background: #f5f5f5;
+            border-radius: 10px;
+            height: 120px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .rich-message-mockup {
+            background: white;
+            border-radius: 8px;
+            height: 100%;
+            display: flex;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .mockup-img {
+            width: 100px;
+            height: 100px;
+            background: #bbdefb;
+            border-radius: 5px;
+        }
+        .rich-menu-mockup {
+            background: white;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .menu-item {
+            width: 33.333%;
+            height: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+            color: #2196F3;
+        }
+        .card-type-mockup {
+            display: flex;
+            height: 100%;
+            overflow: hidden;
+        }
+        .card {
+            min-width: 100px;
+            height: 100%;
+            background: white;
+            margin-right: 10px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .flex-message-mockup {
+            height: 100%;
+            background: white;
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 5px;
+            padding: 5px;
+        }
+        .flex-item {
+            background: #e3f2fd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2196F3;
+        }
+        .highlight-text {
+            position: relative;
+            display: inline-block;
+        }
+        .highlight-text:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 0.5em;
+            background: rgba(255, 235, 59, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-6">
+                <div class="line-icon mr-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-10 h-10">
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="line-header">LINE編: UI4種と活用法</span>
+                </h1>
+            </div>
+
+            <!-- Introduction -->
+            <div class="mb-6">
+                <p class="text-2xl text-gray-700">LINEでは多様なメッセージUIを活用できます。伝えたい情報や目的に合わせて<span class="highlight-text">最適な形式</span>を選びましょう。</p>
+            </div>
+
+            <!-- Main content grid -->
+            <div class="grid grid-cols-2 gap-8 mb-4">
+                <!-- Rich Message -->
+                <div class="ui-card bg-white rounded-xl p-6 shadow-md">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="ui-type-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-blue-700 text-center">リッチメッセージ</h2>
+                    </div>
+                    
+                    <div class="mb-3 flex flex-wrap">
+                        <span class="feature-badge">画像とテキストの組み合わせ</span>
+                        <span class="feature-badge">画面占有率が高い</span>
+                        <span class="feature-badge">複数のタップ領域設定可能</span>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-bullseye"></i></div>
+                        <p class="text-lg text-gray-700">ビジュアル訴求力の強いキャンペーン告知に最適</p>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-magic"></i></div>
+                        <p class="text-lg text-gray-700">複数アクションへの誘導が可能</p>
+                    </div>
+                    
+                    <div class="mockup">
+                        <div class="rich-message-mockup">
+                            <div class="mockup-img flex items-center justify-center">
+                                <i class="fas fa-image text-blue-300 text-4xl"></i>
+                            </div>
+                            <div class="ml-3 flex flex-col justify-between flex-grow">
+                                <div>
+                                    <div class="font-bold">新商品登場！</div>
+                                    <div class="text-sm text-gray-500">期間限定割引中</div>
+                                </div>
+                                <div class="bg-blue-500 text-white text-center py-1 px-2 rounded text-sm">
+                                    詳細を見る
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rich Menu -->
+                <div class="ui-card bg-white rounded-xl p-6 shadow-md">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="ui-type-icon">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-blue-700 text-center">リッチメニュー</h2>
+                    </div>
+                    
+                    <div class="mb-3 flex flex-wrap">
+                        <span class="feature-badge">トーク画面下部に常時表示</span>
+                        <span class="feature-badge">最大6つのメニュー</span>
+                        <span class="feature-badge">いつでもアクセス可能</span>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-sitemap"></i></div>
+                        <p class="text-lg text-gray-700">主要なコンテンツや機能への導線確保</p>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-store"></i></div>
+                        <p class="text-lg text-gray-700">Webサイト/EC/予約サイトへの誘導</p>
+                    </div>
+                    
+                    <div class="mockup">
+                        <div class="rich-menu-mockup">
+                            <div class="menu-item"><i class="fas fa-home"></i></div>
+                            <div class="menu-item"><i class="fas fa-shopping-cart"></i></div>
+                            <div class="menu-item"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="menu-item"><i class="fas fa-gift"></i></div>
+                            <div class="menu-item"><i class="fas fa-user"></i></div>
+                            <div class="menu-item"><i class="fas fa-question-circle"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card Type -->
+                <div class="ui-card bg-white rounded-xl p-6 shadow-md">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="ui-type-icon">
+                            <i class="fas fa-clone"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-blue-700 text-center">カードタイプ</h2>
+                    </div>
+                    
+                    <div class="mb-3 flex flex-wrap">
+                        <span class="feature-badge">カルーセル形式</span>
+                        <span class="feature-badge">横スクロールで複数情報表示</span>
+                        <span class="feature-badge">最大10枚のカード</span>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-store"></i></div>
+                        <p class="text-lg text-gray-700">複数商品の紹介やカタログとして</p>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <p class="text-lg text-gray-700">店舗一覧やイベント情報の案内</p>
+                    </div>
+                    
+                    <div class="mockup">
+                        <div class="card-type-mockup">
+                            <div class="card"></div>
+                            <div class="card"></div>
+                            <div class="card"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Flex Message -->
+                <div class="ui-card bg-white rounded-xl p-6 shadow-md">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="ui-type-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-blue-700 text-center">Flex Message</h2>
+                    </div>
+                    
+                    <div class="mb-3 flex flex-wrap">
+                        <span class="feature-badge">高いカスタマイズ性</span>
+                        <span class="feature-badge">HTMLライクな設計</span>
+                        <span class="feature-badge">自由なレイアウト</span>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-paint-brush"></i></div>
+                        <p class="text-lg text-gray-700">ブランドに合わせた独自デザイン実現</p>
+                    </div>
+                    
+                    <div class="use-case-item">
+                        <div class="use-case-icon"><i class="fas fa-puzzle-piece"></i></div>
+                        <p class="text-lg text-gray-700">複雑なコンテンツの表現に最適</p>
+                    </div>
+                    
+                    <div class="mockup">
+                        <div class="flex-message-mockup">
+                            <div class="flex-item">Header</div>
+                            <div class="flex-item">Image</div>
+                            <div class="flex-item">Text</div>
+                            <div class="flex-item">Button</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="bg-blue-50 p-5 rounded-xl shadow-md">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-lightbulb text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-blue-700 mb-1">UI選択のポイント</h3>
+                        <div class="grid grid-cols-2 gap-x-6 gap-y-2">
+                            <p class="text-lg text-gray-700"><i class="fas fa-check text-green-500 mr-2"></i>訴求したい情報量に合わせて選択</p>
+                            <p class="text-lg text-gray-700"><i class="fas fa-check text-green-500 mr-2"></i>タップ導線の数を考慮</p>
+                            <p class="text-lg text-gray-700"><i class="fas fa-check text-green-500 mr-2"></i>視認性とブランドイメージの一貫性</p>
+                            <p class="text-lg text-gray-700"><i class="fas fa-check text-green-500 mr-2"></i>定期的に効果検証とABテスト</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-auto flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎（続き）</div>
+                <div class="text-xl text-gray-600">4 / 8</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
