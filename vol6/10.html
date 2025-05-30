@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram編: KPIとベンチマーク - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            overflow-y: auto;
+        }
+        .insta-header {
+            position: relative;
+            display: inline-block;
+        }
+        .insta-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(186, 104, 200, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .kpi-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .insta-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(45deg, #8e24aa, #ba68c8);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .metric-card {
+            transition: all 0.25s ease;
+            border-left: 5px solid transparent;
+        }
+        .metric-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .story-card {
+            border-color: #9c27b0;
+        }
+        .dm-card {
+            border-color: #e91e63;
+        }
+        .link-card {
+            border-color: #2196f3;
+        }
+        .reel-card {
+            border-color: #ff9800;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-6">
+                <div class="insta-icon mr-4">
+                    <i class="fab fa-instagram text-white text-4xl"></i>
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="insta-header">Instagram編: KPIとベンチマーク</span>
+                </h1>
+            </div>
+
+            <!-- Main content grid -->
+            <div class="grid grid-cols-1 gap-8 flex-grow">
+                <!-- KPI Chart -->
+                <div class="kpi-card bg-white rounded-xl p-6 shadow-md">
+                    <h2 class="text-3xl font-bold text-purple-800 mb-4">
+                        <i class="fas fa-chart-line mr-2"></i> Instagram KPI目標値
+                    </h2>
+                    
+                    <div class="chart-container">
+                        <canvas id="instaKpiChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- KPI Details Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Story閲覧率 -->
+                    <div class="metric-card story-card kpi-card bg-white p-5 rounded-xl shadow-md">
+                        <div class="flex items-center mb-2">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-eye text-purple-700 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-purple-800">Story閲覧率</h3>
+                        </div>
+                        <div class="flex items-end mb-1">
+                            <span class="stat-number">55</span>
+                            <span class="text-2xl text-purple-500 font-bold ml-1">%</span>
+                        </div>
+                        <p class="text-gray-500">(Insta平均: 32%)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- DM返信率 -->
+                    <div class="metric-card dm-card kpi-card bg-white p-5 rounded-xl shadow-md">
+                        <div class="flex items-center mb-2">
+                            <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-comment-dots text-pink-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-pink-600">DM返信率</h3>
+                        </div>
+                        <div class="flex items-end mb-1">
+                            <span class="stat-number">20</span>
+                            <span class="text-2xl text-pink-500 font-bold ml-1">%</span>
+                        </div>
+                        <p class="text-gray-500">(Insta平均: 18%)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-pink-500 h-2 rounded-full" style="width: 20%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- リンクタップ率 -->
+                    <div class="metric-card link-card kpi-card bg-white p-5 rounded-xl shadow-md">
+                        <div class="flex items-center mb-2">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-hand-pointer text-blue-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-blue-600">リンクタップ率</h3>
+                        </div>
+                        <div class="flex items-end mb-1">
+                            <span class="stat-number">10</span>
+                            <span class="text-2xl text-blue-500 font-bold ml-1">%</span>
+                        </div>
+                        <p class="text-gray-500">(Insta平均: 8%)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- リール経由CV -->
+                    <div class="metric-card reel-card kpi-card bg-white p-5 rounded-xl shadow-md">
+                        <div class="flex items-center mb-2">
+                            <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-3">
+                                <i class="fas fa-film text-amber-600 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-amber-600">リール経由CV</h3>
+                        </div>
+                        <div class="flex items-end mb-1">
+                            <span class="stat-number">4</span>
+                            <span class="text-2xl text-amber-500 font-bold ml-1">%</span>
+                        </div>
+                        <p class="text-gray-500">(Insta平均: 2.8%)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-amber-500 h-2 rounded-full" style="width: 4%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tips Box -->
+                <div class="bg-purple-50 p-5 rounded-xl shadow-md">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 rounded-full bg-purple-200 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-lightbulb text-purple-700 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-purple-800 mb-2">KPI向上のポイント</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 text-xl mr-2"></i>
+                                    <p class="text-lg text-gray-700">セグメント配信で閲覧率アップ</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 text-xl mr-2"></i>
+                                    <p class="text-lg text-gray-700">質問スタンプでDM返信を促進</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 text-xl mr-2"></i>
+                                    <p class="text-lg text-gray-700">限定コンテンツでリール視聴増</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 text-xl mr-2"></i>
+                                    <p class="text-lg text-gray-700">定期的なABテストで最適化</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-6 flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</div>
+                <div class="text-xl text-gray-600">10 / 12</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Instagram KPI Chart
+        const instaKpiCtx = document.getElementById('instaKpiChart').getContext('2d');
+        const instaKpiChart = new Chart(instaKpiCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Story閲覧率', 'DM返信率', 'リンクタップ率', 'リール経由CV'],
+                datasets: [
+                    {
+                        label: 'Instagram平均',
+                        data: [32, 18, 8, 2.8],
+                        backgroundColor: 'rgba(200, 200, 200, 0.7)',
+                        borderColor: 'rgba(180, 180, 180, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    },
+                    {
+                        label: 'Blue Reef目標',
+                        data: [55, 20, 10, 4],
+                        backgroundColor: 'rgba(186, 104, 200, 0.7)',
+                        borderColor: 'rgba(156, 39, 176, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            },
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 16
+                            },
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+<a herf="11.html">次へ</a>
+</body>
+</html>
