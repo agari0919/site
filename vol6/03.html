@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE編: Why LINE? - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #e1f5fe 0%, #bbdefb 100%);
+            overflow-y: auto;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .line-header {
+            position: relative;
+            display: inline-block;
+        }
+        .line-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: rgba(33, 150, 243, 0.3);
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(45deg, #039be5, #29b6f6);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .line-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: #06C755;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .bubble-chart {
+            position: relative;
+            height: 240px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-8">
+                <div class="line-icon mr-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-10 h-10">
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="line-header">LINE編: Why LINE?</span>
+                </h1>
+            </div>
+
+            <!-- Main content grid -->
+            <div class="grid grid-cols-2 gap-10 flex-grow">
+                <!-- Left column: Usage stats -->
+                <div class="flex flex-col">
+                    <div class="stat-card bg-white p-6 rounded-2xl mb-6">
+                        <h3 class="text-3xl font-bold text-gray-700 mb-2">若年層LINEアプリ利用率</h3>
+                        <div class="flex items-end mb-3">
+                            <span class="stat-number">97</span>
+                            <span class="text-4xl text-blue-500 font-bold ml-1">%</span>
+                        </div>
+                        <p class="text-2xl text-gray-600">10代・20代での圧倒的普及率</p>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                    
+                    <div class="mt-4 stat-card bg-blue-50 p-4 rounded-xl">
+                        <div class="flex items-center">
+                            <i class="fas fa-lightbulb text-yellow-500 text-3xl mr-3"></i>
+                            <p class="text-xl text-gray-700">他SNSと比較して<span class="font-bold">最も高い</span>アクティブ率</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right column: Value stats -->
+                <div class="flex flex-col">
+                    <div class="stat-card bg-white p-6 rounded-2xl mb-6">
+                        <h3 class="text-3xl font-bold text-gray-700 mb-2">LINE友だち経済価値</h3>
+                        <div class="flex items-end mb-3">
+                            <span class="stat-number">1,240</span>
+                            <span class="text-4xl text-green-500 font-bold ml-1">円</span>
+                        </div>
+                        <p class="text-2xl text-gray-600">1人あたり年間経済効果</p>
+                    </div>
+                    
+                    <div class="bubble-chart">
+                        <canvas id="valueChart"></canvas>
+                    </div>
+                    
+                    <div class="mt-4 stat-card bg-green-50 p-4 rounded-xl">
+                        <div class="flex items-center">
+                            <i class="fas fa-chart-line text-green-500 text-3xl mr-3"></i>
+                            <p class="text-xl text-gray-700">友だち数×単価＝<span class="font-bold">事業価値</span>に直結</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-6 flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</div>
+                <div class="text-xl text-gray-600">3 / 12</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Usage Chart
+        const usageCtx = document.getElementById('usageChart').getContext('2d');
+        const usageChart = new Chart(usageCtx, {
+            type: 'bar',
+            data: {
+                labels: ['10代', '20代', '30代', '40代', '50代以上'],
+                datasets: [{
+                    label: 'LINE利用率 (%)',
+                    data: [97, 97, 88, 76, 60],
+                    backgroundColor: [
+                        'rgba(33, 150, 243, 0.8)',
+                        'rgba(33, 150, 243, 0.8)',
+                        'rgba(33, 150, 243, 0.6)',
+                        'rgba(33, 150, 243, 0.4)',
+                        'rgba(33, 150, 243, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(25, 118, 210, 1)',
+                        'rgba(25, 118, 210, 1)',
+                        'rgba(25, 118, 210, 0.8)',
+                        'rgba(25, 118, 210, 0.6)',
+                        'rgba(25, 118, 210, 0.4)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Value Bubble Chart
+        const valueCtx = document.getElementById('valueChart').getContext('2d');
+        const valueChart = new Chart(valueCtx, {
+            type: 'bubble',
+            data: {
+                datasets: [{
+                    label: '友だち数と価値の関係',
+                    data: [
+                        { x: 1000, y: 1240000, r: 10 },
+                        { x: 5000, y: 6200000, r: 20 },
+                        { x: 10000, y: 12400000, r: 30 },
+                        { x: 30000, y: 37200000, r: 40 }
+                    ],
+                    backgroundColor: 'rgba(46, 204, 113, 0.6)',
+                    borderColor: 'rgba(39, 174, 96, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'LINE友だち数',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString() + '人';
+                            },
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '年間経済効果（円）',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return (value / 10000) + '万円';
+                            },
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return [
+                                    '友だち数: ' + context.raw.x.toLocaleString() + '人',
+                                    '経済効果: ' + (context.raw.y / 10000).toLocaleString() + '万円'
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+  <a href="03.html">次へ</a>
+</body>
+</html>
