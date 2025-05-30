@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            overflow-y: auto;
+        }
+        .app-icon {
+            width: 180px;
+            height: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+        .app-icon:hover {
+            transform: translateY(-5px);
+        }
+        .title-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .subtitle-highlight {
+            display: inline-block;
+            position: relative;
+        }
+        .subtitle-highlight:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 3px;
+            height: 15px;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(0, 148, 255, 0.2), rgba(193, 53, 132, 0.2));
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            z-index: 0;
+            animation: float 7s infinite ease-in-out;
+        }
+        .bubble-1 {
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 148, 255, 0.1);
+            top: 50px;
+            left: 100px;
+            animation-delay: 0s;
+        }
+        .bubble-2 {
+            width: 100px;
+            height: 100px;
+            background: rgba(193, 53, 132, 0.1);
+            top: 120px;
+            right: 250px;
+            animation-delay: 1s;
+        }
+        .bubble-3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(64, 93, 230, 0.1);
+            bottom: 50px;
+            right: 100px;
+            animation-delay: 2s;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.08;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .line-gradient {
+            background: linear-gradient(90deg, #06C755, #00B900);
+        }
+        .instagram-gradient {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background elements -->
+        <div class="pattern"></div>
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col justify-center items-center px-16 py-12">
+            <!-- Title section -->
+            <h1 class="title-text text-6xl font-extrabold text-center mb-6 text-gray-800">
+                第6回：<span class="text-blue-500">LINE</span> ＆ <span class="text-purple-600">Instagram</span>
+                <div class="mt-2">DM/ブロードキャスト基礎</div>
+            </h1>
+
+            <!-- Icons row -->
+            <div class="flex justify-center items-center space-x-16 my-8">
+                <!-- LINE icon -->
+                <div class="flex flex-col items-center">
+                    <div class="line-gradient rounded-3xl p-1 mb-4">
+                        <div class="bg-white rounded-3xl p-3">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE logo" class="app-icon">
+                        </div>
+                    </div>
+                    <div class="text-xl font-bold text-green-600">LINE</div>
+                </div>
+
+                <!-- Instagram icon -->
+                <div class="flex flex-col items-center">
+                    <div class="instagram-gradient rounded-3xl p-1 mb-4">
+                        <div class="bg-white rounded-3xl p-3">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram logo" class="app-icon">
+                        </div>
+                    </div>
+                    <div class="text-xl font-bold text-purple-600">Instagram</div>
+                </div>
+            </div>
+
+            <!-- Subtitle -->
+            <div class="mt-6 mb-10">
+                <h2 class="text-3xl text-gray-600 font-medium text-center">
+                    <span class="subtitle-highlight">Careステージを深耕 ― 再購買とNPSを押し上げる</span>
+                    <div class="mt-2 text-3xl">シナリオ設計を体得。</div>
+                </h2>
+            </div>
+
+            <!-- Lecturer info -->
+            <div class="absolute bottom-10 right-10 text-right">
+                <p class="text-2xl font-bold text-gray-700">講師名</p>
+                <p class="text-xl text-gray-500">Blue Reef Consulting</p>
+            </div>
+        </div>
+    </div>
+  <a href="02.html">次へ</a>
+</body>
+</html>
