@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>まとめ・質疑応答 - 第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            overflow-y: auto;
+        }
+        .summary-header {
+            position: relative;
+            display: inline-block;
+        }
+        .summary-header:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0.1em;
+            height: 0.3em;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(33, 150, 243, 0.3), rgba(186, 104, 200, 0.3));
+            z-index: -1;
+            border-radius: 4px;
+        }
+        .key-point-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid transparent;
+        }
+        .key-point-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.12);
+        }
+        .line-card {
+            border-color: #06C755;
+        }
+        .insta-card {
+            border-color: #C13584;
+        }
+        .integration-card {
+            border-color: #4CAF50;
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #333 1px, transparent 1px),
+                radial-gradient(circle at 75px 75px, #333 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .summary-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #2196F3, #9C27B0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .platform-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .line-platform {
+            background: #06C755;
+            color: white;
+        }
+        .insta-platform {
+            background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+            color: white;
+        }
+        .integration-platform {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+        }
+        .questions-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .questions-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                rgba(33, 150, 243, 0.03) 0%, 
+                rgba(33, 150, 243, 0) 50%, 
+                rgba(186, 104, 200, 0.03) 50%, 
+                rgba(186, 104, 200, 0) 100%);
+            animation: rotate 60s linear infinite;
+            z-index: 0;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .thank-you-text {
+            background: linear-gradient(90deg, #2196F3, #9C27B0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 4rem;
+            font-weight: 800;
+        }
+        .next-steps {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 7s infinite ease-in-out;
+            z-index: 0;
+        }
+        .bubble-1 {
+            width: 100px;
+            height: 100px;
+            background: rgba(33, 150, 243, 0.1);
+            top: 100px;
+            left: 50px;
+            animation-delay: 0s;
+        }
+        .bubble-2 {
+            width: 80px;
+            height: 80px;
+            background: rgba(186, 104, 200, 0.1);
+            bottom: 100px;
+            right: 150px;
+            animation-delay: 1s;
+        }
+        .bubble-3 {
+            width: 120px;
+            height: 120px;
+            background: rgba(76, 175, 80, 0.1);
+            bottom: 50px;
+            left: 200px;
+            animation-delay: 2s;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center bg-gray-100">
+    <div class="slide-container">
+        <!-- Decorative background pattern -->
+        <div class="pattern"></div>
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+
+        <!-- Main content -->
+        <div class="content h-full flex flex-col px-16 py-10">
+            <!-- Header -->
+            <div class="flex items-center mb-6">
+                <div class="summary-icon mr-4">
+                    <i class="fas fa-flag-checkered text-white text-3xl"></i>
+                </div>
+                <h1 class="text-5xl font-bold text-gray-800">
+                    <span class="summary-header">まとめ・質疑応答</span>
+                </h1>
+            </div>
+
+            <!-- Main summary content -->
+            <div class="grid grid-cols-3 gap-6 mb-6">
+                <!-- LINE Key Points -->
+                <div class="key-point-card line-card bg-white rounded-xl p-5 shadow-md">
+                    <div class="flex items-center mb-3">
+                        <div class="platform-icon line-platform">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" class="w-6 h-6">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">LINE編まとめ</h3>
+                    </div>
+                    <ul class="text-lg text-gray-700 space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>タグ4軸（属性・行動・価値・心理）でセグメント配信</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>ステップ配信（Welcome、Post-Visit、Win-Back）で継続的な関係構築</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>UI4種を活用し、目標KPI（既読率55%など）を達成</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Instagram Key Points -->
+                <div class="key-point-card insta-card bg-white rounded-xl p-5 shadow-md">
+                    <div class="flex items-center mb-3">
+                        <div class="platform-icon insta-platform">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Instagram編まとめ</h3>
+                    </div>
+                    <ul class="text-lg text-gray-700 space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-pink-500 mt-1 mr-2"></i>
+                            <span>Close FriendsとStoryステッカーで効果的なセグメント化</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-pink-500 mt-1 mr-2"></i>
+                            <span>営業くさくない4つのガードレールで自動DMファネル構築</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-pink-500 mt-1 mr-2"></i>
+                            <span>Broadcast Channel週次配信で継続的エンゲージメント</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Integration Key Points -->
+                <div class="key-point-card integration-card bg-white rounded-xl p-5 shadow-md">
+                    <div class="flex items-center mb-3">
+                        <div class="platform-icon integration-platform">
+                            <i class="fas fa-database text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">統合とKPI</h3>
+                    </div>
+                    <ul class="text-lg text-gray-700 space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>LINE UIDとInstagram IDをCDPで統合</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>単一顧客ビューの構築でクロスチャネル施策展開</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1 mr-2"></i>
+                            <span>LTVとNPSの常時可視化で継続的な改善サイクル</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="next-steps p-5 mb-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">
+                    <i class="fas fa-arrow-right text-blue-600 mr-2"></i> 次のステップ
+                </h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-pencil-alt text-blue-600"></i>
+                        </div>
+                        <span class="text-lg text-gray-700">自社向けシナリオ作成</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-vial text-purple-600"></i>
+                        </div>
+                        <span class="text-lg text-gray-700">ABテストの実施</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                            <i class="fas fa-chart-pie text-green-600"></i>
+                        </div>
+                        <span class="text-lg text-gray-700">KPI改善サイクル構築</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Section -->
+            <div class="questions-section p-6 flex-grow relative">
+                <div class="relative z-10">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center mr-4">
+                            <i class="fas fa-question text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-800">質疑応答</h3>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-4">ご質問がありましたら、お気軽にどうぞ！</p>
+                    
+                    <!-- Potential Questions -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-white p-3 rounded-xl shadow-sm">
+                            <p class="text-lg font-medium text-gray-800">"自動DMの効果測定方法は？"</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm">
+                            <p class="text-lg font-medium text-gray-800">"Win-Backシナリオの最適なタイミングは？"</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm">
+                            <p class="text-lg font-medium text-gray-800">"CDP導入のコストパフォーマンスは？"</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl shadow-sm">
+                            <p class="text-lg font-medium text-gray-800">"プライバシー規制との関係は？"</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Thank You Message -->
+                    <div class="text-center mt-4">
+                        <p class="thank-you-text">ありがとうございました！</p>
+                        <p class="text-2xl text-gray-600 mt-2">次回もお楽しみに</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with slide navigation -->
+            <div class="mt-6 flex justify-between items-center">
+                <div class="text-xl text-gray-600">第6回：LINE ＆ Instagram DM/ブロードキャスト基礎</div>
+                <div class="text-xl text-gray-600">12 / 12</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
