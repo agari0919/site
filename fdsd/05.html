@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DXによる変化と効果</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .digital-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .benefit-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            height: 100%;
+            transition: all 0.3s ease;
+            border-top: 4px solid #3182ce;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #f8b400;
+            margin-bottom: 1rem;
+        }
+        .example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            border-left: 3px solid rgba(248, 180, 0, 0.7);
+            padding: 8px 12px;
+            margin-top: 8px;
+        }
+        .highlight {
+            color: #f8b400;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="digital-grid"></div>
+        
+        <div class="content flex flex-col h-screen px-16 py-12">
+            <header class="mb-8">
+                <h2 class="title">DXによって、何が変わるのか？</h2>
+                <p class="text-gray-300 text-xl">デジタル変革がもたらす4つの主要な効果</p>
+            </header>
+            
+            <div class="grid grid-cols-2 gap-8 flex-1">
+                <!-- 教育の魅力と質の向上 -->
+                <div class="benefit-card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full bg-blue-900 bg-opacity-50 p-3 mr-4">
+                            <i class="fas fa-graduation-cap benefit-icon"></i>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold">教育の魅力と質の向上</h3>
+                    </div>
+                    <ul class="text-gray-300 text-lg list-disc pl-6 mb-4">
+                        <li>AI分析による個別最適化された学習体験</li>
+                        <li>オンライン・オンサイト融合の柔軟な教育</li>
+                        <li>VR/AR技術による実践的な学習環境</li>
+                    </ul>
+                    <div class="example">
+                        <p class="text-white"><span class="highlight">事例：</span>熊本大学のAI活用学習データ分析と個別フィードバック</p>
+                    </div>
+                </div>
+                
+                <!-- 研究力の強化 -->
+                <div class="benefit-card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full bg-blue-900 bg-opacity-50 p-3 mr-4">
+                            <i class="fas fa-flask benefit-icon"></i>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold">研究力の強化</h3>
+                    </div>
+                    <ul class="text-gray-300 text-lg list-disc pl-6 mb-4">
+                        <li>研究データの一元管理と高度分析</li>
+                        <li>国内外研究者とのオンライン協働促進</li>
+                        <li>AIを活用した革新的な研究手法</li>
+                    </ul>
+                    <div class="example">
+                        <p class="text-white"><span class="highlight">事例：</span>国際共同研究プラットフォームによる研究促進</p>
+                    </div>
+                </div>
+                
+                <!-- 業務の効率化 -->
+                <div class="benefit-card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full bg-blue-900 bg-opacity-50 p-3 mr-4">
+                            <i class="fas fa-tasks benefit-icon"></i>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold">業務の効率化</h3>
+                    </div>
+                    <ul class="text-gray-300 text-lg list-disc pl-6 mb-4">
+                        <li>AIチャットボットによる問い合わせ対応</li>
+                        <li>RPAによる定型業務の自動化</li>
+                        <li>クラウド基盤での業務プロセス統合</li>
+                    </ul>
+                    <div class="example">
+                        <p class="text-white"><span class="highlight">事例：</span>佐賀大学のAIチャットボット導入による年間1000時間以上の業務削減</p>
+                    </div>
+                </div>
+                
+                <!-- 学生へのデジタルリテラシー教育 -->
+                <div class="benefit-card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="rounded-full bg-blue-900 bg-opacity-50 p-3 mr-4">
+                            <i class="fas fa-laptop-code benefit-icon"></i>
+                        </div>
+                        <h3 class="text-white text-2xl font-bold">デジタルリテラシー向上</h3>
+                    </div>
+                    <ul class="text-gray-300 text-lg list-disc pl-6 mb-4">
+                        <li>先進的なデジタル環境での実践経験</li>
+                        <li>社会で求められるデジタルスキルの習得</li>
+                        <li>テクノロジーを活用した問題解決能力</li>
+                    </ul>
+                    <div class="example">
+                        <p class="text-white"><span class="highlight">事例：</span>データサイエンス教育の全学必修化による人材育成強化</p>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="mt-6 text-center">
+                <p class="text-white italic">"これらは未来の話ではありません。すでに多くの大学が、DXによって具体的な成果を上げています。"</p>
+            </footer>
+        </div>
+    </div>
+  <div><a href="04.html">前へ</a>　/　<a href="06.html">次へ</a></div>
+</body>
+</html>
