@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来への羅針盤 ～今こそ、大学DXの舵を切る～</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.2;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, #fff, #e2e8f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        .compass-icon {
+            position: absolute;
+            opacity: 0.15;
+            width: 500px;
+            height: 500px;
+            right: -100px;
+            bottom: -100px;
+            transform: rotate(15deg);
+        }
+        .digital-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .shine {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            animation: shine 8s ease-in-out infinite;
+        }
+        @keyframes shine {
+            0%, 100% { transform: translate(-25%, -25%) rotate(0deg); }
+            50% { transform: translate(-25%, -25%) rotate(180deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="digital-grid"></div>
+        <div class="shine"></div>
+        <svg class="compass-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="1.5"/>
+            <path d="M16.2426 7.75736L7.75736 16.2426" stroke="white" stroke-width="1.5"/>
+            <path d="M12 12L16.2426 7.75736" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 12L7.75736 16.2426" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        
+        <div class="content flex flex-col items-center justify-center h-screen px-16 py-12">
+            <div class="mb-4">
+                <div class="inline-flex items-center justify-center px-4 py-1 bg-white bg-opacity-20 rounded-full mb-6">
+                    <i class="fas fa-university mr-2"></i>
+                    <span class="text-white text-sm font-medium">国立大学DX推進プロジェクト</span>
+                </div>
+            </div>
+            
+            <h1 class="title text-center mb-4">未来への羅針盤</h1>
+            <h2 class="title text-center mb-8">～今こそ、大学DXの舵を切る～</h2>
+            
+            <p class="subtitle text-white text-center mb-12 max-w-3xl">
+                18歳人口減少時代における大学改革と<br>
+                デジタルトランスフォーメーションによる新たな価値創造
+            </p>
+            
+            <div class="flex items-center justify-center space-x-6 mt-10">
+                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
+                    <i class="fas fa-graduation-cap text-2xl text-white"></i>
+                </div>
+                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
+                    <i class="fas fa-laptop-code text-2xl text-white"></i>
+                </div>
+                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
+                    <i class="fas fa-chart-line text-2xl text-white"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+ <div><a href="02.html">次へ</a></div>
+</body>
+</html>
