@@ -22,6 +22,7 @@
             background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
             position: relative;
             overflow: hidden;
+            display: flex;
         }
         .title {
             font-size: 3rem;
@@ -88,53 +89,155 @@
                 opacity: 1;
             }
         }
+        /* サイドバーナビゲーションのスタイル */
+        .sidebar {
+            width: 240px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            line-height: 1.2;
+        }
+        .sidebar-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .sidebar-menu a.active {
+            background-color: rgba(49, 130, 206, 0.4);
+            color: white;
+            border-left: 3px solid #3182ce;
+            font-weight: bold;
+        }
+        /* ナビゲーションボタンのスタイル */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .prev-button {
+            margin-right: auto;
+        }
+        .next-button {
+            margin-left: auto;
+        }
+        .main-content {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
     <div class="slide-container">
-        <div class="digital-grid"></div>
+        <!-- サイドバーナビゲーション -->
+        <div class="sidebar">
+            <h2 class="sidebar-title">大学DXプレゼンテーション</h2>
+            <ul class="sidebar-menu">
+                <li><a href="slide1.html">1. 未来への羅針盤 ～今こそ、大学DXの舵を切る～</a></li>
+                <li><a href="slide2.html" class="active">2. 18歳人口減少の課題</a></li>
+                <li><a href="slide3.html">3. 大学の使命と直面する課題</a></li>
+                <li><a href="slide4.html">4. 大学DXの概念</a></li>
+                <li><a href="slide5.html">5. DXによる変化と効果</a></li>
+                <li><a href="slide6.html">6. 大学DXの成功事例</a></li>
+                <li><a href="slide7.html">7. DX推進の実践方法</a></li>
+                <li><a href="slide8.html">8. DXへの第一歩 - 何から始めるか</a></li>
+                <li><a href="slide9.html">9. DXの効果と未来の可能性</a></li>
+            </ul>
+        </div>
         
-        <div class="content flex flex-col h-screen px-16 py-12">
-            <header class="mb-8">
-                <h2 class="title">直面する課題：18歳人口の減少</h2>
-                <h3 class="subtitle pulse-animation">淘汰の時代の到来</h3>
-            </header>
+        <!-- メインコンテンツエリア -->
+        <div class="main-content">
+            <div class="digital-grid"></div>
             
-            <div class="flex flex-1">
-                <div class="w-7/12 chart-container p-4">
-                    <canvas id="populationChart" width="600" height="400"></canvas>
+            <div class="content flex flex-col h-screen px-16 py-12">
+                <header class="mb-8">
+                    <h2 class="title">直面する課題：18歳人口の減少</h2>
+                    <h3 class="subtitle pulse-animation">淘汰の時代の到来</h3>
+                </header>
+                
+                <div class="flex flex-1">
+                    <div class="w-7/12 chart-container p-4">
+                        <canvas id="populationChart" width="600" height="400"></canvas>
+                    </div>
+                    
+                    <div class="w-5/12 pl-8 flex flex-col justify-center">
+                        <div class="point-card">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-triangle alert-icon"></i>
+                                <span class="text-white text-xl font-bold">2035年に100万人割れ</span>
+                            </div>
+                            <p class="text-gray-300 mt-2">18歳人口の減少は、すべての大学の経営基盤を脅かします</p>
+                        </div>
+                        
+                        <div class="point-card">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-line alert-icon"></i>
+                                <span class="text-white text-xl font-bold">学生確保競争の激化</span>
+                            </div>
+                            <p class="text-gray-300 mt-2">優秀な学生を確保するための大学間競争は今後さらに厳しくなります</p>
+                        </div>
+                        
+                        <div class="point-card">
+                            <div class="flex items-center">
+                                <i class="fas fa-university alert-icon"></i>
+                                <span class="text-white text-xl font-bold">他人事ではない危機</span>
+                            </div>
+                            <p class="text-gray-300 mt-2">これは全ての国立大学が直面している現実です</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="w-5/12 pl-8 flex flex-col justify-center">
-                    <div class="point-card">
-                        <div class="flex items-center">
-                            <i class="fas fa-exclamation-triangle alert-icon"></i>
-                            <span class="text-white text-xl font-bold">2035年に100万人割れ</span>
-                        </div>
-                        <p class="text-gray-300 mt-2">18歳人口の減少は、すべての大学の経営基盤を脅かします</p>
-                    </div>
+                <footer class="mt-4">
+                    <p class="text-gray-300 italic text-center mb-4">「未来への舵を切る必要に迫られている」</p>
                     
-                    <div class="point-card">
-                        <div class="flex items-center">
-                            <i class="fas fa-chart-line alert-icon"></i>
-                            <span class="text-white text-xl font-bold">学生確保競争の激化</span>
-                        </div>
-                        <p class="text-gray-300 mt-2">優秀な学生を確保するための大学間競争は今後さらに厳しくなります</p>
+                    <!-- ナビゲーションボタン -->
+                    <div class="nav-buttons">
+                        <a href="slide1.html" class="nav-button prev-button">
+                            <i class="fas fa-chevron-left mr-2"></i> 前へ
+                        </a>
+                        <a href="slide3.html" class="nav-button next-button">
+                            次へ <i class="fas fa-chevron-right ml-2"></i>
+                        </a>
                     </div>
-                    
-                    <div class="point-card">
-                        <div class="flex items-center">
-                            <i class="fas fa-university alert-icon"></i>
-                            <span class="text-white text-xl font-bold">他人事ではない危機</span>
-                        </div>
-                        <p class="text-gray-300 mt-2">これは全ての国立大学が直面している現実です</p>
-                    </div>
-                </div>
+                </footer>
             </div>
-            
-            <footer class="mt-4 text-center">
-                <p class="text-gray-300 italic">「未来への舵を切る必要に迫られている」</p>
-            </footer>
         </div>
     </div>
     
@@ -230,6 +333,5 @@
             });
         });
     </script>
-  <div><a href="index.html">前へ</a>　/　<a href="03.html">次へ</a></div>
 </body>
 </html>
