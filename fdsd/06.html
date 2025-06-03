@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大学DXの成功事例</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .digital-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .case-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            height: 100%;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+        .case-header {
+            background-color: rgba(49, 130, 206, 0.3);
+            padding: 1rem;
+            border-bottom: 2px solid rgba(49, 130, 206, 0.5);
+        }
+        .university-logo {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        .result-badge {
+            background-color: rgba(248, 180, 0, 0.2);
+            border: 1px solid rgba(248, 180, 0, 0.5);
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            color: #f8b400;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        .highlight {
+            color: #f8b400;
+            font-weight: 600;
+        }
+        .quote-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #f8b400;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="digital-grid"></div>
+        
+        <div class="content flex flex-col h-screen px-16 py-12">
+            <header class="mb-6">
+                <h2 class="title">DXの成功事例</h2>
+                <p class="text-white text-xl mt-2">すでに実現している国立大学のDX取り組み</p>
+            </header>
+            
+            <div class="grid grid-cols-3 gap-6 flex-1">
+                <!-- 佐賀大学の事例 -->
+                <div class="case-card">
+                    <div class="case-header flex items-center">
+                        <div class="university-logo">
+                            <i class="fas fa-robot text-4xl text-blue-300"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">佐賀大学</h3>
+                            <p class="text-blue-300">AIチャットボット活用</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-white mb-3">問い合わせ対応と定型業務の自動化</p>
+                        <ul class="text-gray-300 list-disc pl-5 mb-4">
+                            <li>学生・教職員からの問い合わせに24時間対応</li>
+                            <li>RPAによる定型業務の自動化</li>
+                            <li>データ入力作業の効率化</li>
+                        </ul>
+                        <div class="result-badge">
+                            <i class="far fa-clock mr-1"></i> 年間1000時間以上の業務削減
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-gray-300 text-sm italic">「職員が創造的業務に集中できるようになりました」</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 熊本大学の事例 -->
+                <div class="case-card">
+                    <div class="case-header flex items-center">
+                        <div class="university-logo">
+                            <i class="fas fa-brain text-4xl text-blue-300"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">熊本大学</h3>
+                            <p class="text-blue-300">学習管理システム(LMS)活用</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-white mb-3">AIによる学習データ分析と最適化</p>
+                        <ul class="text-gray-300 list-disc pl-5 mb-4">
+                            <li>学習データのAI分析</li>
+                            <li>個別最適化されたフィードバック</li>
+                            <li>多様な学習スタイルへの対応</li>
+                        </ul>
+                        <div class="result-badge">
+                            <i class="fas fa-chart-line mr-1"></i> 学生の学習効果30%向上
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-gray-300 text-sm italic">「一人ひとりの理解度に合わせた教育が実現しました」</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 愛媛大学の事例 -->
+                <div class="case-card">
+                    <div class="case-header flex items-center">
+                        <div class="university-logo">
+                            <i class="fas fa-sync-alt text-4xl text-blue-300"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">愛媛大学</h3>
+                            <p class="text-blue-300">DX推進室の設置</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-white mb-3">全学的なDX推進体制の構築</p>
+                        <ul class="text-gray-300 list-disc pl-5 mb-4">
+                            <li>専任教職員によるDX推進チーム</li>
+                            <li>デジタル環境の整備・統合</li>
+                            <li>教職員向けDX研修プログラム</li>
+                        </ul>
+                        <div class="result-badge">
+                            <i class="fas fa-users mr-1"></i> 教職員のDXスキル向上
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-gray-300 text-sm italic">「組織全体のデジタル変革文化が醸成されました」</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote-container p-4 mt-6">
+                <p class="text-white text-lg text-center">
+                    "これらは<span class="highlight">未来の話</span>ではありません。すでに多くの大学が、DXによって<span class="highlight">具体的な成果</span>を上げています。"
+                </p>
+            </div>
+            
+            <div class="flex justify-end mt-2">
+                <p class="text-gray-400 text-sm">※掲載内容は台本に基づいています</p>
+            </div>
+        </div>
+    </div>
+  <div><a href="05.html">前へ</a>　/　<a href="07.html">次へ</a></div>
+</body>
+</html>
