@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大学の使命と直面する課題</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .digital-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .mission-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            border-bottom: 4px solid #3182ce;
+            transition: all 0.3s ease;
+        }
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .mission-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3182ce;
+        }
+        .chart-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            height: 250px;
+        }
+        .challenge-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-left: 4px solid #f8b400;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .challenge-card:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+        .alert-icon {
+            color: #f8b400;
+            margin-right: 8px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="digital-grid"></div>
+        
+        <div class="content flex flex-col h-screen px-16 py-12">
+            <header class="mb-6">
+                <h2 class="title">大学の使命と直面する課題</h2>
+                <p class="text-gray-300 text-xl">変革を必要とする今日の大学環境</p>
+            </header>
+            
+            <div class="flex mb-8">
+                <div class="mission-card w-1/3 p-6 mx-2 flex flex-col items-center text-center">
+                    <i class="fas fa-graduation-cap mission-icon"></i>
+                    <h3 class="text-white text-2xl font-bold mb-2">教育</h3>
+                    <p class="text-gray-300">次世代を担う人材を育む</p>
+                </div>
+                <div class="mission-card w-1/3 p-6 mx-2 flex flex-col items-center text-center">
+                    <i class="fas fa-flask mission-icon"></i>
+                    <h3 class="text-white text-2xl font-bold mb-2">研究</h3>
+                    <p class="text-gray-300">新たな知を創造する</p>
+                </div>
+                <div class="mission-card w-1/3 p-6 mx-2 flex flex-col items-center text-center">
+                    <i class="fas fa-handshake mission-icon"></i>
+                    <h3 class="text-white text-2xl font-bold mb-2">社会貢献</h3>
+                    <p class="text-gray-300">成果を社会に還元する</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-1">
+                <div class="w-1/2 pr-4">
+                    <h3 class="text-white text-xl font-bold mb-3 flex items-center">
+                        <i class="fas fa-chart-line mr-2 text-yellow-400"></i>予算の減少傾向
+                    </h3>
+                    <div class="chart-container p-4">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-2 italic text-center">※国立大学運営費交付金の推移（概算）</p>
+                </div>
+                
+                <div class="w-1/2 pl-4">
+                    <h3 class="text-white text-xl font-bold mb-3 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2 text-yellow-400"></i>変革を阻む壁
+                    </h3>
+                    
+                    <div class="challenge-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-history alert-icon"></i>
+                            <span class="text-white text-lg font-bold">従来の慣習への固執</span>
+                        </div>
+                        <p class="text-gray-300 mt-1">「今までこのやり方で問題なかった」という意識</p>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-laptop-code alert-icon"></i>
+                            <span class="text-white text-lg font-bold">デジタル技術への抵抗</span>
+                        </div>
+                        <p class="text-gray-300 mt-1">新しい技術への移行に対する心理的障壁</p>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-user-clock alert-icon"></i>
+                            <span class="text-white text-lg font-bold">リソース不足</span>
+                        </div>
+                        <p class="text-gray-300 mt-1">人材・時間・予算の制約</p>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="flex items-center">
+                            <i class="fas fa-sitemap alert-icon"></i>
+                            <span class="text-white text-lg font-bold">組織的障壁</span>
+                        </div>
+                        <p class="text-gray-300 mt-1">部署間の分断とコミュニケーション不足</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            
+            // 運営費交付金推移データ（概算）
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2004', '2008', '2012', '2016', '2020', '2023'],
+                    datasets: [{
+                        label: '運営費交付金（億円）',
+                        data: [12400, 11800, 11500, 10900, 10600, 10300],
+                        borderColor: '#f8b400',
+                        backgroundColor: 'rgba(248, 180, 0, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#f8b400',
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            titleFont: {
+                                size: 14
+                            },
+                            bodyFont: {
+                                size: 12
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.parsed.y + '億円';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff',
+                                callback: function(value) {
+                                    return value + '億円';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+  <div><a href="02.html">前へ</a>　/　<a href="04.html">次へ</a></div>
+</body>
+</html>
