@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DX推進の実践方法</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .digital-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .implementation-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .implementation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+        .implementation-icon {
+            font-size: 2.5rem;
+            color: #f8b400;
+            margin-bottom: 1rem;
+        }
+        .university-case {
+            background-color: rgba(49, 130, 206, 0.15);
+            border-radius: 12px;
+            border-left: 4px solid #3182ce;
+            padding: 1rem;
+        }
+        .highlight {
+            color: #f8b400;
+            font-weight: 600;
+        }
+        .wave-decoration {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath fill='rgba(255, 255, 255, 0.05)' d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            z-index: 1;
+        }
+        .connector-line {
+            position: absolute;
+            width: 2px;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: 0;
+        }
+        .pulse-circle {
+            width: 12px;
+            height: 12px;
+            background-color: #f8b400;
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse 2s infinite;
+            z-index: 1;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(248, 180, 0, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(248, 180, 0, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(248, 180, 0, 0);
+            }
+        }
+        /* サイドバーナビゲーションのスタイル */
+        .sidebar {
+            width: 240px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            line-height: 1.2;
+        }
+        .sidebar-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .sidebar-menu a.active {
+            background-color: rgba(49, 130, 206, 0.4);
+            color: white;
+            border-left: 3px solid #3182ce;
+            font-weight: bold;
+        }
+        /* ナビゲーションボタンのスタイル */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .prev-button {
+            margin-right: auto;
+        }
+        .next-button {
+            margin-left: auto;
+        }
+        .main-content {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- サイドバーナビゲーション -->
+        <div class="sidebar">
+            <h2 class="sidebar-title">大学DXプレゼンテーション</h2>
+            <ul class="sidebar-menu">
+                <li><a href="slide1.html">1. 未来への羅針盤 ～今こそ、大学DXの舵を切る～</a></li>
+                <li><a href="slide2.html">2. 18歳人口減少の課題</a></li>
+                <li><a href="slide3.html">3. 大学の使命と直面する課題</a></li>
+                <li><a href="slide4.html">4. 大学DXの概念</a></li>
+                <li><a href="slide5.html">5. DXによる変化と効果</a></li>
+                <li><a href="slide6.html">6. 大学DXの成功事例</a></li>
+                <li><a href="slide7.html" class="active">7. DX推進の実践方法</a></li>
+                <li><a href="slide8.html">8. DXへの第一歩 - 何から始めるか</a></li>
+                <li><a href="slide9.html">9. DXの効果と未来の可能性</a></li>
+            </ul>
+        </div>
+        
+        <!-- メインコンテンツエリア -->
+        <div class="main-content">
+            <div class="digital-grid"></div>
+            <div class="wave-decoration"></div>
+            
+            <div class="content flex flex-col h-screen px-16 py-12">
+                <header class="mb-8">
+                    <h2 class="title">DX推進の実践方法</h2>
+                    <p class="text-gray-300 text-xl">専門家だけのものではない、全学的な取り組みへ</p>
+                </header>
+                
+                <div class="flex flex-1">
+                    <!-- 左側：DX推進の4つの柱 -->
+                    <div class="w-2/3 grid grid-cols-2 gap-6 pr-8">
+                        <!-- 経営層のリーダーシップ -->
+                        <div class="implementation-card p-6 relative">
+                            <div class="pulse-circle" style="top: 30px; right: 30px;"></div>
+                            <div class="connector-line" style="top: 36px; right: 36px; height: 80px; transform: rotate(45deg);"></div>
+                            
+                            <i class="fas fa-chess-king implementation-icon"></i>
+                            <h3 class="text-white text-2xl font-bold mb-3">経営層のリーダーシップ</h3>
+                            <ul class="text-gray-300 text-lg list-disc pl-6">
+                                <li>組織全体のビジョンの明確化</li>
+                                <li>DX推進体制の構築と権限付与</li>
+                                <li>必要なリソースの確保と配分</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 一人ひとりの意識改革 -->
+                        <div class="implementation-card p-6 relative">
+                            <div class="pulse-circle" style="top: 30px; left: 30px;"></div>
+                            <div class="connector-line" style="top: 36px; left: 36px; height: 80px; transform: rotate(-45deg);"></div>
+                            
+                            <i class="fas fa-lightbulb implementation-icon"></i>
+                            <h3 class="text-white text-2xl font-bold mb-3">一人ひとりの意識改革</h3>
+                            <ul class="text-gray-300 text-lg list-disc pl-6">
+                                <li>デジタルリテラシーの向上</li>
+                                <li>「従来の慣習」からの脱却</li>
+                                <li>変化を恐れない組織文化の醸成</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 小さな成功体験の積み重ね -->
+                        <div class="implementation-card p-6 relative">
+                            <div class="pulse-circle" style="bottom: 30px; right: 30px;"></div>
+                            <div class="connector-line" style="bottom: 36px; right: 36px; height: 80px; transform: rotate(-45deg);"></div>
+                            
+                            <i class="fas fa-chart-line implementation-icon"></i>
+                            <h3 class="text-white text-2xl font-bold mb-3">小さな成功体験</h3>
+                            <ul class="text-gray-300 text-lg list-disc pl-6">
+                                <li>短期間で効果が見える取り組み</li>
+                                <li>具体的な成功事例の共有</li>
+                                <li>段階的な展開と拡大</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 現場主導の取り組み -->
+                        <div class="implementation-card p-6 relative">
+                            <div class="pulse-circle" style="bottom: 30px; left: 30px;"></div>
+                            <div class="connector-line" style="bottom: 36px; left: 36px; height: 80px; transform: rotate(45deg);"></div>
+                            
+                            <i class="fas fa-users implementation-icon"></i>
+                            <h3 class="text-white text-2xl font-bold mb-3">全組織的な取り組み</h3>
+                            <ul class="text-gray-300 text-lg list-disc pl-6">
+                                <li>部門・職種を超えた協働</li>
+                                <li>ボトムアップの改善提案促進</li>
+                                <li>学生も巻き込んだ共創活動</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 右側：大学事例 -->
+                    <div class="w-1/3 pl-4 flex flex-col justify-center">
+                        <div class="university-case mb-6">
+                            <div class="flex items-center mb-4">
+                                <div class="rounded-full bg-blue-900 bg-opacity-50 p-3 mr-4">
+                                    <i class="fas fa-university text-3xl text-blue-300"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-white text-xl font-bold">取り組み事例</h3>
+                                    <p class="text-blue-300">琉大トランスフォーメーション（RX）</p>
+                                </div>
+                            </div>
+                            <ul class="text-gray-200 list-disc pl-6 mb-3">
+                                <li>全学的なDXプロジェクト立ち上げ</li>
+                                <li>学長直下のDX推進組織</li>
+                                <li>教職員・学生参加型ワークショップ</li>
+                                <li>デジタル活用人材の育成</li>
+                            </ul>
+                            <p class="text-white text-sm italic">「DXは大学の生存戦略として全学を挙げた取り組みになっています」</p>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-10 rounded-lg p-4 border-l-4 border-yellow-400">
+                            <p class="text-white text-lg italic">
+                                "何から始めればいいのだろう？"<br>
+                                "自分に何ができるだろう？"<br><br>
+                                <span class="highlight">まず関心を持つこと。そして、同僚と話し合い、小さなことからでも新しいやり方を試してみることです。</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <footer class="mt-6">
+                    <p class="text-white text-lg text-center mb-4">
+                        DXは<span class="highlight">私たち一人ひとりの意識と行動</span>から始まります
+                    </p>
+                    
+                    <!-- ナビゲーションボタン -->
+                    <div class="nav-buttons">
+                        <a href="slide6.html" class="nav-button prev-button">
+                            <i class="fas fa-chevron-left mr-2"></i> 前へ
+                        </a>
+                        <a href="slide8.html" class="nav-button next-button">
+                            次へ <i class="fas fa-chevron-right ml-2"></i>
+                        </a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
