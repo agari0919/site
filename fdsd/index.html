@@ -24,6 +24,7 @@
             background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
             position: relative;
             overflow: hidden;
+            display: flex;
         }
         .title {
             font-size: 4rem;
@@ -78,46 +79,140 @@
             0%, 100% { transform: translate(-25%, -25%) rotate(0deg); }
             50% { transform: translate(-25%, -25%) rotate(180deg); }
         }
+        /* サイドバーナビゲーションのスタイル */
+        .sidebar {
+            width: 240px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            line-height: 1.2;
+        }
+        .sidebar-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .sidebar-menu a.active {
+            background-color: rgba(49, 130, 206, 0.4);
+            color: white;
+            border-left: 3px solid #3182ce;
+            font-weight: bold;
+        }
+        /* ナビゲーションボタンのスタイル */
+        .nav-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .main-content {
+            flex: 1;
+            position: relative;
+        }
     </style>
 </head>
 <body>
     <div class="slide-container">
-        <div class="digital-grid"></div>
-        <div class="shine"></div>
-        <svg class="compass-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="1.5"/>
-            <path d="M16.2426 7.75736L7.75736 16.2426" stroke="white" stroke-width="1.5"/>
-            <path d="M12 12L16.2426 7.75736" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M12 12L7.75736 16.2426" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <div class="content flex flex-col items-center justify-center h-screen px-16 py-12">
-            <div class="mb-4">
-                <div class="inline-flex items-center justify-center px-4 py-1 bg-white bg-opacity-20 rounded-full mb-6">
-                    <i class="fas fa-university mr-2"></i>
-                    <span class="text-white text-sm font-medium">国立大学DX推進プロジェクト</span>
+        <!-- サイドバーナビゲーション -->
+        <div class="sidebar">
+            <h2 class="sidebar-title">大学DXプレゼンテーション</h2>
+            <ul class="sidebar-menu">
+                <li><a href="slide1.html" class="active">1. 未来への羅針盤 ～今こそ、大学DXの舵を切る～</a></li>
+                <li><a href="slide2.html">2. 18歳人口減少の課題</a></li>
+                <li><a href="slide3.html">3. 大学の使命と直面する課題</a></li>
+                <li><a href="slide4.html">4. 大学DXの概念</a></li>
+                <li><a href="slide5.html">5. DXによる変化と効果</a></li>
+                <li><a href="slide6.html">6. 大学DXの成功事例</a></li>
+                <li><a href="slide7.html">7. DX推進の実践方法</a></li>
+                <li><a href="slide8.html">8. DXへの第一歩 - 何から始めるか</a></li>
+                <li><a href="slide9.html">9. DXの効果と未来の可能性</a></li>
+            </ul>
+        </div>
+        
+        <!-- メインコンテンツエリア -->
+        <div class="main-content">
+            <div class="digital-grid"></div>
+            <div class="shine"></div>
+            <svg class="compass-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="1.5"/>
+                <path d="M16.2426 7.75736L7.75736 16.2426" stroke="white" stroke-width="1.5"/>
+                <path d="M12 12L16.2426 7.75736" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 12L7.75736 16.2426" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            
+            <div class="content flex flex-col items-center justify-center h-screen px-16 py-12">
+                <div class="mb-4">
+                    <div class="inline-flex items-center justify-center px-4 py-1 bg-white bg-opacity-20 rounded-full mb-6">
+                        <i class="fas fa-university mr-2"></i>
+                        <span class="text-white text-sm font-medium">国立大学DX推進プロジェクト</span>
+                    </div>
+                </div>
+                
+                <h1 class="title text-center mb-4">未来への羅針盤</h1>
+                <h2 class="title text-center mb-8">～今こそ、大学DXの舵を切る～</h2>
+                
+                <p class="subtitle text-white text-center mb-12 max-w-3xl">
+                    18歳人口減少時代における大学改革と<br>
+                    デジタルトランスフォーメーションによる新たな価値創造
+                </p>
+                
+                <div class="flex items-center justify-center space-x-6 mt-8">
+                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
+                        <i class="fas fa-graduation-cap text-2xl text-white"></i>
+                    </div>
+                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
+                        <i class="fas fa-laptop-code text-2xl text-white"></i>
+                    </div>
+                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
+                        <i class="fas fa-chart-line text-2xl text-white"></i>
+                    </div>
+                </div>
+                
+                <!-- ナビゲーションボタン -->
+                <div class="nav-buttons w-full mt-auto">
+                    <a href="slide2.html" class="nav-button next-button">
+                        次へ <i class="fas fa-chevron-right ml-2"></i>
+                    </a>
                 </div>
             </div>
-            
-            <h1 class="title text-center mb-4">未来への羅針盤</h1>
-            <h2 class="title text-center mb-8">～今こそ、大学DXの舵を切る～</h2>
-            
-            <p class="subtitle text-white text-center mb-12 max-w-3xl">
-                18歳人口減少時代における大学改革と<br>
-                デジタルトランスフォーメーションによる新たな価値創造
-            </p>
-            
-            <div class="flex items-center justify-center space-x-6 mt-10">
-                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
-                    <i class="fas fa-graduation-cap text-2xl text-white"></i>
-                </div>
-                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
-                    <i class="fas fa-laptop-code text-2xl text-white"></i>
-                </div>
-                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300">
-                    <i class="fas fa-chart-line text-2xl text-white"></i>
-                </div>
-            </div>
-                    <div><a href="02.html">次へ</a></div>
         </div>
     </div>
 </body>
