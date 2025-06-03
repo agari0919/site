@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DXへの第一歩 - 何から始めるか</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            min-height: 720px;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .digital-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .highlight {
+            color: #f8b400;
+            font-weight: 600;
+        }
+        .step-container {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .step-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 40px;
+            height: 40px;
+            background-color: #f8b400;
+            color: #1a365d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .step-icon {
+            font-size: 2.5rem;
+            color: #f8b400;
+            margin-bottom: 1rem;
+        }
+        .action-card {
+            background-color: rgba(49, 130, 206, 0.15);
+            border-radius: 10px;
+            border-left: 3px solid #3182ce;
+            transition: all 0.2s ease;
+        }
+        .action-card:hover {
+            background-color: rgba(49, 130, 206, 0.2);
+            transform: translateX(5px);
+        }
+        .path-arrow {
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: rgba(248, 180, 0, 0.5);
+            z-index: 1;
+        }
+        .path-arrow::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid rgba(248, 180, 0, 0.5);
+        }
+        .question-bubble {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .question-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="digital-grid"></div>
+        
+        <div class="content flex flex-col h-screen px-16 py-12">
+            <header class="mb-4">
+                <h2 class="title">DXへの第一歩</h2>
+                <p class="text-gray-300 text-xl">何から始めればよいのか？ - 具体的な取り組み方</p>
+            </header>
+            
+            <div class="question-bubble">
+                <p class="text-white text-xl italic">
+                    "何から始めればいいのだろう？" "自分に何ができるだろう？"
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-8 mb-6">
+                <!-- ステップ1：関心を持つ -->
+                <div class="step-container p-6 relative">
+                    <div class="step-number">1</div>
+                    <div class="path-arrow" style="top: 50%; right: -40px;"></div>
+                    
+                    <div class="mb-4 flex items-center">
+                        <i class="fas fa-search step-icon mr-4"></i>
+                        <h3 class="text-white text-2xl font-bold">まず関心を持つ</h3>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-4">最新のデジタル技術や他大学の事例に興味を持ち、情報収集することから始めましょう。</p>
+                    
+                    <div class="action-card p-3 mb-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-book-reader text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">DX関連の記事やニュースを定期的に読む</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card p-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-laptop-code text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">デジタルツールの基本操作を学ぶ</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ステップ2：同僚と対話 -->
+                <div class="step-container p-6 relative">
+                    <div class="step-number">2</div>
+                    <div class="path-arrow" style="bottom: -20px; left: 50%; transform: rotate(90deg); transform-origin: left;"></div>
+                    
+                    <div class="mb-4 flex items-center">
+                        <i class="fas fa-comments step-icon mr-4"></i>
+                        <h3 class="text-white text-2xl font-bold">同僚と対話する</h3>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-4">アイデアや課題を共有し、部署を超えたコミュニケーションを促進します。</p>
+                    
+                    <div class="action-card p-3 mb-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-coffee text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">ランチタイムDX談義を企画する</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card p-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-users text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">部署横断の意見交換会に参加する</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ステップ4：振り返りと改善 -->
+                <div class="step-container p-6 relative">
+                    <div class="step-number">4</div>
+                    
+                    <div class="mb-4 flex items-center">
+                        <i class="fas fa-sync-alt step-icon mr-4"></i>
+                        <h3 class="text-white text-2xl font-bold">振り返りと改善</h3>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-4">成果と課題を定期的に検証し、継続的な改善サイクルを回します。</p>
+                    
+                    <div class="action-card p-3 mb-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-chart-bar text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">効果測定と定期的な見直しを行う</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card p-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-share-alt text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">成功体験を学内で共有する</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ステップ3：小さなことから試す -->
+                <div class="step-container p-6 relative">
+                    <div class="step-number">3</div>
+                    <div class="path-arrow" style="top: 50%; left: -40px;"></div>
+                    
+                    <div class="mb-4 flex items-center">
+                        <i class="fas fa-rocket step-icon mr-4"></i>
+                        <h3 class="text-white text-2xl font-bold">小さなことから試す</h3>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-4">日常業務の中で、すぐに実践できる小さな変革から始めましょう。</p>
+                    
+                    <div class="action-card p-3 mb-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-tasks text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">紙の資料をデジタル化する</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card p-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-video text-blue-300 text-lg mr-3"></i>
+                            <p class="text-white">オンラインツールを会議に導入する</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white bg-opacity-10 rounded-lg p-5 border-l-4 border-yellow-400 mt-2">
+                <p class="text-white text-xl text-center">
+                    <span class="highlight">「小さな一歩」</span>の積み重ねが、<span class="highlight">大きな変革</span>につながります。<br>
+                    大切なのは、<span class="highlight">今日から始める</span>ことです。
+                </p>
+            </div>
+            
+            <div class="flex justify-between items-center mt-4">
+                <p class="text-gray-300 italic">
+                    "DXの道のりに、完璧な準備は必要ありません。<br>
+                    まずは第一歩を踏み出すことから始まります。"
+                </p>
+                
+                <div class="flex items-center">
+                    <i class="fas fa-lightbulb text-yellow-400 text-2xl mr-3"></i>
+                    <p class="text-white font-bold">自分事として考え、行動しましょう</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  <div><a href="07.html">前へ</a>　/　<a href="09.html">次へ</a></div>
+</body>
+</html>
