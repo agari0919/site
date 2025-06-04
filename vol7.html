@@ -14,7 +14,7 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            overflow-x: hidden; /* 水平スクロールは常に非表示 */
+            overflow-x: hidden;
         }
         
         .presentation-container {
@@ -89,7 +89,7 @@
             width: calc(100vw - 320px);
             height: 100vh;
             position: relative;
-            overflow: hidden; /* main-content自体のはみ出しはhidden */
+            overflow: hidden;
         }
         
         .slide-container {
@@ -100,7 +100,7 @@
         
         .slide {
             width: 100%;
-            height: 100vh; /* 各スライドの高さをビューポートに合わせる */
+            height: 100vh; 
             position: absolute;
             top: 0;
             left: 0;
@@ -108,7 +108,7 @@
             opacity: 0;
             transform: translateX(100%);
             transition: all 0.5s ease-in-out;
-            overflow-y: auto; /* スライド内のコンテンツがはみ出したらスクロール */
+            overflow-y: auto; 
         }
         
         .slide.active {
@@ -116,7 +116,7 @@
             transform: translateX(0);
         }
         
-        .slide.prev { /* これはアニメーション用なので残す */
+        .slide.prev {
             transform: translateX(-100%);
         }
         
@@ -125,19 +125,16 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            /* height は各スライドで異なる場合があるのでインラインで調整 */
             background: linear-gradient(90deg, rgba(37, 99, 235, 0.1) 0%, rgba(59, 130, 246, 0.2) 100%);
-            /* clip-path も各スライドで異なる場合があるのでインラインで調整 */
             z-index: 1;
         }
         
         .content {
             position: relative;
             z-index: 2;
-            /* padding はスライドによって若干異なるので、共通のベースを設定しつつ必要に応じて調整 */
             padding: 2rem 3rem; 
             line-height: 1.6;
-            max-width: 1100px; /* コンテンツの最大幅 */
+            max-width: 1100px; 
         }
         
         .navigation-controls {
@@ -192,7 +189,7 @@
             height: 100%;
             background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
             transition: width 0.5s ease;
-            width: 0%; /* 初期値はJSで設定 */
+            width: 0%; 
         }
         
         .slide-indicator {
@@ -231,236 +228,68 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        /* Slide 2 specific styles */
-        .chart-container {
-            width: 350px;
-            height: 280px;
-            margin: 0 auto;
-        }
-        .data-source {
-            font-size: 28px; /* 元のpt指定は大きすぎるため調整 */
-            color: #6b7280;
-            margin-top: 1rem;
-            text-align: center;
-            line-height: 1.6;
-        }
-        .script-box {
-            background-color: rgba(255, 255, 255, 0.7); /* 0.8から0.7へ統一 */
-            border-left: 6px solid #3b82f6;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 統一 */
-            line-height: 1.6;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-        .legend-color {
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        /* Slide 3 specific styles */
-        .comparison-card {
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        .comparison-card:hover {
-            transform: translateY(-2px);
-        }
-        .map-icon, .lost-icon { /* 統合 */
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 36px;
-        }
-        .map-icon {
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
-        }
-        .lost-icon {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        }
-        
-        /* Slide 5 specific styles */
-        .emotion-card {
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-        .emotion-card:hover {
-            transform: translateY(-2px);
-        }
-        .color-sample {
-            height: 80px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-        .emotion-curve {
-            height: 120px;
-            background: linear-gradient(to right, 
-                #10b981 0%, #10b981 30%, 
-                #f59e0b 30%, #f59e0b 70%, 
-                #ef4444 70%, #ef4444 100%);
-            border-radius: 8px;
-            position: relative;
-            margin-bottom: 1rem;
-        }
-
-        /* Slide 6 specific styles */
-        .kpi-card {
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-        .kpi-card:hover {
-            transform: translateY(-2px);
-        }
-        .sticky-note { /* 共通化できるものはここへ */
+        .chart-container { width: 350px; height: 280px; margin: 0 auto; }
+        .data-source { font-size: 18pt; color: #6b7280; margin-top: 1rem; text-align: center; line-height: 1.6; }
+        .script-box { background-color: rgba(255, 255, 255, 0.7); border-left: 6px solid #3b82f6; padding: 1.5rem; margin-top: 2rem; border-radius: 0.5rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); line-height: 1.6; }
+        .legend-item { display: flex; align-items: center; margin-bottom: 1rem; line-height: 1.6; }
+        .legend-color { width: 24px; height: 24px; border-radius: 6px; margin-right: 15px; flex-shrink: 0; }
+        .comparison-card { background: rgba(255,255,255,0.8); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .comparison-card:hover { transform: translateY(-2px); }
+        .map-icon, .lost-icon { width: 80px; height: 80px; margin: 0 auto 1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; }
+        .map-icon { background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); }
+        .lost-icon { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .emotion-card { background: rgba(255,255,255,0.8); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease; height: 100%; }
+        .emotion-card:hover { transform: translateY(-2px); }
+        .color-sample { height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 1rem; position: relative; }
+        .emotion-curve { height: 120px; background: linear-gradient(to right, #10b981 0%, #10b981 30%, #f59e0b 30%, #f59e0b 70%, #ef4444 70%, #ef4444 100%); border-radius: 8px; position: relative; margin-bottom: 1rem; }
+        .kpi-card { background: rgba(255,255,255,0.8); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease; height: 100%; }
+        .kpi-card:hover { transform: translateY(-2px); }
+        .sticky-note-kpi { /* KPIスライド用の付箋スタイル */
+            background-color: #fecaca; /* red-200 */
             padding: 0.75rem;
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
-            transform: rotate(-2deg); /* 若干の角度調整 */
+            transform: rotate(-2deg);
             border-radius: 4px;
             position: relative;
             display: inline-block;
-            line-height: 1.6;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+            color: #991b1b; /* red-800 */
         }
-        /* 色別の付箋スタイル */
-        .blue-note { background-color: #bfdbfe; color: #1e40af; } /* Tailwind blue-300, text-blue-700 */
-        .yellow-note { background-color: #fef08a; color: #92400e; }/* Tailwind yellow-300, text-yellow-800 */
-        .green-note { background-color: #a7f3d0; color: #065f46; }/* Tailwind green-300, text-green-800 */
-        .red-note { background-color: #fecaca; color: #991b1b; }  /* Tailwind red-300, text-red-800 */
-
-
-        /* Slide 7 specific styles */
-        .persona-card {
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-        .persona-card:hover {
-            transform: translateY(-2px);
-        }
-        .badge {
-            background-color: #3b82f6;
-            color: white;
-            border-radius: 9999px;
-            padding: 0.25rem 0.75rem;
-            display: inline-block;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Slide 8 specific styles */
-        .timer-box {
-            background: linear-gradient(145deg, #2563eb, #1d4ed8);
-            border-radius: 1rem;
-            color: white;
-            text-align: center;
-            padding: 1.5rem; /* 2remから少し調整 */
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
-        }
-        /* .sticky-note は共通化済み */
-
-        /* Slide 9 specific styles */
-        .chat-bubble {
-            position: relative;
-            background-color: #f1f5f9; /* Tailwind slate-100 */
-            border-radius: 0.75rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            line-height: 1.6;
-        }
-        .journey-cell { /* 共通化できるものはここへ */
-            border: 1px solid #e5e7eb; /* Tailwind gray-200 */
-            border-radius: 0.25rem; /* 0.75remから調整 */
-            padding: 0.5rem; /* 1remから調整 */
-            background-color: #f8fafc; /* Tailwind slate-50 */
-            line-height: 1.6;
-            text-align: center;
-        }
-        .highlight-cell {
-            background-color: rgba(252, 165, 165, 0.2);
-            border: 1px dashed #ef4444;
-        }
-
-        /* Slide 12 specific styles for journey-map grid */
-        .journey-map {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-            background-color: #e5e7eb; /* Tailwind gray-200 */
-            padding: 2px;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-        /* .journey-cell は共通化済み */
-
-
-        /* Slide 13 specific styles */
-        .takeaway-card {
-            border-radius: 1rem;
-            transition: transform 0.2s;
-            padding: 1.5rem;
-            line-height: 1.6;
-        }
-        .takeaway-card:hover {
-            transform: translateY(-3px);
-        }
-        .homework-item {
-            transition: all 0.3s;
-            line-height: 1.6;
-        }
-        .homework-item:hover {
-            background-color: #f0f9ff; /* Tailwind blue-50 */
-            transform: scale(1.01);
-        }
+        .persona-card { background: rgba(255,255,255,0.8); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease; height: 100%; }
+        .persona-card:hover { transform: translateY(-2px); }
+        .badge { background-color: #3b82f6; color: white; border-radius: 9999px; padding: 0.25rem 0.75rem; display: inline-block; margin-right: 0.5rem; margin-bottom: 0.5rem; font-size: 20pt; }
+        .timer-box { background: linear-gradient(145deg, #2563eb, #1d4ed8); border-radius: 1rem; color: white; text-align: center; padding: 1.5rem; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); }
+        .chat-bubble { position: relative; background-color: #f1f5f9; border-radius: 0.75rem; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); line-height: 1.6; }
+        .journey-cell { border: 1px solid #e5e7eb; border-radius: 0.25rem; padding: 0.5rem; background-color: #f8fafc; line-height: 1.6; text-align: center; }
+        .highlight-cell { background-color: rgba(252, 165, 165, 0.2); border: 1px dashed #ef4444; }
+        .journey-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background-color: #e5e7eb; padding: 2px; border-radius: 4px; margin-bottom: 1rem; }
+        .takeaway-card { border-radius: 1rem; transition: transform 0.2s; padding: 1.5rem; line-height: 1.6; }
+        .takeaway-card:hover { transform: translateY(-3px); }
+        .homework-item { transition: all 0.3s; line-height: 1.6; }
+        .homework-item:hover { background-color: #f0f9ff; transform: scale(1.01); }
         
-        /* Responsive adjustments */
+        /* 導入スライド用スタイル */
+        .intro-icon { font-size: 2.5rem; margin-bottom: 0.5rem; color: #3b82f6;}
+        .intro-list li { display: flex; align-items: start; margin-bottom: 0.75rem; font-size: 28pt; }
+        .intro-list i { color: #3b82f6; margin-right: 0.75rem; font-size: 24pt; margin-top: 0.3rem; width: 30px; text-align: center; }
+        .intro-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 20pt;}
+        .intro-table th, .intro-table td { border: 1px solid #e5e7eb; padding: 0.5rem; text-align: left; }
+        .intro-table th { background-color: #f3f4f6; font-weight: 600; }
+
+
         @media (max-width: 1024px) {
             .sidebar { width: 280px; }
             .main-content { margin-left: 280px; width: calc(100vw - 280px); }
             .progress-bar { left: 280px; width: calc(100vw - 280px); }
-            .content { padding: 1.5rem; /* 少し小さく */ }
-            /* フォントサイズを少し調整 */
-            h1, h2 { font-size: 48pt !important; }
-            h3 { font-size: 36pt !important; }
-            p, div, span, li { font-size: 24pt !important; }
+            .content { padding: 1.5rem; }
+            h1, h2 { font-size: 42pt !important; }
+            h3 { font-size: 32pt !important; }
+            p, div, li { font-size: 22pt !important; }
+            .badge { font-size: 18pt !important; }
             .data-source, .keyword-badge, .slide-number, .slide-indicator { font-size: 12pt !important; }
             .sidebar-header { font-size: 16pt !important; }
-            .script-box p, .script-box div { font-size: 22pt !important;}
+            .script-box p, .script-box div { font-size: 20pt !important;}
+            .intro-list li, .intro-table {font-size: 20pt !important;}
+            .intro-list i {font-size: 20pt !important;}
         }
         
         @media (max-width: 768px) {
@@ -469,15 +298,17 @@
             .main-content { margin-left: 0; width: 100vw; }
             .progress-bar { left: 0; width: 100vw; }
             .content { padding: 1rem; }
-            /* フォントサイズをさらに調整 */
-            h1, h2 { font-size: 36pt !important; }
-            h3 { font-size: 28pt !important; }
-            p, div, span, li { font-size: 18pt !important; }
+            h1, h2 { font-size: 30pt !important; }
+            h3 { font-size: 24pt !important; }
+            p, div, li { font-size: 16pt !important; }
+            .badge { font-size: 14pt !important; }
             .data-source, .keyword-badge, .slide-number, .slide-indicator { font-size: 10pt !important; }
             .sidebar-header { font-size: 14pt !important; }
-            .script-box p, .script-box div { font-size: 16pt !important;}
+            .script-box p, .script-box div { font-size: 14pt !important;}
             .navigation-controls { bottom: 1rem; right: 1rem;}
             .nav-button { width: 40px; height: 40px; font-size: 16px; }
+            .intro-list li, .intro-table {font-size: 16pt !important;}
+            .intro-list i {font-size: 16pt !important;}
         }
     </style>
 </head>
@@ -490,78 +321,130 @@
             </div>
             <ul class="slide-menu">
                 <li class="slide-menu-item active" data-slide="1"><span class="slide-number">1</span>タイトル・学習ゴール</li>
-                <li class="slide-menu-item" data-slide="2"><span class="slide-number">2</span>流入経路の分裂</li>
-                <li class="slide-menu-item" data-slide="3"><span class="slide-number">3</span>入口ではなく"旅"を設計</li>
-                <li class="slide-menu-item" data-slide="4"><span class="slide-number">4</span>3層構造解説</li>
-                <li class="slide-menu-item" data-slide="5"><span class="slide-number">5</span>感情カラーコード</li>
-                <li class="slide-menu-item" data-slide="6"><span class="slide-number">6</span>KPIレイヤー</li>
-                <li class="slide-menu-item" data-slide="7"><span class="slide-number">7</span>ペルソナ再整理</li>
-                <li class="slide-menu-item" data-slide="8"><span class="slide-number">8</span>メインワークショップ</li>
-                <li class="slide-menu-item" data-slide="9"><span class="slide-number">9</span>AI検索 vs マップ</li>
-                <li class="slide-menu-item" data-slide="10"><span class="slide-number">10</span>ミニディスカッション</li>
-                <li class="slide-menu-item" data-slide="11"><span class="slide-number">11</span>改善アイデア貼付け</li>
-                <li class="slide-menu-item" data-slide="12"><span class="slide-number">12</span>講評・秀逸アイデア</li>
-                <li class="slide-menu-item" data-slide="13"><span class="slide-number">13</span>まとめ・宿題</li>
+                <li class="slide-menu-item" data-slide="2"><span class="slide-number">2</span>CJMとは？全体像とメリット</li>
+                <li class="slide-menu-item" data-slide="3"><span class="slide-number">3</span>流入経路の分裂</li>
+                <li class="slide-menu-item" data-slide="4"><span class="slide-number">4</span>入口ではなく"旅"を設計</li>
+                <li class="slide-menu-item" data-slide="5"><span class="slide-number">5</span>3層構造解説</li>
+                <li class="slide-menu-item" data-slide="6"><span class="slide-number">6</span>感情カラーコード（記号表現）</li>
+                <li class="slide-menu-item" data-slide="7"><span class="slide-number">7</span>KPIレイヤー</li>
+                <li class="slide-menu-item" data-slide="8"><span class="slide-number">8</span>ペルソナ再整理</li>
+                <li class="slide-menu-item" data-slide="9"><span class="slide-number">9</span>メインワークショップ</li>
+                <li class="slide-menu-item" data-slide="10"><span class="slide-number">10</span>AI検索 vs マップ</li>
+                <li class="slide-menu-item" data-slide="11"><span class="slide-number">11</span>ミニディスカッション</li>
+                <li class="slide-menu-item" data-slide="12"><span class="slide-number">12</span>改善アイデア貼付け</li>
+                <li class="slide-menu-item" data-slide="13"><span class="slide-number">13</span>講評・秀逸アイデア</li>
+                <li class="slide-menu-item" data-slide="14"><span class="slide-number">14</span>まとめ・宿題</li>
             </ul>
         </div>
 
         <div class="main-content">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            
-            <div class="slide-indicator" id="slideIndicator">1 / 13</div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="slide-indicator" id="slideIndicator">1 / 14</div>
             
             <div class="slide-container">
                 <div class="slide active" id="slide1">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 3rem 4rem;">
-                        <div class="text-blue-600 font-semibold mb-4" style="font-size: 44pt; line-height: 1.6;">第7回</div>
-                        <h1 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.4;">カスタマージャーニーマップ徹底ワークショップ</h1>
-                        <div class="font-medium text-gray-700 max-w-4xl mb-8" style="font-size: 36pt; line-height: 1.6;">
+                        <div class="text-blue-600 font-semibold mb-4" style="font-size: 44pt;">第7回</div>
+                        <h1 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.3;">カスタマージャーニーマップ徹底ワークショップ</h1>
+                        <div class="font-medium text-gray-700 max-w-4xl mb-8" style="font-size: 36pt; line-height: 1.5;">
                             タッチポイント・感情曲線・KPI を1枚に重ね、チャネル乱立時代でもブレないマーケ地図を描く
                         </div>
                         <div class="goal-box mb-8">
-                            <div class="font-semibold text-blue-700 mb-4" style="font-size: 44pt; line-height: 1.6;">今回のゴール</div>
-                            <p class="text-gray-700" style="font-size: 36pt; line-height: 1.6;">
+                            <div class="font-semibold text-blue-700 mb-4" style="font-size: 44pt;">今回のゴール</div>
+                            <p class="text-gray-700" style="font-size: 36pt; line-height: 1.5;">
                                 Blue Reef Café の<span class="font-bold">"最愛顧客"</span>1 ペルソナについて、<br>
-                                <span class="font-bold">完成形ジャーニーマップ（A3）</span>を作成し、弱点セルに改善アイデアを貼れるようになる
+                                <span class="font-bold">完成形ジャーニーマップ（A3）</span>を作成し、弱点セルに改善アイデアを具体的に記述できるようになる
                             </p>
                         </div>
                         <div class="mb-8">
-                            <div class="font-semibold text-blue-700 mb-4" style="font-size: 44pt; line-height: 1.6;">学習ゴール</div>
+                            <div class="font-semibold text-blue-700 mb-4" style="font-size: 44pt;">学習ゴール</div>
                             <div class="space-y-4 pl-2">
                                 <div class="flex items-start mb-4">
-                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1" style="font-size: 24px;">①</div>
-                                    <div style="font-size: 36pt; line-height: 1.6;">
-                                        <span class="font-medium">"面"で捉える：</span>点施策ではなく STDC × 感情曲線 × チャネル を重ねる
+                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">①</div>
+                                    <div style="font-size: 36pt; line-height: 1.5;">
+                                        <span class="font-medium">CJMの基本を理解：</span>カスタマージャーニーマップの構造、目的、作成プロセスを把握する。
+                                    </div>
+                                </div>
+                                <div class="flex items-start mb-4">
+                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">②</div>
+                                    <div style="font-size: 36pt; line-height: 1.5;">
+                                        <span class="font-medium">"面"で捉える：</span>点施策ではなく STDC × 感情 × チャネル × KPI を重ねる。
                                         <span class="keyword-badge">俯瞰設計</span>
                                     </div>
                                 </div>
                                 <div class="flex items-start mb-4">
-                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1" style="font-size: 24px;">②</div>
-                                    <div style="font-size: 36pt; line-height: 1.6;">
-                                        <span class="font-medium">行動 & 感情を可視化：</span>フリクション・期待値を色で見える化
+                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">③</div>
+                                    <div style="font-size: 36pt; line-height: 1.5;">
+                                        <span class="font-medium">行動 & 感情を可視化：</span>フリクション・期待値を記号や言葉で見える化。
                                         <span class="keyword-badge">見える化</span>
                                     </div>
                                 </div>
                                 <div class="flex items-start mb-4">
-                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1" style="font-size: 24px;">③</div>
-                                    <div style="font-size: 36pt; line-height: 1.6;">
-                                        <span class="font-medium">KPI を貼る：</span>数値を添えて"測れる地図"にする
+                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">④</div>
+                                    <div style="font-size: 36pt; line-height: 1.5;">
+                                        <span class="font-medium">KPI を設定：</span>数値を添えて"測れる地図"にする。
                                         <span class="keyword-badge">測定可能</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="absolute bottom-8 right-12 text-gray-500" style="font-size: 28pt; line-height: 1.6;">
+                        <div class="absolute bottom-8 right-12 text-gray-500" style="font-size: 28pt;">
                             <i class="far fa-clock mr-2"></i> 90分ワークショップ
                         </div>
                     </div>
                 </div>
 
                 <div class="slide" id="slide2">
+                    <div class="wave" style="height: 250px; clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);"></div>
+                     <div class="content" style="padding: 2rem 3rem;">
+                        <h2 class="font-bold text-gray-800 mb-6" style="font-size: 54pt; line-height: 1.3;">カスタマージャーニーマップとは？<br><span class="text-blue-600" style="font-size: 36pt;">全体像と作成のメリット</span></h2>
+                        
+                        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                            <h3 class="font-semibold text-blue-700 mb-3 flex items-center" style="font-size: 36pt;">
+                                <i class="fas fa-map-signs intro-icon mr-4"></i>カスタマージャーニーマップを一言で言うと…
+                            </h3>
+                            <p style="font-size: 28pt; color: #374151;">
+                                顧客が製品やサービスと出会い、関わり、最終的なゴールに至るまでの<strong class="text-blue-600">『体験の旅』</strong>を、顧客視点で見える化した<strong class="text-blue-600">地図</strong>です。
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                            <h3 class="font-semibold text-blue-700 mb-4 flex items-center" style="font-size: 36pt;">
+                                <i class="fas fa-rocket intro-icon mr-4"></i>なぜ作るの？（作成のメリット）
+                            </h3>
+                            <ul class="intro-list">
+                                <li><i class="fas fa-users"></i>顧客理解の深化: 顧客の行動、思考、感情を深く知る。</li>
+                                <li><i class="fas fa-lightbulb"></i>課題と機会の発見: 顧客体験のボトルネックや改善点、新たな価値提供のヒントを見つける。</li>
+                                <li><i class="fas fa-comments"></i>共通認識の醸成: チーム内で顧客視点を共有し、一貫した施策立案へ。</li>
+                                <li><i class="fas fa-bullseye"></i>施策の最適化: 各タッチポイントでの最適なアプローチを検討できる。</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                            <h3 class="font-semibold text-blue-700 mb-3 flex items-center" style="font-size: 36pt;">
+                                <i class="fas fa-drafting-compass intro-icon mr-4"></i>今回作成するマップの完成イメージ
+                            </h3>
+                            <p style="font-size: 28pt; color: #374151; margin-bottom: 1rem;">
+                                今日のワークショップでは、横軸に顧客のステージ、縦軸に以下の要素を書き込むジャーニーマップを作成します。
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 text-center" style="font-size: 24pt;">
+                                <div class="bg-blue-50 p-3 rounded-md"><strong>横軸(ステージ例):</strong><br>きっかけ(See) → 情報集め(Think) → 行動(Do) → 利用後(Care)</div>
+                                <div class="bg-green-50 p-3 rounded-md"><strong>縦軸(記入項目):</strong><br>行動 / 感情 / チャネル / KPI</div>
+                            </div>
+                             <p style="font-size: 24pt; color: #555; margin-top: 1rem;">
+                                <i class="fas fa-exclamation-circle mr-1 text-yellow-500"></i> これらを整理し、一枚の「顧客体験の地図」を完成させます。
+                            </p>
+                        </div>
+
+                        <div class="script-box">
+                            <p style="font-size: 24pt;">「まず、今日皆さんに作っていただく『カスタマージャーニーマップ』とは何か、その全体像とメリットを簡単にご説明します。顧客の体験を旅に見立てて地図にしたもので、顧客理解を深め、課題やチャンスを発見するのに役立ちます。今日は、顧客の行動、感情、接点、KPIを一枚のマップに落とし込みます。このイメージを持って進めましょう。」</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" id="slide3">
                     <div class="wave" style="height: 200px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 250px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 1.5rem 2.5rem;">
@@ -574,22 +457,10 @@
                             <div class="w-full md:w-1/2 md:pl-8">
                                 <h3 class="font-semibold text-gray-700 mb-6" style="font-size: 44pt; line-height: 1.3;">デジタル流入経路の内訳</h3>
                                 <div class="space-y-4">
-                                    <div class="legend-item">
-                                        <div class="legend-color" style="background-color: #3b82f6;"></div>
-                                        <div><span class="font-bold" style="font-size: 36pt;">38%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">検索エンジン</span></div>
-                                    </div>
-                                    <div class="legend-item">
-                                        <div class="legend-color" style="background-color: #10b981;"></div>
-                                        <div><span class="font-bold" style="font-size: 36pt;">27%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">SNS</span></div>
-                                    </div>
-                                    <div class="legend-item">
-                                        <div class="legend-color" style="background-color: #f59e0b;"></div>
-                                        <div><span class="font-bold" style="font-size: 36pt;">9%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">AI回答</span></div>
-                                    </div>
-                                    <div class="legend-item">
-                                        <div class="legend-color" style="background-color: #6b7280;"></div>
-                                        <div><span class="font-bold" style="font-size: 36pt;">26%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">その他</span></div>
-                                    </div>
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #3b82f6;"></div><div><span class="font-bold" style="font-size: 36pt;">38%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">検索エンジン</span></div></div>
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #10b981;"></div><div><span class="font-bold" style="font-size: 36pt;">27%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">SNS</span></div></div>
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #f59e0b;"></div><div><span class="font-bold" style="font-size: 36pt;">9%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">AI回答</span></div></div>
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #6b7280;"></div><div><span class="font-bold" style="font-size: 36pt;">26%</span> <span class="text-gray-700 ml-3" style="font-size: 36pt;">その他</span></div></div>
                                 </div>
                             </div>
                         </div>
@@ -599,7 +470,7 @@
                     </div>
                 </div>
 
-                <div class="slide" id="slide3">
+                <div class="slide" id="slide4">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
                         <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt;">入口ではなく"旅"を設計せよ</h2>
@@ -622,129 +493,126 @@
                     </div>
                 </div>
 
-                <div class="slide" id="slide4">
+                <div class="slide" id="slide5">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
                         <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt;">ジャーニーマップの3層構造</h2>
                         <div style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
                             <div class="flex items-center mb-4">
                                 <div style="background: #3b82f6; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28pt; font-weight: bold; margin-right: 2rem; flex-shrink: 0;">①</div>
-                                <h3 style="font-size: 44pt; color: #1e40af;">行動レイヤー（青付箋）</h3>
+                                <h3 style="font-size: 44pt; color: #1e40af;">行動レイヤー</h3>
                             </div>
                             <p style="font-size: 36pt; line-height: 1.6;">各STDCステージでの顧客の具体的行動を記録</p>
                         </div>
                         <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
                             <div class="flex items-center mb-4">
                                 <div style="background: #f59e0b; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28pt; font-weight: bold; margin-right: 2rem; flex-shrink: 0;">②</div>
-                                <h3 style="font-size: 44pt; color: #92400e;">感情レイヤー（黄付箋）</h3>
+                                <h3 style="font-size: 44pt; color: #92400e;">感情レイヤー</h3>
                             </div>
-                            <p style="font-size: 36pt; line-height: 1.6;">各行動に対する感情温度を色でグラデーション表現</p>
+                            <p style="font-size: 36pt; line-height: 1.6;">各行動に対する感情を顔文字😊😐😟や言葉、矢印↑↓などで表現</p>
                         </div>
                         <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
                             <div class="flex items-center mb-4">
                                 <div style="background: #10b981; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28pt; font-weight: bold; margin-right: 2rem; flex-shrink: 0;">③</div>
-                                <h3 style="font-size: 44pt; color: #065f46;">チャネルレイヤー（緑付箋）</h3>
+                                <h3 style="font-size: 44pt; color: #065f46;">チャネルレイヤー</h3>
                             </div>
-                            <p style="font-size: 36pt; line-height: 1.6;">接点となるメディア・場所・タッチポイントを記録</p>
+                            <p style="font-size: 36pt; line-height: 1.6;">接点となるメディア・場所・タッチポイントを記録（例：□で囲む）</p>
                         </div>
                         <div class="script-box">
-                            <p style="font-size: 36pt;">「3層構造：①行動②感情③チャネル。色で温度を塗るとボトルネックが浮きます。」</p>
+                            <p style="font-size: 36pt;">「3層構造：①行動、②感情（記号や言葉で）、③チャネル。これで顧客体験を整理します。」</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="slide" id="slide5">
+                
+                <div class="slide" id="slide6">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
-                        <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.6;">感情カラーコード</h2>
+                        <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.6;">感情の表現方法（記号や言葉で）</h2>
                         <div class="mb-6">
-                            <h3 class="font-semibold text-blue-700 mb-4" style="font-size: 44pt; line-height: 1.6;">顧客感情を3色で可視化する設計手法</h3>
+                            <h3 class="font-semibold text-blue-700 mb-4" style="font-size: 44pt; line-height: 1.6;">顧客感情を分かりやすく可視化</h3>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                             <div class="emotion-card border-l-4 border-green-500">
-                                <div class="color-sample bg-green-500"><i class="fas fa-smile mr-2" style="font-size: 36pt;"></i><span style="font-size: 36pt;">好感・満足</span></div>
-                                <h4 class="font-bold text-green-700 mb-2" style="font-size: 36pt; line-height: 1.6;">ポジティブ感情</h4>
-                                <ul class="text-gray-700 space-y-2" style="font-size: 28pt; line-height: 1.6;"><li>• 期待以上の体験</li><li>• 満足・喜び</li><li>• ブランド推奨意向</li></ul>
+                                <div class="color-sample bg-green-500 flex items-center justify-center"><i class="fas fa-smile mr-2" style="font-size: 36pt;"></i><span style="font-size: 36pt;">ポジティブ</span> <i class="fas fa-arrow-up ml-2" style="font-size:30pt;"></i></div>
+                                <h4 class="font-bold text-green-700 mb-2" style="font-size: 36pt; line-height: 1.6;">例：満足・期待以上</h4>
+                                <ul class="text-gray-700 space-y-2" style="font-size: 28pt; line-height: 1.6;"><li>キーワード：「嬉しい」「解決した」「助かった」</li><li>記号例：😊, 👍, ◎, <span class="text-2xl">😄</span></li></ul>
                             </div>
                             <div class="emotion-card border-l-4 border-yellow-500">
-                                <div class="color-sample bg-yellow-500"><i class="fas fa-meh mr-2" style="font-size: 36pt;"></i><span style="font-size: 36pt;">不安・迷い</span></div>
-                                <h4 class="font-bold text-yellow-700 mb-2" style="font-size: 36pt; line-height: 1.6;">ニュートラル〜若干ネガティブ</h4>
-                                <ul class="text-gray-700 space-y-2" style="font-size: 28pt; line-height: 1.6;"><li>• 決断できない</li><li>• 情報不足</li><li>• 選択肢過多</li></ul>
+                                <div class="color-sample bg-yellow-500 flex items-center justify-center"><i class="fas fa-meh mr-2" style="font-size: 36pt;"></i><span style="font-size: 36pt;">ニュートラル</span><i class="fas fa-minus ml-2" style="font-size:30pt;"></i></div>
+                                <h4 class="font-bold text-yellow-700 mb-2" style="font-size: 36pt; line-height: 1.6;">例：普通・どちらでもない</h4>
+                                <ul class="text-gray-700 space-y-2" style="font-size: 28pt; line-height: 1.6;"><li>キーワード：「まあまあ」「普通」「特にない」</li><li>記号例：😐, 〇, <span class="text-2xl">🤔</span></li></ul>
                             </div>
                             <div class="emotion-card border-l-4 border-red-500">
-                                <div class="color-sample bg-red-500"><i class="fas fa-angry mr-2" style="font-size: 36pt;"></i><span style="font-size: 36pt;">ストレス・不満</span></div>
-                                <h4 class="font-bold text-red-700 mb-2" style="font-size: 36pt; line-height: 1.6;">強いネガティブ感情</h4>
-                                <ul class="text-gray-700 space-y-2" style="font-size: 28pt; line-height: 1.6;"><li>• 障壁・摩擦</li><li>• 期待割れ</li><li>• 離脱要因</li></ul>
+                                <div class="color-sample bg-red-500 flex items-center justify-center"><i class="fas fa-frown mr-2" style="font-size: 36pt;"></i><span style="font-size: 36pt;">ネガティブ</span> <i class="fas fa-arrow-down ml-2" style="font-size:30pt;"></i></div>
+                                <h4 class="font-bold text-red-700 mb-2" style="font-size: 36pt; line-height: 1.6;">例：不満・ストレス</h4>
+                                <ul class="text-gray-700 space-y-2" style="font-size: 28pt; line-height: 1.6;"><li>キーワード：「イライラ」「分かりにくい」「がっかり」</li><li>記号例：😟, 👎, ×, <span class="text-2xl">😠</span></li></ul>
                             </div>
                         </div>
                         <div class="mb-6">
-                            <h3 class="font-semibold text-gray-700 mb-4" style="font-size: 44pt; line-height: 1.6;"><i class="fas fa-chart-line text-blue-500 mr-3"></i>感情曲線の表現例</h3>
+                            <h3 class="font-semibold text-gray-700 mb-4" style="font-size: 44pt; line-height: 1.6;"><i class="fas fa-signature text-blue-500 mr-3"></i>感情曲線の活用</h3>
+                            <p style="font-size: 28pt; color: #374151; margin-bottom: 1rem;">各ステージの下部に、感情の起伏を簡単な線で描きましょう（上がポジティブ、下がネガティブ）。これにより、体験全体の感情の流れが一目でわかります。</p>
                             <div class="emotion-curve relative">
                                 <div class="absolute inset-0 flex items-center justify-center">
-                                    <svg width="100%" height="80" viewBox="0 0 600 80" preserveAspectRatio="none"><path d="M20,40 C100,20 200,60 300,50 S500,20 580,65" stroke="white" stroke-width="4" fill="none" stroke-dasharray="10,5"></path><text x="50" y="25" fill="white" font-weight="bold" font-size="14">好感度高</text><text x="300" y="75" fill="white" font-weight="bold" text-anchor="middle" font-size="14">感情の変化</text><text x="520" y="40" fill="white" font-weight="bold" font-size="14">問題点</text></svg>
+                                    <svg width="100%" height="80" viewBox="0 0 600 80" preserveAspectRatio="none"><path d="M20,60 C100,20 200,70 300,40 S500,10 580,50" stroke="#4A5568" stroke-width="3" fill="none" stroke-linecap="round"></path><text x="50" y="15" fill="#4A5568" font-weight="bold" font-size="14">😊</text><text x="280" y="75" fill="#4A5568" font-weight="bold" text-anchor="middle" font-size="14">😐</text><text x="530" y="25" fill="#4A5568" font-weight="bold" font-size="14">😟</text></svg>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-blue-50 rounded-lg border-l-8 border-blue-500 p-6 mb-6">
-                            <div class="flex items-center mb-4"><i class="fas fa-lightbulb text-yellow-500 mr-4 text-5xl"></i><h3 class="font-bold text-blue-700" style="font-size: 44pt; line-height: 1.6;">セルの色とアクション</h3></div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="bg-green-100 rounded p-4"><div class="font-bold text-green-700 mb-2" style="font-size: 36pt; line-height: 1.6;">緑セル</div><div class="text-gray-700" style="font-size: 28pt; line-height: 1.6;">→ 強みとして活かす</div></div>
-                                <div class="bg-yellow-100 rounded p-4"><div class="font-bold text-yellow-700 mb-2" style="font-size: 36pt; line-height: 1.6;">橙セル</div><div class="text-gray-700" style="font-size: 28pt; line-height: 1.6;">→ 監視・改善検討</div></div>
-                                <div class="bg-red-100 rounded p-4"><div class="font-bold text-red-700 mb-2" style="font-size: 36pt; line-height: 1.6;">赤セル</div><div class="text-gray-700" style="font-size: 28pt; line-height: 1.6;">→ <span class="font-bold">優先的に改善</span></div></div>
-                            </div>
+                         <div class="bg-blue-50 rounded-lg border-l-8 border-blue-500 p-6 mb-6">
+                            <div class="flex items-center mb-4"><i class="fas fa-lightbulb text-yellow-500 mr-4 text-5xl"></i><h3 class="font-bold text-blue-700" style="font-size: 44pt; line-height: 1.6;">注目すべき感情</h3></div>
+                            <p style="font-size: 28pt; color: #374151;">特に<strong class="text-red-600">ネガティブな感情 (😟, × など) が集中する箇所</strong>は、顧客体験の大きな課題（ペインポイント）を示しています。ここが改善の優先箇所です。</p>
                         </div>
-                        <div class="script-box"><p class="text-gray-700" style="font-size: 36pt; line-height: 1.6;">「感情曲線は色のグラデで。<span class="font-semibold">赤が多いセル＝改善優先</span>。」</p></div>
+                        <div class="script-box"><p class="text-gray-700" style="font-size: 36pt; line-height: 1.6;">「感情は顔文字やキーワード、矢印で表現しましょう。特にネガティブな感情は改善のサインです。」</p></div>
                     </div>
                 </div>
 
-                <div class="slide" id="slide6">
+                <div class="slide" id="slide7">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                      <div class="content" style="padding: 2rem 3rem;">
                         <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.6;">KPIレイヤーで"測れる地図"に</h2>
-                        <div class="mb-6"><h3 class="font-semibold text-blue-700 mb-4" style="font-size: 44pt; line-height: 1.6;">数値で体験を測定可能にする設計手法</h3></div>
+                        <div class="mb-6"><h3 class="font-semibold text-blue-700 mb-4" style="font-size: 44pt; line-height: 1.6;">数値で体験を測定可能にする</h3></div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div class="kpi-card border-l-4 border-blue-500">
                                 <h4 class="font-bold text-blue-700 mb-4 flex items-center" style="font-size: 36pt; line-height: 1.6;"><i class="fas fa-chart-line text-red-500 mr-3"></i>KPIで指標化する理由</h4>
                                 <ul class="text-gray-700 space-y-3" style="font-size: 28pt; line-height: 1.6;">
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>測定できない体験は<span class="font-bold">改善できない</span></li>
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>各セルに<span class="text-red-500 font-bold">赤付箋</span>でKPIを追加</li>
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>現状値と目標値を<span class="font-bold">両方</span>記載</li>
+                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>測定できない体験は、改善できません。</li>
+                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>各セル（特に弱点セル）に、KPIを<strong class="text-red-600">赤いペン</strong>または<strong class="text-red-600">目立つ印 (例: ☆印)</strong>で追加しましょう。</li>
+                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>KPIには、<strong class="text-blue-600">現状値</strong>と<strong class="text-green-600">目標値</strong>の両方を記載します。</li>
                                 </ul>
                             </div>
                             <div class="kpi-card border-l-4 border-red-500 relative">
-                                <div class="sticky-note red-note absolute -top-3 -right-3" style="font-size:20pt; padding: 0.5rem;"><div class="font-bold">KPI Layer</div></div>
+                                <div class="sticky-note-kpi absolute -top-3 -right-3" style="font-size:20pt; padding: 0.5rem;"><div class="font-bold">☆ KPIレイヤー</div></div>
                                 <h4 class="font-bold text-red-700 mb-4" style="font-size: 36pt; line-height: 1.6;">マップ完成イメージ</h4>
                                 <div class="bg-blue-50 rounded-lg p-4 text-center">
                                     <div class="text-blue-600" style="font-size: 28pt; line-height: 1.6;">行動・感情・チャネル</div>
                                     <div class="text-2xl my-2" style="font-size: 28pt; line-height: 1.6;">+</div>
-                                    <div class="font-bold text-red-600" style="font-size: 28pt; line-height: 1.6;">KPI (測定指標)</div>
+                                    <div class="font-bold text-red-600" style="font-size: 28pt; line-height: 1.6;">KPI (測定指標) ☆</div>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-6">
                             <h3 class="font-semibold text-gray-700 mb-4" style="font-size: 44pt; line-height: 1.6;"><i class="fas fa-bullseye text-red-500 mr-3"></i>各STDC段階の代表的KPI</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                                <div class="bg-blue-50 rounded-lg p-4 text-center"><div class="font-bold text-blue-700 mb-3" style="font-size: 36pt;">See</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">Impression</div><div style="font-size: 20pt;">ストーリービュー率</div><div class="text-red-600 font-bold" style="font-size: 28pt;">≧ 50%</div></div></div>
-                                <div class="bg-yellow-50 rounded-lg p-4 text-center"><div class="font-bold text-yellow-700 mb-3" style="font-size: 36pt;">Think</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">Avg.Time</div><div style="font-size: 20pt;">平均滞在時間</div><div class="text-red-600 font-bold" style="font-size: 28pt;">≥ 1:30</div></div></div>
-                                <div class="bg-green-50 rounded-lg p-4 text-center"><div class="font-bold text-green-700 mb-3" style="font-size: 36pt;">Do</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">CVR</div><div style="font-size: 20pt;">予約/クーポン率</div><div class="text-red-600 font-bold" style="font-size: 28pt;">≥ 3%</div></div></div>
-                                <div class="bg-purple-50 rounded-lg p-4 text-center"><div class="font-bold text-purple-700 mb-3" style="font-size: 36pt;">Care</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">NPS</div><div style="font-size: 20pt;">推奨度スコア</div><div class="text-red-600 font-bold" style="font-size: 28pt;">≥ +25</div></div></div>
+                                <div class="bg-blue-50 rounded-lg p-4 text-center"><div class="font-bold text-blue-700 mb-3" style="font-size: 36pt;">See</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">☆Impression</div><div style="font-size: 20pt;">(現状:1万人 → 目標:2万人)</div></div></div>
+                                <div class="bg-yellow-50 rounded-lg p-4 text-center"><div class="font-bold text-yellow-700 mb-3" style="font-size: 36pt;">Think</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">☆Avg.Time</div><div style="font-size: 20pt;">(現状:45秒 → 目標:90秒)</div></div></div>
+                                <div class="bg-green-50 rounded-lg p-4 text-center"><div class="font-bold text-green-700 mb-3" style="font-size: 36pt;">Do</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">☆CVR</div><div style="font-size: 20pt;">(現状:1.2% → 目標:3%)</div></div></div>
+                                <div class="bg-purple-50 rounded-lg p-4 text-center"><div class="font-bold text-purple-700 mb-3" style="font-size: 36pt;">Care</div><div class="space-y-2"><div class="font-semibold" style="font-size: 28pt;">☆NPS</div><div style="font-size: 20pt;">(現状:+10 → 目標:+25)</div></div></div>
                             </div>
                         </div>
-                        <div class="bg-blue-50 rounded-lg border-l-8 border-blue-500 p-6 mb-6">
-                            <div class="flex items-center mb-4"><i class="fas fa-lightbulb text-yellow-500 mr-4 text-5xl"></i><h3 class="font-bold text-blue-700" style="font-size: 44pt; line-height: 1.6;">赤付箋でのKPI設定方法</h3></div>
+                         <div class="bg-blue-50 rounded-lg border-l-8 border-blue-500 p-6 mb-6">
+                            <div class="flex items-center mb-4"><i class="fas fa-lightbulb text-yellow-500 mr-4 text-5xl"></i><h3 class="font-bold text-blue-700" style="font-size: 44pt; line-height: 1.6;">KPIの書き方 (例)</h3></div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-white rounded p-4"><div class="font-bold text-blue-700 mb-2" style="font-size: 36pt;">現状値を記載</div><div class="text-gray-700" style="font-size: 28pt;">例：現在のCVR 1.2%</div></div>
-                                <div class="bg-white rounded p-4"><div class="font-bold text-red-700 mb-2" style="font-size: 36pt;">目標値を設定</div><div class="text-gray-700" style="font-size: 28pt;">例：目標CVR 3.0%</div></div>
+                                <div class="bg-white rounded p-4"><div class="font-bold text-blue-700 mb-2" style="font-size: 36pt;">現状値を記載</div><div class="text-gray-700" style="font-size: 28pt;">例：☆予約率 (現:1.2%)</div></div>
+                                <div class="bg-white rounded p-4"><div class="font-bold text-red-700 mb-2" style="font-size: 36pt;">目標値を設定</div><div class="text-gray-700" style="font-size: 28pt;">例：☆予約率 (現:1.2% → 目:3.0%)</div></div>
                             </div>
                         </div>
-                        <div class="script-box"><p class="text-gray-700" style="font-size: 36pt; line-height: 1.6;">「指標を貼れば<span class="font-semibold">"測れる地図"完成</span>。数字がない施策は迷走します。」</p></div>
+                        <div class="script-box"><p class="text-gray-700" style="font-size: 36pt; line-height: 1.6;">「指標を書き込めば<span class="font-semibold">"測れる地図"完成</span>。現状と目標を併記し、具体的な数字で管理しましょう。」</p></div>
                     </div>
                 </div>
 
-                <div class="slide" id="slide7">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
+                <div class="slide" id="slide8">
+                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
                         <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.6;">ペルソナ再整理</h2>
@@ -758,7 +626,7 @@
                                         <div><h5 class="font-bold" style="font-size: 32pt; line-height: 1.6;">佐藤 美咲</h5><p class="text-gray-600" style="font-size: 24pt; line-height: 1.6;">28歳・マーケティング担当</p></div>
                                     </div>
                                     <div class="grid grid-cols-2 gap-4 mb-4"><div><p class="text-blue-600 font-bold" style="font-size: 28pt; line-height: 1.6;">月2回来店</p><p class="text-gray-500" style="font-size: 20pt; line-height: 1.6;">平均予算: ¥2,800</p></div></div>
-                                    <div class="mb-4"><span class="badge" style="font-size: 20pt; line-height: 1.6;">Instagram</span><span class="badge" style="font-size: 20pt; line-height: 1.6;">朝活派</span><span class="badge" style="font-size: 20pt; line-height: 1.6;">健康志向</span></div>
+                                    <div class="mb-4"><span class="badge">Instagram</span><span class="badge">朝活派</span><span class="badge">健康志向</span></div>
                                 </div>
                                 <div><h6 class="font-semibold text-blue-700 mb-3" style="font-size: 28pt; line-height: 1.6;">利用動機</h6><ul class="text-gray-700 space-y-2" style="font-size: 24pt; line-height: 1.6;"><li>• 海を見ながら朝の時間を有効活用</li><li>• インスタ映えスポット</li><li>• 健康志向メニュー</li></ul></div>
                             </div>
@@ -770,7 +638,7 @@
                                         <div><h5 class="font-bold" style="font-size: 32pt; line-height: 1.6;">山田 隆</h5><p class="text-gray-600" style="font-size: 24pt; line-height: 1.6;">35歳・Webデザイナー</p></div>
                                     </div>
                                     <div class="grid grid-cols-2 gap-4 mb-4"><div><p class="text-green-600 font-bold" style="font-size: 28pt; line-height: 1.6;">週3回滞在</p><p class="text-gray-500" style="font-size: 20pt; line-height: 1.6;">平均予算: ¥3,200</p></div></div>
-                                    <div class="mb-4"><span class="badge bg-green-500" style="font-size: 20pt; line-height: 1.6;">フリーランス</span><span class="badge bg-green-500" style="font-size: 20pt; line-height: 1.6;">長時間滞在</span><span class="badge bg-green-500" style="font-size: 20pt; line-height: 1.6;">PCユーザー</span></div>
+                                    <div class="mb-4"><span class="badge bg-green-500">フリーランス</span><span class="badge bg-green-500">長時間滞在</span><span class="badge bg-green-500">PCユーザー</span></div>
                                 </div>
                                 <div><h6 class="font-semibold text-green-700 mb-3" style="font-size: 28pt; line-height: 1.6;">利用動機</h6><ul class="text-gray-700 space-y-2" style="font-size: 24pt; line-height: 1.6;"><li>• Wi-Fi環境と電源確保</li><li>• 海の景色で集中力UP</li><li>• 長時間滞在OK雰囲気</li></ul></div>
                             </div>
@@ -787,40 +655,43 @@
                     </div>
                 </div>
 
-                <div class="slide" id="slide8">
+                <div class="slide" id="slide9">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
-                        <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.6;">メインワークショップ：A3マップ作成</h2>
+                        <h2 class="font-bold text-gray-800 mb-6" style="font-size: 54pt; line-height: 1.3;">メインワークショップ：A3マップ作成<br><span class="text-blue-600" style="font-size: 32pt;">（直接記入スタイル・記号活用）</span></h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
                             <div class="md:col-span-1">
                                 <div class="timer-box mb-6"><p class="font-medium opacity-80 mb-4" style="font-size: 28pt;">制限時間</p><div style="font-size: 72pt; font-weight: bold; line-height: 1;">25:00</div></div>
                                 <div class="bg-white rounded-lg shadow-sm p-6">
                                     <h4 class="font-semibold text-blue-700 mb-4 flex items-center" style="font-size: 36pt; line-height: 1.6;"><i class="fas fa-tools text-blue-500 mr-3"></i>必要な道具</h4>
-                                    <ul class="text-gray-700 space-y-3" style="font-size: 28pt; line-height: 1.6;"><li>• A3ワークシート</li><li>• 付箋4色セット</li><li>• 極太ペン</li></ul>
+                                    <ul class="text-gray-700 space-y-3" style="font-size: 28pt; line-height: 1.6;">
+                                        <li>• A3ワークシート（テンプレート推奨）</li>
+                                        <li>• 筆記用具（普段お使いのもの）</li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="md:col-span-2">
                                 <div class="bg-white rounded-lg shadow p-6">
-                                    <h3 class="font-bold text-blue-700 mb-6 flex items-center" style="font-size: 44pt; line-height: 1.6;"><i class="fas fa-list-ol mr-3"></i>4ステップ制作手順</h3>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                        <div class="flex items-start mb-6"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0"><span class="font-bold" style="font-size: 24pt;">1</span></div><div><div class="sticky-note blue-note"><span class="font-bold" style="font-size: 20pt;">行動</span></div><p style="font-size: 28pt; color: #374151;">顧客行動を青付箋に記入</p></div></div>
-                                        <div class="flex items-start mb-6"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0"><span class="font-bold" style="font-size: 24pt;">2</span></div><div><div class="sticky-note yellow-note"><span class="font-bold" style="font-size: 20pt;">感情</span></div><p style="font-size: 28pt; color: #374151;">感情温度を黄付箋に記録</p></div></div>
-                                        <div class="flex items-start mb-6"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0"><span class="font-bold" style="font-size: 24pt;">3</span></div><div><div class="sticky-note green-note"><span class="font-bold" style="font-size: 20pt;">チャネル</span></div><p style="font-size: 28pt; color: #374151;">接点メディアを緑付箋に記入</p></div></div>
-                                        <div class="flex items-start mb-6"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0"><span class="font-bold" style="font-size: 24pt;">4</span></div><div><div class="sticky-note red-note"><span class="font-bold" style="font-size: 20pt;">KPI</span></div><p style="font-size: 28pt; color: #374151;">測定指標を赤付箋に記入</p></div></div>
+                                    <h3 class="font-bold text-blue-700 mb-6 flex items-center" style="font-size: 44pt; line-height: 1.6;"><i class="fas fa-list-ol mr-3"></i>4ステップ制作手順（記号凡例）</h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                                        <div class="flex items-start"><div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3 mt-1 flex-shrink-0"><span class="font-bold text-xl">1</span></div><div><div class="font-bold text-blue-700 mb-1 text-2xl flex items-center"><i class="fas fa-pencil-alt mr-2"></i>行動を記述</div><p class="text-gray-600 text-xl">「行動」欄に具体的行動を記入。</p></div></div>
+                                        <div class="flex items-start"><div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3 mt-1 flex-shrink-0"><span class="font-bold text-xl">2</span></div><div><div class="font-bold text-yellow-600 mb-1 text-2xl flex items-center"><i class="far fa-grin-beam mr-1"></i><i class="far fa-meh mr-1"></i><i class="far fa-frown mr-2"></i>感情を表現</div><p class="text-gray-600 text-xl">「感情」欄に顔文字、言葉、矢印(↑↓)で。</p></div></div>
+                                        <div class="flex items-start"><div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3 mt-1 flex-shrink-0"><span class="font-bold text-xl">3</span></div><div><div class="font-bold text-green-600 mb-1 text-2xl flex items-center"><i class="fas fa-vector-square mr-2"></i>チャネルを特定</div><p class="text-gray-600 text-xl">「チャネル」欄に。例： [Webサイト]。</p></div></div>
+                                        <div class="flex items-start"><div class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3 mt-1 flex-shrink-0"><span class="font-bold text-xl">4</span></div><div><div class="font-bold text-red-600 mb-1 text-2xl flex items-center"><i class="fas fa-star mr-2"></i>KPIを検討</div><p class="text-gray-600 text-xl">「KPI」欄に。例：☆予約率。</p></div></div>
                                     </div>
                                     <div class="bg-yellow-50 rounded-lg border-l-4 border-yellow-400 p-4 mt-6">
                                         <h4 class="font-semibold text-yellow-800 mb-3 flex items-center" style="font-size: 36pt; line-height: 1.6;"><i class="fas fa-lightbulb text-yellow-500 mr-3"></i>ヒント</h4>
-                                        <p class="text-gray-700" style="font-size: 28pt; line-height: 1.6;">赤色（ネガティブ感情）が固まるセルは改善ポイント。後で対策案を考えます。</p>
+                                        <p class="text-gray-700" style="font-size: 28pt; line-height: 1.6;">感情がネガティブ(😟↓)な箇所や、KPI(☆)が空欄の箇所は改善のチャンス！</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="script-box"><p class="text-gray-700" style="font-size: 36pt; line-height: 1.6;">「A3シートと4色付箋。手順①行動(青)→②感情(黄)→③チャネル(緑)→④KPI(赤)。残10・5・1分で声掛け。」</p></div>
+                        <div class="script-box"><p class="text-gray-700" style="font-size: 32pt; line-height: 1.6;">「A3シートと筆記用具で。①行動、②感情(顔文字や矢印で)、③チャネル(例:□で囲む)、④KPI(例:☆印)を各欄に記入します。ネガティブ感情やKPI未設定箇所が改善点。時間は25分、アナウンスします。」</p></div>
                     </div>
                 </div>
-
-                <div class="slide" id="slide9">
+                
+                <div class="slide" id="slide10">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
@@ -850,9 +721,13 @@
                                 <div class="bg-white rounded-lg shadow-md border border-gray-200 p-4 mb-3">
                                     <div class="journey-cell">
                                         <div class="bg-blue-100 text-blue-800 font-medium py-1 px-3 rounded inline-block mb-2" style="font-size: 20pt; line-height: 1.6;"><i class="fas fa-binoculars mr-1"></i>See (認知段階)</div>
-                                        <div class="mb-2"><div class="sticky-note blue-note" style="font-size: 18pt;"><div class="font-semibold">SNSで写真を見る</div></div><div class="sticky-note blue-note" style="font-size: 18pt;"><div class="font-semibold">「沖縄 海カフェ」検索</div></div></div>
-                                        <div class="mb-2"><div class="sticky-note yellow-note" style="font-size: 18pt;"><div class="font-semibold">期待感・わくわく</div></div><div class="sticky-note yellow-note" style="font-size: 18pt;"><div class="font-semibold">選択肢が多すぎて迷う</div></div></div>
-                                        <div><div class="sticky-note green-note" style="font-size: 18pt;"><div class="font-semibold">Instagram</div></div><div class="sticky-note green-note" style="font-size: 18pt;"><div class="font-semibold">Google検索</div></div><div class="sticky-note green-note" style="font-size: 18pt;"><div class="font-semibold">口コミサイト</div></div></div>
+                                        <div class="text-left" style="font-size: 18pt;">
+                                            <p>・SNSで写真を見る</p>
+                                            <p>・「沖縄 海カフェ」検索</p>
+                                            <p>😊 期待感・わくわく</p>
+                                            <p>😟 選択肢が多すぎて迷う</p>
+                                            <p>[Instagram], [Google検索], [口コミサイト]</p>
+                                        </div>
                                     </div>
                                     <div class="flex justify-end mt-2"><button class="bg-red-100 text-red-700 font-medium py-1 px-3 rounded-full flex items-center" style="font-size: 18pt; line-height: 1.6;"><i class="fas fa-star text-red-500 mr-1"></i>赤星を付ける</button></div>
                                 </div>
@@ -868,8 +743,8 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="slide" id="slide10">
+                
+                <div class="slide" id="slide11">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
@@ -898,7 +773,7 @@
                                         <div class="flex items-start"><div class="bg-red-100 text-red-800 rounded-full w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0 mt-1"><i class="fas fa-star text-lg"></i></div><div><h4 class="font-bold text-red-800 mb-2" style="font-size: 36pt; line-height: 1.6;">赤星マーキング</h4><p class="text-gray-700 mb-2" style="font-size: 28pt; line-height: 1.6;">足りない入口を赤星（★）でマーキング</p><p class="text-gray-600" style="font-size: 20pt; line-height: 1.6;">例：「AIに表示されていない」「SEO対策不足」など</p></div></div>
                                     </div>
                                     <div class="bg-blue-100 rounded-lg flex items-center p-3">
-                                        <i class="fas fa-info-circle text-blue-600 text-3xl mr-4"></i><p class="text-blue-800" style="font-size: 28pt; line-height: 1.6;">次のステップで<span class="font-bold">改善アイデア</span>を付箋で貼り付けます</p>
+                                        <i class="fas fa-info-circle text-blue-600 text-3xl mr-4"></i><p class="text-blue-800" style="font-size: 28pt; line-height: 1.6;">次のステップで<span class="font-bold">改善アイデア</span>を記述します</p>
                                     </div>
                                 </div>
                             </div>
@@ -910,26 +785,26 @@
                     </div>
                 </div>
 
-                <div class="slide" id="slide11">
+                <div class="slide" id="slide12">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
-                        <h2 class="font-bold text-gray-800 mb-4" style="font-size: 60pt; line-height: 1.6;">改善アイデア貼付け</h2>
+                        <h2 class="font-bold text-gray-800 mb-4" style="font-size: 60pt; line-height: 1.6;">改善アイデア記述</h2>
                         <p class="text-blue-600 font-semibold mb-6" style="font-size: 44pt; line-height: 1.6;">制限時間：15分</p>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-4">
                             <div class="md:col-span-1">
                                 <div class="timer-box mb-4"><p class="font-medium opacity-80 mb-2" style="font-size: 28pt;">残り時間</p><div style="font-size: 60pt; font-weight: bold; line-height: 1;">15:00</div></div>
                                 <div class="bg-yellow-50 rounded-lg shadow border-l-8 border-yellow-400 p-4">
                                     <h4 class="font-semibold text-yellow-800 mb-3 flex items-center" style="font-size: 36pt; line-height: 1.6;"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i>作業手順</h4>
-                                    <ol class="text-gray-700 pl-6 space-y-2 list-decimal" style="font-size: 20pt; line-height: 1.6;"><li>赤星セルを確認</li><li>改善案を赤付箋で貼る</li><li>具体的アクション記述</li><li>期待効果を記入</li></ol>
+                                    <ol class="text-gray-700 pl-6 space-y-2 list-decimal" style="font-size: 20pt; line-height: 1.6;"><li>赤星(★)セルを確認</li><li>改善案を<strong class="text-red-600">赤いペン</strong>等で記述</li><li>具体的アクションを記述</li><li>期待効果（数値目標）も</li></ol>
                                 </div>
                             </div>
                             <div class="md:col-span-3">
                                 <div class="bg-white rounded-lg shadow p-4">
                                     <div class="flex items-center mb-4"><div class="bg-red-100 text-red-800 rounded-full w-12 h-12 flex items-center justify-center mr-4"><i class="fas fa-lightbulb text-2xl"></i></div><h3 class="font-bold text-red-800" style="font-size: 44pt; line-height: 1.6;">改善アイデア具体例</h3></div>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                                        <div class="sticky-note red-note"><div class="font-medium text-red-800 mb-2" style="font-size: 28pt;">TikTok縦動画SEO</div><p class="text-gray-700" style="font-size: 20pt;">海辺テラス席360°動画60秒。ハッシュタグ #沖縄海カフェ #BlueReef</p></div>
-                                        <div class="sticky-note red-note" style="transform: rotate(1deg);"><div class="font-medium text-red-800 mb-2" style="font-size: 28pt;">GoogleビジネスFAQ</div><p class="text-gray-700" style="font-size: 20pt;">「駐車場ある？」「予約必要？」など頻出質問20個追加</p></div>
+                                        <div class="p-4 rounded-md border-2 border-red-400 bg-red-50" style="transform: rotate(-1deg);"><div class="font-medium text-red-800 mb-2" style="font-size: 28pt;">TikTok縦動画SEO</div><p class="text-gray-700" style="font-size: 20pt;">海辺テラス席360°動画60秒。ハッシュタグ #沖縄海カフェ #BlueReef (目標:再生数1万回/月)</p></div>
+                                        <div class="p-4 rounded-md border-2 border-red-400 bg-red-50" style="transform: rotate(1deg);"><div class="font-medium text-red-800 mb-2" style="font-size: 28pt;">GoogleビジネスFAQ拡充</div><p class="text-gray-700" style="font-size: 20pt;">「駐車場ある？」「予約必要？」など頻出質問20個追加 (目標:電話問合せ10%減)</p></div>
                                     </div>
                                     <div class="bg-blue-50 rounded-lg p-3 mb-4">
                                         <h4 class="font-semibold text-blue-800 mb-3 flex items-center" style="font-size: 36pt; line-height: 1.6;"><i class="fas fa-map-marked-alt text-blue-600 mr-2"></i>STDC別改善方向性</h4>
@@ -946,12 +821,12 @@
                         </div>
                         <div class="script-box">
                             <div class="text-gray-500 mb-2" style="font-size: 20pt; line-height: 1.6;">講師スクリプト</div>
-                            <p class="text-gray-700" style="font-size: 20pt; line-height: 1.6;">「赤星セルに赤付箋で改善案を1つ。例：TikTok縦動画SEO／GoogleビジネスFAQ追加 など。」</p>
+                            <p class="text-gray-700" style="font-size: 20pt; line-height: 1.6;">「赤星を付けたセルに、具体的な改善アイデアを赤いペンなどで書き込みましょう。数値目標も忘れずに。」</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="slide" id="slide12">
+                <div class="slide" id="slide13">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
@@ -960,7 +835,8 @@
                             <div class="bg-white rounded-lg shadow p-4">
                                 <div class="flex items-center mb-4"><div class="bg-red-100 text-red-600 rounded-full w-12 h-12 flex items-center justify-center mr-4"><i class="fas fa-search-minus text-2xl"></i></div><h3 class="font-bold text-red-600" style="font-size: 36pt; line-height: 1.6;">共通の弱点エリア</h3></div>
                                 <div class="mb-4">
-                                    <div class="journey-map" style="font-size: 12px;"> <div class="journey-cell text-blue-700 font-medium bg-blue-50">See</div><div class="journey-cell highlight-cell text-blue-700 font-medium bg-blue-50">Think ★</div><div class="journey-cell text-blue-700 font-medium bg-blue-50">Do</div><div class="journey-cell text-blue-700 font-medium bg-blue-50">Care</div>
+                                    <div class="journey-map" style="font-size: 12px;"> 
+                                        <div class="journey-cell text-blue-700 font-medium bg-blue-50">See</div><div class="journey-cell highlight-cell text-blue-700 font-medium bg-blue-50">Think ★</div><div class="journey-cell text-blue-700 font-medium bg-blue-50">Do</div><div class="journey-cell text-blue-700 font-medium bg-blue-50">Care</div>
                                         <div class="journey-cell">Paid</div><div class="journey-cell highlight-cell">Paid</div><div class="journey-cell">Paid</div><div class="journey-cell">Paid</div>
                                         <div class="journey-cell">Owned</div><div class="journey-cell highlight-cell">Owned</div><div class="journey-cell">Owned</div><div class="journey-cell">Owned</div>
                                         <div class="journey-cell">Earned</div><div class="journey-cell highlight-cell text-red-500 font-bold border-2 border-red-500">Earned ⚠️</div><div class="journey-cell">Earned</div><div class="journey-cell">Earned</div>
@@ -1003,7 +879,7 @@
                     </div>
                 </div>
 
-                <div class="slide" id="slide13">
+                <div class="slide" id="slide14">
                     <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
                     <div class="content" style="padding: 2rem 3rem;">
                         <h2 class="font-bold text-gray-800 mb-6" style="font-size: 60pt;">まとめ & 次回への宿題</h2>
@@ -1019,8 +895,8 @@
                                     </div>
                                     <div style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center;">
                                         <div style="font-size: 36pt; color: #f57c00; margin-bottom: 1rem;">②</div>
-                                        <h4 style="font-size: 36pt; color: #f57c00; margin-bottom: 0.5rem;">色で感情</h4>
-                                        <p style="font-size: 28pt; color: #424242;">感情曲線をグラデーションで表現</p>
+                                        <h4 style="font-size: 36pt; color: #f57c00; margin-bottom: 0.5rem;">記号で感情</h4>
+                                        <p style="font-size: 28pt; color: #424242;">感情を顔文字や言葉、記号で表現</p>
                                         <span style="background: #fff3e0; color: #f57c00; padding: 0.5rem 1rem; border-radius: 20px; font-size: 20pt; display: inline-block; margin-top: 0.5rem;">見える化</span>
                                     </div>
                                     <div style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center;">
@@ -1034,8 +910,8 @@
                             <div class="takeaway-card" style="background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);">
                                 <h3 style="font-size: 44pt; color: #c2185b; margin-bottom: 1.5rem;">宿題</h3>
                                 <ul style="font-size: 28pt; line-height: 1.8; color: #424242;" class="list-none p-0">
-                                    <li class="homework-item p-2 rounded-md mb-2">📝 マップの清書：今日作成したジャーニーマップを整理して清書</li>
-                                    <li class="homework-item p-2 rounded-md mb-2">🎯 弱点KPI目標設定：改善が必要なセルのKPI目標値を具体的に設定</li>
+                                    <li class="homework-item p-2 rounded-md mb-2">📝 マップの清書：今日作成したジャーニーマップを整理して清書（デジタル化も推奨）</li>
+                                    <li class="homework-item p-2 rounded-md mb-2">🎯 弱点KPI目標設定：改善が必要なセルのKPI目標値を具体的に設定（現状値も忘れずに）</li>
                                     <li class="homework-item p-2 rounded-md">📤 LMSへのアップロード：次回までに提出</li>
                                 </ul>
                             </div>
@@ -1045,20 +921,24 @@
                             </div>
                         </div>
                         <div class="script-box">
-                            <p style="font-size: 36pt;">「Take‑aways:①面で設計②色で感情③数字で測定。宿題はマップ清書+弱点KPI目標をLMSにアップ。次回このKPIを入口施策に変換します。」</p>
+                            <p style="font-size: 36pt;">「Take‑aways:①面で設計②記号で感情③数字で測定。宿題はマップ清書+弱点KPI目標をLMSにアップ。次回このKPIを入口施策に変換します。」</p>
                         </div>
                     </div>
                 </div>
 
-            </div> <div class="navigation-controls">
+            </div>             
+            <div class="navigation-controls">
                 <button class="nav-button" id="prevBtn" disabled><i class="fas fa-chevron-left"></i></button>
                 <button class="nav-button" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
             </div>
-        </div> </div> <script>
+        </div> 
+    </div> 
+
+    <script>
         class PresentationController {
             constructor() {
                 this.currentSlide = 1;
-                this.totalSlides = 13; 
+                this.totalSlides = 14; // スライド総数を更新
                 this.menuItems = document.querySelectorAll('.slide-menu-item');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
@@ -1072,7 +952,7 @@
             init() {
                 this.bindEvents();
                 this.updateUI();
-                this.initChart(); // チャート初期化を追加
+                this.initChart(); 
             }
 
             initChart() {
@@ -1091,15 +971,8 @@
                             }]
                         },
                         options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: { display: false },
-                                tooltip: {
-                                    callbacks: { label: context => `${context.label}: ${context.raw}%` },
-                                    titleFont: { size: 16 }, bodyFont: { size: 14 }
-                                }
-                            },
+                            responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { display: false }, tooltip: { callbacks: { label: context => `${context.label}: ${context.raw}%` }, titleFont: { size: 16 }, bodyFont: { size: 14 }}},
                             cutout: '55%'
                         }
                     });
@@ -1111,9 +984,7 @@
                     item.addEventListener('click', (e) => {
                         const slideNum = parseInt(e.currentTarget.dataset.slide);
                         this.goToSlide(slideNum);
-                        if (window.innerWidth <= 768) { // スマホ表示時にメニューを閉じる
-                            this.sidebar.classList.remove('open');
-                        }
+                        if (window.innerWidth <= 768) { this.sidebar.classList.remove('open'); }
                     });
                 });
                 
@@ -1121,31 +992,21 @@
                 this.nextBtn.addEventListener('click', () => this.nextSlide());
                 
                 document.addEventListener('keydown', (e) => {
-                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; // 入力中は無効
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
                     switch(e.key) {
                         case 'ArrowLeft': e.preventDefault(); this.previousSlide(); break;
                         case 'ArrowRight': e.preventDefault(); this.nextSlide(); break;
                         case 'Home': e.preventDefault(); this.goToSlide(1); break;
                         case 'End': e.preventDefault(); this.goToSlide(this.totalSlides); break;
-                        case 'm': // 'm'キーでモバイルメニュー開閉トグル (デバッグ用など)
-                            if (window.innerWidth <= 768) {
-                                this.sidebar.classList.toggle('open');
-                            }
-                            break;
+                        case 'm': if (window.innerWidth <= 768) { this.sidebar.classList.toggle('open');} break;
                     }
                 });
                 
-                // Mobile menu toggle logic ( improved )
-                // Add a dedicated hamburger button or similar for better UX if needed
-                // For now, clicking outside sidebar closes it
                 document.addEventListener('click', (e) => {
                     if (window.innerWidth <= 768 && this.sidebar.classList.contains('open')) {
                         if (!this.sidebar.contains(e.target) && !e.target.closest('.nav-button') && !e.target.closest('.slide-menu-item')) {
-                             // Check if click is not on a menu toggle button if you add one
-                            const isMenuToggle = e.target.closest('[data-action="toggle-sidebar"]'); // Example
-                            if(!isMenuToggle) {
-                                this.sidebar.classList.remove('open');
-                            }
+                            const isMenuToggle = e.target.closest('[data-action="toggle-sidebar"]');
+                            if(!isMenuToggle) { this.sidebar.classList.remove('open'); }
                         }
                     }
                 });
@@ -1157,74 +1018,33 @@
                 const currentSlideElement = document.getElementById(`slide${this.currentSlide}`);
                 const targetSlideElement = document.getElementById(`slide${slideNum}`);
 
-                if (currentSlideElement) {
-                    currentSlideElement.classList.remove('active');
-                    // Optionally add 'prev' class for specific exit animation if needed
-                    // if (slideNum < this.currentSlide) currentSlideElement.classList.add('prev');
-                }
-                
-                if (targetSlideElement) {
-                    targetSlideElement.classList.add('active');
-                }
+                if (currentSlideElement) { currentSlideElement.classList.remove('active'); }
+                if (targetSlideElement) { targetSlideElement.classList.add('active'); }
                 
                 this.currentSlide = slideNum;
                 this.updateUI();
             }
             
-            nextSlide() {
-                if (this.currentSlide < this.totalSlides) {
-                    this.goToSlide(this.currentSlide + 1);
-                }
-            }
-            
-            previousSlide() {
-                if (this.currentSlide > 1) {
-                    this.goToSlide(this.currentSlide - 1);
-                }
-            }
+            nextSlide() { if (this.currentSlide < this.totalSlides) { this.goToSlide(this.currentSlide + 1); } }
+            previousSlide() { if (this.currentSlide > 1) { this.goToSlide(this.currentSlide - 1); } }
             
             updateUI() {
-                this.menuItems.forEach((item, index) => {
-                    item.classList.toggle('active', (index + 1) === this.currentSlide);
-                });
-                
+                this.menuItems.forEach((item, index) => { item.classList.toggle('active', (index + 1) === this.currentSlide); });
                 this.prevBtn.disabled = this.currentSlide === 1;
                 this.nextBtn.disabled = this.currentSlide === this.totalSlides;
-                
                 const progress = (this.currentSlide / this.totalSlides) * 100;
                 this.progressFill.style.width = `${progress}%`;
-                
                 this.slideIndicator.textContent = `${this.currentSlide} / ${this.totalSlides}`;
-                
                 const activeItem = document.querySelector('.slide-menu-item.active');
-                if (activeItem) {
-                    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-
-                // Ensure previously active slide is fully hidden if using complex transitions
-                document.querySelectorAll('.slide').forEach(slide => {
-                    if (slide.id !== `slide${this.currentSlide}`) {
-                        slide.classList.remove('active');
-                    }
-                });
+                if (activeItem) { activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+                document.querySelectorAll('.slide').forEach(slide => { if (slide.id !== `slide${this.currentSlide}`) { slide.classList.remove('active'); }});
                 const activeSlide = document.getElementById(`slide${this.currentSlide}`);
-                if (activeSlide) {
-                    activeSlide.classList.add('active');
-                    activeSlide.scrollTop = 0; // Go to top of new slide
-                }
+                if (activeSlide) { activeSlide.classList.add('active'); activeSlide.scrollTop = 0; }
             }
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            window.presentationController = new PresentationController();
-        });
-        
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                const sidebar = document.getElementById('sidebar');
-                if(sidebar) sidebar.classList.remove('open');
-            }
-        });
+        document.addEventListener('DOMContentLoaded', () => { window.presentationController = new PresentationController(); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 768) { const sidebar = document.getElementById('sidebar'); if(sidebar) sidebar.classList.remove('open'); }});
     </script>
 </body>
 </html>
