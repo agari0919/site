@@ -61,11 +61,14 @@
         .emotion-card div:last-child { flex-grow: 1; }
         .emotion-curve svg { width: 100%; height: auto; }
 
+        .intro-icon { font-size: 2.5rem; margin-bottom: 0.5rem; color: #3b82f6;}
+        .intro-list li { display: flex; align-items: start; margin-bottom: 0.75rem; font-size: 1.25rem; }
+        .intro-list i { color: #3b82f6; margin-right: 0.75rem; font-size: 1.25rem; margin-top: 0.2rem; width: 24px; text-align: center; }
+        
         @media (max-width: 1280px) {
             .content { padding: 2rem; }
             h1 { font-size: 3rem; } h2 { font-size: 2.5rem; } h3 { font-size: 1.75rem; } h4 { font-size: 1.25rem; }
             p, li, div { font-size: 1.1rem; }
-            .cjm-example-table { font-size: 0.8rem !important; }
         }
         @media (max-width: 1024px) {
             .sidebar { width: 280px; }
@@ -83,7 +86,6 @@
             p, li, div { font-size: 1rem; }
             .navigation-controls { bottom: 1rem; right: 1rem;}
             .nav-button { width: 44px; height: 44px; }
-            .cjm-example-table { font-size: 0.7rem !important; }
         }
     </style>
 </head>
@@ -131,10 +133,10 @@
                                 <h3 class="text-blue-600 mb-4">顧客体験の「地図」です</h3>
                                 <p class="text-gray-700">顧客が製品やサービスと出会い、関わり、最終的なゴールに至るまでの<strong class="text-blue-600">『体験の旅』</strong>を、顧客視点で見える化したものです。</p>
                                 <h3 class="text-blue-600 mt-8 mb-4">なぜ作るのか？</h3>
-                                <ul class="space-y-3">
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i><div><strong>顧客理解の深化：</strong>顧客の行動、思考、感情を深く知る。</div></li>
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i><div><strong>課題と機会の発見：</strong>体験のボトルネックや改善点を見つける。</div></li>
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i><div><strong>共通認識の醸成：</strong>チーム内で顧客視点を共有し、施策を円滑に進める。</div></li>
+                                <ul class="space-y-3 intro-list">
+                                    <li><i class="fas fa-check-circle"></i><div><strong>顧客理解の深化：</strong>顧客の行動、思考、感情を深く知る。</div></li>
+                                    <li><i class="fas fa-check-circle"></i><div><strong>課題と機会の発見：</strong>体験のボトルネックや改善点を見つける。</div></li>
+                                    <li><i class="fas fa-check-circle"></i><div><strong>共通認識の醸成：</strong>チーム内で顧客視点を共有し、施策を円滑に進める。</div></li>
                                 </ul>
                             </div>
                             <div class="bg-white p-4 rounded-lg shadow-lg">
@@ -164,194 +166,36 @@
 
                 <div class="slide" id="slide3">
                     <div class="wave" style="height: 200px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 250px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-6">顧客との接点は<br>あらゆる場所に存在する</h2>
-                        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                            <div class="md:w-1/2"><h3 class="text-gray-700 mb-6">デジタル流入経路の内訳</h3><div class="space-y-4">
-                                <div class="legend-item"><div class="legend-color" style="background-color: #3b82f6;"></div><div><span class="font-bold text-2xl">38%</span> <span class="text-gray-700 ml-3">検索エンジン</span></div></div>
-                                <div class="legend-item"><div class="legend-color" style="background-color: #10b981;"></div><div><span class="font-bold text-2xl">27%</span> <span class="text-gray-700 ml-3">SNS</span></div></div>
-                                <div class="legend-item"><div class="legend-color" style="background-color: #f59e0b;"></div><div><span class="font-bold text-2xl">9%</span> <span class="text-gray-700 ml-3">AI回答</span></div></div>
-                                <div class="legend-item"><div class="legend-color" style="background-color: #6b7280;"></div><div><span class="font-bold text-2xl">26%</span> <span class="text-gray-700 ml-3">その他</span></div></div>
-                            </div></div>
-                            <div class="chart-container"><canvas id="inflowChart"></canvas><p class="data-source">出典：2024年日本 デジタルマーケティング動向調査</p></div>
+                    <div class="content">
+                        <h2 class="mb-8">顧客との接点は<br>あらゆる場所に存在する</h2>
+                        <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
+                            <div class="chart-container order-2 md:order-1 flex-shrink-0" style="width:300px; height:300px;">
+                                <canvas id="inflowChart"></canvas>
+                                <p class="data-source text-sm">出典：2024年日本 デジタルマーケティング動向調査</p>
+                            </div>
+                            <div class="w-full md:w-auto order-1 md:order-2">
+                                <h3 class="text-gray-700 mb-6">デジタル流入経路の内訳</h3>
+                                <div class="space-y-4">
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #3b82f6;"></div><div><span class="font-bold text-2xl">38%</span> <span class="text-gray-700 ml-3">検索エンジン</span></div></div>
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #10b981;"></div><div><span class="font-bold text-2xl">27%</span> <span class="text-gray-700 ml-3">SNS</span></div></div>
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #f59e0b;"></div><div><span class="font-bold text-2xl">9%</span> <span class="text-gray-700 ml-3">AI回答</span></div></div>
+                                    <div class="legend-item"><div class="legend-color" style="background-color: #6b7280;"></div><div><span class="font-bold text-2xl">26%</span> <span class="text-gray-700 ml-3">その他</span></div></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="script-box mt-8"><p class="author">講師コメント</p><p>顧客が情報を得る場所は、検索だけでなくSNSやAIなど多岐にわたります。これらの「点」をバラバラに追うと、顧客の全体像を見失ってしまいます。</p></div>
                     </div>
                 </div>
-                <div class="slide" id="slide4">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-4">入口ではなく"旅"を設計する</h2><p class="text-2xl text-gray-600 mb-8">チャネル分裂時代だからこそ、一貫した顧客体験の設計が重要です。</p>
-                        <div class="flex flex-col md:flex-row justify-between items-stretch mb-6 gap-8">
-                            <div class="w-full md:w-1/2 comparison-card flex flex-col items-center justify-center text-center p-8"><div class="lost-icon mb-4"><i class="fas fa-shoe-prints"></i></div><h3 class="text-red-600">❌ バラバラなアプローチ</h3><p>各チャネルを個別最適化するため、顧客は一貫性のない体験を強いられる。</p></div>
-                            <div class="w-full md:w-1/2 comparison-card flex flex-col items-center justify-center text-center p-8"><div class="map-icon mb-4"><i class="fas fa-map-signs"></i></div><h3 class="text-green-600">✅ ジャーニー設計</h3><p>顧客の体験全体を一枚の「地図」として捉え、最適な道筋を描く。</p></div>
-                        </div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>旅行で地図を持たずに個々の店に突撃したら迷子になるように、マーケティングも全体図が必要です。今日のゴールは、この「地図」を描くことです。</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide5">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-8">ジャーニーマップの構成要素</h2>
-                        <div class="space-y-6">
-                            <div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">①</div><h3>行動レイヤー</h3></div><p class="text-gray-700 ml-14">各ステージでの顧客の具体的な「行動」を書き出します。（例：検索する、来店する）</p></div>
-                            <div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-yellow-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">②</div><h3>感情レイヤー</h3></div><p class="text-gray-700 ml-14">各行動に対する「感情」を、顔文字😊😐😟や言葉、矢印↑↓などで表現します。</p></div>
-                            <div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">③</div><h3>チャネルレイヤー</h3></div><p class="text-gray-700 ml-14">顧客が接するメディア・場所などの「タッチポイント」を記録します。（例：[Instagram]）</p></div>
-                            <div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">④</div><h3>KPIレイヤー</h3></div><p class="text-gray-700 ml-14">各体験を測定するための「重要業績評価指標」を設定します。（例：☆予約率）</p></div>
-                        </div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>これらの要素を組み合わせることで、顧客体験の全体像が立体的になります。</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide6">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-8">感情の表現方法</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <div class="emotion-card border-t-4 border-green-500 bg-white p-4 rounded-lg shadow-md text-center"><div class="color-sample text-green-500 text-5xl mb-2"><i class="fas fa-smile"></i><i class="fas fa-arrow-up ml-2"></i></div><h4 class="text-green-700">ポジティブ</h4><p class="text-sm text-gray-600">例：満足、期待以上<br>キーワード：「嬉しい」「助かった」<br>記号：😊, 👍, ◎</p></div>
-                            <div class="emotion-card border-t-4 border-yellow-500 bg-white p-4 rounded-lg shadow-md text-center"><div class="color-sample text-yellow-500 text-5xl mb-2"><i class="fas fa-meh"></i><i class="fas fa-minus ml-2"></i></div><h4 class="text-yellow-700">ニュートラル</h4><p class="text-sm text-gray-600">例：普通、どちらでもない<br>キーワード：「まあまあ」「特にない」<br>記号：😐, 〇, 🤔</p></div>
-                            <div class="emotion-card border-t-4 border-red-500 bg-white p-4 rounded-lg shadow-md text-center"><div class="color-sample text-red-500 text-5xl mb-2"><i class="fas fa-frown"></i><i class="fas fa-arrow-down ml-2"></i></div><h4 class="text-red-700">ネガティブ</h4><p class="text-sm text-gray-600">例：不満、ストレス<br>キーワード：「イライラ」「分かりにくい」<br>記号：😟, 👎, ×</p></div>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md"><h3 class="mb-4"><i class="fas fa-signature text-blue-500 mr-3"></i>感情曲線の活用</h3><p class="text-gray-700 mb-4">各ステージの下部に、感情の起伏を簡単な線で描きましょう（上がポジティブ、下がネガティブ）。体験全体の感情の流れが一目でわかります。</p><div class="emotion-curve bg-gray-200"><svg viewBox="0 0 600 100" preserveAspectRatio="xMidYMid meet"><path d="M20,80 C100,20 200,90 300,50 S500,10 580,60" stroke="#3b82f6" stroke-width="4" fill="none" stroke-linecap="round"></path></svg></div></div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>特にネガティブな感情は顧客の「ペインポイント（痛み）」を示しており、改善の大きなヒントになります。</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide7">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-8">KPIレイヤーで"測れる地図"に</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                            <div class="kpi-card bg-white p-6 rounded-lg shadow-md">
-                                <h3 class="text-blue-600 mb-4 flex items-start"><i class="fas fa-chart-line text-xl text-red-500 mr-3 mt-2"></i>なぜKPIで指標化するのか？</h3>
-                                <ul class="space-y-4">
-                                    <li><i class="fas fa-check-circle"></i><div>測定できない体験は、改善できません。</div></li>
-                                    <li><i class="fas fa-check-circle"></i><div>各セル（特に弱点セル）に、KPIを<strong class="text-red-600">赤いペン</strong>または<strong class="text-red-600">目立つ印 (例: ☆印)</strong>で追加しましょう。</div></li>
-                                    <li><i class="fas fa-check-circle"></i><div>KPIには、<strong class="text-blue-600">現状値</strong>と<strong class="text-green-600">目標値</strong>の両方を記載します。</div></li>
-                                </ul>
-                            </div>
-                            <div class="kpi-card bg-white p-6 rounded-lg shadow-md">
-                                <h3 class="text-blue-600 mb-4">各ステージの代表的なKPI</h3>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="bg-blue-50 rounded-lg p-3"><h4 class="font-bold text-blue-700">See (認知)</h4><p class="text-sm">☆Impression<br>☆ブランド検索数</p></div>
-                                    <div class="bg-yellow-50 rounded-lg p-3"><h4 class="font-bold text-yellow-700">Think (検討)</h4><p class="text-sm">☆Webサイト滞在時間<br>☆口コミ評価</p></div>
-                                    <div class="bg-green-50 rounded-lg p-3"><h4 class="font-bold text-green-700">Do (行動)</h4><p class="text-sm">☆予約/購入率 (CVR)<br>☆平均客単価</p></div>
-                                    <div class="bg-purple-50 rounded-lg p-3"><h4 class="font-bold text-purple-700">Care (継続)</h4><p class="text-sm">☆リピート率<br>☆NPS (推奨度)</p></div>
-                                </div>
-                                <h4 class="mt-6 mb-2">KPIの書き方 (例)</h4>
-                                <div class="bg-gray-100 p-3 rounded">☆予約率 (現状: 1.2% → 目標: 3.0%)</div>
-                            </div>
-                        </div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>指標を書き込むことで、感覚的な地図が「測定可能な地図」に進化します。現状と目標を併記し、具体的な数字で改善を管理しましょう。</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide8">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-8">ペルソナ設定</h2><p class="text-xl text-gray-600 mb-6">今回のワークショップで焦点を当てる顧客像を決めます。</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-                            <div class="persona-card border-t-4 border-blue-500 bg-white p-6 rounded-lg shadow-md">
-                                <h3 class="text-blue-700">A：沖縄旅行中の学生グループ</h3><p class="font-bold text-blue-500 mb-4">田中 健太 (21歳)</p>
-                                <p class="mb-4">大学の友人3人との卒業旅行で沖縄へ。アクティブに観光しつつ、SNS映えするスポットを探している。</p>
-                                <h4 class="font-semibold mb-2">重視すること</h4><ul class="list-disc pl-5 text-gray-700"><li>写真映え（エモさ）</li><li>コストパフォーマンス</li><li>仲間との思い出作り</li></ul>
-                            </div>
-                            <div class="persona-card border-t-4 border-green-500 bg-white p-6 rounded-lg shadow-md">
-                                <h3 class="text-green-700">B：3世代で楽しむファミリー</h3><p class="font-bold text-green-500 mb-4">鈴木 一家 (父35, 母34, 子5, 祖母65)</p>
-                                <p class="mb-4">夏休みを利用して、家族3世代で沖縄旅行。景色の良い場所でゆっくり休憩したいと考えている。</p>
-                                <h4 class="font-semibold mb-2">重視すること</h4><ul class="list-disc pl-5 text-gray-700"><li>子供がいても安心な設備</li><li>ベビーカーでの入りやすさ</li><li>全員が楽しめるメニュー</li></ul>
-                            </div>
-                        </div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>これから4〜5人の新しいグループに分かれていただきます。まずは自己紹介をして、どちらのペルソナでマップを作成するか、グループで話し合って決めてください。</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide9">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-4">メインワークショップ</h2><p class="text-2xl text-blue-600 font-bold mb-8">制限時間：20分</p>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div>
-                                <h3 class="mb-4">A3マップ作成（直接記入）</h3>
-                                <ol class="list-decimal pl-5 space-y-4">
-                                    <li><strong>行動を記述：</strong>各ステージの顧客行動を「行動」欄に書き込みます。</li>
-                                    <li><strong>感情を表現：</strong>行動に対する感情を「感情」欄に記述。<br>（例：顔文字 😊😐😟、キーワード、矢印↑↓）</li>
-                                    <li><strong>チャネルを特定：</strong>接点となるメディアや場所を「チャネル」欄に書き込みます。<br>（例：<code>[Webサイト]</code> のように囲む）</li>
-                                    <li><strong>KPIを検討：</strong>測定指標を「KPI」欄に書き込みます。<br>（例：<code>☆予約率</code> のように印をつける）</li>
-                                </ol>
-                                <div class="timer-box mt-8"><p class="font-medium opacity-80 mb-2 text-xl">残り時間</p><div class="text-6xl font-bold leading-none">20:00</div></div>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg shadow-md">
-                                <h4 class="font-bold mb-3 text-center">参考：ジャーニーマップ作成のヒント</h4>
-                                <div class="space-y-3 text-sm">
-                                    <div class="bg-blue-50 p-2 rounded"><strong>行動：</strong>顧客が「何をするか」を具体的に。例：「検索する」「比較する」「予約する」「来店する」「投稿する」</div>
-                                    <div class="bg-yellow-50 p-2 rounded"><strong>感情：</strong>ポジティブ/ネガティブ両面から。例：「期待」「不安」「面倒」「満足」「感動」「がっかり」</div>
-                                    <div class="bg-green-50 p-2 rounded"><strong>チャネル：</strong>オンライン/オフライン問わず全ての接点。例：SNS、Webサイト、広告、店舗、友人、雑誌、TV</div>
-                                    <div class="bg-red-50 p-2 rounded"><strong>KPI：</strong>行動やビジネス目標に対応する指標。例：インプレッション数、CTR、CVR、客単価、リピート率、NPS</div>
-                                    <div class="bg-gray-100 p-2 rounded"><strong>課題/機会：</strong>感情がネガティブな所は「課題」。ポジティブな所は「機会」。</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>A3シートと筆記用具で、決めたペルソナのジャーニーを描き始めましょう。感情がネガティブな箇所や、KPIが思いつかない箇所が、後で改善策を考えるヒントになります。残り10分、5分で声掛けします。</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide10">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 60%, 100% 25%, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-4">グループワーク：相互レビュー</h2><p class="text-2xl text-blue-600 font-bold mb-8">制限時間：5分</p>
-                        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-                            <i class="fas fa-users text-6xl text-blue-500 mb-6"></i>
-                            <h3 class="mb-4">他のグループのマップを見てみよう</h3>
-                            <p class="max-w-3xl mx-auto mb-6">作成したマップを他のグループと交換し、5分間でお互いのマップを確認します。良い点や「なるほど！」と思った点、改善できそうな点を伝え合いましょう。</p>
-                            <div class="text-left max-w-2xl mx-auto bg-gray-50 p-4 rounded-md">
-                                <h4 class="font-bold mb-3">確認ポイントの例</h4>
-                                <ul class="list-disc pl-5 space-y-2">
-                                    <li>顧客の感情が特にネガティブになっている箇所はどこか？</li>
-                                    <li>KPIは具体的で測定可能か？</li>
-                                    <li>自分たちのグループでは出なかった、良い視点やアイデアは？</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>では、お隣のグループとマップを交換してください。新鮮な視点で見ることで、自分たちでは気づかなかった発見があるはずです。良い点はどんどん褒め合いましょう！</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide11">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div>
-                    <div class="content"><h2 class="mb-4">改善アイデアの具体化</h2><p class="text-2xl text-blue-600 font-bold mb-8">制限時間：15分</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="bg-white p-6 rounded-lg shadow-lg">
-                                <h3 class="mb-4 flex items-center"><i class="fas fa-lightbulb text-yellow-400 text-3xl mr-3"></i>課題をチャンスに変える</h3>
-                                <p class="mb-4">自分たちのマップの弱点（ネガティブ感情の箇所など）や、他のグループから得た気づきを元に、具体的な改善アイデアをマップに追記していきましょう。</p>
-                                <h4 class="font-bold mb-3">アイデアの書き方</h4>
-                                <ul class="list-disc pl-5 space-y-2">
-                                    <li><strong>誰が (Who):</strong> 担当部署や担当者</li>
-                                    <li><strong>何を (What):</strong> 具体的なアクション</li>
-                                    <li><strong>いつまでに (When):</strong> 期限</li>
-                                    <li><strong>どうやって (How):</strong> 手段やツール</li>
-                                    <li><strong>期待効果 (KPI):</strong> 目標とする数値</li>
-                                </ul>
-                            </div>
-                            <div class="bg-white p-6 rounded-lg shadow-lg">
-                                <h4 class="font-bold mb-3">改善アイデアの例</h4>
-                                <div class="space-y-4">
-                                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg">
-                                        <p class="font-bold text-blue-700">【課題】席の空き状況が不明で不安</p>
-                                        <p class="mt-1"><strong>【アイデア】</strong>公式サイトにリアルタイムの混雑状況を表示する機能を追加。(担当:Webチーム, 期限:3ヶ月後, KPI:直帰率5%改善)</p>
-                                    </div>
-                                    <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
-                                        <p class="font-bold text-green-700">【機会】写真映えする体験</p>
-                                        <p class="mt-1"><strong>【アイデア】</strong>「#BlueReefCafe」投稿キャンペーンを実施。月間ベストフォト賞を選出。(担当:マーケチーム, 期限:来月〜, KPI:UGC投稿数20%増)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="script-box"><p class="author">講師コメント</p><p>弱点を特定したら、それを解決するための具体的なアクションプランを考えます。「頑張る」ではなく、「誰が・何を・いつまでに」を明確にしましょう。</p></div>
-                    </div>
-                </div>
-                <div class="slide" id="slide12">
-                    <div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div>
-                    <div class="content text-center flex flex-col items-center justify-center h-full">
-                        <i class="fas fa-award text-8xl text-yellow-400 mb-8"></i>
-                        <h2 class="mb-6">本日のワークショップは<br>以上となります</h2>
-                        <h3 class="text-blue-600">お疲れ様でした！</h3>
-                        <div class="takeaway-card bg-white mt-12 p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
-                            <h4 class="font-bold mb-4 text-2xl">本日の学び (Take-aways)</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                                <div><div class="bg-blue-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3">①</div><h4 class="font-semibold">"面"で設計</h4><p class="text-sm text-gray-600">点施策ではなく、顧客の体験全体を捉える視点</p></div>
-                                <div><div class="bg-yellow-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3">②</div><h4 class="font-semibold">記号で感情</h4><p class="text-sm text-gray-600">顧客の感情を記号や言葉で可視化し、課題を発見</p></div>
-                                <div><div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3">③</div><h4 class="font-semibold">数字で測定</h4><p class="text-sm text-gray-600">KPIを設定し、改善可能な「測れる地図」にする</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                <div class="slide" id="slide4"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-4">入口ではなく"旅"を設計する</h2><p class="text-2xl text-gray-600 mb-8">チャネル分裂時代だからこそ、一貫した顧客体験の設計が重要です。</p><div class="flex flex-col md:flex-row justify-between items-stretch mb-6 gap-8"><div class="w-full md:w-1/2 comparison-card flex flex-col items-center justify-center text-center p-8 bg-white shadow-lg rounded-lg"><div class="lost-icon mb-4"><i class="fas fa-shoe-prints"></i></div><h3 class="text-red-600">❌ バラバラなアプローチ</h3><p>各チャネルを個別最適化するため、顧客は一貫性のない体験を強いられる。</p></div><div class="w-full md:w-1/2 comparison-card flex flex-col items-center justify-center text-center p-8 bg-white shadow-lg rounded-lg"><div class="map-icon mb-4"><i class="fas fa-map-signs"></i></div><h3 class="text-green-600">✅ ジャーニー設計</h3><p>顧客の体験全体を一枚の「地図」として捉え、最適な道筋を描く。</p></div></div><div class="script-box"><p class="author">講師コメント</p><p>旅行で地図を持たずに個々の店に突撃したら迷子になるように、マーケティングも全体図が必要です。今日のゴールは、この「地図」を描くことです。</p></div></div></div>
+                <div class="slide" id="slide5"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-8">ジャーニーマップの構成要素</h2><div class="space-y-6"><div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">①</div><h3>行動レイヤー</h3></div><p class="text-gray-700 ml-14">各ステージでの顧客の具体的な「行動」を書き出します。（例：検索する、来店する）</p></div><div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-yellow-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">②</div><h3>感情レイヤー</h3></div><p class="text-gray-700 ml-14">各行動に対する「感情」を、顔文字😊😐😟や言葉、矢印↑↓などで表現します。</p></div><div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">③</div><h3>チャネルレイヤー</h3></div><p class="text-gray-700 ml-14">顧客が接するメディア・場所などの「タッチポイント」を記録します。（例：[Instagram]）</p></div><div class="bg-white p-6 rounded-lg shadow-md"><div class="flex items-center mb-2"><div class="bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-xl mr-4 flex-shrink-0">④</div><h3>KPIレイヤー</h3></div><p class="text-gray-700 ml-14">各体験を測定するための「重要業績評価指標」を設定します。（例：☆予約率）</p></div></div><div class="script-box"><p class="author">講師コメント</p><p>これらの要素を組み合わせることで、顧客体験の全体像が立体的になります。</p></div></div></div>
+                <div class="slide" id="slide6"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-8">感情の表現方法</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"><div class="emotion-card border-t-4 border-green-500 bg-white p-4 rounded-lg shadow-md text-center"><div class="color-sample text-green-500 text-5xl mb-2"><i class="fas fa-smile"></i><i class="fas fa-arrow-up ml-2"></i></div><h4 class="text-green-700">ポジティブ</h4><p class="text-sm text-gray-600">例：満足、期待以上<br>キーワード：「嬉しい」「助かった」<br>記号：😊, 👍, ◎</p></div><div class="emotion-card border-t-4 border-yellow-500 bg-white p-4 rounded-lg shadow-md text-center"><div class="color-sample text-yellow-500 text-5xl mb-2"><i class="fas fa-meh"></i><i class="fas fa-minus ml-2"></i></div><h4 class="text-yellow-700">ニュートラル</h4><p class="text-sm text-gray-600">例：普通、どちらでもない<br>キーワード：「まあまあ」「特にない」<br>記号：😐, 〇, 🤔</p></div><div class="emotion-card border-t-4 border-red-500 bg-white p-4 rounded-lg shadow-md text-center"><div class="color-sample text-red-500 text-5xl mb-2"><i class="fas fa-frown"></i><i class="fas fa-arrow-down ml-2"></i></div><h4 class="text-red-700">ネガティブ</h4><p class="text-sm text-gray-600">例：不満、ストレス<br>キーワード：「イライラ」「分かりにくい」<br>記号：😟, 👎, ×</p></div></div><div class="bg-white p-6 rounded-lg shadow-md"><h3 class="mb-4"><i class="fas fa-signature text-blue-500 mr-3"></i>感情曲線の活用</h3><p class="text-gray-700 mb-4">各ステージの下部に、感情の起伏を簡単な線で描きましょう（上がポジティブ、下がネガティブ）。体験全体の感情の流れが一目でわかります。</p><div class="emotion-curve bg-gray-200"><svg viewBox="0 0 600 100" preserveAspectRatio="xMidYMid meet"><path d="M20,80 C100,20 200,90 300,50 S500,10 580,60" stroke="#3b82f6" stroke-width="4" fill="none" stroke-linecap="round"></path></svg></div></div><div class="script-box"><p class="author">講師コメント</p><p>特にネガティブな感情は顧客の「ペインポイント（痛み）」を示しており、改善の大きなヒントになります。</p></div></div></div>
+                <div class="slide" id="slide7"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-8">KPIレイヤーで"測れる地図"に</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"><div class="kpi-card bg-white p-6 rounded-lg shadow-md"><h3 class="text-blue-600 mb-4 flex items-start"><i class="fas fa-chart-line text-xl text-red-500 mr-3 mt-2"></i>なぜKPIで指標化するのか？</h3><ul class="space-y-4"><li><i class="fas fa-check-circle"></i><div>測定できない体験は、改善できません。</div></li><li><i class="fas fa-check-circle"></i><div>各セル（特に弱点セル）に、KPIを<strong class="text-red-600">赤いペン</strong>または<strong class="text-red-600">目立つ印 (例: ☆印)</strong>で追加しましょう。</div></li><li><i class="fas fa-check-circle"></i><div>KPIには、<strong class="text-blue-600">現状値</strong>と<strong class="text-green-600">目標値</strong>の両方を記載します。</div></li></ul></div><div class="kpi-card bg-white p-6 rounded-lg shadow-md"><h3 class="text-blue-600 mb-4">各ステージの代表的なKPI</h3><div class="grid grid-cols-2 gap-4"><div class="bg-blue-50 rounded-lg p-3"><h4 class="font-bold text-blue-700">See (認知)</h4><p class="text-sm">☆Impression<br>☆ブランド検索数</p></div><div class="bg-yellow-50 rounded-lg p-3"><h4 class="font-bold text-yellow-700">Think (検討)</h4><p class="text-sm">☆Webサイト滞在時間<br>☆口コミ評価</p></div><div class="bg-green-50 rounded-lg p-3"><h4 class="font-bold text-green-700">Do (行動)</h4><p class="text-sm">☆予約/購入率 (CVR)<br>☆平均客単価</p></div><div class="bg-purple-50 rounded-lg p-3"><h4 class="font-bold text-purple-700">Care (継続)</h4><p class="text-sm">☆リピート率<br>☆NPS (推奨度)</p></div></div><h4 class="mt-6 mb-2">KPIの書き方 (例)</h4><div class="bg-gray-100 p-3 rounded">☆予約率 (現状: 1.2% → 目標: 3.0%)</div></div></div><div class="script-box"><p class="author">講師コメント</p><p>指標を書き込むことで、感覚的な地図が「測定可能な地図」に進化します。現状と目標を併記し、具体的な数字で改善を管理しましょう。</p></div></div></div>
+                <div class="slide" id="slide8"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-8">ペルソナ設定</h2><p class="text-xl text-gray-600 mb-6">今回のワークショップで焦点を当てる顧客像をグループで決定します。</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6"><div class="persona-card border-t-4 border-blue-500 bg-white p-6 rounded-lg shadow-md"><h3 class="text-blue-700">A：沖縄旅行中の学生グループ</h3><p class="font-bold text-blue-500 mb-4">田中 健太 (21歳)</p><p class="mb-4">大学の友人3人との卒業旅行で沖縄へ。アクティブに観光しつつ、SNS映えするスポットを探している。</p><h4 class="font-semibold mb-2">重視すること</h4><ul class="list-disc pl-5 text-gray-700"><li>写真映え（エモさ）</li><li>コストパフォーマンス</li><li>仲間との思い出作り</li></ul></div><div class="persona-card border-t-4 border-green-500 bg-white p-6 rounded-lg shadow-md"><h3 class="text-green-700">B：3世代で楽しむファミリー</h3><p class="font-bold text-green-500 mb-4">鈴木 一家 (父35, 母34, 子5, 祖母65)</p><p class="mb-4">夏休みを利用して、家族3世代で沖縄旅行。景色の良い場所でゆっくり休憩したいと考えている。</p><h4 class="font-semibold mb-2">重視すること</h4><ul class="list-disc pl-5 text-gray-700"><li>子供がいても安心な設備</li><li>ベビーカーでの入りやすさ</li><li>全員が楽しめるメニュー</li></ul></div></div><div class="script-box"><p class="author">講師コメント</p><p>これから4〜5人の新しいグループに分かれていただきます。まずは自己紹介をして、どちらのペルソナでマップを作成するか、グループで話し合って決めてください。</p></div></div></div>
+                <div class="slide" id="slide9"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-4">メインワークショップ</h2><p class="text-2xl text-blue-600 font-bold mb-8">制限時間：20分</p><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div class="bg-white p-6 rounded-lg shadow-md"><h3 class="mb-4">A3マップ作成（直接記入）</h3><ol class="list-decimal pl-5 space-y-4"><li><strong>行動を記述：</strong>各ステージの顧客行動を「行動」欄に書き込みます。</li><li><strong>感情を表現：</strong>行動に対する感情を「感情」欄に記述。<br>（例：顔文字 😊😐😟、キーワード、矢印↑↓）</li><li><strong>チャネルを特定：</strong>接点となるメディアや場所を「チャネル」欄に書き込みます。<br>（例：<code>[Webサイト]</code> のように囲む）</li><li><strong>KPIを検討：</strong>測定指標を「KPI」欄に書き込みます。<br>（例：<code>☆予約率</code> のように印をつける）</li></ol><div class="timer-box mt-8"><p class="font-medium opacity-80 mb-2 text-xl">残り時間</p><div class="text-6xl font-bold leading-none">20:00</div></div></div><div class="bg-white p-4 rounded-lg shadow-md"><h4 class="font-bold mb-3 text-center">参考：ジャーニーマップ作成のヒント</h4><div class="space-y-3 text-sm"><div class="bg-blue-50 p-2 rounded"><strong>行動：</strong>顧客が「何をするか」を具体的に。例：「検索する」「比較する」「予約する」「来店する」「投稿する」</div><div class="bg-yellow-50 p-2 rounded"><strong>感情：</strong>ポジティブ/ネガティブ両面から。例：「期待」「不安」「面倒」「満足」「感動」「がっかり」</div><div class="bg-green-50 p-2 rounded"><strong>チャネル：</strong>オンライン/オフライン問わず全ての接点。例：SNS、Webサイト、広告、店舗、友人、雑誌、TV</div><div class="bg-red-50 p-2 rounded"><strong>KPI：</strong>行動やビジネス目標に対応する指標。例：インプレッション数、CTR、CVR、客単価、リピート率、NPS</div><div class="bg-gray-100 p-2 rounded"><strong>課題/機会：</strong>感情がネガティブな所は「課題」。ポジティブな所は「機会」。</div></div></div></div><div class="script-box"><p class="author">講師コメント</p><p>A3シートと筆記用具で、決めたペルソナのジャーニーを描き始めましょう。感情がネガティブな箇所や、KPIが思いつかない箇所が、後で改善策を考えるヒントになります。残り10分、5分で声掛けします。</p></div></div></div>
+                <div class="slide" id="slide10"><div class="wave" style="height: 300px; clip-path: polygon(0 60%, 100% 25%, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-4">グループワーク：相互レビュー</h2><p class="text-2xl text-blue-600 font-bold mb-8">制限時間：5分</p><div class="bg-white p-8 rounded-lg shadow-lg text-center"><i class="fas fa-users text-6xl text-blue-500 mb-6"></i><h3 class="mb-4">他のグループのマップを見てみよう</h3><p class="max-w-3xl mx-auto mb-6">作成したマップを他のグループと交換し、5分間でお互いのマップを確認します。良い点や「なるほど！」と思った点、改善できそうな点を伝え合いましょう。</p><div class="text-left max-w-2xl mx-auto bg-gray-50 p-4 rounded-md"><h4 class="font-bold mb-3">確認ポイントの例</h4><ul class="list-disc pl-5 space-y-2"><li>顧客の感情が特にネガティブになっている箇所はどこか？</li><li>KPIは具体的で測定可能か？</li><li>自分たちのグループでは出なかった良い視点やアイデアは？</li></ul></div></div><div class="script-box"><p class="author">講師コメント</p><p>では、お隣のグループとマップを交換してください。新鮮な視点で見ることで、自分たちでは気づかなかった発見があるはずです。良い点はどんどん褒め合いましょう！</p></div></div></div>
+                <div class="slide" id="slide11"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="wave" style="opacity: 0.5; height: 350px; clip-path: polygon(0 60%, 100% 20%, 100% 100%, 0% 100%);"></div><div class="content"><h2 class="mb-4">改善アイデアの具体化</h2><p class="text-2xl text-blue-600 font-bold mb-8">制限時間：15分</p><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="bg-white p-6 rounded-lg shadow-lg"><h3 class="mb-4 flex items-center"><i class="fas fa-lightbulb text-yellow-400 text-3xl mr-3"></i>課題をチャンスに変える</h3><p class="mb-4">自分たちのマップの弱点（ネガティブ感情の箇所など）や、他のグループから得た気づきを元に、具体的な改善アイデアをマップに追記していきましょう。</p><h4 class="font-bold mb-3">アイデアの書き方</h4><ul class="list-disc pl-5 space-y-2"><li><strong>誰が (Who):</strong> 担当部署や担当者</li><li><strong>何を (What):</strong> 具体的なアクション</li><li><strong>いつまでに (When):</strong> 期限</li><li><strong>どうやって (How):</strong> 手段やツール</li><li><strong>期待効果 (KPI):</strong> 目標とする数値</li></ul></div><div class="bg-white p-6 rounded-lg shadow-lg"><h4 class="font-bold mb-3">改善アイデアの例</h4><div class="space-y-4"><div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg"><p class="font-bold text-blue-700">【課題】席の空き状況が不明で不安</p><p class="mt-1 text-sm"><strong>【アイデア】</strong>公式サイトにリアルタイムの混雑状況を表示する機能を追加。(担当:Webチーム, 期限:3ヶ月後, KPI:直帰率5%改善)</p></div><div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg"><p class="font-bold text-green-700">【機会】写真映えする体験</p><p class="mt-1 text-sm"><strong>【アイデア】</strong>「#BlueReefCafe」投稿キャンペーンを実施。月間ベストフォト賞を選出。(担当:マーケチーム, 期限:来月〜, KPI:UGC投稿数20%増)</p></div></div></div></div><div class="script-box"><p class="author">講師コメント</p><p>弱点を特定したら、それを解決するための具体的なアクションプランを考えます。「頑張る」ではなく、「誰が・何を・いつまでに」を明確にしましょう。</p></div></div></div>
+                <div class="slide" id="slide12"><div class="wave" style="height: 300px; clip-path: polygon(0 40%, 100% 0, 100% 100%, 0% 100%);"></div><div class="content text-center flex flex-col items-center justify-center h-full"><i class="fas fa-award text-8xl text-yellow-400 mb-8"></i><h2 class="mb-6">本日のワークショップは<br>以上となります</h2><h3 class="text-blue-600">お疲れ様でした！</h3><div class="takeaway-card bg-white mt-12 p-8 rounded-lg shadow-lg max-w-4xl mx-auto"><h4 class="font-bold mb-4 text-2xl">本日の学び (Take-aways)</h4><div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center"><div><div class="bg-blue-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3">①</div><h4 class="font-semibold">"面"で設計</h4><p class="text-sm text-gray-600">点施策ではなく、顧客の体験全体を捉える視点</p></div><div><div class="bg-yellow-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3">②</div><h4 class="font-semibold">記号で感情</h4><p class="text-sm text-gray-600">顧客の感情を記号や言葉で可視化し、課題を発見</p></div><div><div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3">③</div><h4 class="font-semibold">数字で測定</h4><p class="text-sm text-gray-600">KPIを設定し、改善可能な「測れる地図」にする</p></div></div></div></div></div>
 
             </div>             
             <div class="navigation-controls">
@@ -384,9 +228,9 @@
 
             initChart() {
                 const chartElement = document.getElementById('inflowChart');
-                if (chartElement && !chartElement.chart) { // すでにチャートが存在しない場合のみ初期化
+                if (chartElement && !chartElement.chart) { 
                     const ctx = chartElement.getContext('2d');
-                    chartElement.chart = new Chart(ctx, { // chartインスタンスをelementに保存
+                    chartElement.chart = new Chart(ctx, {
                         type: 'doughnut',
                         data: {
                             labels: ['検索エンジン', 'SNS', 'AI回答', 'その他'],
@@ -459,7 +303,7 @@
                 this.menuItems.forEach((item, index) => { item.classList.toggle('active', (index + 1) === this.currentSlide); });
                 this.prevBtn.disabled = this.currentSlide === 1;
                 this.nextBtn.disabled = this.currentSlide === this.totalSlides;
-                const progress = ((this.currentSlide -1) / (this.totalSlides - 1)) * 100;
+                const progress = ((this.currentSlide - 1) / (this.totalSlides - 1)) * 100;
                 this.progressFill.style.width = `${progress}%`;
                 this.slideIndicator.textContent = `${this.currentSlide} / ${this.totalSlides}`;
                 const activeItem = document.querySelector('.slide-menu-item.active');
