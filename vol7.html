@@ -244,7 +244,7 @@
         .emotion-curve { height: 120px; background: linear-gradient(to right, #10b981 0%, #10b981 30%, #f59e0b 30%, #f59e0b 70%, #ef4444 70%, #ef4444 100%); border-radius: 8px; position: relative; margin-bottom: 1rem; }
         .kpi-card { background: rgba(255,255,255,0.8); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s ease; height: 100%; }
         .kpi-card:hover { transform: translateY(-2px); }
-        .sticky-note-kpi { /* KPIスライド用の付箋スタイル */
+        .sticky-note-kpi {
             background-color: #fecaca; /* red-200 */
             padding: 0.75rem;
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
@@ -267,14 +267,9 @@
         .homework-item { transition: all 0.3s; line-height: 1.6; }
         .homework-item:hover { background-color: #f0f9ff; transform: scale(1.01); }
         
-        /* 導入スライド用スタイル */
         .intro-icon { font-size: 2.5rem; margin-bottom: 0.5rem; color: #3b82f6;}
         .intro-list li { display: flex; align-items: start; margin-bottom: 0.75rem; font-size: 28pt; }
         .intro-list i { color: #3b82f6; margin-right: 0.75rem; font-size: 24pt; margin-top: 0.3rem; width: 30px; text-align: center; }
-        .intro-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 20pt;}
-        .intro-table th, .intro-table td { border: 1px solid #e5e7eb; padding: 0.5rem; text-align: left; }
-        .intro-table th { background-color: #f3f4f6; font-weight: 600; }
-
 
         @media (max-width: 1024px) {
             .sidebar { width: 280px; }
@@ -288,7 +283,7 @@
             .data-source, .keyword-badge, .slide-number, .slide-indicator { font-size: 12pt !important; }
             .sidebar-header { font-size: 16pt !important; }
             .script-box p, .script-box div { font-size: 20pt !important;}
-            .intro-list li, .intro-table {font-size: 20pt !important;}
+            .intro-list li {font-size: 20pt !important;}
             .intro-list i {font-size: 20pt !important;}
         }
         
@@ -307,7 +302,7 @@
             .script-box p, .script-box div { font-size: 14pt !important;}
             .navigation-controls { bottom: 1rem; right: 1rem;}
             .nav-button { width: 40px; height: 40px; font-size: 16px; }
-            .intro-list li, .intro-table {font-size: 16pt !important;}
+            .intro-list li {font-size: 16pt !important;}
             .intro-list i {font-size: 16pt !important;}
         }
     </style>
@@ -325,13 +320,13 @@
                 <li class="slide-menu-item" data-slide="3"><span class="slide-number">3</span>流入経路の分裂</li>
                 <li class="slide-menu-item" data-slide="4"><span class="slide-number">4</span>入口ではなく"旅"を設計</li>
                 <li class="slide-menu-item" data-slide="5"><span class="slide-number">5</span>3層構造解説</li>
-                <li class="slide-menu-item" data-slide="6"><span class="slide-number">6</span>感情カラーコード（記号表現）</li>
+                <li class="slide-menu-item" data-slide="6"><span class="slide-number">6</span>感情の表現方法</li>
                 <li class="slide-menu-item" data-slide="7"><span class="slide-number">7</span>KPIレイヤー</li>
                 <li class="slide-menu-item" data-slide="8"><span class="slide-number">8</span>ペルソナ再整理</li>
                 <li class="slide-menu-item" data-slide="9"><span class="slide-number">9</span>メインワークショップ</li>
                 <li class="slide-menu-item" data-slide="10"><span class="slide-number">10</span>AI検索 vs マップ</li>
                 <li class="slide-menu-item" data-slide="11"><span class="slide-number">11</span>ミニディスカッション</li>
-                <li class="slide-menu-item" data-slide="12"><span class="slide-number">12</span>改善アイデア貼付け</li>
+                <li class="slide-menu-item" data-slide="12"><span class="slide-number">12</span>改善アイデア記述</li>
                 <li class="slide-menu-item" data-slide="13"><span class="slide-number">13</span>講評・秀逸アイデア</li>
                 <li class="slide-menu-item" data-slide="14"><span class="slide-number">14</span>まとめ・宿題</li>
             </ul>
@@ -348,48 +343,21 @@
                     <div class="content" style="padding: 3rem 4rem;">
                         <div class="text-blue-600 font-semibold mb-4" style="font-size: 44pt;">第7回</div>
                         <h1 class="font-bold text-gray-800 mb-6" style="font-size: 60pt; line-height: 1.3;">カスタマージャーニーマップ徹底ワークショップ</h1>
-                        <div class="font-medium text-gray-700 max-w-4xl mb-8" style="font-size: 36pt; line-height: 1.5;">
-                            タッチポイント・感情曲線・KPI を1枚に重ね、チャネル乱立時代でもブレないマーケ地図を描く
-                        </div>
+                        <div class="font-medium text-gray-700 max-w-4xl mb-8" style="font-size: 36pt; line-height: 1.5;">タッチポイント・感情曲線・KPI を1枚に重ね、チャネル乱立時代でもブレないマーケ地図を描く</div>
                         <div class="goal-box mb-8">
                             <div class="font-semibold text-blue-700 mb-4" style="font-size: 44pt;">今回のゴール</div>
-                            <p class="text-gray-700" style="font-size: 36pt; line-height: 1.5;">
-                                <span class="font-bold">"最愛顧客"</span>ペルソナについて、<br>
-                                <span class="font-bold">完成形ジャーニーマップ（A3）</span>を作成し、弱点セルに改善アイデアを具体的に記述できるようになる
-                            </p>
+                            <p class="text-gray-700" style="font-size: 36pt; line-height: 1.5;"><span class="font-bold">"最愛顧客"</span>ペルソナについて、<br><span class="font-bold">完成形ジャーニーマップ（A3）</span>を作成し、弱点セルに改善アイデアを具体的に記述できるようになる</p>
                         </div>
                         <div class="mb-8">
                             <div class="font-semibold text-blue-700 mb-4" style="font-size: 44pt;">学習ゴール</div>
                             <div class="space-y-4 pl-2">
-                                <div class="flex items-start mb-4">
-                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">①</div>
-                                    <div style="font-size: 36pt; line-height: 1.5;">
-                                        <span class="font-medium">CJMの基本を理解：</span>カスタマージャーニーマップの構造、目的、作成プロセスを把握する。
-                                    </div>
-                                </div>
-                                <div class="flex items-start mb-4">
-                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">②</div>
-                                    <div style="font-size: 36pt; line-height: 1.5;">
-                                        <span class="font-medium">"面"で捉える：</span>点施策ではなく STDC × 感情 × チャネル × KPI を重ねる。
-                                        <span class="keyword-badge">俯瞰設計</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-start mb-4">
-                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">③</div>
-                                    <div style="font-size: 36pt; line-height: 1.5;">
-                                        <span class="font-medium">行動 & 感情を可視化：</span>期待値を記号や言葉で見える化。
-                                        <span class="keyword-badge">見える化</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-start mb-4">
-                                    <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">④</div>
-                                    <div style="font-size: 36pt; line-height: 1.5;">
-                                        <span class="font-medium">KPI を設定：</span>数値を添えて"測れる地図"にする。
-                                        <span class="keyword-badge">測定可能</span>
-                                    </div>
-                                </div>
+                                <div class="flex items-start mb-4"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">①</div><div style="font-size: 36pt; line-height: 1.5;"><span class="font-medium">CJMの基本を理解：</span>カスタマージャーニーマップの構造、目的、作成プロセスを把握する。</div></div>
+                                <div class="flex items-start mb-4"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">②</div><div style="font-size: 36pt; line-height: 1.5;"><span class="font-medium">"面"で捉える：</span>点施策ではなく STDC × 感情 × チャネル × KPI を重ねる。<span class="keyword-badge">俯瞰設計</span></div></div>
+                                <div class="flex items-start mb-4"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">③</div><div style="font-size: 36pt; line-height: 1.5;"><span class="font-medium">行動 & 感情を可視化：</span>フリクション・期待値を記号や言葉で見える化。<span class="keyword-badge">見える化</span></div></div>
+                                <div class="flex items-start mb-4"><div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold mr-6 mt-1 text-2xl flex-shrink-0">④</div><div style="font-size: 36pt; line-height: 1.5;"><span class="font-medium">KPI を設定：</span>数値を添えて"測れる地図"にする。<span class="keyword-badge">測定可能</span></div></div>
                             </div>
                         </div>
+                        <div class="absolute bottom-8 right-12 text-gray-500" style="font-size: 28pt;"><i class="far fa-clock mr-2"></i> 90分ワークショップ</div>
                     </div>
                 </div>
 
@@ -397,20 +365,12 @@
                     <div class="wave" style="height: 250px; clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);"></div>
                      <div class="content" style="padding: 2rem 3rem;">
                         <h2 class="font-bold text-gray-800 mb-6" style="font-size: 54pt; line-height: 1.3;">カスタマージャーニーマップとは？<br><span class="text-blue-600" style="font-size: 36pt;">全体像と作成のメリット</span></h2>
-                        
                         <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-                            <h3 class="font-semibold text-blue-700 mb-3 flex items-center" style="font-size: 36pt;">
-                                <i class="fas fa-map-signs intro-icon mr-4"></i>カスタマージャーニーマップを一言で言うと…
-                            </h3>
-                            <p style="font-size: 28pt; color: #374151;">
-                                顧客が製品やサービスと出会い、関わり、最終的なゴールに至るまでの<strong class="text-blue-600">『体験の旅』</strong>を、顧客視点で見える化した<strong class="text-blue-600">地図</strong>です。
-                            </p>
+                            <h3 class="font-semibold text-blue-700 mb-3 flex items-center" style="font-size: 36pt;"><i class="fas fa-map-signs intro-icon mr-4"></i>カスタマージャーニーマップを一言で言うと…</h3>
+                            <p style="font-size: 28pt; color: #374151;">顧客が製品やサービスと出会い、関わり、最終的なゴールに至るまでの<strong class="text-blue-600">『体験の旅』</strong>を、顧客視点で見える化した<strong class="text-blue-600">地図</strong>です。</p>
                         </div>
-
                         <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-                            <h3 class="font-semibold text-blue-700 mb-4 flex items-center" style="font-size: 36pt;">
-                                <i class="fas fa-rocket intro-icon mr-4"></i>なぜ作るの？（作成のメリット）
-                            </h3>
+                            <h3 class="font-semibold text-blue-700 mb-4 flex items-center" style="font-size: 36pt;"><i class="fas fa-rocket intro-icon mr-4"></i>なぜ作るの？（作成のメリット）</h3>
                             <ul class="intro-list">
                                 <li><i class="fas fa-users"></i>顧客理解の深化: 顧客の行動、思考、感情を深く知る。</li>
                                 <li><i class="fas fa-lightbulb"></i>課題と機会の発見: 顧客体験のボトルネックや改善点、新たな価値提供のヒントを見つける。</li>
@@ -418,106 +378,31 @@
                                 <li><i class="fas fa-bullseye"></i>施策の最適化: 各タッチポイントでの最適なアプローチを検討できる。</li>
                             </ul>
                         </div>
-                        
                         <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-                            <h3 class="font-semibold text-blue-700 mb-3 flex items-center" style="font-size: 36pt;">
-                                <i class="fas fa-drafting-compass intro-icon mr-4"></i>今回作成するマップの構成要素
-                            </h3>
-                            <p style="font-size: 28pt; color: #374151; margin-bottom: 1rem;">
-                                今日のワークショップでは、横軸に顧客のステージ、縦軸に以下の要素を書き込むジャーニーマップを作成します。
-                            </p>
-                            <div class="grid grid-cols-2 gap-4 text-center" style="font-size: 24pt;">
-                                <div class="bg-blue-50 p-3 rounded-md"><strong>横軸(ステージ例):</strong><br>きっかけ(See) → 情報集め(Think) → 行動(Do) → 利用後(Care)</div>
-                                <div class="bg-green-50 p-3 rounded-md"><strong>縦軸(記入項目):</strong><br>行動 / 感情 / チャネル / KPI / 課題・機会</div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-                            <h3 class="font-semibold text-blue-700 mb-4 flex items-center" style="font-size: 36pt;">
-                                <i class="fas fa-check-circle intro-icon mr-4"></i>完成例：Blue Reef Café 佐藤さんのジャーニーマップ
-                            </h3>
-                            <p style="font-size: 24pt; color: #374151; margin-bottom: 1rem;">
-                                これは、ペルソナ「佐藤美咲さん（28歳・マーケティング担当・オーシャンラバー）」が「海を見ながらリフレッシュし、良い一日をスタートする」というゴールを達成するための体験をマップ化した例です。
-                            </p>
+                            <h3 class="font-semibold text-blue-700 mb-3 flex items-center" style="font-size: 36pt;"><i class="fas fa-check-circle intro-icon mr-4"></i>完成例：Blue Reef Café 佐藤さんのジャーニーマップ</h3>
+                            <p style="font-size: 24pt; color: #374151; margin-bottom: 1rem;">ペルソナ「佐藤美咲さん（28歳）」が「海を見ながらリフレッシュし、良い一日をスタートする」というゴールを達成するための体験マップ例です。</p>
                             <div class="overflow-x-auto bg-gray-50 p-4 rounded-lg shadow-inner">
                                 <style>
                                     .cjm-example-table { width: 100%; border-collapse: collapse; }
-                                    .cjm-example-table th, .cjm-example-table td {
-                                        border: 1px solid #d1d5db; /* gray-300 */
-                                        padding: 0.75rem; /* Tailwind p-3相当 */
-                                        text-align: left;
-                                        font-size: 15pt !important; /* 他のスライドより少し小さく */
-                                        line-height: 1.5 !important;
-                                        vertical-align: top;
-                                    }
-                                    .cjm-example-table thead th {
-                                        background-color: #eff6ff; /* blue-100 */
-                                        color: #1d4ed8; /* blue-700 */
-                                        font-weight: 600; /* semibold */
-                                        font-size: 16pt !important;
-                                    }
-                                    .cjm-example-table tbody th {
-                                        background-color: #f9fafb; /* gray-50 */
-                                        color: #1d4ed8; /* blue-700 */
-                                        font-weight: 600;
-                                        white-space: nowrap;
-                                    }
-                                    .cjm-example-table ul { list-style-type: disc; padding-left: 1.2em; margin:0; }
-                                    .cjm-example-table li { margin-bottom: 0.25em; }
+                                    .cjm-example-table th, .cjm-example-table td { border: 1px solid #d1d5db; padding: 0.75rem; text-align: left; font-size: 15pt !important; line-height: 1.5 !important; vertical-align: top; }
+                                    .cjm-example-table thead th { background-color: #eff6ff; color: #1d4ed8; font-weight: 600; font-size: 16pt !important; }
+                                    .cjm-example-table tbody th { background-color: #f9fafb; color: #1d4ed8; font-weight: 600; white-space: nowrap; }
                                 </style>
                                 <table class="cjm-example-table">
-                                    <thead>
-                                        <tr>
-                                            <th>要素</th>
-                                            <th>きっかけ (See)</th>
-                                            <th>情報収集・比較 (Think)</th>
-                                            <th>来店・体験 (Do)</th>
-                                            <th>共有・再訪検討 (Care)</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>要素</th><th>きっかけ (See)</th><th>情報収集・比較 (Think)</th><th>来店・体験 (Do)</th><th>共有・再訪検討 (Care)</th></tr></thead>
                                     <tbody>
-                                        <tr>
-                                            <th>行動</th>
-                                            <td><ul><li>朝、SNSで沖縄の綺麗な景色を見る</li><li>「海が見えるカフェに行きたいな」と思う</li></ul></td>
-                                            <td><ul><li>インスタで #沖縄海カフェ #朝活カフェ 検索</li><li>口コミサイトで評価チェック</li><li>Blue Reef CaféのHPを見る</li></ul></td>
-                                            <td><ul><li>Blue Reef Caféに来店</li><li>オーシャンビューの席に着く</li><li>限定アサイーボウルとコーヒーを注文</li><li>食事を楽しむ</li><li>店内の雰囲気を撮影</li></ul></td>
-                                            <td><ul><li>満足した体験をインスタに投稿 (ストーリーズ)</li><li>友人にLINEで写真送る</li><li>ポイントカード作るか考える</li></ul></td>
-                                        </tr>
-                                        <tr>
-                                            <th>感情</th>
-                                            <td>😊 ワクワク<br>😌 リフレッシュしたい</td>
-                                            <td>🤔 どこがいいかな？<br>🧐 写真映えする？<br>😊良さそう！期待↑</td>
-                                            <td>😄 景色最高！<br>😋 美味しい！<br>😌 落ち着く〜</td>
-                                            <td>🥰 大満足！<br>また来たい！<br>😌 いい朝だった</td>
-                                        </tr>
-                                        <tr>
-                                            <th>チャネル/<br>タッチポイント</th>
-                                            <td><code>[Instagram]</code><br><code>[友人知人]</code></td>
-                                            <td><code>[Instagram]</code><br><code>[食べログ]</code><br><code>[Google Maps]</code><br><code>[公式HP]</code></td>
-                                            <td><code>[店舗外観]</code><br><code>[店内座席]</code><br><code>[メニュー]</code><br><code>[スタッフ]</code><br><code>[飲食物]</code></td>
-                                            <td><code>[Instagram]</code><br><code>[LINE]</code><br><code>[レジ周り(ポイントカード案内)]</code></td>
-                                        </tr>
-                                        <tr>
-                                            <th>KPI<br>(現状→目標)</th>
-                                            <td>☆関連投稿Imp数<br>☆ブランド検索数<br>(月500→月1000)</td>
-                                            <td>☆HPアクセス数<br>(日200→日300)<br>☆口コミ評価<br>(4.0→4.2)<br>☆予約/問合せ数<br>(週5→週10)</td>
-                                            <td>☆平均滞在時間<br>(60分→75分)<br>☆客単価<br>(¥1500→¥1800)<br>☆特定メニュー注文率<br>(アサイー:10%→15%)</td>
-                                            <td>☆SNS投稿数(UGC)<br>(週10→週20)<br>☆リピート率<br>(15%→25%)<br>☆ポイントカード発行数<br>(日5→日10)</td>
-                                        </tr>
-                                        <tr>
-                                            <th>課題/<br>機会</th>
-                                            <td><ul><li>まだBlue Reef Caféを知らない</li><li>朝カフェの選択肢が多い</li></ul></td>
-                                            <td><ul><li>他店との差別化</li><li>メニューの魅力伝えきれてない？</li><li>席の空き状況が不明</li></ul></td>
-                                            <td><ul><li>注文まで少し待つ</li><li>Wi-Fi繋がりづらい時がある</li><li>限定メニューすぐ売り切れる</li></ul></td>
-                                            <td><ul><li>ポイントカードのメリット分かりにくい</li><li>口コミ投稿を促せていない</li></ul></td>
-                                        </tr>
+                                        <tr><th>行動</th><td>• 朝、SNSで沖縄の綺麗な景色を見る<br>• 「海が見えるカフェに行きたいな」と思う</td><td>• インスタで #沖縄海カフェ 検索<br>• 口コミサイトで評価チェック<br>• 公式HPを見る</td><td>• 来店し、オーシャンビューの席に着く<br>• 限定アサイーボウルとコーヒーを注文<br>• 食事と雰囲気を楽しむ、撮影する</td><td>• 満足した体験をインスタに投稿 (ストーリーズ)<br>• 友人にLINEで写真送る<br>• ポイントカード作るか考える</td></tr>
+                                        <tr><th>感情</th><td>😊 ワクワク<br>😌 リフレッシュしたい</td><td>🤔 どこがいいかな？<br>🧐 写真映えする？<br>😊良さそう！期待↑</td><td>😄 景色最高！<br>😋 美味しい！<br>😌 落ち着く〜</td><td>🥰 大満足！<br>また来たい！<br>😌 いい朝だった</td></tr>
+                                        <tr><th>チャネル/<br>タッチポイント</th><td><code>[Instagram]</code><br><code>[友人知人]</code></td><td><code>[Instagram]</code><br><code>[食べログ]</code><br><code>[公式HP]</code></td><td><code>[店舗外観]</code><br><code>[店内座席]</code><br><code>[メニュー]</code><br><code>[スタッフ]</code></td><td><code>[Instagram]</code><br><code>[LINE]</code><br><code>[レジ周り]</code></td></tr>
+                                        <tr><th>KPI<br>(現状→目標)</th><td>☆ブランド検索数<br>(月500→月1000)</td><td>☆HPアクセス数<br>(日200→日300)<br>☆口コミ評価<br>(4.0→4.2)</td><td>☆平均滞在時間<br>(60分→75分)<br>☆客単価<br>(¥1500→¥1800)</td><td>☆SNS投稿数(UGC)<br>(週10→週20)<br>☆リピート率<br>(15%→25%)</td></tr>
+                                        <tr><th>課題/<br>機会</th><td>• まだBlue Reef Caféを知らない<br>• 朝カフェの選択肢が多い</td><td>• 他店との差別化<br>• 席の空き状況が不明</td><td>• 注文まで少し待つ<br>• Wi-Fiが遅い時がある<br>• 限定メニューがすぐ売り切れる</td><td>• ポイントカードのメリットが分かりにくい<br>• 口コミ投稿を促せていない</td></tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <!--<div class="script-box">
-                             <p style="font-size: 24pt;">「まず、今日皆さんに作っていただく『カスタマージャーニーマップ』とは何か、その全体像とメリットを簡単にご説明します。顧客の体験を旅に見立てて地図にしたもので、顧客理解を深め、課題やチャンスを発見するのに役立ちます。ご覧いただいている完成例のように、顧客の行動、感情、接点、KPI、そして課題や機会を一枚のマップに落とし込みます。このイメージを持って、具体的な作成ステップに進んでいきましょう。」</p>
-                        </div>-->
+                        <div class="script-box">
+                             <p style="font-size: 24pt;">「この完成例のように、顧客の行動、感情、接点、KPI、そして課題や機会を一枚のマップに落とし込みます。このイメージを持って、具体的な作成ステップに進んでいきましょう。」</p>
+                        </div>
                     </div>
                 </div>
                 
@@ -652,10 +537,19 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div class="kpi-card border-l-4 border-blue-500">
                                 <h4 class="font-bold text-blue-700 mb-4 flex items-center" style="font-size: 36pt; line-height: 1.6;"><i class="fas fa-chart-line text-red-500 mr-3"></i>KPIで指標化する理由</h4>
-                                <ul class="text-gray-700 space-y-3" style="font-size: 28pt; line-height: 1.6;">
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>測定できない体験は、改善できません。</li>
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>各セル（特に弱点セル）に、KPIを目立つ印 (例:☆)で追加しましょう。</li>
-                                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>KPIには、<strong class="text-blue-600">現状値</strong>と<strong class="text-green-600">目標値</strong>の両方を記載します。</li>
+                                <ul class="text-gray-700 space-y-4" style="font-size: 28pt; line-height: 1.6;">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-2 mr-3 flex-shrink-0"></i>
+                                        <div>測定できない体験は、改善できません。</div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-2 mr-3 flex-shrink-0"></i>
+                                        <div>各セル（特に弱点セル）に、KPIを<strong class="text-red-600">赤いペン</strong>または<strong class="text-red-600">目立つ印 (例: ☆印)</strong>で追加しましょう。</div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-2 mr-3 flex-shrink-0"></i>
+                                        <div>KPIには、<strong class="text-blue-600">現状値</strong>と<strong class="text-green-600">目標値</strong>の両方を記載します。</div>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="kpi-card border-l-4 border-red-500 relative">
@@ -1015,7 +909,7 @@
         class PresentationController {
             constructor() {
                 this.currentSlide = 1;
-                this.totalSlides = 14; // スライド総数を更新
+                this.totalSlides = 14; 
                 this.menuItems = document.querySelectorAll('.slide-menu-item');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
