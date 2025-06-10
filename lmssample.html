@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学習管理システム (LMS)</title>
+    <title>学習管理システム (LMS) - 静的バージョン</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,6 +15,20 @@
         .category-toggle.collapsed .fa-chevron-down { transform: rotate(-90deg); }
         aside { transition: transform 0.3s ease-in-out; }
         .modal-bg { background-color: rgba(0,0,0,0.5); }
+
+        /* ▼▼▼ YouTubeのサイズを修正 ▼▼▼ */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 アスペクト比 */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -25,20 +39,15 @@
             <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden" style="display: none;"></div>
             <aside id="sidebar" class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg flex flex-col z-30 transform -translate-x-full lg:relative lg:translate-x-0 lg:w-1/3 lg:max-w-sm">
                 <div class="p-6 border-b flex justify-between items-center">
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-900">学習コース</h1>
-                        <p class="text-sm text-gray-500 mt-1">コースを選択</p>
-                    </div>
+                    <div><h1 class="text-2xl font-bold text-gray-900">学習コース</h1><p class="text-sm text-gray-500 mt-1">コースを選択</p></div>
                     <button id="close-sidebar-btn" class="lg:hidden text-gray-500 hover:text-gray-800"><i class="fas fa-times text-2xl"></i></button>
                 </div>
-                <nav id="course-list" class="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-1">
-                    <p class="text-gray-500 text-center p-4">コースを読み込み中...</p>
-                </nav>
+                <nav id="course-list" class="flex-1 overflow-y-auto sidebar-scroll p-4 space-y-1"></nav>
                 <div class="p-4 border-t bg-gray-50">
-                     <p class="text-xs text-gray-600">ユーザーID:</p>
-                     <p id="user-id-display" class="text-sm font-mono text-gray-800 break-all"></p>
-                     <button id="admin-login-btn" class="mt-4 block w-full text-center bg-gray-600 hover:bg-gray-700 text-white text-sm font-bold py-2 px-4 rounded-lg transition duration-300">
-                        <i class="fas fa-user-shield mr-1"></i> 管理者ログイン
+                     <p class="text-xs text-gray-600">ユーザーID (デモ):</p>
+                     <p id="user-id-display" class="text-sm font-mono text-gray-800 break-all">static-user-01</p>
+                     <button id="admin-login-btn" class="mt-4 block w-full text-center bg-gray-600 hover:bg-gray-700 text-white text-sm font-bold py-2 px-4 rounded-lg transition">
+                        <i class="fas fa-user-shield mr-1"></i> 管理画面へ
                      </button>
                 </div>
             </aside>
@@ -53,12 +62,13 @@
                     <div id="course-details" class="hidden bg-white p-6 sm:p-8 rounded-lg shadow-md">
                         <h2 id="course-title" class="text-2xl sm:text-4xl font-bold mb-2"></h2>
                         <p id="course-description" class="text-gray-600 mb-6"></p>
-                        <div class="aspect-w-16 aspect-h-9 mb-6 rounded-lg overflow-hidden shadow-inner bg-black">
-                            <iframe id="youtube-player" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <!-- ▼▼▼ YouTube表示部分のHTMLを修正 ▼▼▼ -->
+                        <div class="video-container mb-6 rounded-lg overflow-hidden shadow-inner bg-black">
+                            <iframe id="youtube-player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         <div class="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4">
-                            <a id="google-form-link" href="#" target="_blank" class="w-full sm:w-auto flex-grow text-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105"><i class="fab fa-google mr-2"></i> テストを受ける</a>
-                            <button id="completion-button" class="w-full sm:w-auto flex-grow bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105"><i class="fas fa-check-circle mr-2"></i>学習完了にする</button>
+                            <a id="google-form-link" href="#" target="_blank" class="w-full sm:w-auto flex-grow text-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-105"><i class="fab fa-google mr-2"></i> テストを受ける</a>
+                            <button id="completion-button" class="w-full sm:w-auto flex-grow bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-105"><i class="fas fa-check-circle mr-2"></i>学習完了にする</button>
                         </div>
                     </div>
                     <div id="badge-container" class="hidden mt-12 text-center bg-gradient-to-r from-yellow-300 to-yellow-500 p-8 rounded-lg shadow-xl border-4 border-yellow-600">
@@ -77,142 +87,212 @@
             <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
                 <div class="text-center"><i class="fas fa-user-shield text-4xl text-indigo-600"></i><h2 class="mt-4 text-2xl font-bold text-gray-900">管理画面ログイン</h2></div>
                 <form id="login-form" class="space-y-6">
-                    <div><label for="username" class="text-sm font-bold text-gray-600 block">ユーザーID</label><input id="username" type="text" class="w-full p-3 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required value="admin"></div>
-                    <div><label for="password" class="text-sm font-bold text-gray-600 block">パスワード</label><input id="password" type="password" class="w-full p-3 mt-1 text-gray-800 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required value="pass"></div>
+                    <div><label for="username" class="text-sm font-bold text-gray-600 block">ユーザーID</label><input id="username" type="text" class="w-full p-3 mt-1 text-gray-800 bg-gray-100 border rounded-md" required value="admin"></div>
+                    <div><label for="password" class="text-sm font-bold text-gray-600 block">パスワード</label><input id="password" type="password" class="w-full p-3 mt-1 text-gray-800 bg-gray-100 border rounded-md" required value="pass"></div>
                     <p id="login-error" class="text-sm text-red-500 text-center hidden">IDまたはパスワードが違います。</p>
-                    <div><button type="submit" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-md transition duration-300">ログイン</button></div>
+                    <div><button type="submit" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-md transition">ログイン</button></div>
                     <button id="back-to-student-view-btn-1" type="button" class="w-full text-center text-sm text-gray-600 hover:text-indigo-600 mt-2">← 学習画面に戻る</button>
                 </form>
             </div>
         </div>
         <div id="admin-dashboard" class="hidden p-4 sm:p-8">
             <div class="max-w-7xl mx-auto">
+                <div class="p-4 mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-r-lg">
+                    <p><i class="fas fa-exclamation-triangle mr-2"></i><b>静的モードの注意:</b> ここで行った変更（追加、編集、削除）は、このページを再読み込みするとリセットされます。恒久的な変更は、HTMLファイル内の `initialCourseData` を直接編集してください。</p>
+                </div>
                 <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
                     <h1 class="text-3xl font-bold text-gray-800">コース管理</h1>
-                    <div>
-                         <button id="back-to-student-view-btn-2" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition duration-300 mr-2"><i class="fas fa-eye mr-2"></i>学習画面に戻る</button>
-                        <button id="save-changes-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300"><i class="fas fa-save mr-2"></i>変更を保存</button>
-                    </div>
+                    <button id="back-to-student-view-btn-2" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition"><i class="fas fa-eye mr-2"></i>学習画面に戻る</button>
                 </div>
-                 <div class="mb-4 text-right">
-                    <button id="show-csv-import-btn" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
-                        <i class="fas fa-file-upload mr-2"></i>CSVファイルから登録
-                    </button>
+                <div class="mb-4 text-right">
+                    <button id="show-csv-import-btn" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg transition"><i class="fas fa-file-upload mr-2"></i>CSVファイルから登録</button>
                 </div>
                 <div id="course-editor" class="bg-white p-6 rounded-lg shadow-md"></div>
-                <div class="mt-6"><button id="add-category-btn" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300"><i class="fas fa-plus-circle mr-2"></i>大カテゴリーを追加</button></div>
+                <div class="mt-6"><button id="add-category-btn" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition"><i class="fas fa-plus-circle mr-2"></i>大カテゴリーを追加</button></div>
             </div>
         </div>
     </div>
     
     <!-- ===== モーダルウィンドウ ===== -->
     <div id="course-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg"><div class="bg-white rounded-lg shadow-xl w-full max-w-lg m-4"><div class="p-6 border-b"><h3 class="text-xl font-bold">コースの編集</h3></div><div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto"><label class="block"><span class="font-bold text-gray-600">コースID</span><input type="text" id="modal-course-id" class="w-full p-2 mt-1 bg-gray-100 rounded" readonly></label><label class="block"><span class="font-bold text-gray-600">タイトル</span><input type="text" id="modal-course-title" class="w-full p-2 mt-1 border rounded"></label><label class="block"><span class="font-bold text-gray-600">説明</span><textarea id="modal-course-description" class="w-full p-2 mt-1 border rounded" rows="3"></textarea></label><label class="block"><span class="font-bold text-gray-600">YouTube URL</span><input type="url" id="modal-youtube-url" class="w-full p-2 mt-1 border rounded" placeholder="https://www.youtube.com/watch?v=..."></label><label class="block"><span class="font-bold text-gray-600">Google Form URL</span><input type="url" id="modal-google-form-url" class="w-full p-2 mt-1 border rounded"></label></div><div class="p-4 bg-gray-100 flex justify-end space-x-2"><button id="modal-cancel-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">キャンセル</button><button id="modal-save-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">保存</button></div></div></div>
-    <div id="input-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg"><div class="bg-white rounded-lg shadow-xl w-full max-w-md m-4"><div class="p-6 border-b"><h3 id="input-modal-title" class="text-xl font-bold"></h3></div><div class="p-6"><label id="input-modal-label" for="input-modal-text" class="font-bold text-gray-600"></label><input type="text" id="input-modal-text" class="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"></div><div class="p-4 bg-gray-100 flex justify-end space-x-2"><button id="input-modal-cancel-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">キャンセル</button><button id="input-modal-ok-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">OK</button></div></div></div>
-    <div id="csv-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg"><div class="bg-white rounded-lg shadow-xl w-full max-w-2xl m-4"><div class="p-6 border-b"><h3 class="text-xl font-bold">CSVファイルから一括登録</h3></div><div class="p-6 space-y-4"><div><label for="csv-file-input" class="block text-sm font-bold text-gray-700 mb-2">1. CSVファイルを選択</label><input type="file" id="csv-file-input" accept=".csv" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/><p class="text-xs text-gray-500 mt-1">ヘッダー行(1行目)は無視されます。</p></div><div><label class="flex items-center"><input type="checkbox" id="csv-overwrite-checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"><span class="ml-2 text-sm text-gray-900">既存のコースを全て削除して上書きする</span></label></div></div><div class="p-4 bg-gray-100 flex justify-end space-x-2"><button id="csv-modal-cancel-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">キャンセル</button><button id="csv-import-btn" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">インポート実行</button></div></div></div>
+    <div id="input-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg"><div class="bg-white rounded-lg shadow-xl w-full max-w-md m-4"><div class="p-6 border-b"><h3 id="input-modal-title" class="text-xl font-bold"></h3></div><div class="p-6"><label id="input-modal-label" for="input-modal-text" class="font-bold text-gray-600"></label><input type="text" id="input-modal-text" class="w-full p-2 mt-1 border rounded-md"></div><div class="p-4 bg-gray-100 flex justify-end space-x-2"><button id="input-modal-cancel-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">キャンセル</button><button id="input-modal-ok-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">OK</button></div></div></div>
+    <div id="csv-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg"><div class="bg-white rounded-lg shadow-xl w-full max-w-2xl m-4"><div class="p-6 border-b"><h3 class="text-xl font-bold">CSVファイルから一括登録</h3></div><div class="p-6 space-y-4"><div><label for="csv-file-input" class="block text-sm font-bold text-gray-700 mb-2">1. CSVファイルを選択</label><input type="file" id="csv-file-input" accept=".csv" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/></div><div><label class="flex items-center"><input type="checkbox" id="csv-overwrite-checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded"><span class="ml-2 text-sm text-gray-900">既存のコースを全て削除して上書きする</span></label></div></div><div class="p-4 bg-gray-100 flex justify-end space-x-2"><button id="csv-modal-cancel-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">キャンセル</button><button id="csv-import-btn" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">インポート実行</button></div></div></div>
     <div id="confirm-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg"><div class="bg-white rounded-lg shadow-xl w-full max-w-md m-4"><div class="p-6 text-center"><i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-4"></i><h3 class="text-xl font-bold mb-2">確認</h3><p id="confirm-modal-text" class="text-gray-600"></p></div><div class="p-4 bg-gray-100 flex justify-end space-x-2"><button id="confirm-modal-cancel-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">キャンセル</button><button id="confirm-modal-ok-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">削除する</button></div></div></div>
 
 
-    <script type="module">
+    <script>
         // =================================================================
-        // 初期化と設定
+        // 静的データと初期設定
         // =================================================================
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // ▼▼▼ ここにFirebaseプロジェクトの設定を貼り付け ▼▼▼
-        const firebaseConfig = {
- apiKey: "AIzaSyC5bCMwervo1EJYups5_KflOEw-GK026PU",
-  authDomain: "test001-8d0f9.firebaseapp.com",
-  databaseURL: "https://test001-8d0f9.firebaseio.com",
-  projectId: "test001-8d0f9",
-  storageBucket: "test001-8d0f9.firebasestorage.app",
-  messagingSenderId: "997050950237",
-  appId: "1:997050950237:web:ccb100f9a25d43ce67a3b4"
+        const sampleCourse = {
+            title: 'DXの必要性 人材不足編',
+            description: '日本の人材不足の現状と、DXがなぜ解決策となり得るのかを解説します。',
+            youtubeUrl: 'https://www.youtube.com/watch?v=IbwZUc8_-jQ',
+            googleFormUrl: 'https://forms.gle/sYsExuGpXQH8cREz9'
         };
-        // ▲▲▲ ここまで ▲▲▲
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        const initialCourseData = [
+            {
+                title: "経営・ガバナンス",
+                subcategories: [
+                    { title: "DX戦略", courses: [] },
+                    { title: "KPI・パフォーマンス管理", courses: [] },
+                    { title: "リーダーシップ・ガバナンス", courses: [] }
+                ]
+            },
+            {
+                title: "事業戦略・イノベーション",
+                subcategories: [
+                    { title: "新規事業開発", courses: [] },
+                    { title: "製品・サービスイノベーション", courses: [] },
+                    { title: "パートナーシップ・エコシステム", courses: [] }
+                ]
+            },
+            {
+                title: "組織文化・チェンジマネジメント",
+                subcategories: [
+                    { title: "変革推進", courses: [] },
+                    { title: "社内コミュニケーション", courses: [] },
+                    { title: "働き方改革", courses: [] }
+                ]
+            },
+            {
+                title: "人事・タレントマネジメント",
+                subcategories: [
+                    { title: "採用", courses: [] },
+                    { title: "育成・リスキリング", courses: [] },
+                    { title: "評価制度", courses: [] }
+                ]
+            },
+            {
+                title: "IT・データインフラ",
+                subcategories: [
+                    { title: "クラウド基盤", courses: [] },
+                    { title: "システム統合・API", courses: [] },
+                    { title: "データガバナンス", courses: [] }
+                ]
+            },
+            {
+                title: "業務プロセス・オペレーション",
+                subcategories: [
+                    { title: "プロセス可視化・BPM", courses: [] },
+                    { title: "自動化・RPA", courses: [] },
+                    { title: "ワークフロー・ペーパーレス", courses: [] }
+                ]
+            },
+            {
+                title: "営業・マーケティング",
+                subcategories: [
+                    { title: "マーケティングオートメーション", courses: [] },
+                    { title: "セールス・CRM", courses: [] },
+                    { title: "デジタル広告・キャンペーン", courses: [] }
+                ]
+            },
+            {
+                title: "顧客体験・カスタマーサクセス",
+                subcategories: [
+                    { title: "オムニチャネル", courses: [] },
+                    { title: "サポート・ヘルプデスク", courses: [] },
+                    { title: "継続率向上・NPS", courses: [] }
+                ]
+            },
+            {
+                title: "製品・サービス開発",
+                subcategories: [
+                    { title: "アジャイル開発", courses: [] },
+                    { title: "DevOps", courses: [] },
+                    { title: "AI・データ活用機能", courses: [] }
+                ]
+            },
+            {
+                title: "サプライチェーン・調達",
+                subcategories: [
+                    { title: "需要予測・在庫管理", courses: [] },
+                    { title: "調達・購買", courses: [] },
+                    { title: "物流・トレーサビリティ", courses: [] }
+                ]
+            },
+            {
+                title: "財務・経営管理",
+                subcategories: [
+                    { title: "予算・計画", courses: [] },
+                    { title: "管理会計・BI", courses: [] },
+                    { title: "ROI・投資評価", courses: [] }
+                ]
+            },
+            {
+                title: "リスク・セキュリティ・コンプライアンス",
+                subcategories: [
+                    { title: "サイバーセキュリティ", courses: [] },
+                    { title: "法規制・コンプライアンス", courses: [] },
+                    { title: "BCP・事業継続", courses: [] }
+                ]
+            },
+             {
+                title: "その他",
+                subcategories: [
+                    { title: "キーワード該当項目", courses: [] }
+                ]
+            }
+        ];
+        
+        let courseIdCounter = 1;
+        initialCourseData.forEach(cat => {
+            (cat.subcategories || []).forEach(subcat => {
+                const newCourse = { ...sampleCourse, id: `c${String(courseIdCounter++).padStart(3, '0')}`};
+                subcat.courses = [newCourse];
+            });
+        });
 
-        let userId = null, userProgress = {}, currentCourseId = null, categories = [], courseDataForAdmin = [];
-        let onInputModalSubmit = null, onConfirm = null;
+        let categories = []; 
+        let userProgress = {};
+        let currentCourseId = null;
+        let onInputModalSubmit = null;
+        let onConfirm = null;
 
-        // =================================================================
         // DOM要素の取得
-        // =================================================================
         const studentView = document.getElementById('student-view'), adminView = document.getElementById('admin-view'), adminLoginBtn = document.getElementById('admin-login-btn'), backToStudentViewBtn1 = document.getElementById('back-to-student-view-btn-1'), backToStudentViewBtn2 = document.getElementById('back-to-student-view-btn-2');
         const sidebar = document.getElementById('sidebar'), openSidebarBtn = document.getElementById('open-sidebar-btn'), closeSidebarBtn = document.getElementById('close-sidebar-btn'), sidebarOverlay = document.getElementById('sidebar-overlay'), courseListEl = document.getElementById('course-list'), welcomeMessageEl = document.getElementById('welcome-message'), courseDetailsEl = document.getElementById('course-details'), courseTitleEl = document.getElementById('course-title'), courseDescriptionEl = document.getElementById('course-description'), youtubePlayerEl = document.getElementById('youtube-player'), googleFormLinkEl = document.getElementById('google-form-link'), completionButtonEl = document.getElementById('completion-button'), badgeContainerEl = document.getElementById('badge-container'), userIdDisplayEl = document.getElementById('user-id-display');
-        const loginScreen = document.getElementById('login-screen'), loginForm = document.getElementById('login-form'), loginError = document.getElementById('login-error'), adminDashboard = document.getElementById('admin-dashboard'), courseEditor = document.getElementById('course-editor'), saveChangesBtn = document.getElementById('save-changes-btn'), addCategoryBtn = document.getElementById('add-category-btn');
+        const loginScreen = document.getElementById('login-screen'), loginForm = document.getElementById('login-form'), loginError = document.getElementById('login-error'), adminDashboard = document.getElementById('admin-dashboard'), courseEditor = document.getElementById('course-editor'), addCategoryBtn = document.getElementById('add-category-btn');
         const courseModal = document.getElementById('course-modal'), modalCancelBtn = document.getElementById('modal-cancel-btn'), modalSaveBtn = document.getElementById('modal-save-btn'); let editingCourseInfo = null;
         const inputModal = document.getElementById('input-modal'), inputModalTitle = document.getElementById('input-modal-title'), inputModalLabel = document.getElementById('input-modal-label'), inputModalText = document.getElementById('input-modal-text'), inputModalOkBtn = document.getElementById('input-modal-ok-btn'), inputModalCancelBtn = document.getElementById('input-modal-cancel-btn');
         const showCsvImportBtn = document.getElementById('show-csv-import-btn'), csvModal = document.getElementById('csv-modal'), csvFileInput = document.getElementById('csv-file-input'), csvOverwriteCheckbox = document.getElementById('csv-overwrite-checkbox'), csvModalCancelBtn = document.getElementById('csv-modal-cancel-btn'), csvImportBtn = document.getElementById('csv-import-btn');
         const confirmModal = document.getElementById('confirm-modal'), confirmModalText = document.getElementById('confirm-modal-text'), confirmModalOkBtn = document.getElementById('confirm-modal-ok-btn'), confirmModalCancelBtn = document.getElementById('confirm-modal-cancel-btn');
 
+        // 初期化処理
+        document.addEventListener('DOMContentLoaded', () => {
+            categories = JSON.parse(JSON.stringify(initialCourseData));
+            renderCourseList();
+        });
 
-        // =================================================================
-        // 画面切り替え & 認証
-        // =================================================================
+        // 画面切り替え
         function showStudentView() { studentView.classList.remove('hidden'); adminView.classList.add('hidden'); }
         function showAdminView() { studentView.classList.add('hidden'); adminView.classList.remove('hidden'); loginScreen.classList.remove('hidden'); adminDashboard.classList.add('hidden'); }
         adminLoginBtn.addEventListener('click', showAdminView);
         backToStudentViewBtn1.addEventListener('click', showStudentView);
         backToStudentViewBtn2.addEventListener('click', showStudentView);
         
-        onAuthStateChanged(auth, async (user) => {
-            if (user) { userId = user.uid; userIdDisplayEl.textContent = userId; loadUserProgress(); listenToCourseData(); } 
-            else { try { await signInAnonymously(auth); } catch (error) { console.error("Anonymous sign-in failed:", error); } }
-        });
-        
-        // =================================================================
-        // 学習者画面ロジック
-        // =================================================================
-        const COURSE_DB_PATH = "lms_courses";
-        const COURSE_DOC_ID = "main_structure";
-        const USER_DB_PATH = "lms_users";
-
+        // 学習者画面
         function openSidebar() { sidebar.classList.remove('-translate-x-full'); sidebarOverlay.style.display = 'block'; }
         function closeSidebar() { sidebar.classList.add('-translate-x-full'); sidebarOverlay.style.display = 'none'; }
         openSidebarBtn.addEventListener('click', openSidebar); closeSidebarBtn.addEventListener('click', closeSidebar); sidebarOverlay.addEventListener('click', closeSidebar);
         
-        function listenToCourseData() { 
-            const courseDocRef = doc(db, COURSE_DB_PATH, COURSE_DOC_ID); 
-            onSnapshot(courseDocRef, (docSnap) => { categories = (docSnap.exists() && docSnap.data().categories) ? docSnap.data().categories : []; renderCourseList(); checkAllCompleted(); }, (error) => { console.error("Error listening to course data:", error); courseListEl.innerHTML = `<p class="text-red-500 text-center p-4">コースの読み込みに失敗しました。</p>`; }); 
-        }
-        async function loadUserProgress() { 
-            if (!userId) return; 
-            const docRef = doc(db, USER_DB_PATH, userId); 
-            onSnapshot(docRef, (docSnap) => { userProgress = docSnap.exists() ? docSnap.data().progress || {} : {}; renderCourseList(); checkAllCompleted(); updateCompletionButtonState(); }, error => console.error("Error loading user progress:", error)); 
-        }
-        async function saveUserProgress() { 
-            if (!userId) return; 
-            try { await setDoc(doc(db, USER_DB_PATH, userId), { progress: userProgress }, { merge: true }); } catch (error) { console.error("Error saving user progress: ", error); } 
-        }
         function findCourseById(courseId) { for (const category of categories) { for (const subcategory of (category.subcategories || [])) { const found = (subcategory.courses || []).find(c => c.id === courseId); if (found) return found; } } return null; }
         function renderCourseList() { if (categories.length === 0) { courseListEl.innerHTML = `<p class="text-gray-500 text-center p-4">受講できるコースがありません。</p>`; return; } courseListEl.innerHTML = ''; categories.forEach(category => { const categoryEl = document.createElement('div'); categoryEl.innerHTML = `<div class="category-toggle p-2 rounded-md font-bold text-gray-700 cursor-pointer hover:bg-gray-200 flex justify-between items-center"><span><i class="fas fa-folder mr-2 text-indigo-500"></i>${category.title}</span><i class="fas fa-chevron-down text-sm text-gray-500"></i></div>`; const subcategoriesContainer = document.createElement('div'); subcategoriesContainer.className = 'ml-4'; categoryEl.appendChild(subcategoriesContainer); (category.subcategories || []).forEach(subcategory => { const subcategoryEl = document.createElement('div'); subcategoryEl.innerHTML = `<div class="category-toggle p-2 rounded-md font-semibold text-gray-600 cursor-pointer hover:bg-gray-100 flex justify-between items-center"><span><i class="fas fa-folder mr-2 text-yellow-500"></i>${subcategory.title}</span><i class="fas fa-chevron-down text-sm text-gray-400"></i></div>`; const coursesContainer = document.createElement('div'); coursesContainer.className = 'ml-4'; subcategoryEl.appendChild(coursesContainer); (subcategory.courses || []).forEach(course => { const isCompleted = userProgress[course.id] || false; const courseEl = document.createElement('div'); courseEl.innerHTML = `<a href="#" class="flex items-center p-3 rounded-lg transition duration-200 ${currentCourseId === course.id ? 'bg-indigo-100 text-indigo-700 font-bold' : 'hover:bg-gray-50'}"><i class="fas ${isCompleted ? 'fa-check-circle text-green-500' : 'fa-book-open text-gray-400'} mr-3"></i><span class="flex-1 text-sm">${course.title}</span></a>`; courseEl.querySelector('a').addEventListener('click', (e) => { e.preventDefault(); selectCourse(course.id); if (window.innerWidth < 1024) { closeSidebar(); } }); coursesContainer.appendChild(courseEl); }); subcategoryEl.querySelector('.category-toggle').addEventListener('click', (e) => { e.currentTarget.classList.toggle('collapsed'); coursesContainer.classList.toggle('hidden'); }); subcategoriesContainer.appendChild(subcategoryEl); }); categoryEl.querySelector('.category-toggle').addEventListener('click', (e) => { e.currentTarget.classList.toggle('collapsed'); subcategoriesContainer.classList.toggle('hidden'); }); courseListEl.appendChild(categoryEl); }); }
         function convertYoutubeUrlToEmbed(url) { if (!url) return ""; let videoId = null; try { const urlObj = new URL(url); if (urlObj.hostname.includes("youtube.com")) videoId = urlObj.searchParams.get("v"); else if (urlObj.hostname === "youtu.be") videoId = urlObj.pathname.substring(1); } catch (e) {} if (url.includes("embed/")) return url; if (videoId) return `https://www.youtube.com/embed/${videoId}`; return ""; }
         function selectCourse(courseId) { currentCourseId = courseId; const course = findCourseById(courseId); if (course) { welcomeMessageEl.classList.add('hidden'); courseDetailsEl.classList.remove('hidden'); courseTitleEl.textContent = course.title; courseDescriptionEl.textContent = course.description; youtubePlayerEl.src = convertYoutubeUrlToEmbed(course.youtubeUrl); googleFormLinkEl.href = course.googleFormUrl || '#'; updateCompletionButtonState(); renderCourseList(); } }
-        completionButtonEl.addEventListener('click', () => { if (currentCourseId) { userProgress[currentCourseId] = true; saveUserProgress(); } });
+        completionButtonEl.addEventListener('click', () => { if (currentCourseId) { userProgress[currentCourseId] = true; updateCompletionButtonState(); checkAllCompleted(); renderCourseList(); } });
         function updateCompletionButtonState() { if (!currentCourseId) return; const isCompleted = userProgress[currentCourseId] || false; completionButtonEl.disabled = isCompleted; if(isCompleted) { completionButtonEl.innerHTML = '<i class="fas fa-check-circle mr-2"></i>学習済み'; completionButtonEl.classList.add('bg-gray-400', 'cursor-not-allowed'); completionButtonEl.classList.remove('bg-green-500', 'hover:bg-green-600', 'hover:scale-105'); } else { completionButtonEl.innerHTML = '<i class="fas fa-check-circle mr-2"></i>学習完了にする'; completionButtonEl.classList.remove('bg-gray-400', 'cursor-not-allowed'); completionButtonEl.classList.add('bg-green-500', 'hover:bg-green-600', 'hover:scale-105'); } }
         function checkAllCompleted() { if (categories.length === 0) return badgeContainerEl.classList.add('hidden'); const allCourses = categories.flatMap(cat => (cat.subcategories || []).flatMap(sub => sub.courses || [])); if (allCourses.length === 0) return badgeContainerEl.classList.add('hidden'); const allCompleted = allCourses.every(course => userProgress[course.id]); badgeContainerEl.classList.toggle('hidden', !allCompleted); }
 
-
-        // =================================================================
-        // 管理画面ロジック
-        // =================================================================
-        loginForm.addEventListener('submit', (e) => { e.preventDefault(); if (e.target.username.value === 'admin' && e.target.password.value === 'pass') { loginScreen.classList.add('hidden'); adminDashboard.classList.remove('hidden'); initializeAdminPanel(); } else { loginError.classList.remove('hidden'); } });
-        async function initializeAdminPanel() { await loadCourseDataForAdmin(); renderEditor(); }
-        async function loadCourseDataForAdmin() { const docRef = doc(db, COURSE_DB_PATH, COURSE_DOC_ID); try { const docSnap = await getDoc(docRef); courseDataForAdmin = JSON.parse(JSON.stringify((docSnap.exists() && docSnap.data().categories) ? docSnap.data().categories : [])); } catch (error) { console.error("Error loading course data: ", error); alert("データの読み込みに失敗しました。"); } }
-        async function saveCourseData() { const docRef = doc(db, COURSE_DB_PATH, COURSE_DOC_ID); try { await setDoc(docRef, { categories: courseDataForAdmin }); alert("変更を保存しました！"); } catch (error) { console.error("Error saving course data: ", error); alert("データの保存に失敗しました。"); } }
-        saveChangesBtn.addEventListener('click', saveCourseData);
-
+        // 管理画面
+        loginForm.addEventListener('submit', (e) => { e.preventDefault(); if (e.target.username.value === 'admin' && e.target.password.value === 'pass') { loginScreen.classList.add('hidden'); adminDashboard.classList.remove('hidden'); renderEditor(); } else { loginError.classList.remove('hidden'); } });
+        
         function renderEditor() {
             courseEditor.innerHTML = '';
-            if (courseDataForAdmin.length === 0) courseEditor.innerHTML = `<p class="text-gray-500">コースがありません。「大カテゴリーを追加」から作成してください。</p>`;
-            courseDataForAdmin.forEach((category, catIdx) => courseEditor.appendChild(createCategoryElement(category, catIdx)));
+            if (categories.length === 0) courseEditor.innerHTML = `<p class="text-gray-500">コースがありません。「大カテゴリーを追加」から作成してください。</p>`;
+            categories.forEach((category, catIdx) => courseEditor.appendChild(createCategoryElement(category, catIdx)));
         }
-        
         function createCategoryElement(category, catIdx) { const el = document.createElement('div'); el.className = 'p-4 mb-4 border-2 border-indigo-200 rounded-lg'; el.innerHTML = `<div class="flex justify-between items-center mb-2"><h3 class="text-xl font-bold text-indigo-800">${category.title}</h3><div><button data-cat-idx="${catIdx}" class="add-subcategory-btn bg-blue-100 text-blue-700 px-3 py-1 text-sm rounded-md hover:bg-blue-200">中カテゴリー追加</button><button data-cat-idx="${catIdx}" class="delete-category-btn text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i></button></div></div>`; const subcategoriesContainer = document.createElement('div'); subcategoriesContainer.className = 'ml-4'; (category.subcategories || []).forEach((subcategory, subCatIdx) => subcategoriesContainer.appendChild(createSubcategoryElement(subcategory, catIdx, subCatIdx))); el.appendChild(subcategoriesContainer); return el; }
         function createSubcategoryElement(subcategory, catIdx, subCatIdx) { const el = document.createElement('div'); el.className = 'p-3 my-2 border-l-4 border-yellow-400'; el.innerHTML = `<div class="flex justify-between items-center mb-2"><h4 class="text-lg font-semibold text-gray-700">${subcategory.title}</h4><div><button data-cat-idx="${catIdx}" data-subcat-idx="${subCatIdx}" class="add-course-btn bg-green-100 text-green-700 px-3 py-1 text-sm rounded-md hover:bg-green-200">コース追加</button><button data-cat-idx="${catIdx}" data-subcat-idx="${subCatIdx}" class="delete-subcategory-btn text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i></button></div></div>`; const coursesContainer = document.createElement('div'); coursesContainer.className = 'ml-4'; (subcategory.courses || []).forEach((course, courseIdx) => coursesContainer.appendChild(createCourseElement(course, catIdx, subCatIdx, courseIdx))); el.appendChild(coursesContainer); return el; }
         function createCourseElement(course, catIdx, subCatIdx, courseIdx) { const el = document.createElement('div'); el.className = 'flex justify-between items-center p-2 my-1 bg-gray-50 rounded-md'; el.innerHTML = `<p><i class="fas fa-book-open text-gray-500 mr-2"></i>${course.title}</p><div><button data-cat-idx="${catIdx}" data-subcat-idx="${subCatIdx}" data-course-idx="${courseIdx}" class="edit-course-btn text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button><button data-cat-idx="${catIdx}" data-subcat-idx="${subCatIdx}" data-course-idx="${courseIdx}" class="delete-course-btn text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i></button></div>`; return el; }
@@ -220,26 +300,24 @@
         courseEditor.addEventListener('click', (e) => {
             const target = e.target.closest('button'); if (!target) return;
             const { catIdx, subcatIdx, courseIdx } = target.dataset;
-            if (target.classList.contains('delete-category-btn')) { const idx = parseInt(catIdx); showConfirmModal(`大カテゴリー「${courseDataForAdmin[idx].title}」を削除しますか？中のコースもすべて削除されます。`, () => { courseDataForAdmin.splice(idx, 1); renderEditor(); }); } 
-            else if (target.classList.contains('delete-subcategory-btn')) { const cIdx = parseInt(catIdx), sIdx = parseInt(subcatIdx); showConfirmModal(`中カテゴリー「${courseDataForAdmin[cIdx].subcategories[sIdx].title}」を削除しますか？`, () => { courseDataForAdmin[cIdx].subcategories.splice(sIdx, 1); renderEditor(); }); } 
-            else if (target.classList.contains('delete-course-btn')) { const cIdx = parseInt(catIdx), sIdx = parseInt(subcatIdx), coIdx = parseInt(courseIdx); showConfirmModal(`コース「${courseDataForAdmin[cIdx].subcategories[sIdx].courses[coIdx].title}」を削除しますか？`, () => { courseDataForAdmin[cIdx].subcategories[sIdx].courses.splice(coIdx, 1); renderEditor(); }); } 
-            else if (target.classList.contains('add-subcategory-btn')) { showInputModal("中カテゴリーの作成", "新しい中カテゴリー名:", (title) => { if(!courseDataForAdmin[catIdx].subcategories) courseDataForAdmin[catIdx].subcategories = []; courseDataForAdmin[catIdx].subcategories.push({ title: title, courses: [] }); renderEditor(); }); } 
-            else if (target.classList.contains('add-course-btn')) { showInputModal("コースの作成", "新しいコース名:", (title) => { if(!courseDataForAdmin[catIdx].subcategories[subcatIdx].courses) courseDataForAdmin[catIdx].subcategories[subcatIdx].courses = []; courseDataForAdmin[catIdx].subcategories[subcatIdx].courses.push({ id: `course_${Date.now()}`, title: title, description: "", youtubeUrl: "", googleFormUrl: "" }); renderEditor(); }); } 
-            else if (target.classList.contains('edit-course-btn')) { editingCourseInfo = { catIdx, subcatIdx, courseIdx }; const course = courseDataForAdmin[catIdx].subcategories[subcatIdx].courses[courseIdx]; document.getElementById('modal-course-id').value = course.id; document.getElementById('modal-course-title').value = course.title; document.getElementById('modal-course-description').value = course.description; document.getElementById('modal-youtube-url').value = course.youtubeUrl; document.getElementById('modal-google-form-url').value = course.googleFormUrl; courseModal.style.display = 'flex'; }
+            if (target.classList.contains('delete-category-btn')) { const idx = parseInt(catIdx); showConfirmModal(`大カテゴリー「${categories[idx].title}」を削除しますか？`, () => { categories.splice(idx, 1); renderEditor(); renderCourseList(); }); } 
+            else if (target.classList.contains('delete-subcategory-btn')) { const cIdx = parseInt(catIdx), sIdx = parseInt(subcatIdx); showConfirmModal(`中カテゴリー「${categories[cIdx].subcategories[sIdx].title}」を削除しますか？`, () => { categories[cIdx].subcategories.splice(sIdx, 1); renderEditor(); renderCourseList(); }); } 
+            else if (target.classList.contains('delete-course-btn')) { const cIdx = parseInt(catIdx), sIdx = parseInt(subcatIdx), coIdx = parseInt(courseIdx); showConfirmModal(`コース「${categories[cIdx].subcategories[sIdx].courses[coIdx].title}」を削除しますか？`, () => { categories[cIdx].subcategories[sIdx].courses.splice(coIdx, 1); renderEditor(); renderCourseList(); }); } 
+            else if (target.classList.contains('add-subcategory-btn')) { showInputModal("中カテゴリーの作成", "新しい中カテゴリー名:", (title) => { if(!categories[catIdx].subcategories) categories[catIdx].subcategories = []; categories[catIdx].subcategories.push({ title: title, courses: [] }); renderEditor(); renderCourseList(); }); } 
+            else if (target.classList.contains('add-course-btn')) { showInputModal("コースの作成", "新しいコース名:", (title) => { if(!categories[catIdx].subcategories[subcatIdx].courses) categories[catIdx].subcategories[subcatIdx].courses = []; categories[catIdx].subcategories[subcatIdx].courses.push({ id: `course_${Date.now()}`, title: title, description: "", youtubeUrl: "", googleFormUrl: "" }); renderEditor(); renderCourseList(); }); } 
+            else if (target.classList.contains('edit-course-btn')) { editingCourseInfo = { catIdx, subcatIdx, courseIdx }; const course = categories[catIdx].subcategories[subcatIdx].courses[courseIdx]; document.getElementById('modal-course-id').value = course.id; document.getElementById('modal-course-title').value = course.title; document.getElementById('modal-course-description').value = course.description; document.getElementById('modal-youtube-url').value = course.youtubeUrl; document.getElementById('modal-google-form-url').value = course.googleFormUrl; courseModal.style.display = 'flex'; }
         });
         
-        // =================================================================
         // モーダル制御
-        // =================================================================
         modalCancelBtn.addEventListener('click', () => { courseModal.style.display = 'none'; editingCourseInfo = null; });
         modalSaveBtn.addEventListener('click', () => {
-            if (editingCourseInfo) { const {catIdx, subcatIdx, courseIdx} = editingCourseInfo; const course = courseDataForAdmin[catIdx].subcategories[subcatIdx].courses[courseIdx]; course.title = document.getElementById('modal-course-title').value; course.description = document.getElementById('modal-course-description').value; course.youtubeUrl = document.getElementById('modal-youtube-url').value; course.googleFormUrl = document.getElementById('modal-google-form-url').value; courseModal.style.display = 'none'; editingCourseInfo = null; renderEditor(); }
+            if (editingCourseInfo) { const {catIdx, subcatIdx, courseIdx} = editingCourseInfo; const course = categories[catIdx].subcategories[subcatIdx].courses[courseIdx]; course.title = document.getElementById('modal-course-title').value; course.description = document.getElementById('modal-course-description').value; course.youtubeUrl = document.getElementById('modal-youtube-url').value; course.googleFormUrl = document.getElementById('modal-google-form-url').value; courseModal.style.display = 'none'; editingCourseInfo = null; renderEditor(); renderCourseList(); }
         });
         
         function showInputModal(title, label, callback) { inputModalTitle.textContent = title; inputModalLabel.textContent = label; inputModalText.value = ''; onInputModalSubmit = callback; inputModal.style.display = 'flex'; inputModalText.focus(); }
         inputModalOkBtn.addEventListener('click', () => { const text = inputModalText.value.trim(); if (text && onInputModalSubmit) { onInputModalSubmit(text); } inputModal.style.display = 'none'; onInputModalSubmit = null; });
         inputModalCancelBtn.addEventListener('click', () => { inputModal.style.display = 'none'; onInputModalSubmit = null; });
-        addCategoryBtn.addEventListener('click', () => { showInputModal("大カテゴリーの作成", "新しい大カテゴリー名:", (title) => { courseDataForAdmin.push({ title: title, subcategories: [] }); renderEditor(); }); });
+        addCategoryBtn.addEventListener('click', () => { showInputModal("大カテゴリーの作成", "新しい大カテゴリー名:", (title) => { categories.push({ title: title, subcategories: [] }); renderEditor(); renderCourseList(); }); });
         
         showCsvImportBtn.addEventListener('click', () => { csvModal.style.display = 'flex'; });
         csvModalCancelBtn.addEventListener('click', () => { csvModal.style.display = 'none'; });
@@ -250,15 +328,15 @@
             const reader = new FileReader();
             reader.onload = function(event) {
                 const csvText = event.target.result;
-                if (overwrite) { courseDataForAdmin = []; }
+                if (overwrite) { categories = []; }
                 const lines = csvText.split(/\r\n|\n/).slice(1); let importedCount = 0;
                 lines.forEach(line => {
                     if (!line.trim()) return; 
                     const columns = line.split(',');
                     if (columns.length < 3) return;
                     const [catTitle, subCatTitle, courseTitle, description, youtubeUrl, googleFormUrl] = columns.map(c => (c || "").trim());
-                    let category = courseDataForAdmin.find(c => c.title === catTitle);
-                    if (!category) { category = { title: catTitle, subcategories: [] }; courseDataForAdmin.push(category); }
+                    let category = categories.find(c => c.title === catTitle);
+                    if (!category) { category = { title: catTitle, subcategories: [] }; categories.push(category); }
                     if(!category.subcategories) category.subcategories = [];
                     let subcategory = category.subcategories.find(sc => sc.title === subCatTitle);
                     if (!subcategory) { subcategory = { title: subCatTitle, courses: [] }; category.subcategories.push(subcategory); }
@@ -267,7 +345,8 @@
                     subcategory.courses.push(newCourse);
                     importedCount++;
                 });
-                renderEditor(); alert(`${importedCount}件のコースをインポートしました。`); csvModal.style.display = 'none'; csvFileInput.value = ''; csvOverwriteCheckbox.checked = false;
+                renderEditor(); renderCourseList();
+                alert(`${importedCount}件のコースをインポートしました。`); csvModal.style.display = 'none'; csvFileInput.value = ''; csvOverwriteCheckbox.checked = false;
             };
             reader.readAsText(file);
         });
@@ -275,7 +354,6 @@
         function showConfirmModal(text, callback) { confirmModalText.textContent = text; onConfirm = callback; confirmModal.style.display = 'flex'; }
         confirmModalOkBtn.addEventListener('click', () => { if (onConfirm) { onConfirm(); } confirmModal.style.display = 'none'; onConfirm = null; });
         confirmModalCancelBtn.addEventListener('click', () => { confirmModal.style.display = 'none'; onConfirm = null; });
-
     </script>
 </body>
 </html>
