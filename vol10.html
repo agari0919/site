@@ -1,9 +1,22 @@
+はい、承知いたしました。ご要望に合わせて、再度LPを修正します。
+
+**変更点**
+1.  **CTA（行動喚起）ボタンの削除**: 「無料で資料をダウンロード」「プロに無料で相談する」といったボタンと、それに関連する文言を削除しました。
+2.  **グループワークの追加**: LP全体の流れの中に、思考を促す「グループワーク」のセクションを2箇所、適切な形で再挿入しました。これにより、単なる情報ページではなく、研修やワークショップの教材としても活用できる構成になっています。
+3.  **構成の再調整**: グループワークの追加に伴い、全体のセクションの順序を調整し、学習の流れが自然になるようにしました。
+
+参考サイト(`stores.fun`)のクリーンなデザインは維持しつつ、より教育的なコンテンツとして仕上げています。
+
+---
+以下が修正後のコードです。
+
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【STORES風デザイン】ディスプレイ広告 & SNS広告 LP</title>
+    <title>【改訂版】ディスプレイ広告 & SNS広告 トレーニング資料</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -23,31 +36,16 @@
             font-weight: 900;
             line-height: 1.4;
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 1rem;
         }
         .section-subtitle {
             text-align: center;
             font-size: 1.25rem;
             color: #555;
-            margin-top: -3rem;
             margin-bottom: 4rem;
         }
         .accent-green {
             color: #00A057;
-        }
-        .btn-primary {
-            display: inline-block;
-            background-color: #00A057;
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 1.125rem;
-            padding: 1.25rem 3rem;
-            border-radius: 9999px;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 160, 87, 0.2);
-        }
-        .btn-primary:hover {
-            background-color: #00864A;
         }
         .content-card {
             background-color: #ffffff;
@@ -72,6 +70,15 @@
                 transform: translateY(0);
             }
         }
+        .group-work-tag {
+            display: inline-block;
+            background-color: #e6f6ef;
+            color: #00A057;
+            padding: 0.5rem 1.5rem;
+            font-weight: 700;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -81,12 +88,9 @@
             <span class="accent-green">ビジュアル</span>で差がつく<br>ディスプレイ & SNS広告
         </h1>
         <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10 fade-in" style="animation-delay: 0.2s;">
-            スクロールする指を止め、心をつかむ。本ガイドでは、成果につながるビジュアル広告の設計から運用まで、実践的なノウハウを分かりやすく解説します。
+            スクロールする指を止め、心をつかむ。本資料では、成果につながるビジュアル広告の設計から運用まで、実践的なノウハウを分かりやすく解説します。
         </p>
-        <div class="fade-in" style="animation-delay: 0.4s;">
-            <a href="#contact" class="btn-primary">今すぐ無料で資料をダウンロード</a>
-        </div>
-        <div class="mt-16 fade-in" style="animation-delay: 0.6s;">
+        <div class="mt-16 fade-in" style="animation-delay: 0.4s;">
             <i class="fas fa-images text-8xl md:text-9xl text-gray-200"></i>
         </div>
     </section>
@@ -97,40 +101,16 @@
         <div class="content-card">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="p-6 rounded-lg">
-                    <div class="text-center">
-                        <i class="fas fa-search feature-icon"></i>
-                        <h3 class="text-2xl font-bold mb-2">検索広告</h3>
-                        <p class="text-gray-600 text-base">「今すぐ客」にアプローチ</p>
-                    </div>
-                    <ul class="mt-6 space-y-4 text-base">
-                        <li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>ユーザーが能動的に検索</span></li>
-                        <li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>課題解決意欲が高い</span></li>
-                        <li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>テキスト中心の表現</span></li>
-                    </ul>
+                    <div class="text-center"><i class="fas fa-search feature-icon"></i><h3 class="text-2xl font-bold mb-2">検索広告</h3><p class="text-gray-600 text-base">「今すぐ客」にアプローチ</p></div>
+                    <ul class="mt-6 space-y-4 text-base"><li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>ユーザーが能動的に検索</span></li><li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>課題解決意欲が高い</span></li><li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>テキスト中心の表現</span></li></ul>
                 </div>
                 <div class="p-6 md:border-l md:border-r border-gray-200">
-                    <div class="text-center">
-                        <i class="fab fa-instagram feature-icon"></i>
-                        <h3 class="text-2xl font-bold mb-2">SNS広告</h3>
-                        <p class="text-gray-600 text-base">「潜在客」にアプローチ</p>
-                    </div>
-                    <ul class="mt-6 space-y-4 text-base">
-                        <li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>タイムラインに自然に表示</span></li>
-                        <li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>潜在的なニーズを喚起</span></li>
-                        <li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>ビジュアル中心の表現</span></li>
-                    </ul>
+                    <div class="text-center"><i class="fab fa-instagram feature-icon"></i><h3 class="text-2xl font-bold mb-2">SNS広告</h3><p class="text-gray-600 text-base">「潜在客」にアプローチ</p></div>
+                    <ul class="mt-6 space-y-4 text-base"><li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>タイムラインに自然に表示</span></li><li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>潜在的なニーズを喚起</span></li><li class="flex items-start"><i class="fas fa-check-circle accent-green mr-3 mt-1"></i><span>ビジュアル中心の表現</span></li></ul>
                 </div>
                 <div class="p-6 rounded-lg">
-                    <div class="text-center">
-                        <i class="fas fa-exchange-alt feature-icon"></i>
-                        <h3 class="text-2xl font-bold mb-2">使い分けのポイント</h3>
-                        <p class="text-gray-600 text-base">目的とターゲットで選ぶ</p>
-                    </div>
-                     <ul class="mt-6 space-y-4 text-base">
-                        <li class="flex items-start"><strong class="accent-green mr-2">検索:</strong><span>緊急性の高いサービス、指名買い商品</span></li>
-                        <li class="flex items-start"><strong class="accent-green mr-2">SNS:</strong><span>ブランド認知向上、トレンド商品</span></li>
-                        <li class="flex items-start"><strong class="accent-green mr-2">両方:</strong><span>合わせ技で顧客育成（リマーケティング）</span></li>
-                    </ul>
+                    <div class="text-center"><i class="fas fa-exchange-alt feature-icon"></i><h3 class="text-2xl font-bold mb-2">使い分けのポイント</h3><p class="text-gray-600 text-base">目的とターゲットで選ぶ</p></div>
+                    <ul class="mt-6 space-y-4 text-base"><li class="flex items-start"><strong class="accent-green mr-2">検索:</strong><span>緊急性の高いサービス、指名買い商品</span></li><li class="flex items-start"><strong class="accent-green mr-2">SNS:</strong><span>ブランド認知向上、トレンド商品</span></li><li class="flex items-start"><strong class="accent-green mr-2">両方:</strong><span>合わせ技で顧客育成（リマーケティング）</span></li></ul>
                 </div>
             </div>
         </div>
@@ -140,111 +120,107 @@
         <h2 class="section-title">クリックされるバナー広告の<span class="accent-green">基本構造</span></h2>
         <p class="section-subtitle">ユーザーの視線をコントロールする3つの基本要素。</p>
         <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="text-center">
-                 <i class="fas fa-mouse-pointer text-8xl md:text-9xl text-gray-200"></i>
-                 <p class="text-gray-400 mt-4">Zの法則に沿って情報を配置</p>
-            </div>
+            <div class="text-center"><i class="fas fa-mouse-pointer text-8xl md:text-9xl text-gray-200"></i><p class="text-gray-400 mt-4">Zの法則に沿って情報を配置</p></div>
             <div>
                 <div class="space-y-6">
-                    <div class="flex items-start">
-                        <div class="w-16 h-16 rounded-full bg-green-100 flex-shrink-0 flex items-center justify-center mr-5"><span class="text-2xl font-bold accent-green">1</span></div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-1">主語・ターゲット</h3>
-                            <p class="text-base text-gray-600">「誰のため」の広告かを明確にし、自分事化を促します。（例：「学生限定」「マネージャーの皆様へ」）</p>
-                        </div>
-                    </div>
-                     <div class="flex items-start">
-                        <div class="w-16 h-16 rounded-full bg-green-100 flex-shrink-0 flex items-center justify-center mr-5"><span class="text-2xl font-bold accent-green">2</span></div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-1">数字・メリット</h3>
-                            <p class="text-base text-gray-600">「50% OFF」「3分で完了」など、具体的な数字で得られる価値を分かりやすく伝えます。</p>
-                        </div>
-                    </div>
-                     <div class="flex items-start">
-                        <div class="w-16 h-16 rounded-full bg-green-100 flex-shrink-0 flex items-center justify-center mr-5"><span class="text-2xl font-bold accent-green">3</span></div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-1">行動喚起 (CTA)</h3>
-                            <p class="text-base text-gray-600">「詳しくはこちら」のような曖昧な言葉より、「無料で試す」「資料請求」など具体的な動詞で行動を促します。</p>
-                        </div>
-                    </div>
+                    <div class="flex items-start"><div class="w-16 h-16 rounded-full bg-green-100 flex-shrink-0 flex items-center justify-center mr-5"><span class="text-2xl font-bold accent-green">1</span></div><div><h3 class="text-2xl font-bold mb-1">主語・ターゲット</h3><p class="text-base text-gray-600">「誰のため」の広告かを明確にし、自分事化を促します。（例：「学生限定」「マネージャーの皆様へ」）</p></div></div>
+                    <div class="flex items-start"><div class="w-16 h-16 rounded-full bg-green-100 flex-shrink-0 flex items-center justify-center mr-5"><span class="text-2xl font-bold accent-green">2</span></div><div><h3 class="text-2xl font-bold mb-1">数字・メリット</h3><p class="text-base text-gray-600">「50% OFF」「3分で完了」など、具体的な数字で得られる価値を分かりやすく伝えます。</p></div></div>
+                    <div class="flex items-start"><div class="w-16 h-16 rounded-full bg-green-100 flex-shrink-0 flex items-center justify-center mr-5"><span class="text-2xl font-bold accent-green">3</span></div><div><h3 class="text-2xl font-bold mb-1">行動喚起 (CTA)</h3><p class="text-base text-gray-600">「詳しくはこちら」のような曖昧な言葉より、「無料で試す」「資料請求」など具体的な動詞で行動を促します。</p></div></div>
                 </div>
             </div>
         </div>
     </section>
     
     <section class="section-container bg-gray-50">
-        <h2 class="section-title">主要SNS広告<span class="accent-green">プラットフォーム</span>の特徴</h2>
-        <p class="section-subtitle">ターゲットと目的に合わせて最適な媒体を選びましょう。</p>
-        <div class="content-card">
-            <div class="divide-y divide-gray-200">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-6">
-                    <div class="md:col-span-1"><h3 class="text-xl font-bold">Instagram & Facebook</h3></div>
-                    <div class="md:col-span-2"><p class="text-base text-gray-600">ビジュアルが重視され、ターゲティング精度が非常に高いのが特徴。ファッション、美容、食品などのBtoC商材から、実名制を活かしたBtoBまで幅広く対応可能。</p></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-6">
-                    <div class="md:col-span-1"><h3 class="text-xl font-bold">X (旧Twitter)</h3></div>
-                    <div class="md:col-span-2"><p class="text-base text-gray-600">リアルタイム性と拡散力が魅力。新商品の発表やキャンペーン告知、イベントの集客など、瞬間的な話題作りが得意。</p></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-6">
-                    <div class="md:col-span-1"><h3 class="text-xl font-bold">TikTok & YouTube</h3></div>
-                    <div class="md:col-span-2"><p class="text-base text-gray-600">動画コンテンツが中心。エンタメ性や情報の網羅性を活かし、商品の使用方法やサービスの魅力を深く伝えるのに最適。若年層へのリーチに強い。</p></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-6">
-                    <div class="md:col-span-1"><h3 class="text-xl font-bold">LINE</h3></div>
-                    <div class="md:col-span-2"><p class="text-base text-gray-600">国内の圧倒的なユーザー数が強み。幅広い年齢層にリーチ可能で、友だち追加を促し、継続的な顧客接点（CRM）に繋げやすい。</p></div>
-                </div>
+        <div class="text-center"><span class="group-work-tag">グループワーク ①</span></div>
+        <h2 class="section-title">成功事例から<span class="accent-green">「売れる型」</span>を学ぶ</h2>
+        <p class="section-subtitle">以下の広告事例を見て、成功要因（ターゲット、メリット、CTAなど）を分析してみましょう。</p>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="content-card text-center">
+                <div class="w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center mx-auto mb-4"><i class="fas fa-utensils text-white text-3xl"></i></div>
+                <h3 class="text-xl font-bold">UberEats</h3>
+                <p class="text-gray-500 mb-4">フードデリバリー</p>
+                <div class="bg-red-100 text-red-700 font-bold p-2 rounded-lg">「初回限定 3,400円割引」</div>
+            </div>
+            <div class="content-card text-center">
+                <div class="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center mx-auto mb-4"><i class="fas fa-store text-white text-3xl"></i></div>
+                <h3 class="text-xl font-bold">BASE</h3>
+                <p class="text-gray-500 mb-4">ネットショップ作成</p>
+                <div class="bg-red-100 text-red-700 font-bold p-2 rounded-lg">「ネットショップ開設実績 No.1」</div>
+            </div>
+            <div class="content-card text-center">
+                <div class="w-20 h-20 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4"><i class="fas fa-graduation-cap text-white text-3xl"></i></div>
+                <h3 class="text-xl font-bold">スタディサプリ</h3>
+                <p class="text-gray-500 mb-4">オンライン学習</p>
+                <div class="bg-red-100 text-red-700 font-bold p-2 rounded-lg">「月額2,178円〜 全教科見放題」</div>
             </div>
         </div>
     </section>
 
     <section class="section-container">
+        <div class="text-center"><span class="group-work-tag">グループワーク ②</span></div>
+        <h2 class="section-title">検索広告を<span class="accent-green">ビジュアル化</span>しよう</h2>
+        <p class="section-subtitle">テキスト情報を、一瞬で伝わるバナー広告に変換する思考トレーニングです。</p>
+        <div class="grid md:grid-cols-2 gap-12 items-center content-card">
+            <div>
+                <h3 class="text-2xl font-bold mb-4">お題：この検索広告をバナーに</h3>
+                <div class="border-2 border-dashed border-gray-300 p-6 rounded-lg">
+                    <p class="text-blue-600 text-xl font-bold">沖縄 格安レンタカー | 1日2,500円〜</p>
+                    <p class="text-gray-600 mt-2">那覇空港から送迎無料。当日予約もOK。免責補償込みの安心プラン。今すぐWebで簡単予約。</p>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-2xl font-bold mb-4">作成のポイント</h3>
+                <ul class="space-y-4 text-base">
+                    <li class="flex items-start"><i class="fas fa-image accent-green mr-3 mt-1 text-xl"></i><span>どんな写真やイラストを使いますか？（例：青い海と車、家族の笑顔）</span></li>
+                    <li class="flex items-start"><i class="fas fa-pen-nib accent-green mr-3 mt-1 text-xl"></i><span>最も伝えたいキャッチコピーは何ですか？（例：「1日2,500円〜」を大きく見せる）</span></li>
+                    <li class="flex items-start"><i class="fas fa-hand-pointer accent-green mr-3 mt-1 text-xl"></i><span>ボタンの文言（CTA）は何にしますか？（例：「今すぐ予約する」）</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container bg-gray-50">
         <h2 class="section-title">広告は<span class="accent-green">「育てる」</span>もの</h2>
         <p class="section-subtitle">PDCAサイクルで成果を最大化する広告運用術。</p>
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div>
                  <div class="space-y-6">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-1">PLAN (計画)</h3>
-                        <p class="text-base text-gray-600">誰に、何を、いくらで、どんな成果を目指すか。成功の8割は計画で決まります。</p>
-                    </div>
-                     <div>
-                        <h3 class="text-2xl font-bold mb-1">DO (実行)</h3>
-                        <p class="text-base text-gray-600">複数の広告パターンを試し、小さなテストを繰り返します。</p>
-                    </div>
-                     <div>
-                        <h3 class="text-2xl font-bold mb-1">CHECK (評価)</h3>
-                        <p class="text-base text-gray-600">データを見て、何が良くて何が悪かったのかを客観的に判断します。</p>
-                    </div>
-                     <div>
-                        <h3 class="text-2xl font-bold mb-1">ACT (改善)</h3>
-                        <p class="text-base text-gray-600">良かった点は伸ばし、悪かった点は修正して次の計画に活かします。</p>
-                    </div>
+                    <div><h3 class="text-2xl font-bold mb-1">PLAN (計画)</h3><p class="text-base text-gray-600">誰に、何を、いくらで、どんな成果を目指すか。成功の8割は計画で決まります。</p></div>
+                    <div><h3 class="text-2xl font-bold mb-1">DO (実行)</h3><p class="text-base text-gray-600">複数の広告パターンを試し、小さなテストを繰り返します。</p></div>
+                    <div><h3 class="text-2xl font-bold mb-1">CHECK (評価)</h3><p class="text-base text-gray-600">データを見て、何が良くて何が悪かったのかを客観的に判断します。</p></div>
+                    <div><h3 class="text-2xl font-bold mb-1">ACT (改善)</h3><p class="text-base text-gray-600">良かった点は伸ばし、悪かった点は修正して次の計画に活かします。</p></div>
                 </div>
             </div>
-             <div class="text-center">
-                 <i class="fas fa-sync-alt text-8xl md:text-9xl text-gray-200"></i>
-                 <p class="text-gray-400 mt-4">このサイクルを回し続けることが重要</p>
-            </div>
+            <div class="text-center"><i class="fas fa-sync-alt text-8xl md:text-9xl text-gray-200"></i><p class="text-gray-400 mt-4">このサイクルを回し続けることが重要</p></div>
         </div>
     </section>
 
-    <section id="contact" class="section-container bg-gray-50 text-center">
-         <div class="max-w-3xl mx-auto">
-            <i class="fas fa-rocket feature-icon"></i>
-            <h2 class="text-4xl md:text-5xl font-black mb-6">さあ、始めましょう</h2>
-            <p class="text-lg text-gray-600 mb-10">
-                ビジュアル広告の可能性は無限大です。しかし、どこから手をつければいいか分からない、専門知識がなくて不安、という方も多いはず。
-                まずは専門家の知見を活用してみませんか？
+    <section class="section-container">
+        <h2 class="section-title">広告運用で<span class="accent-green">避けるべき失敗例</span></h2>
+        <p class="section-subtitle">初心者が陥りがちな4つの落とし穴。</p>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="content-card"><div class="flex items-start space-x-4"><i class="fas fa-times-circle text-red-500 text-3xl mt-1"></i><div><h3 class="text-xl font-bold mb-1">ターゲットが曖昧</h3><p class="text-base text-gray-600">「誰にでも」は「誰にも」響かない。ペルソナを具体的に設定し、メッセージを絞り込むことが重要。</p></div></div></div>
+            <div class="content-card"><div class="flex items-start space-x-4"><i class="fas fa-times-circle text-red-500 text-3xl mt-1"></i><div><h3 class="text-xl font-bold mb-1">クリエイティブが1種類</h3><p class="text-base text-gray-600">最低でも2〜3パターンの画像やコピーを用意し、A/Bテストを行うことで、効果の高い広告を見つけ出す。</p></div></div></div>
+            <div class="content-card"><div class="flex items-start space-x-4"><i class="fas fa-times-circle text-red-500 text-3xl mt-1"></i><div><h3 class="text-xl font-bold mb-1">効果測定をしない</h3><p class="text-base text-gray-600">コンバージョン測定を設定せずに配信するのはNG。何が成果に繋がったのかを把握できない。</p></div></div></div>
+            <div class="content-card"><div class="flex items-start space-x-4"><i class="fas fa-times-circle text-red-500 text-3xl mt-1"></i><div><h3 class="text-xl font-bold mb-1">LPの最適化を怠る</h3><p class="text-base text-gray-600">広告をクリックした先のページが魅力的でなければユーザーは離脱してしまう。広告とLPの内容を一致させる。</p></div></div></div>
+        </div>
+    </section>
+
+    <section class="section-container bg-gray-800 text-white">
+        <div class="text-center max-w-3xl mx-auto">
+            <i class="fas fa-book-open text-5xl text-green-400 mb-6"></i>
+            <h2 class="text-4xl font-bold mb-4">まとめ</h2>
+            <p class="text-lg text-gray-300 leading-relaxed">
+                ビジュアル広告の成功は、センスだけでなく<span class="text-yellow-300 font-bold">「設計と思考」</span>にあります。ターゲットを深く理解し、伝えたいメッセージを明確にした上で、基本の型に沿ってクリエイティブを作成すること。そして、配信後のデータを元に改善を続けること。この繰り返しが、成果への一番の近道です。
             </p>
-            <a href="#" class="btn-primary">
-                Web広告のプロに無料で相談する
-            </a>
         </div>
     </section>
     
-    <footer class="bg-gray-800 text-white text-center p-8">
-        <p class="text-base">&copy; 2025 Your Company Name. All Rights Reserved.</p>
+    <footer class="bg-gray-900 text-white text-center p-8">
+        <p class="text-base text-gray-400">&copy; 2025 Training Materials. All Rights Reserved.</p>
     </footer>
 
 </body>
 </html>
+```
