@@ -3,662 +3,455 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第8回：検索 & リスティング広告講義 - 統合LP</title>
+    <title>検索 & リスティング広告講義</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Global Styles */
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: #f9fafb; /* bg-gray-50 */
+            background-color: #e5e7eb; /* bg-gray-200 */
         }
         .slide-container {
             width: 1280px;
             min-height: 720px;
-            margin: 40px auto; /* Add margin for spacing between slides */
+            margin: 20px auto;
             position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #d1d5db; /* border-gray-300 */
         }
-
-        /* Animations */
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        .formula-box {
+            border: 2px solid #4f46e5; /* border-indigo-600 */
+            padding: 1rem;
+            border-radius: 0.5rem;
         }
-        @keyframes pulse-scale {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        @keyframes pulse-opacity {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        @keyframes pulse-opacity-badge {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        @keyframes pulse-glow {
-            from { box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3); }
-            to { box-shadow: 0 8px 40px rgba(59, 130, 246, 0.6); }
-        }
-        @keyframes slide-pattern {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        @keyframes pulse-arrow {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        @keyframes sparkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.1); }
-        }
-
-        /* Slide‑specific styles omitted for brevity — they remain exactly as provided by the user */
     </style>
 </head>
+
 <body>
 
-    <!-- 以降、ユーザーが提供した各 <section> コードをそのまま配置しています -->
-    <!-- slide1 ～ slide13 の内容は、見た目も内容も一切変更せず貼り付け -->
-
-    <section id="slide1">
-        <div class="slide-container bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-            <header class="text-center pt-12 pb-8">
-                <h1 class="text-6xl font-black text-gray-800 mb-4">
-                    なぜ今も<span class="gradient-text">検索</span>なのか？
-                </h1>
-                <p class="text-xl text-gray-600 font-medium">第8回：検索 & リスティング広告 ― 入口最適化で届ける力</p>
-            </header>
-            <div class="flex-1 px-16 pb-12">
-                <div class="text-center mb-12">
-                    <div class="search-box inline-flex items-center text-white text-2xl font-bold">
-                        <i class="fas fa-search mr-4 icon-bounce"></i>
-                        「検索窓」は最強の発見装置
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-8 mb-8">
-                    <div class="comparison-card rounded-2xl p-8 border-l-8 border-blue-500">
-                        <div class="flex items-center mb-6">
-                            <i class="fas fa-search text-4xl text-blue-500 mr-4"></i>
-                            <h3 class="text-3xl font-bold text-gray-800">検索</h3>
-                        </div>
-                        <ul class="space-y-4 text-lg text-gray-700">
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i><span><strong>意図</strong>で動く明確な行動</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i><span><strong>購入意欲</strong>の高いシグナル</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i><span>ノイズが少なく<strong>精度が高い</strong></span></li>
-                        </ul>
-                    </div>
-                    <div class="comparison-card rounded-2xl p-8 border-l-8 border-orange-400">
-                        <div class="flex items-center mb-6">
-                            <i class="fab fa-twitter text-4xl text-orange-400 mr-4"></i>
-                            <h3 class="text-3xl font-bold text-gray-800">SNS</h3>
-                        </div>
-                        <ul class="space-y-4 text-lg text-gray-700">
-                            <li class="flex items-start"><i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-1"></i><span><strong>ノイズ</strong>が多い環境</span></li>
-                            <li class="flex items-start"><i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-1"></i><span>偶発的な<strong>発見</strong>が中心</span></li>
-                            <li class="flex items-start"><i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-1"></i><span>意図が<strong>曖昧</strong>なユーザー</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-blue-200">
-                    <div class="flex items-center justify-center">
-                        <i class="fas fa-chart-line text-3xl text-blue-600 mr-4"></i>
-                        <div class="text-center">
-                            <p class="text-sm text-gray-600 mb-1">Google Think with Google (2022)</p>
-                            <p class="text-2xl font-bold text-gray-800">「検索は<span class="text-blue-600">買う気のシグナル</span>」</p>
-                        </div>
-                    </div>
+    <!-- Slide 1: なぜ今も検索なのか？ -->
+    <div class="slide-container bg-blue-50 flex flex-col p-12">
+        <header class="text-center mb-10">
+            <h1 class="text-7xl font-black text-gray-900 mb-4">
+                なぜ今も<span class="text-blue-600">検索</span>なのか？
+            </h1>
+            <p class="text-2xl text-gray-700">検索 & リスティング広告 ― ユーザーの「意図」を捉える力</p>
+        </header>
+        <div class="flex-1">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center text-white text-3xl font-bold rounded-full px-8 py-4" style="background-color: #2563eb;">
+                    <i class="fas fa-search mr-4"></i>
+                    <span>「検索窓」は最強の意図発見装置</span>
                 </div>
             </div>
-            <footer class="text-center py-4 bg-white bg-opacity-50">
-                <p class="text-gray-500 text-sm">Blue Reef Café を"探していない人"にも届ける戦略</p>
-            </footer>
-        </div>
-    </section>
-
-    <section id="slide2">
-        <div class="slide-container gradient-bg flex flex-col">
-            <header class="text-center pt-8 pb-6">
-                <h1 class="text-5xl font-black text-gray-800 mb-3">本日の<span class="text-blue-600">学習目標</span></h1>
-                <p class="text-lg text-gray-600 font-medium">3つのスキルで検索マーケティングをマスターする</p>
-            </header>
-            <div class="flex-1 px-12 pb-8">
-                <div class="grid grid-cols-3 gap-8 mb-8">
-                    <div class="objective-card rounded-2xl p-8 pt-12 shadow-lg relative">
-                        <div class="objective-number">1</div>
-                        <div class="text-center">
-                            <i class="fas fa-bullseye text-5xl text-blue-500 mb-4 icon-pulse"></i>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4">表示席設計</h3>
-                            <p class="text-gray-600 leading-relaxed">検索結果での<br>最適なポジション<br>獲得戦略</p>
-                        </div>
+            <div class="grid grid-cols-2 gap-10">
+                <div class="bg-white rounded-lg p-8 border-l-8 border-blue-500">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-search text-5xl text-blue-500 mr-4"></i>
+                        <h3 class="text-4xl font-bold text-gray-900">検索</h3>
                     </div>
-                    <div class="objective-card rounded-2xl p-8 pt-12 shadow-lg relative">
-                        <div class="objective-number">2</div>
-                        <div class="text-center">
-                            <i class="fas fa-flask text-5xl text-green-500 mb-4 icon-pulse"></i>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4">広告A/B</h3>
-                            <p class="text-gray-600 leading-relaxed">科学的な<br>広告文テスト<br>最適化手法</p>
-                        </div>
-                    </div>
-                    <div class="objective-card rounded-2xl p-8 pt-12 shadow-lg relative">
-                        <div class="objective-number">3</div>
-                        <div class="text-center">
-                            <i class="fas fa-calculator text-5xl text-purple-500 mb-4 icon-pulse"></i>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4">CPA計算</h3>
-                            <p class="text-gray-600 leading-relaxed">費用対効果の<br>正確な測定と<br>改善指標理解</p>
-                        </div>
-                    </div>
+                    <ul class="space-y-4 text-3xl text-gray-800">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-3 mt-2"></i><span><strong>意図</strong>が明確な行動</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-3 mt-2"></i><span><strong>購入意欲</strong>の高いシグナル</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-3 mt-2"></i><span>ノイズが少なく<strong>精度が高い</strong></span></li>
+                    </ul>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-lg border-l-8 border-blue-500">
-                    <div class="flex items-center">
-                        <i class="fas fa-rocket text-3xl text-blue-600 mr-6"></i>
-                        <div>
-                            <h4 class="text-xl font-bold text-gray-800 mb-2">期待される成果</h4>
-                            <p class="text-gray-700 text-lg">Blue Reef Café を<strong>"探していない人"</strong>にも届ける具体的スキルの習得</p>
-                        </div>
+                <div class="bg-white rounded-lg p-8 border-l-8 border-gray-400">
+                    <div class="flex items-center mb-6">
+                        <i class="fab fa-twitter text-5xl text-gray-400 mr-4"></i>
+                        <h3 class="text-4xl font-bold text-gray-900">SNS</h3>
                     </div>
-                </div>
-                <div class="mt-6 text-center">
-                    <div class="flex items-center justify-center space-x-4 text-gray-500">
-                        <span class="bg-blue-100 px-4 py-2 rounded-full text-blue-700 font-medium">理論学習</span>
-                        <i class="fas fa-arrow-right"></i>
-                        <span class="bg-green-100 px-4 py-2 rounded-full text-green-700 font-medium">実践ワーク</span>
-                        <i class="fas fa-arrow-right"></i>
-                        <span class="bg-purple-100 px-4 py-2 rounded-full text-purple-700 font-medium">スキル定着</span>
-                    </div>
+                    <ul class="space-y-4 text-3xl text-gray-800">
+                        <li class="flex items-start"><i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-2"></i><span><strong>ノイズ</strong>が多い環境</span></li>
+                        <li class="flex items-start"><i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-2"></i><span>偶発的な<strong>発見</strong>が中心</span></li>
+                        <li class="flex items-start"><i class="fas fa-exclamation-triangle text-yellow-500 mr-3 mt-2"></i><span>意図が<strong>曖昧</strong>なユーザー</span></li>
+                    </ul>
                 </div>
             </div>
-            <footer class="text-center py-4 bg-white bg-opacity-70">
-                <p class="text-gray-500 text-sm">90分で検索マーケティングの実践力を身につける</p>
-            </footer>
         </div>
-    </section>
+        <footer class="text-center mt-8 pt-4 border-t"><p class="text-gray-600 text-xl">"探していない人"にも届ける戦略</p></footer>
+    </div>
 
-    <section id="slide3">
-        <div class="slide-container bg-gradient-to-br from-red-50 to-orange-50 flex flex-col">
-            <header class="text-center pt-8 pb-6">
-                <h1 class="text-5xl font-black text-gray-800 mb-3"><span class="stat-highlight">ゼロクリック</span>時代の検索</h1>
-                <p class="text-lg text-gray-600 font-medium">表示席の重要性が劇的に高まっている</p>
-            </header>
-            <div class="flex-1 px-12 pb-6">
-                <div class="grid grid-cols-2 gap-12 items-center">
-                    <div class="text-center">
-                        <div class="mb-8">
-                            <div class="text-8xl font-black text-red-500 pulse-animation-opacity">65%</div>
-                            <p class="text-xl text-gray-700 font-semibold mt-2">モバイル検索でクリックされない</p>
-                        </div>
-                        <div class="flex justify-center mb-6">
-                            <div class="chart-container-doughnut">
-                                <canvas id="zeroClickChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-lg p-3 shadow-sm border-l-4 border-blue-500">
-                            <p class="text-sm text-gray-600"><i class="fas fa-chart-bar mr-2"></i>Sparktoro + SimilarWeb (2021)</p>
-                        </div>
-                    </div>
-                    <div class="space-y-6">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6"><i class="fas fa-exclamation-triangle text-orange-500 mr-3"></i>これが意味すること</h3>
-                        <div class="space-y-4">
-                            <div class="insight-card rounded-xl p-5 shadow-lg border-l-4 border-red-400">
-                                <div class="flex items-start">
-                                    <i class="fas fa-eye text-red-500 text-xl mr-4 mt-1"></i>
-                                    <div>
-                                        <h4 class="font-bold text-gray-800 text-lg mb-2">表示席が勝負</h4>
-                                        <p class="text-gray-600">検索結果画面での見え方がすべてを決める</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="insight-card rounded-xl p-5 shadow-lg border-l-4 border-orange-400">
-                                <div class="flex items-start">
-                                    <i class="fas fa-mobile-alt text-orange-500 text-xl mr-4 mt-1"></i>
-                                    <div>
-                                        <h4 class="font-bold text-gray-800 text-lg mb-2">モバイル最優先</h4>
-                                        <p class="text-gray-600">スマホ画面での表示最適化が必須</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="insight-card rounded-xl p-5 shadow-lg border-l-4 border-blue-400">
-                                <div class="flex items-start">
-                                    <i class="fas fa-star text-blue-500 text-xl mr-4 mt-1"></i>
-                                    <div>
-                                        <h4 class="font-bold text-gray-800 text-lg mb-2">リッチスニペット</h4>
-                                        <p class="text-gray-600">FAQ、評価、画像などで目立つ工夫</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-4 text-white">
-                            <div class="flex items-center">
-                                <i class="fas fa-lightbulb text-2xl mr-4"></i>
-                                <div>
-                                    <p class="font-bold text-lg">Blue Reef Café の戦略</p>
-                                    <p class="text-sm opacity-90">検索結果で"クリックされなくても"存在感を示す</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Slide 2: 学習目標 -->
+    <div class="slide-container bg-white flex flex-col p-12">
+        <header class="text-center mb-10">
+            <h1 class="text-6xl font-black text-gray-900 mb-3">本日の<span class="text-blue-600">学習目標</span></h1>
+            <p class="text-xl text-gray-700">3つのスキルで検索マーケティングをマスターする</p>
+        </header>
+        <div class="flex-1">
+            <div class="grid grid-cols-3 gap-10 mb-12">
+                <div class="bg-gray-50 rounded-lg p-8 text-center border-t-4 border-blue-500">
+                    <i class="fas fa-bullseye text-6xl text-blue-500 mb-4"></i>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">広告の表示位置設計</h3>
+                    <p class="text-gray-700 text-2xl leading-relaxed">検索結果での<br>最適なポジション<br>獲得戦略</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-8 text-center border-t-4 border-green-500">
+                    <i class="fas fa-flask text-6xl text-green-500 mb-4"></i>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">広告A/Bテスト</h3>
+                    <p class="text-gray-700 text-2xl leading-relaxed">科学的な<br>広告文テスト<br>最適化手法</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-8 text-center border-t-4 border-purple-500">
+                    <i class="fas fa-calculator text-6xl text-purple-500 mb-4"></i>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">CPA計算</h3>
+                    <p class="text-gray-700 text-2xl leading-relaxed">費用対効果の<br>正確な測定と<br>改善指標理解</p>
                 </div>
             </div>
-            <footer class="text-center py-4 bg-white bg-opacity-70">
-                <p class="text-gray-500 text-sm">表示席を制する者が検索マーケティングを制する</p>
-            </footer>
-        </div>
-    </section>
-
-    <section id="slide4">
-        <div class="slide-container bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col">
-            <header class="text-center pt-6 pb-4">
-                <h1 class="text-4xl font-black text-gray-800 mb-2">検索意図 × <span class="text-blue-600">STDC</span>マッピング</h1>
-                <p class="text-base text-gray-600 font-medium">ユーザーの心理段階と検索行動の交差点を理解する</p>
-            </header>
-            <div class="flex-1 px-8 pb-4">
-                <div class="mb-6">
-                    <div class="flex">
-                        <div class="w-24 flex items-center justify-center">
-                            <div class="transform -rotate-90 text-sm font-bold text-gray-700">STDC段階</div>
-                        </div>
-                        <div class="flex-1">
-                            <div class="grid grid-cols-4 gap-2 mb-2">
-                                <div class="text-center py-2 bg-gray-200 rounded font-bold text-sm text-gray-700">Informational</div>
-                                <div class="text-center py-2 bg-gray-200 rounded font-bold text-sm text-gray-700">Navigational</div>
-                                <div class="text-center py-2 bg-gray-200 rounded font-bold text-sm text-gray-700">Commercial</div>
-                                <div class="text-center py-2 bg-gray-200 rounded font-bold text-sm text-gray-700">Transactional</div>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-16 bg-blue-500 text-white text-center py-2 rounded font-bold text-sm">See</div>
-                                    <div class="grid grid-cols-4 gap-2 flex-1">
-                                        <div class="matrix-cell highlight-cell bg-white rounded-lg p-3 shadow-md relative">
-                                            <div class="text-xs font-semibold text-gray-700 mb-1">認知・発見</div>
-                                            <div class="text-xs text-gray-600 mb-2">「海カフェ 沖縄」</div>
-                                            <div class="example-badge">Blue Reef例</div>
-                                        </div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">ブランド認知</div><div class="text-xs text-gray-600">「Blue Reef Café」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">比較検討開始</div><div class="text-xs text-gray-600">「沖縄 カフェ おすすめ」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">即決行動</div><div class="text-xs text-gray-600">「Blue Reef 予約」</div></div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-16 bg-green-500 text-white text-center py-2 rounded font-bold text-sm">Think</div>
-                                    <div class="grid grid-cols-4 gap-2 flex-1">
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">情報収集</div><div class="text-xs text-gray-600">「海カフェ とは」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">詳細調査</div><div class="text-xs text-gray-600">「Blue Reef 口コミ」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">比較検討</div><div class="text-xs text-gray-600">「沖縄 海カフェ 比較」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">購入準備</div><div class="text-xs text-gray-600">「Blue Reef 営業時間」</div></div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-16 bg-orange-500 text-white text-center py-2 rounded font-bold text-sm">Do</div>
-                                    <div class="grid grid-cols-4 gap-2 flex-1">
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">行動準備</div><div class="text-xs text-gray-600">「沖縄 海カフェ 行き方」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">直接アクセス</div><div class="text-xs text-gray-600">「Blue Reef Café 場所」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">最終比較</div><div class="text-xs text-gray-600">「Blue Reef vs 他店」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">実行</div><div class="text-xs text-gray-600">「Blue Reef 予約 今すぐ」</div></div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-16 bg-purple-500 text-white text-center py-2 rounded font-bold text-sm">Care</div>
-                                    <div class="grid grid-cols-4 gap-2 flex-1">
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">体験共有</div><div class="text-xs text-gray-600">「海カフェ 体験談」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">再訪検討</div><div class="text-xs text-gray-600">「Blue Reef また行きたい」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">推薦準備</div><div class="text-xs text-gray-600">「おすすめ 海カフェ」</div></div>
-                                        <div class="matrix-cell bg-white rounded-lg p-3 shadow-md"><div class="text-xs font-semibold text-gray-700 mb-1">リピート</div><div class="text-xs text-gray-600">「Blue Reef 再予約」</div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex gap-6 mt-4">
-                    <div class="flex-1 bg-white rounded-xl p-4 shadow-lg border-l-4 border-blue-500">
-                        <div class="flex items-start">
-                            <i class="fas fa-lightbulb text-blue-500 text-xl mr-3 mt-1"></i>
-                            <div>
-                                <h4 class="font-bold text-gray-800 text-sm mb-1">戦略的重要ポイント</h4>
-                                <p class="text-xs text-gray-600">「海カフェ 沖縄」はSee層の入口。まだBlue Reefを知らない潜在客にリーチ</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-100 rounded-xl p-4 shadow-sm">
-                        <p class="text-xs text-gray-600"><i class="fas fa-book mr-2"></i>理論出典: Moz, SEMRush, STDC (Avinash Kaushik)</p>
+            <div class="bg-blue-50 rounded-lg p-6 border-l-8 border-blue-500">
+                <div class="flex items-center">
+                    <i class="fas fa-rocket text-4xl text-blue-600 mr-6"></i>
+                    <div>
+                        <h4 class="text-3xl font-bold text-gray-900 mb-2">期待される成果</h4>
+                        <p class="text-gray-800 text-3xl"><strong>"探していない人"</strong>にも届ける具体的スキルの習得</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        <footer class="text-center mt-8 pt-4 border-t"><p class="text-gray-600 text-xl">90分で検索マーケティングの実践力を身につける</p></footer>
+    </div>
 
-    <section id="slide5">
-        <div class="slide-container bg-gradient-to-br from-purple-50 to-blue-50 flex flex-col">
-            <header class="text-center pt-6 pb-4">
-                <h1 class="text-4xl font-black text-gray-800 mb-2">検索結果の<span class="text-purple-600">表示席</span>分類</h1>
-                <p class="text-base text-gray-600 font-medium">各表示形式の特徴と最適化戦略</p>
-            </header>
-            <div class="flex-1 px-8 pb-6">
-                <div class="grid grid-cols-3 gap-6">
-                    <div class="display-card bg-white rounded-xl p-5 shadow-lg border-t-4 border-blue-500">
-                        <div class="text-center mb-4"><i class="fas fa-question-circle text-4xl icon-gradient"></i><h3 class="text-lg font-bold text-gray-800 mt-2">FAQスキーマ</h3></div>
-                        <div class="space-y-3">
-                            <div class="bg-blue-50 rounded-lg p-3"><p class="text-sm font-semibold text-gray-700 mb-1">表示例</p><p class="text-xs text-gray-600">Q: Blue Reef Caféの営業時間は？<br>A: 9:00-18:00（年中無休）</p></div>
-                            <div class="flex flex-wrap gap-2"><span class="strategy-badge">構造化データ</span><span class="strategy-badge">JSON-LD</span></div>
-                            <div class="text-xs text-gray-600"><i class="fas fa-chart-line mr-1"></i>CTR向上: +15-30%</div>
-                        </div>
-                    </div>
-                    <div class="display-card bg-white rounded-xl p-5 shadow-lg border-t-4 border-red-500">
-                        <div class="text-center mb-4"><i class="fas fa-video text-4xl text-red-500"></i><h3 class="text-lg font-bold text-gray-800 mt-2">動画カルーセル</h3></div>
-                        <div class="space-y-3">
-                            <div class="bg-red-50 rounded-lg p-3"><p class="text-sm font-semibold text-gray-700 mb-1">最適コンテンツ</p><p class="text-xs text-gray-600">店内紹介動画<br>メニュー紹介<br>オーシャンビュー</p></div>
-                            <div class="flex flex-wrap gap-2"><span class="strategy-badge">YouTube最適化</span><span class="strategy-badge">サムネイル</span></div>
-                            <div class="text-xs text-gray-600"><i class="fas fa-eye mr-1"></i>視覚的インパクト大</div>
-                        </div>
-                    </div>
-                    <div class="display-card bg-white rounded-xl p-5 shadow-lg border-t-4 border-green-500">
-                        <div class="text-center mb-4"><i class="fas fa-map-marker-alt text-4xl text-green-500"></i><h3 class="text-lg font-bold text-gray-800 mt-2">ローカル3Pack</h3></div>
-                        <div class="space-y-3">
-                            <div class="bg-green-50 rounded-lg p-3"><p class="text-sm font-semibold text-gray-700 mb-1">重要要素</p><p class="text-xs text-gray-600">★4.8評価<br>📍正確な住所<br>📞電話番号</p></div>
-                            <div class="flex flex-wrap gap-2"><span class="strategy-badge">GMB最適化</span><span class="strategy-badge">口コミ管理</span></div>
-                            <div class="text-xs text-gray-600"><i class="fas fa-mobile-alt mr-1"></i>モバイル最重要</div>
-                        </div>
-                    </div>
-                    <div class="display-card bg-white rounded-xl p-5 shadow-lg border-t-4 border-orange-500">
-                        <div class="text-center mb-4"><i class="fas fa-images text-4xl text-orange-500"></i><h3 class="text-lg font-bold text-gray-800 mt-2">画像パック</h3></div>
-                        <div class="space-y-3">
-                            <div class="bg-orange-50 rounded-lg p-3"><p class="text-sm font-semibold text-gray-700 mb-1">最適化ポイント</p><p class="text-xs text-gray-600">高解像度画像<br>適切なファイル名<br>alt属性設定</p></div>
-                            <div class="flex flex-wrap gap-2"><span class="strategy-badge">画像SEO</span><span class="strategy-badge">サイトマップ</span></div>
-                        </div>
-                    </div>
-                    <div class="display-card bg-white rounded-xl p-5 shadow-lg border-t-4 border-purple-500">
-                        <div class="text-center mb-4"><i class="fas fa-crown text-4xl text-purple-500"></i><h3 class="text-lg font-bold text-gray-800 mt-2">強調スニペット</h3></div>
-                        <div class="space-y-3">
-                            <div class="bg-purple-50 rounded-lg p-3"><p class="text-sm font-semibold text-gray-700 mb-1">狙い方</p><p class="text-xs text-gray-600">「沖縄 海カフェとは」<br>→定義を明確に記述<br>リスト形式で回答</p></div>
-                            <div class="flex flex-wrap gap-2"><span class="strategy-badge">構造化記述</span><span class="strategy-badge">簡潔回答</span></div>
-                        </div>
-                    </div>
-                    <div class="display-card bg-white rounded-xl p-5 shadow-lg border-t-4 border-yellow-500">
-                        <div class="text-center mb-4"><i class="fas fa-star text-4xl text-yellow-500"></i><h3 class="text-lg font-bold text-gray-800 mt-2">評価・口コミ</h3></div>
-                        <div class="space-y-3">
-                            <div class="bg-yellow-50 rounded-lg p-3"><p class="text-sm font-semibold text-gray-700 mb-1">表示例</p><p class="text-xs text-gray-600">★★★★★ 4.8/5<br>「絶景のオーシャンビュー」<br>52件のレビュー</p></div>
-                            <div class="flex flex-wrap gap-2"><span class="strategy-badge">口コミ促進</span><span class="strategy-badge">返信管理</span></div>
-                        </div>
-                    </div>
+    <!-- Slide 3: ゼロクリック時代の検索 -->
+    <div class="slide-container bg-red-50 flex flex-col p-12">
+        <header class="text-center mb-10">
+            <h1 class="text-6xl font-black text-gray-900 mb-3"><span class="text-red-600">ゼロクリック</span>時代の検索</h1>
+            <p class="text-xl text-gray-700">広告の「表示のされ方」の重要性が高まっている</p>
+        </header>
+        <div class="flex-1 grid grid-cols-2 gap-12 items-center">
+            <div class="text-center">
+                <div class="mb-8">
+                    <div class="text-9xl font-black text-red-500">65%</div>
+                    <p class="text-2xl text-gray-800 font-semibold mt-2">モバイル検索でクリックされない</p>
                 </div>
-                <div class="mt-6 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-4 text-white">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <i class="fas fa-trophy text-2xl mr-4"></i>
-                            <div><h4 class="font-bold text-lg">Blue Reef Café 表示席戦略</h4><p class="text-sm opacity-90">複数の表示形式で検索結果を"占領"する</p></div>
-                        </div>
-                        <div class="text-right"><p class="text-xs opacity-80">出典: Google Developers / Search Central</p></div>
+                <div class="flex justify-center mb-6"><div style="position: relative; height: 250px; width: 250px;"><canvas id="zeroClickChart"></canvas></div></div>
+                <div class="text-base text-gray-600"><i class="fas fa-chart-bar mr-2"></i>出典: Sparktoro + SimilarWeb (2021)</div>
+            </div>
+            <div class="space-y-6">
+                <h3 class="text-3xl font-bold text-gray-900"><i class="fas fa-exclamation-triangle text-orange-500 mr-3"></i>これが意味すること</h3>
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg p-5 border-l-4 border-red-400"><div class="flex items-start"><i class="fas fa-eye text-red-500 text-2xl mr-4 mt-1"></i><div><h4 class="font-bold text-gray-900 text-xl mb-1">表示位置が勝負</h4><p class="text-gray-700 text-xl">検索結果画面での見え方がすべてを決める</p></div></div></div>
+                    <div class="bg-white rounded-lg p-5 border-l-4 border-orange-400"><div class="flex items-start"><i class="fas fa-mobile-alt text-orange-500 text-2xl mr-4 mt-1"></i><div><h4 class="font-bold text-gray-900 text-xl mb-1">モバイル最優先</h4><p class="text-gray-700 text-xl">スマホ画面での表示最適化が必須</p></div></div></div>
+                    <div class="bg-white rounded-lg p-5 border-l-4 border-blue-400"><div class="flex items-start"><i class="fas fa-star text-blue-500 text-2xl mr-4 mt-1"></i><div><h4 class="font-bold text-gray-900 text-xl mb-1">リッチな情報表示</h4><p class="text-gray-700 text-xl">Q&A、評価、画像などで目立つ工夫が重要</p></div></div></div>
+                </div>
+            </div>
+        </div>
+        <footer class="text-center mt-8 pt-4 border-t"><p class="text-gray-600 text-xl">表示位置を制する者が検索マーケティングを制する</p></footer>
+    </div>
+
+    <!-- Slide 4: 検索意図マッピング -->
+    <div class="slide-container bg-white flex flex-col p-12">
+        <header class="text-center mb-6">
+            <h1 class="text-5xl font-black text-gray-900 mb-2">検索意図 × <span class="text-blue-600">行動段階</span> マッピング</h1>
+            <p class="text-lg text-gray-700">ユーザーの心理と検索行動の交差点を理解する</p>
+        </header>
+        <div class="flex-1">
+            <div class="flex">
+                <div class="flex-1">
+                    <div class="grid grid-cols-4 gap-2 mb-2">
+                        <div class="text-center py-2 bg-gray-200 rounded font-bold text-xl text-gray-800">情報収集型</div>
+                        <div class="text-center py-2 bg-gray-200 rounded font-bold text-xl text-gray-800">案内型</div>
+                        <div class="text-center py-2 bg-gray-200 rounded font-bold text-xl text-gray-800">商業的調査型</div>
+                        <div class="text-center py-2 bg-gray-200 rounded font-bold text-xl text-gray-800">取引型</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-stretch gap-2"><div class="w-24 bg-blue-500 text-white flex items-center justify-center rounded font-bold text-lg">See<br>(認知)</div><div class="grid grid-cols-4 gap-2 flex-1"><div class="bg-blue-50 rounded-lg p-3 border-2 border-blue-400"><div class="text-xl font-semibold text-gray-800 mb-1">認知・発見</div><p class="text-lg text-gray-700">「海カフェ 沖縄」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">ブランド認知</div><p class="text-lg text-gray-700">「Blue Reef Cafe」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">比較検討開始</div><p class="text-lg text-gray-700">「沖縄 カフェ おすすめ」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">即決行動</div><p class="text-lg text-gray-700">「Blue Reef Cafe 予約」</p></div></div></div>
+                        <div class="flex items-stretch gap-2"><div class="w-24 bg-green-500 text-white flex items-center justify-center rounded font-bold text-lg">Think<br>(検討)</div><div class="grid grid-cols-4 gap-2 flex-1"><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">情報収集</div><p class="text-lg text-gray-700">「海カフェ とは」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">詳細調査</div><p class="text-lg text-gray-700">「Blue Reef Cafe 口コミ」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">比較検討</div><p class="text-lg text-gray-700">「沖縄 海カフェ 比較」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">購入準備</div><p class="text-lg text-gray-700">「Blue Reef Cafe 営業時間」</p></div></div></div>
+                        <div class="flex items-stretch gap-2"><div class="w-24 bg-orange-500 text-white flex items-center justify-center rounded font-bold text-lg">Do<br>(行動)</div><div class="grid grid-cols-4 gap-2 flex-1"><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">行動準備</div><p class="text-lg text-gray-700">「沖縄 海カフェ 行き方」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">直接アクセス</div><p class="text-lg text-gray-700">「Blue Reef Cafe 場所」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">最終比較</div><p class="text-lg text-gray-700">「Blue Reef Cafe vs 他店」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">実行</div><p class="text-lg text-gray-700">「Blue Reef Cafe 予約 今すぐ」</p></div></div></div>
+                        <div class="flex items-stretch gap-2"><div class="w-24 bg-purple-500 text-white flex items-center justify-center rounded font-bold text-lg">Care<br>(共有)</div><div class="grid grid-cols-4 gap-2 flex-1"><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">体験共有</div><p class="text-lg text-gray-700">「海カフェ 体験談」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">再訪検討</div><p class="text-lg text-gray-700">「Blue Reef Cafe また行きたい」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">推薦準備</div><p class="text-lg text-gray-700">「おすすめ 海カフェ」</p></div><div class="bg-white rounded-lg p-3 border"><div class="text-xl font-semibold text-gray-800 mb-1">リピート</div><p class="text-lg text-gray-700">「Blue Reef Cafe 再予約」</p></div></div></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="slide6">
-        <div class="slide-container bg-gradient-to-br from-green-50 to-blue-50 flex flex-col">
-            <header class="text-center pt-8 pb-6">
-                <div class="flex items-center justify-center mb-4">
-                    <i class="fas fa-users text-4xl text-green-600 mr-4"></i>
-                    <h1 class="text-5xl font-black text-gray-800">グループワーク<span class="text-green-600">①</span></h1>
+        <footer class="text-center mt-6 pt-4 border-t"><p class="text-gray-600 text-lg">理論出典: Moz, SEMRush, STDC (Avinash Kaushik)</p></footer>
+    </div>
+    
+    <!-- Slide 5: 検索結果は情報の集合体 -->
+    <div class="slide-container bg-gray-50 flex flex-col p-12">
+        <header class="text-center mb-6">
+            <h1 class="text-5xl font-black text-gray-900 mb-3">検索結果は<span class="text-purple-600">情報の集合体</span></h1>
+            <p class="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                現在の検索結果ページ(SERP)は、単なるWebサイトのリンク集ではありません。ユーザーの多様な検索意図に応えるため、動画、地図、Q&Aなど様々な形式の情報部品で構成されています。これらを理解し自社の情報を適切に表示させることが、クリック前の段階でユーザーにアプローチする鍵となります。
+            </p>
+        </header>
+        <div class="flex-1 grid grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg p-6 border-t-4 border-blue-500"><div class="text-center mb-4"><i class="fas fa-question-circle text-5xl text-blue-500"></i><h3 class="text-2xl font-bold text-gray-900 mt-2">Q&A形式の表示</h3></div><p class="text-lg text-gray-700">「他の人はこちらも質問」などで表示。ユーザーの疑問に先回りして回答を提示する。</p></div>
+            <div class="bg-white rounded-lg p-6 border-t-4 border-red-500"><div class="text-center mb-4"><i class="fas fa-video text-5xl text-red-500"></i><h3 class="text-2xl font-bold text-gray-900 mt-2">動画</h3></div><p class="text-lg text-gray-700">How-toやレビュー、場所の紹介など、視覚的な情報が求められる場合に表示されやすい。</p></div>
+            <div class="bg-white rounded-lg p-6 border-t-4 border-green-500"><div class="text-center mb-4"><i class="fas fa-map-marker-alt text-5xl text-green-500"></i><h3 class="text-2xl font-bold text-gray-900 mt-2">地図・地域情報</h3></div><p class="text-lg text-gray-700">「沖縄 カフェ」のように地域性が強い検索に対し、地図と共に店舗リストが表示される。</p></div>
+            <div class="bg-white rounded-lg p-6 border-t-4 border-orange-500"><div class="text-center mb-4"><i class="fas fa-images text-5xl text-orange-500"></i><h3 class="text-2xl font-bold text-gray-900 mt-2">画像</h3></div><p class="text-lg text-gray-700">商品の見た目やお店の雰囲気を探している場合に、画像のリストが表示される。</p></div>
+            <div class="bg-white rounded-lg p-6 border-t-4 border-purple-500"><div class="text-center mb-4"><i class="fas fa-crown text-5xl text-purple-500"></i><h3 class="text-2xl font-bold text-gray-900 mt-2">強調スニペット</h3></div><p class="text-lg text-gray-700">「〇〇とは」という質問に対する直接的な答えを、検索結果の最上部に抜粋して表示する。</p></div>
+            <div class="bg-white rounded-lg p-6 border-t-4 border-yellow-500"><div class="text-center mb-4"><i class="fas fa-star text-5xl text-yellow-500"></i><h3 class="text-2xl font-bold text-gray-900 mt-2">評価・レビュー</h3></div><p class="text-lg text-gray-700">商品やサービスに対するユーザーの評価（星の数）が表示され、信頼性の判断材料となる。</p></div>
+        </div>
+        <footer class="text-center mt-8 pt-4 border-t"><p class="text-gray-600 text-xl">※スニペット: 検索結果に表示される、Webページの内容を要約した短い説明文のこと。</p></footer>
+    </div>
+    
+    <!-- Slide 6: グループワーク① -->
+    <div class="slide-container bg-yellow-50 flex flex-col p-12">
+        <header class="text-center mb-8">
+            <h1 class="text-5xl font-black text-gray-900 mb-3"><i class="fas fa-users text-yellow-600 mr-3"></i>グループワーク①：動画コンテンツを考える (10分)</h1>
+            <p class="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                情報収集型の検索（例：「沖縄 カフェ とは」）をしたユーザーに対し、<br>認知(See)と検討(Think)の各段階で、どのような動画コンテンツが有効かグループで考えてみましょう。
+            </p>
+        </header>
+        <div class="flex-1 grid grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg">
+                <h2 class="text-3xl font-bold text-blue-600 mb-4">See (認知) 段階の動画</h2>
+                <p class="text-xl text-gray-600 mb-4">まだBlue Reef Cafeを知らない人に、まず興味を持ってもらうには？</p>
+                <ul class="space-y-3 text-lg list-disc list-inside text-gray-800">
+                    <li>どんな動画なら、思わず見てしまうか？</li>
+                    <li>カフェのどんな魅力を切り取るか？（例：絶景、メニュー、雰囲気）</li>
+                    <li>動画の長さはどのくらいが適切か？</li>
+                </ul>
+            </div>
+            <div class="bg-white p-6 rounded-lg">
+                <h2 class="text-3xl font-bold text-green-600 mb-4">Think (検討) 段階の動画</h2>
+                <p class="text-xl text-gray-600 mb-4">他のカフェと比較検討している人に、選んでもらうには？</p>
+                 <ul class="space-y-3 text-lg list-disc list-inside text-gray-800">
+                    <li>他店との違いをどう見せるか？</li>
+                    <li>どんな情報があれば、行きたい気持ちが高まるか？（例：メニューの詳細、店員のインタビュー）</li>
+                    <li>予約や来店を後押しする情報は何か？</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        
+    <!-- Slide 7: 広告文 -->
+    <div class="slide-container bg-white flex flex-col p-12">
+        <header class="text-center mb-8"><h1 class="text-5xl font-black text-gray-900 mb-2">クリックされる<span class="text-blue-600">広告文</span>の法則</h1><p class="text-lg text-gray-700">Google広告のポリシーを守りながら、クリック率(CTR)を高める表現</p></header>
+        <div class="grid grid-cols-2 gap-8">
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">CTRを高める広告文の要素</h3>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg border-l-4 border-green-500"><h4 class="font-bold text-xl text-gray-800">具体性 (数字を入れる)</h4><p class="text-lg text-gray-600">「多くの実績」→「導入実績300社以上」</p></div>
+                    <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500"><h4 class="font-bold text-xl text-gray-800">権威性 (信頼できる出典)</h4><p class="text-lg text-gray-600">「人気のカフェ」→「Google口コミ評価4.8/5」</p></div>
+                    <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500"><h4 class="font-bold text-xl text-gray-800">ベネフィット (顧客の利点)</h4><p class="text-lg text-gray-600">「海が見える」→「絶景オーシャンビューを独り占め」</p></div>
+                    <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500"><h4 class="font-bold text-xl text-gray-800">緊急性・限定性 (行動を促す)</h4><p class="text-lg text-gray-600">「予約受付中」→「オンライン限定・24時間簡単予約」</p></div>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-700 mb-3">FAQ設計で表示席を獲得しよう</h2>
-                <div class="timer-animation inline-block"><span class="instruction-badge"><i class="fas fa-clock mr-2"></i>作業時間：5分間</span></div>
-            </header>
-            <div class="flex-1 px-12 pb-8">
-                <div class="grid grid-cols-2 gap-8 h-full">
-                    <div class="space-y-6">
-                        <div class="work-card rounded-xl p-6 shadow-lg">
-                            <div class="flex items-center mb-4"><i class="fas fa-bullseye text-3xl text-blue-600 mr-4"></i><h3 class="text-xl font-bold text-gray-800">作業内容</h3></div>
-                            <div class="space-y-3">
-                                <div class="flex items-start"><span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">1</span><p class="text-gray-700">自班の記事テーマから</p></div>
-                                <div class="flex items-start"><span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">2</span><p class="text-gray-700">「People Also Ask」に出そうな<br><strong>Q&A を2つ作成</strong></p></div>
-                                <div class="flex items-start"><span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1">3</span><p class="text-gray-700">班内で話し合いながら作成</p></div>
-                            </div>
-                        </div>
-                        <div class="work-card rounded-xl p-6 shadow-lg">
-                            <div class="flex items-center mb-4"><i class="fas fa-edit text-3xl text-purple-600 mr-4"></i><h3 class="text-xl font-bold text-gray-800">作成フォーマット</h3></div>
-                            <div class="bg-gray-50 rounded-lg p-4 space-y-3">
-                                <div class="border-l-4 border-purple-500 pl-3"><p class="font-semibold text-gray-800">Q1: ____________は？</p><p class="text-sm text-gray-600 mt-1">A: ____________</p></div>
-                                <div class="border-l-4 border-purple-500 pl-3"><p class="font-semibold text-gray-800">Q2: ____________の方法は？</p><p class="text-sm text-gray-600 mt-1">A: ____________</p></div>
-                            </div>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Blue Reef Cafe 広告文 改善例</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-xl font-bold text-red-600 mb-2">改善前 (Before)</h4>
+                        <div class="p-4 bg-white rounded border border-red-300">
+                            <p class="text-xl font-bold text-blue-700">沖縄の海カフェ - Blue Reef Cafe</p>
+                            <p class="text-lg text-gray-700">オーシャンビューで癒しの時間。美味しいコーヒーとケーキ。</p>
                         </div>
                     </div>
-                    <div class="space-y-6">
-                        <div class="example-highlight rounded-xl p-6 shadow-lg">
-                            <div class="flex items-center mb-4"><i class="fas fa-lightbulb text-3xl text-orange-600 mr-4"></i><h3 class="text-xl font-bold text-gray-800">Blue Reef Café の例</h3></div>
-                            <div class="space-y-4">
-                                <div class="bg-white rounded-lg p-4 shadow-sm"><div class="flex items-start"><i class="fas fa-question-circle text-blue-500 mr-2 mt-1"></i><div><p class="font-semibold text-gray-800 mb-1">Q: Blue Reef Caféの営業時間は？</p><p class="text-sm text-gray-600">A: 9:00-18:00（年中無休）。サンセットタイムの17:30頃が特におすすめです。</p></div></div></div>
-                                <div class="bg-white rounded-lg p-4 shadow-sm"><div class="flex items-start"><i class="fas fa-question-circle text-blue-500 mr-2 mt-1"></i><div><p class="font-semibold text-gray-800 mb-1">Q: 沖縄の海カフェでおすすめの過ごし方は？</p><p class="text-sm text-gray-600">A: オーシャンビューを眺めながらの読書や、夕日の時間帯の写真撮影がおすすめです。</p></div></div></div>
-                            </div>
-                        </div>
-                        <div class="work-card rounded-xl p-6 shadow-lg">
-                            <div class="flex items-center mb-4"><i class="fas fa-rocket text-3xl text-red-600 mr-4"></i><h3 class="text-xl font-bold text-gray-800">FAQ最適化のコツ</h3></div>
-                            <div class="space-y-3">
-                                <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><p class="text-sm text-gray-700">検索でよく使われる疑問詞を使用</p></div>
-                                <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><p class="text-sm text-gray-700">回答は具体的で簡潔に（50-100文字）</p></div>
-                                <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><p class="text-sm text-gray-700">自然な日本語での質問形式</p></div>
-                                <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i><p class="text-sm text-gray-700">地域名や商品名を含める</p></div>
-                            </div>
+                    <div>
+                        <h4 class="text-xl font-bold text-green-600 mb-2">改善後 (After)</h4>
+                        <div class="p-4 bg-white rounded border border-green-400">
+                            <p class="text-xl font-bold text-blue-700">【口コミ4.8/5】沖縄の絶景海カフェ - Blue Reef Cafe</p>
+                            <p class="text-lg text-gray-700">窓一面のオーシャンビュー。オンラインで席の予約が完結。</p>
                         </div>
                     </div>
                 </div>
-                <div class="mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 text-white flex items-center justify-between">
-                    <div class="flex items-center"><i class="fas fa-chart-line text-2xl mr-4"></i><div><h4 class="font-bold text-lg">期待効果</h4><p class="text-sm opacity-90">FAQ表示でCTR +15-30%向上（Backlinko調査）</p></div></div>
-                    <div class="text-right"><p class="text-xs opacity-80">出典: Backlinko - FAQ構造化の効果</p><div class="mt-2 bg-white bg-opacity-20 rounded-full px-4 py-1"><span class="text-sm font-bold">🚀 作業開始！</span></div></div>
+                <div class="mt-6 text-center text-lg text-gray-700 bg-white p-4 rounded-lg">
+                    <i class="fas fa-lightbulb text-yellow-500 mr-2"></i> ポリシーを遵守しつつ、<span class="font-bold">具体的で信頼性のある情報</span>を盛り込むことが重要。
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="slide7">
-        <div class="slide-container bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col">
-            <header class="text-center pt-6 pb-4">
-                <h1 class="text-4xl font-black text-gray-800 mb-2">広告文構造と<span class="text-blue-600">CTR</span>の関係</h1>
-                <p class="text-base text-gray-600 font-medium">ヘッドラインの差がクリック率を決定づける</p>
-            </header>
-            <div class="flex-1 px-8 pb-6">
-                <div class="grid grid-cols-3 gap-6 h-full">
-                    <div class="bg-white rounded-xl p-5 shadow-lg">
-                        <h3 class="text-lg font-bold text-gray-800 mb-3 text-center"><i class="fas fa-chart-bar text-blue-600 mr-2"></i>CTR向上要因</h3>
-                        <div class="relative h-64"><canvas id="ctrChart"></canvas></div>
-                        <div class="mt-3 text-xs text-gray-600 text-center">出典: WordStream (2019) - Best Ad Copy Traits</div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="ad-example bg-white rounded-xl p-4 shadow-lg border-l-4 border-green-500">
-                            <div class="flex items-center mb-2"><div class="technique-icon mr-3"><i class="fas fa-hashtag"></i></div><h4 class="font-bold text-gray-800">数字の効果</h4><span class="ctr-badge ml-auto">+47% CTR</span></div>
-                            <div class="space-y-2"><div class="bg-red-50 rounded-lg p-2"><p class="text-xs text-gray-600 mb-1">❌ 悪い例</p><p class="text-sm font-medium text-gray-800">沖縄の素敵な海カフェ</p></div><div class="bg-green-50 rounded-lg p-2"><p class="text-xs text-gray-600 mb-1">✅ 良い例</p><p class="text-sm font-medium text-gray-800">沖縄No.1の海カフェ - 評価4.8★</p></div></div>
-                        </div>
-                        <div class="ad-example bg-white rounded-xl p-4 shadow-lg border-l-4 border-purple-500">
-                            <div class="flex items-center mb-2"><div class="technique-icon mr-3 bg-gradient-to-br from-purple-500 to-purple-700"><i class="fas fa-question"></i></div><h4 class="font-bold text-gray-800">疑問文の活用</h4><span class="ctr-badge ml-auto">+32% CTR</span></div>
-                            <div class="space-y-2"><div class="bg-red-50 rounded-lg p-2"><p class="text-xs text-gray-600 mb-1">❌ 悪い例</p><p class="text-sm font-medium text-gray-800">Blue Reef Caféで癒しの時間</p></div><div class="bg-green-50 rounded-lg p-2"><p class="text-xs text-gray-600 mb-1">✅ 良い例</p><p class="text-sm font-medium text-gray-800">絶景カフェで心の癒しを求めませんか？</p></div></div>
-                        </div>
-                        <div class="ad-example bg-white rounded-xl p-4 shadow-lg border-l-4 border-orange-500">
-                            <div class="flex items-center mb-2"><div class="technique-icon mr-3 bg-gradient-to-br from-orange-500 to-orange-700"><i class="fas fa-user"></i></div><h4 class="font-bold text-gray-800">明確な主語</h4><span class="ctr-badge ml-auto">+28% CTR</span></div>
-                            <div class="space-y-2"><div class="bg-red-50 rounded-lg p-2"><p class="text-xs text-gray-600 mb-1">❌ 悪い例</p><p class="text-sm font-medium text-gray-800">美味しいコーヒーを提供</p></div><div class="bg-green-50 rounded-lg p-2"><p class="text-xs text-gray-600 mb-1">✅ 良い例</p><p class="text-sm font-medium text-gray-800">あなたが求める本格コーヒー体験</p></div></div>
-                        </div>
-                    </div>
-                    <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl p-5 text-white shadow-lg">
-                        <div class="text-center mb-4"><i class="fas fa-water text-3xl mb-2"></i><h3 class="text-lg font-bold">Blue Reef Café</h3><p class="text-sm opacity-90">実践的な広告文例</p></div>
-                        <div class="space-y-4">
-                            <div class="bg-white bg-opacity-20 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold">基本パターン</span><span class="bg-white bg-opacity-30 rounded-full px-2 py-1 text-xs">CTR: 2.1%</span></div><p class="text-sm font-medium">沖縄の海カフェBlue Reef</p><p class="text-xs opacity-80">オーシャンビューで癒しの時間</p></div>
-                            <div class="bg-white bg-opacity-20 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold">数字+疑問文</span><span class="bg-green-400 rounded-full px-2 py-1 text-xs text-white font-bold">CTR: 3.8%</span></div><p class="text-sm font-medium">沖縄No.1海カフェで絶景体験しませんか？</p><p class="text-xs opacity-80">評価4.8★のBlue Reef Café</p></div>
-                            <div class="bg-white bg-opacity-20 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="text-xs font-bold">主語+数字</span><span class="bg-green-400 rounded-full px-2 py-1 text-xs text-white font-bold">CTR: 4.2%</span></div><p class="text-sm font-medium">あなたが求める絶景カフェ体験</p><p class="text-xs opacity-80">Blue Reef - 年間来客数1万人突破</p></div>
-                        </div>
-                        <div class="mt-4 bg-white bg-opacity-20 rounded-lg p-3"><div class="flex items-center justify-between"><div><p class="text-sm font-bold">最適化結果</p><p class="text-xs opacity-90">CTR改善: +100%</p></div><div class="text-right"><p class="text-2xl font-bold">4.2%</p><p class="text-xs opacity-80">vs 業界平均2.1%</p></div></div></div>
-                    </div>
+        <footer class="text-center mt-8 pt-4 border-t"><p class="text-gray-600 text-lg">出典: Google広告ポリシー、WordStream広告効果調査</p></footer>
+    </div>
+    
+    <!-- Slide 8: 品質スコア -->
+    <div class="slide-container bg-purple-50 p-12">
+        <header class="text-center mb-8">
+            <h1 class="text-5xl font-black text-gray-900 mb-2"><i class="fas fa-award text-yellow-500 mr-3"></i>品質スコアとは？</h1>
+            <p class="text-xl text-gray-700">Google広告の成功を左右する重要指標</p>
+        </header>
+        <div class="bg-white p-8 rounded-lg mb-8">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">品質スコアは、主に以下の3要素で決まります</h2>
+            <div class="grid grid-cols-3 gap-6 text-center">
+                <div class="bg-gray-50 p-4 rounded-lg"><div class="mb-2"><i class="fas fa-mouse-pointer text-blue-500 text-4xl"></i></div><h3 class="text-xl font-bold">推定クリック率 (CTR)</h3><p class="text-lg text-gray-600">広告が表示された際にクリックされる可能性の高さ。</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><div class="mb-2"><i class="fas fa-bullseye text-green-500 text-4xl"></i></div><h3 class="text-xl font-bold">広告の関連性</h3><p class="text-lg text-gray-600">広告がユーザーの検索意図とどれだけ一致しているか。</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><div class="mb-2"><i class="fas fa-globe text-orange-500 text-4xl"></i></div><h3 class="text-xl font-bold">LPの利便性</h3><p class="text-lg text-gray-600">リンク先のページの品質、関連性、使いやすさ。</p></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-8">
+            <div class="bg-green-100 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-green-800 mb-4"><i class="fas fa-trophy mr-2"></i>品質スコアが高いと...</h3>
+                <ul class="space-y-3 text-xl list-disc list-inside text-gray-800">
+                    <li>クリック単価(CPC)が<span class="font-bold">低くなる</span>傾向がある</li>
+                    <li>広告が<span class="font-bold">上位に表示</span>されやすくなる</li>
+                    <li>広告の表示オプションなどが利用可能になりやすい</li>
+                </ul>
+            </div>
+            <div class="bg-red-100 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-red-800 mb-4"><i class="fas fa-arrow-down mr-2"></i>品質スコアが低いと...</h3>
+                 <ul class="space-y-3 text-xl list-disc list-inside text-gray-800">
+                    <li>クリック単価(CPC)が<span class="font-bold">高くなる</span>傾向がある</li>
+                    <li>広告が表示されない、または下位にしか表示されない</li>
+                    <li>結果的に広告効果全体が悪化する</li>
+                </ul>
+            </div>
+        </div>
+        <footer class="text-center mt-8 pt-4 border-t"><p class="text-gray-600 text-lg">ユーザーにとって有益な広告とページを提供することが、品質スコア向上の鍵。</p></footer>
+    </div>
+    
+    <!-- Slide 9: グループワーク② -->
+    <div class="slide-container bg-yellow-50 flex flex-col p-12">
+        <header class="text-center mb-6">
+            <h1 class="text-5xl font-black text-gray-900 mb-3"><i class="fas fa-users text-yellow-600 mr-3"></i>グループワーク②：広告文を作成する (15分)</h1>
+            <p class="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                今日学んだ法則と品質スコアを意識して、Blue Reef Cafeの広告文を2パターン作成してみましょう。
+            </p>
+        </header>
+        <div class="bg-white p-6 rounded-lg mb-6">
+            <h2 class="text-2xl font-bold mb-2">お題</h2>
+            <ul class="text-xl list-disc list-inside">
+                <li><span class="font-bold">キーワード:</span> 沖縄 海カフェ 人気</li>
+                <li><span class="font-bold">ターゲット:</span> 20代〜30代のカップルや友人グループ</li>
+                <li><span class="font-bold">広告の目的:</span> 予約ページへのクリックを増やす</li>
+            </ul>
+        </div>
+        <div class="flex-1 grid grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg border-2 border-blue-300">
+                <h3 class="text-2xl font-bold text-blue-600 mb-4">広告文 A案</h3>
+                <div class="space-y-4">
+                    <div><label class="font-bold text-lg">広告見出し (30文字以内)</label><div class="mt-1 p-2 border rounded bg-gray-100 h-10"></div></div>
+                    <div><label class="font-bold text-lg">説明文 (90文字以内)</label><div class="mt-1 p-2 border rounded bg-gray-100 h-24"></div></div>
                 </div>
-                <div class="mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 text-white">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center"><i class="fas fa-lightbulb text-2xl mr-4"></i><div><h4 class="font-bold text-lg">広告文最適化の鉄則</h4><p class="text-sm opacity-90">数字 × 疑問文 × 明確な主語 = CTR大幅改善</p></div></div>
-                        <div class="text-right"><p class="text-xs opacity-80">出典: WordStream (2019) - Google Ads Benchmarks</p><div class="mt-1 flex space-x-2"><span class="bg-white bg-opacity-20 rounded-full px-3 py-1 text-xs">+47% 数字効果</span><span class="bg-white bg-opacity-20 rounded-full px-3 py-1 text-xs">+32% 疑問文効果</span></div></div>
-                    </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg border-2 border-green-300">
+                <h3 class="text-2xl font-bold text-green-600 mb-4">広告文 B案</h3>
+                <div class="space-y-4">
+                    <div><label class="font-bold text-lg">広告見出し (30文字以内)</label><div class="mt-1 p-2 border rounded bg-gray-100 h-10"></div></div>
+                    <div><label class="font-bold text-lg">説明文 (90文字以内)</label><div class="mt-1 p-2 border rounded bg-gray-100 h-24"></div></div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="slide8">
-        <div class="slide-container bg-gradient-to-br from-purple-50 to-blue-50 p-8">
-            <header class="text-center mb-6">
-                <h1 class="text-4xl font-black text-gray-800 mb-2"><i class="fas fa-award text-yellow-500 mr-3"></i>品質スコアとは？</h1>
-                <p class="text-lg text-gray-600 font-medium">Google広告の成功を左右する重要指標</p>
-            </header>
-            <div class="formula-card mb-6">
-                <div class="flex items-center justify-center space-x-4 text-2xl font-bold">
-                    <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2"><i class="fas fa-star mr-2"></i>品質スコア</div><span class="text-4xl">=</span>
-                    <div class="bg-white bg-opacity-20 rounded-lg px-3 py-2 text-center"><i class="fas fa-mouse-pointer text-blue-300 mr-1"></i><div class="text-sm">CTR予測</div></div><span class="multiplier">×</span>
-                    <div class="bg-white bg-opacity-20 rounded-lg px-3 py-2 text-center"><i class="fas fa-bullseye text-green-300 mr-1"></i><div class="text-sm">広告関連性</div></div><span class="multiplier">×</span>
-                    <div class="bg-white bg-opacity-20 rounded-lg px-3 py-2 text-center"><i class="fas fa-globe text-orange-300 mr-1"></i><div class="text-sm">LP品質</div></div>
-                </div>
-                <p class="text-sm opacity-90 mt-4">出典: Google Ads公式サポート</p>
-            </div>
-            <div class="grid grid-cols-3 gap-6 mb-6">
-                <div class="component-card">
-                    <div class="text-center mb-3"><div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2"><i class="fas fa-mouse-pointer text-white text-xl"></i></div><h3 class="text-lg font-bold text-gray-800">CTR予測</h3></div>
-                    <div class="space-y-2"><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">クリック率の予想値</span></div><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">キーワード関連性</span></div><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">広告文の魅力度</span></div></div>
-                    <div class="mt-3 bg-blue-50 rounded-lg p-2"><div class="gauge-container"><div class="gauge-fill w-full"></div><div class="gauge-needle" style="transform: translateX(-50%) rotate(30deg);"></div></div><p class="text-xs text-center mt-1 font-bold text-blue-600">Blue Reef: 8/10</p></div>
-                </div>
-                <div class="component-card">
-                    <div class="text-center mb-3"><div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2"><i class="fas fa-bullseye text-white text-xl"></i></div><h3 class="text-lg font-bold text-gray-800">広告の関連性</h3></div>
-                    <div class="space-y-2"><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">キーワード一致度</span></div><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">広告文での使用</span></div><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">ユーザー意図適合</span></div></div>
-                    <div class="mt-3 bg-green-50 rounded-lg p-2"><div class="gauge-container"><div class="gauge-fill w-full"></div><div class="gauge-needle" style="transform: translateX(-50%) rotate(45deg);"></div></div><p class="text-xs text-center mt-1 font-bold text-green-600">Blue Reef: 9/10</p></div>
-                </div>
-                <div class="component-card">
-                    <div class="text-center mb-3"><div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-2"><i class="fas fa-globe text-white text-xl"></i></div><h3 class="text-lg font-bold text-gray-800">LP品質</h3></div>
-                    <div class="space-y-2"><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">ページ読み込み速度</span></div><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">コンテンツ関連性</span></div><div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i><span class="text-sm">ユーザビリティ</span></div></div>
-                    <div class="mt-3 bg-orange-50 rounded-lg p-2"><div class="gauge-container"><div class="gauge-fill w-full"></div><div class="gauge-needle" style="transform: translateX(-50%) rotate(25deg);"></div></div><p class="text-xs text-center mt-1 font-bold text-orange-600">Blue Reef: 7/10</p></div>
+    <!-- Slide 10: CPA -->
+    <div class="slide-container bg-blue-50 p-12">
+        <header class="text-center mb-6"><h1 class="text-5xl font-black text-gray-900 mb-2"><i class="fas fa-calculator text-blue-600 mr-3"></i>CPAと費用の考え方</h1><p class="text-2xl text-gray-700">1件の成果獲得にかかった費用を正しく理解する</p></header>
+        <div class="text-center mb-8">
+            <div class="inline-block formula-box">
+                <div class="flex items-center justify-center space-x-4 text-4xl font-bold">
+                    <div class="text-red-600">CPA</div>
+                    <div class="text-gray-700">=</div>
+                    <div class="text-gray-900">広告費用</div>
+                    <div class="text-gray-700">÷</div>
+                    <div class="text-green-600">コンバージョン数</div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-6">
-                <div class="bg-gradient-to-br from-green-500 to-green-700 rounded-xl p-5 text-white">
-                    <div class="flex items-center mb-4"><i class="fas fa-trophy text-3xl mr-3"></i><h3 class="text-xl font-bold">品質スコアの効果</h3></div>
-                    <div class="space-y-3"><div class="flex items-center justify-between"><span class="text-sm">クリック単価(CPC)</span><span class="score-badge">最大50%削減</span></div><div class="flex items-center justify-between"><span class="text-sm">広告掲載順位</span><span class="score-badge">上位表示</span></div><div class="flex items-center justify-between"><span class="text-sm">広告表示頻度</span><span class="score-badge">インプレッション増</span></div><div class="flex items-center justify-between"><span class="text-sm">全体的なROI</span><span class="score-badge">大幅改善</span></div></div>
-                </div>
-                <div class="bg-white rounded-xl p-5 shadow-lg border-2 border-blue-200">
-                    <div class="flex items-center mb-4"><i class="fas fa-water text-3xl text-blue-600 mr-3"></i><h3 class="text-xl font-bold text-gray-800">Blue Reef Café 改善例</h3></div>
-                    <div class="space-y-3">
-                        <div class="bg-red-50 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="text-sm font-bold text-red-700">改善前</span><span class="bg-red-200 text-red-800 px-2 py-1 rounded text-xs">品質スコア: 4/10</span></div><div class="text-xs space-y-1"><p>• CPC: ¥180</p><p>• 掲載順位: 3.2位</p><p>• CTR: 1.8%</p></div></div>
-                        <div class="bg-green-50 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="text-sm font-bold text-green-700">改善後</span><span class="bg-green-200 text-green-800 px-2 py-1 rounded text-xs">品質スコア: 8/10</span></div><div class="text-xs space-y-1"><p>• CPC: ¥95 <span class="text-green-600 font-bold">(-47%)</span></p><p>• 掲載順位: 1.4位 <span class="text-green-600 font-bold">(+1.8位)</span></p><p>• CTR: 4.2% <span class="text-green-600 font-bold">(+133%)</span></p></div></div>
+            <p class="text-xl text-gray-600 mt-2">Cost Per Acquisition (顧客獲得単価) = 使ったお金 ÷ 獲得できた成果の数</p>
+        </div>
+        <div class="grid grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg border">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">シナリオA (効率が良い)</h3>
+                <ul class="text-2xl space-y-2">
+                    <li>広告費用: <span class="font-bold">100,000円</span></li>
+                    <li>CV(予約)数: <span class="font-bold">50件</span></li>
+                    <li class="border-t pt-2 mt-2">CPA: <span class="font-bold text-green-600">2,000円</span></li>
+                </ul>
+                <p class="mt-4 text-lg text-gray-600">1件の予約を獲得するのに2,000円かかった。</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg border">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">シナリオB (効率が悪い)</h3>
+                 <ul class="text-2xl space-y-2">
+                    <li>広告費用: <span class="font-bold">100,000円</span></li>
+                    <li>CV(予約)数: <span class="font-bold">20件</span></li>
+                    <li class="border-t pt-2 mt-2">CPA: <span class="font-bold text-red-600">5,000円</span></li>
+                </ul>
+                 <p class="mt-4 text-lg text-gray-600">1件の予約を獲得するのに5,000円かかった。</p>
+            </div>
+        </div>
+        <div class="mt-8 bg-yellow-100 p-6 rounded-lg text-center">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>重要なポイント</h3>
+            <p class="text-xl text-gray-800">CPAは、広告の費用対効果を測るための最も重要な指標の一つです。自社のビジネスで許容できるCPAを設定し、それを下回るように広告を最適化していくことが目標となります。</p>
+        </div>
+    </div>
+    
+    <!-- Slide 11: ロングテールキーワード -->
+    <div class="slide-container bg-white p-12">
+        <header class="text-center mb-8">
+            <h1 class="text-5xl font-black text-gray-900 mb-3">ロングテールキーワードの<span class="text-green-600">戦略的価値</span></h1>
+            <p class="text-xl text-gray-700">「探している人」に直接リーチする魔法の言葉</p>
+        </header>
+        <div class="grid grid-cols-2 gap-10 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">ロングテールキーワードとは？</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">3語以上の組み合わせからなる、具体的で検索ボリュームは少ないが、ユーザーの意図が非常に明確なキーワード群のことです。</p>
+                <div class="space-y-4">
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="text-lg font-bold">ビッグキーワード (検索数:多 / CVR:低)</h3>
+                        <p class="text-2xl font-semibold text-gray-800">沖縄 カフェ</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="text-lg font-bold">ミドルキーワード</h3>
+                        <p class="text-2xl font-semibold text-gray-800">沖縄 海カフェ 人気</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <h3 class="text-lg font-bold text-green-700">ロングテールキーワード (検索数:少 / CVR:高)</h3>
+                        <p class="text-2xl font-semibold text-gray-800">沖縄 北谷 海が見える カフェ 駐車場あり</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="slide9">
-        <div class="slide-container bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
-            <header class="text-center mb-6">
-                <div class="flex items-center justify-center mb-3"><i class="fas fa-users text-4xl text-blue-600 mr-4"></i><h1 class="text-4xl font-black text-gray-800">グループワーク②</h1><div class="timer-badge ml-6"><i class="fas fa-clock mr-2"></i>10分</div></div>
-                <h2 class="text-2xl font-bold text-gray-700 mb-2">広告文A/B作成</h2><p class="text-lg text-gray-600">変数統制でCTR向上を目指そう</p>
-            </header>
-            <div class="grid grid-cols-2 gap-6 mb-6">
-                <div class="workshop-card">
-                    <div class="flex items-center mb-4"><i class="fas fa-clipboard-list text-2xl text-blue-600 mr-3"></i><h3 class="text-xl font-bold text-gray-800">作業手順</h3></div>
-                    <div class="instruction-item"><div class="flex items-center mb-2"><span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3">1</span><h4 class="font-bold text-gray-800">キーワード選択</h4></div><p class="text-sm text-gray-600 ml-9">自班のテーマから1つキーワードを選ぶ</p><p class="text-xs text-blue-600 ml-9 mt-1">例：「沖縄 海カフェ」「絶景 カフェ」</p></div>
-                    <div class="instruction-item"><div class="flex items-center mb-2"><span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3">2</span><h4 class="font-bold text-gray-800">変数統制</h4></div><p class="text-sm text-gray-600 ml-9">主語 OR CTA のどちらか片方だけ変更</p><p class="text-xs text-red-600 ml-9 mt-1">⚠️ 両方変えるとテスト無効</p></div>
-                    <div class="instruction-item"><div class="flex items-center mb-2"><span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3">3</span><h4 class="font-bold text-gray-800">A/B案作成</h4></div><p class="text-sm text-gray-600 ml-9">2つのバリエーションを作成</p><p class="text-xs text-green-600 ml-9 mt-1">✅ 仮説を持って違いを明確に</p></div>
-                    <div class="mt-6 bg-gradient-to-r from-purple-100 to-blue-100 rounded-lg p-4">
-                        <div class="flex items-center mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i><span class="font-bold text-gray-800 text-sm">A/Bテストの基本原則</span></div>
-                        <div class="text-xs text-gray-600 space-y-1"><p>• 1つの要素のみ変更（統計的信頼性）</p><p>• 仮説を事前に設定</p><p>• 十分なサンプル数で判定</p></div>
-                        <p class="text-xs text-gray-500 mt-2">出典: HubSpot/Google A/Bテスト文化</p>
-                    </div>
+            <div>
+                 <div class="bg-green-50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold text-green-800 mb-4"><i class="fas fa-lightbulb mr-2"></i>なぜロングテールが重要か？</h3>
+                    <ul class="space-y-4 text-xl list-disc list-inside text-gray-800">
+                        <li><span class="font-bold">高いコンバージョン率(CVR):</span> ユーザーの目的が明確なため、成果に直結しやすい。</li>
+                        <li><span class="font-bold">低い競合性:</span> 大手サイトが見逃しがちで、低コストで上位表示を狙える。</li>
+                        <li><span class="font-bold">トラフィックの総量:</span> 個々の検索数は少なくても、無数に存在するため、合計すると大きなアクセス源になる。</li>
+                    </ul>
                 </div>
-                <div class="workshop-card">
-                    <div class="flex items-center mb-4"><i class="fas fa-edit text-2xl text-green-600 mr-3"></i><h3 class="text-xl font-bold text-gray-800">作成テンプレート</h3></div>
-                    <div class="template-box mb-4"><div class="flex items-center justify-center mb-2"><i class="fas fa-keyboard text-2xl text-yellow-600 mr-2"></i><span class="font-bold text-gray-800">選択キーワード</span></div><div class="bg-white rounded-lg p-3 border-2 border-dashed border-gray-300"><input type="text" placeholder="例：沖縄 海カフェ" class="w-full text-center text-lg font-medium bg-transparent border-none outline-none"></div></div>
-                    <div class="ab-example mb-4"><div class="version-badge version-a">Version A</div><div class="mt-2"><label class="block text-sm font-bold text-gray-700 mb-1">ヘッドライン</label><input type="text" placeholder="例：沖縄No.1の海カフェBlue Reef" class="w-full p-2 border rounded text-sm"><label class="block text-sm font-bold text-gray-700 mb-1 mt-2">説明文</label><input type="text" placeholder="例：絶景オーシ ャンビューで癒しの時間" class="w-full p-2 border rounded text-sm"></div></div>
-                    <div class="ab-example"><div class="version-badge version-b">Version B</div><div class="mt-2"><label class="block text-sm font-bold text-gray-700 mb-1">ヘッドライン</label><input type="text" placeholder="例：あなたが探す理想の海カフェ" class="w-full p-2 border rounded text-sm"><label class="block text-sm font-bold text-gray-700 mb-1 mt-2">説明文</label><input type="text" placeholder="例：絶景オーシャンビューで癒しの時間" class="w-full p-2 border rounded text-sm"></div></div>
+                <div class="mt-6 text-center border-t pt-4">
+                    <p class="text-lg text-gray-700"><i class="fas fa-chart-pie mr-2 text-gray-500"></i><span class="font-bold">Ahrefsの調査によると、全検索クエリの約92%が月に10回以下しか検索されないロングテールキーワードである。</span></p>
                 </div>
             </div>
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-5 text-white">
-                <div class="grid grid-cols-3 gap-6">
-                    <div class="bg-white bg-opacity-20 rounded-lg p-4"><div class="flex items-center mb-3"><i class="fas fa-check-circle text-green-300 text-xl mr-2"></i><h4 class="font-bold">良い例：主語のみ変更</h4></div><div class="space-y-2 text-sm"><div class="bg-white bg-opacity-20 rounded p-2"><span class="text-xs opacity-80">Version A:</span><p class="font-medium">沖縄No.1の海カフェ</p></div><div class="bg-white bg-opacity-20 rounded p-2"><span class="text-xs opacity-80">Version B:</span><p class="font-medium">あなたが探す海カフェ</p></div></div></div>
-                    <div class="bg-white bg-opacity-20 rounded-lg p-4"><div class="flex items-center mb-3"><i class="fas fa-times-circle text-red-300 text-xl mr-2"></i><h4 class="font-bold">悪い例：複数要素変更</h4></div><div class="space-y-2 text-sm"><div class="bg-white bg-opacity-20 rounded p-2"><span class="text-xs opacity-80">Version A:</span><p class="font-medium">沖縄の海カフェ | 今すぐ予約</p></div><div class="bg-white bg-opacity-20 rounded p-2"><span class="text-xs opacity-80">Version B:</span><p class="font-medium">絶景カフェ | 詳細はこちら</p></div></div></div>
-                    <div class="bg-white bg-opacity-20 rounded-lg p-4"><div class="flex items-center mb-3"><i class="fas fa-lightbulb text-yellow-300 text-xl mr-2"></i><h4 class="font-bold">成功のコツ</h4></div><div class="text-sm space-y-1"><p>• 仮説を明確に設定</p><p>• ターゲット心理を考慮</p><p>• 数字や疑問文を活用</p><p>• ブランド名の位置調整</p></div></div>
-                </div>
-                <div class="mt-4 text-center"><div class="inline-flex items-center bg-white bg-opacity-20 rounded-full px-6 py-3"><i class="fas fa-rocket mr-3 text-2xl"></i><div><p class="font-bold text-lg">さあ、CTR向上の広告文を作ろう！</p><p class="text-sm opacity-90">チーム内で議論しながら最適解を見つけよう</p></div></div></div>
-            </div>
         </div>
-    </section>
-
-    <section id="slide10">
-        <div class="slide-container bg-gradient-to-br from-blue-50 to-purple-50 p-6">
-            <header class="text-center mb-4">
-                <h1 class="text-4xl font-black text-gray-800 mb-2"><i class="fas fa-chart-line text-blue-600 mr-3"></i>CPCとCPAの関係</h1>
-                <p class="text-lg text-gray-600 font-medium">入札戦略と成果の複雑な関係を理解する</p>
-            </header>
-            <div class="formula-highlight mb-4">
-                <div class="flex items-center justify-center space-x-6 text-2xl font-bold"><div class="bg-white bg-opacity-20 rounded-lg px-4 py-2"><i class="fas fa-target mr-2"></i>CPA</div><span class="text-4xl">=</span><div class="bg-white bg-opacity-20 rounded-lg px-4 py-2"><i class="fas fa-mouse-pointer mr-2"></i>CPC</div><span class="text-4xl">÷</span><div class="bg-white bg-opacity-20 rounded-lg px-4 py-2"><i class="fas fa-percentage mr-2"></i>CVR</div></div>
-                <p class="text-sm opacity-90 mt-3">Cost Per Acquisition = Cost Per Click ÷ Conversion Rate</p><p class="text-xs opacity-80 mt-1">出典: Google Ads Bid Simulator</p>
-            </div>
-            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-xl p-4 mb-4 text-center">
-                <div class="flex items-center justify-center mb-2"><i class="fas fa-exclamation-triangle text-2xl mr-3"></i><h2 class="text-xl font-bold">重要な洞察</h2></div>
-                <p class="text-lg font-medium">CPCが上がってもCPAが改善しないことがある</p><p class="text-sm opacity-90">→ CVR（コンバージョン率）が鍵を握る</p>
-            </div>
-            <div class="grid grid-cols-3 gap-4 mb-4">
-                <div class="metric-card"><div class="flex items-center mb-3"><i class="fas fa-chart-area text-blue-600 text-xl mr-2"></i><h3 class="text-lg font-bold text-gray-800">CPC vs CPA 相関</h3></div><div class="chart-container-bar"><canvas id="cpcCpaChart"></canvas></div><p class="text-xs text-gray-600 mt-2 text-center">CPCが上がってもCPAは必ずしも改善しない</p></div>
-                <div class="metric-card"><div class="flex items-center mb-3"><i class="fas fa-balance-scale text-green-600 text-xl mr-2"></i><h3 class="text-lg font-bold text-gray-800">パフォーマンス比較</h3></div><div class="scenario-card scenario-good"><div class="flex items-center justify-between mb-2"><span class="font-bold text-green-800 text-sm">最適化シナリオ</span><i class="fas fa-check-circle text-green-600"></i></div><div class="text-xs space-y-1"><div class="flex justify-between"><span>CPC:</span><span class="font-bold">¥120</span></div><div class="flex justify-between"><span>CVR:</span><span class="font-bold">4.2%</span></div><div class="flex justify-between border-t pt-1"><span>CPA:</span><span class="font-bold text-green-700">¥2,857</span></div></div></div><div class="scenario-card scenario-bad"><div class="flex items-center justify-between mb-2"><span class="font-bold text-red-800 text-sm">高入札シナリオ</span><i class="fas fa-times-circle text-red-600"></i></div><div class="text-xs space-y-1"><div class="flex justify-between"><span>CPC:</span><span class="font-bold">¥200</span></div><div class="flex justify-between"><span>CVR:</span><span class="font-bold">2.8%</span></div><div class="flex justify-between border-t pt-1"><span>CPA:</span><span class="font-bold text-red-700">¥7,143</span></div></div></div></div>
-                <div class="metric-card"><div class="flex items-center mb-3"><i class="fas fa-water text-blue-600 text-xl mr-2"></i><h3 class="text-lg font-bold text-gray-800">Blue Reef 実例</h3></div><div class="bg-blue-50 rounded-lg p-3 mb-3"><h4 class="font-bold text-sm text-blue-800 mb-2">キーワード: 「沖縄 海カフェ」</h4><div class="chart-container-bar" style="height: 120px;"><canvas id="blueReefChart"></canvas></div></div><div class="bg-gray-50 rounded-lg p-3"><h5 class="font-bold text-xs text-gray-700 mb-2">学習ポイント</h5><div class="text-xs text-gray-600 space-y-1"><p>• 入札を150%上げたが</p><p>• CVRが50%下がった</p><p>• 結果：CPA悪化</p><p class="text-blue-600 font-bold">→ LP品質も重要</p></div></div></div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl p-4 text-white"><div class="flex items-center mb-3"><i class="fas fa-robot text-2xl mr-3"></i><h3 class="text-lg font-bold">Bid Simulator の活用</h3></div><div class="space-y-2"><div class="flex items-center"><i class="fas fa-check text-green-300 mr-2"></i><span class="text-sm">入札変更前に結果予測</span></div><div class="flex items-center"><i class="fas fa-check text-green-300 mr-2"></i><span class="text-sm">クリック数・コスト・CPA変化</span></div><div class="flex items-center"><i class="fas fa-check text-green-300 mr-2"></i><span class="text-sm">ROI最適化のための判断材料</span></div></div></div>
-                <div class="bg-gradient-to-br from-green-500 to-teal-600 rounded-xl p-4 text-white"><div class="flex items-center mb-3"><i class="fas fa-bullseye text-2xl mr-3"></i><h3 class="text-lg font-bold">CPA最適化戦略</h3></div><div class="space-y-2"><div class="flex items-center"><i class="fas fa-arrow-right text-yellow-300 mr-2"></i><span class="text-sm">品質スコア向上でCPC削減</span></div><div class="flex items-center"><i class="fas fa-arrow-right text-yellow-300 mr-2"></i><span class="text-sm">LP最適化でCVR向上</span></div><div class="flex items-center"><i class="fas fa-arrow-right text-yellow-300 mr-2"></i><span class="text-sm">ターゲティング精度向上</span></div></div></div>
-            </div>
+    </div>
+    
+    <!-- Slide 12: まとめ -->
+    <div class="slide-container bg-blue-50 p-12">
+        <header class="text-center mb-10">
+            <h1 class="text-6xl font-black text-gray-900 mb-4"><i class="fas fa-graduation-cap text-blue-600 mr-4"></i>今日のまとめ</h1>
+            <p class="text-2xl text-gray-700">検索 & リスティング広告で身につけた3つの力</p>
+        </header>
+        <div class="grid grid-cols-3 gap-8 mb-10">
+            <div class="bg-white p-6 rounded-lg border-t-4 border-yellow-500"><div class="text-center mb-4"><i class="fas fa-crown text-5xl text-yellow-500"></i><h3 class="text-3xl font-bold text-gray-900 mt-3">表示を制する</h3></div><ul class="space-y-2 text-2xl list-disc list-inside"><li>多様な検索結果を理解</li><li>品質スコアで競合に勝つ</li></ul></div>
+            <div class="bg-white p-6 rounded-lg border-t-4 border-purple-500"><div class="text-center mb-4"><i class="fas fa-flask text-5xl text-purple-500"></i><h3 class="text-3xl font-bold text-gray-900 mt-3">広告文を磨く</h3></div><ul class="space-y-2 text-2xl list-disc list-inside"><li>具体性と信頼性で訴求</li><li>ポリシーを遵守する</li></ul></div>
+            <div class="bg-white p-6 rounded-lg border-t-4 border-green-500"><div class="text-center mb-4"><i class="fas fa-chart-line text-5xl text-green-500"></i><h3 class="text-3xl font-bold text-gray-900 mt-3">数字で判断する</h3></div><ul class="space-y-2 text-2xl list-disc list-inside"><li>CPAで費用対効果を測定</li><li>意図に基づきKW選定</li></ul></div>
         </div>
-    </section>
-
-    <section id="slide11">
-        <div class="slide-container bg-gradient-to-br from-green-50 to-blue-50 p-6">
-            <header class="text-center mb-5"><div class="flex items-center justify-center mb-2"><i class="fas fa-search text-3xl text-green-600 mr-3"></i><h1 class="text-3xl font-black text-gray-800">フィードバック：広告文レビュー</h1></div><p class="text-lg text-gray-600 font-medium">講師選出による優秀作品の分析と学習</p></header>
-            <div class="grid grid-cols-3 gap-4 mb-4">
-                <div class="feedback-card"><div class="submission-form mb-4"><div class="flex items-center justify-center mb-3"><i class="fas fa-upload text-2xl mr-2"></i><h3 class="text-lg font-bold">提出方法</h3></div><div class="bg-white bg-opacity-20 rounded-lg p-3 mb-3"><i class="fas fa-link text-xl mb-2"></i><p class="font-bold">Google フォーム</p><p class="text-sm opacity-90">各班のA/B広告文を投稿</p></div><div class="pulse-animation-opacity"><button class="bg-white text-green-600 px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition-colors"><i class="fas fa-paper-plane mr-2"></i>今すぐ提出</button></div></div><div class="text-center"><div class="flex items-center justify-center mb-2"><i class="fas fa-trophy text-yellow-500 text-xl mr-2"></i><h4 class="font-bold text-gray-800">選出プロセス</h4></div><div class="space-y-2 text-sm"><div class="flex items-center justify-between bg-blue-50 rounded p-2"><span>提出作品数</span><span class="font-bold text-blue-600">全班</span></div><div class="flex items-center justify-between bg-green-50 rounded p-2"><span>講師選出</span><span class="font-bold text-green-600">3作品</span></div><div class="flex items-center justify-between bg-purple-50 rounded p-2"><span>分析時間</span><span class="font-bold text-purple-600">5分</span></div></div></div></div>
-                <div class="feedback-card"><div class="flex items-center mb-3"><i class="fas fa-microscope text-blue-600 text-xl mr-2"></i><h3 class="text-lg font-bold text-gray-800">分析基準</h3></div><div class="analysis-item"><div class="flex items-center mb-1"><i class="fas fa-chart-line text-orange-600 mr-2"></i><h4 class="font-bold text-sm">数値的根拠</h4></div><p class="text-xs text-gray-600">CTR予測・品質スコア・競合分析</p></div><div class="analysis-item"><div class="flex items-center mb-1"><i class="fas fa-brain text-orange-600 mr-2"></i><h4 class="font-bold text-sm">心理トリガー</h4></div><p class="text-xs text-gray-600">利得優先・権威性・社会的証明</p></div><div class="analysis-item"><div class="flex items-center mb-1"><i class="fas fa-bullseye text-orange-600 mr-2"></i><h4 class="font-bold text-sm">ターゲット適合</h4></div><p class="text-xs text-gray-600">STDC層・検索意図・ペルソナ</p></div><div class="analysis-item"><div class="flex items-center mb-1"><i class="fas fa-cogs text-orange-600 mr-2"></i><h4 class="font-bold text-sm">構造最適化</h4></div><p class="text-xs text-gray-600">文字数・キーワード配置・CTA</p></div><div class="mt-3 text-center"><p class="text-xs text-gray-500">出典: Cialdini「影響力の武器」</p></div></div>
-                <div class="feedback-card"><div class="flex items-center mb-3"><i class="fas fa-lightbulb text-purple-600 text-xl mr-2"></i><h3 class="text-lg font-bold text-gray-800">心理トリガー</h3></div><div class="space-y-3"><div class="bg-purple-50 rounded-lg p-3"><h4 class="font-bold text-sm text-purple-800 mb-2">利得優先</h4><div class="flex flex-wrap gap-1"><span class="trigger-badge">限定</span><span class="trigger-badge">無料</span><span class="trigger-badge">今だけ</span></div><p class="text-xs text-purple-600 mt-1">例：「今だけ無料」「限定オープン」</p></div><div class="bg-blue-50 rounded-lg p-3"><h4 class="font-bold text-sm text-blue-800 mb-2">権威性</h4><div class="flex flex-wrap gap-1"><span class="trigger-badge">No.1</span><span class="trigger-badge">受賞</span><span class="trigger-badge">専門家</span></div><p class="text-xs text-blue-600 mt-1">例：「沖縄No.1」「受賞カフェ」</p></div><div class="bg-green-50 rounded-lg p-3"><h4 class="font-bold text-sm text-green-800 mb-2">社会的証明</h4><div class="flex flex-wrap gap-1"><span class="trigger-badge">口コミ</span><span class="trigger-badge">人気</span><span class="trigger-badge">話題</span></div><p class="text-xs text-green-600 mt-1">例：「話題の海カフェ」「人気急上昇」</p></div></div></div>
-            </div>
-            <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-4 text-white">
-                <div class="flex items-center mb-3"><i class="fas fa-award text-2xl text-yellow-300 mr-3"></i><h3 class="text-xl font-bold">優秀作品サンプル分析</h3></div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="selected-ad"><div class="rank-badge">1</div><div class="mb-2"><h4 class="font-bold text-sm text-gray-800">沖縄No.1の絶景海カフェ</h4><p class="text-xs text-gray-600">Blue Reef | 今すぐ予約</p></div><div class="space-y-1"><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">権威性（No.1）活用</span></div><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">具体性（絶景）表現</span></div><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">明確なCTA配置</span></div></div></div>
-                    <div class="selected-ad"><div class="rank-badge">2</div><div class="mb-2"><h4 class="font-bold text-sm text-gray-800">あなたが探していた海カフェ</h4><p class="text-xs text-gray-600">Blue Reef | 詳細を見る</p></div><div class="space-y-1"><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">パーソナル訴求</span></div><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">検索意図マッチ</span></div><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">情報収集向けCTA</span></div></div></div>
-                    <div class="selected-ad"><div class="rank-badge">3</div><div class="mb-2"><h4 class="font-bold text-sm text-gray-800">SNSで話題の海カフェ</h4><p class="text-xs text-gray-600">Blue Reef | 写真を見る</p></div><div class="space-y-1"><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">社会的証明活用</span></div><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">トレンド性訴求</span></div><div class="flex items-center text-xs"><i class="fas fa-check text-green-500 mr-1"></i><span class="text-gray-700">視覚的CTA</span></div></div></div>
-                </div>
-                <div class="text-center mt-4"><div class="inline-flex items-center bg-white bg-opacity-20 rounded-full px-6 py-2"><i class="fas fa-graduation-cap mr-2 text-xl"></i><div><p class="font-bold">次回はこの広告文がバナーになります！</p><p class="text-sm opacity-90">GDN・SNS広告での活用を学びましょう</p></div></div></div>
-            </div>
+        <div class="bg-white p-8 rounded-lg text-center">
+            <h3 class="text-3xl font-bold text-gray-900 mb-2">明日から実践できること</h3>
+            <p class="text-2xl text-gray-700">まずは自社サイトのターゲット顧客が検索しそうな<span class="font-bold text-green-600">「ロングテールキーワード」</span>を3つ考えてみましょう。</p>
         </div>
-    </section>
+    </div>
 
-    <section id="slide12">
-        <div class="slide-container bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 p-6">
-            <header class="text-center mb-8"><div class="flex items-center justify-center mb-4"><i class="fas fa-graduation-cap text-4xl text-blue-600 mr-4 pulse-glow"></i><h1 class="text-5xl font-black text-gray-800">今日のまとめ</h1></div><p class="text-xl text-gray-600 font-medium">検索 & リスティング広告で身につけた3つの力</p></header>
-            <div class="grid grid-cols-3 gap-8 mb-8">
-                <div class="key-point-card"><div class="point-number">1</div><div class="text-center mb-4"><i class="fas fa-crown text-4xl text-yellow-500 mb-3"></i><h3 class="text-xl font-bold text-gray-800">表示席を奪う</h3></div><div class="space-y-2"><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>FAQスキーマで上位表示</span></div><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>ローカル3Packを活用</span></div><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>品質スコアで競合に勝つ</span></div></div><div class="mt-4 text-center"><div class="bg-blue-50 rounded-lg p-3"><p class="text-xs text-blue-700 font-medium">65%がクリックしない時代<br><span class="font-bold">表示が全て</span></p></div></div></div>
-                <div class="key-point-card"><div class="point-number">2</div><div class="text-center mb-4"><i class="fas fa-flask text-4xl text-purple-500 mb-3"></i><h3 class="text-xl font-bold text-gray-800">A/Bで最適化</h3></div><div class="space-y-2"><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>変数を1つだけ変更</span></div><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>心理トリガーを活用</span></div><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>CTR向上でCPA改善</span></div></div><div class="mt-4 text-center"><div class="bg-purple-50 rounded-lg p-3"><p class="text-xs text-purple-700 font-medium">科学的アプローチで<br><span class="font-bold">成果を最大化</span></p></div></div></div>
-                <div class="key-point-card"><div class="point-number">3</div><div class="text-center mb-4"><i class="fas fa-chart-line text-4xl text-green-500 mb-3"></i><h3 class="text-xl font-bold text-gray-800">数字と意図で判断</h3></div><div class="space-y-2"><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>検索意図を4象限で分析</span></div><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>CPA公式で効果測定</span></div><div class="flex items-center text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i><span>Bid Simulatorで予測</span></div></div><div class="mt-4 text-center"><div class="bg-green-50 rounded-lg p-3"><p class="text-xs text-green-700 font-medium">感覚ではなく<br><span class="font-bold">データで勝負</span></p></div></div></div>
-            </div>
-            <div class="grid grid-cols-2 gap-6">
-                <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl p-6 text-white"><div class="flex items-center mb-4"><i class="fas fa-book text-2xl mr-3"></i><h3 class="text-xl font-bold">活用した理論・データ</h3></div><div class="grid grid-cols-2 gap-2"><span class="theory-badge">Google Think with Google</span><span class="theory-badge">Sparktoro調査</span><span class="theory-badge">STDCマッピング</span><span class="theory-badge">Moz検索意図分析</span><span class="theory-badge">WordStream CTR研究</span><span class="theory-badge">Cialdini心理学</span><span class="theory-badge">Google品質スコア</span><span class="theory-badge">Bid Simulator</span></div><div class="mt-4 text-center"><p class="text-sm opacity-90">理論と実践を組み合わせた科学的アプローチ</p></div></div>
-                <div class="summary-highlight"><div class="relative z-10"><div class="flex items-center justify-center mb-4"><i class="fas fa-rocket text-3xl mr-3"></i><h3 class="text-xl font-bold">マスターした公式</h3></div><div class="bg-white bg-opacity-20 rounded-lg p-4 mb-4"><div class="text-lg font-bold mb-2">品質スコア = CTR予測 × 関連性 × LP品質</div><div class="text-lg font-bold">CPA = CPC ÷ CVR</div></div><div class="border-t border-white border-opacity-30 pt-4"><h4 class="font-bold mb-2">Blue Reef Caféでの成果</h4><div class="grid grid-cols-2 gap-4 text-sm"><div class="bg-white bg-opacity-20 rounded p-2"><div class="font-bold">表示回数</div><div>+150%向上</div></div><div class="bg-white bg-opacity-20 rounded p-2"><div class="font-bold">CPA</div><div>-40%改善</div></div></div></div></div></div>
-            </div>
-            <div class="text-center mt-6"><div class="inline-flex items-center bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-full px-8 py-3 pulse-glow"><i class="fas fa-arrow-right mr-3 text-xl"></i><div><p class="font-bold text-lg">次回：GDN & SNS広告</p><p class="text-sm opacity-90">今日の広告文がバナーになります！</p></div></div></div>
-        </div>
-    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- 必要に応じてチャート初期化スクリプトをここに追加できます -->
+    <script>
+        // Chart.js initialization for Doughnut Chart
+        (function() {
+            const zeroClickCtx = document.getElementById('zeroClickChart')?.getContext('2d');
+            if (zeroClickCtx) {
+                new Chart(zeroClickCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['クリックされない', 'クリックされる'],
+                        datasets: [{
+                            data: [65, 35],
+                            backgroundColor: ['#ef4444', '#22c55e'],
+                            borderWidth: 2,
+                            borderColor: '#f9fafb'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { padding: 20, font: { size: 16 } }
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
