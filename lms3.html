@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DX LMS モックアップ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .snap-x-mandatory {
+            scroll-snap-type: x mandatory;
+        }
+        .snap-start {
+            scroll-snap-align: start;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .active-tab {
+            color: #2563eb; /* text-blue-600 */
+        }
+        .active-tab svg {
+            stroke: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div id="app-container" class="pb-20 md:pb-0">
+        <!-- App pages will be rendered here -->
+    </div>
+
+    <!-- Onboarding Modal -->
+    <div id="onboarding-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md transform transition-all duration-300 ease-out" id="onboarding-content">
+            <!-- Onboarding steps will be injected here -->
+        </div>
+    </div>
+
+    <!-- Bottom Tab Bar for Mobile -->
+    <footer id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-slate-200 shadow-t-md flex justify-around md:hidden z-40">
+        <button data-page="home" class="nav-button flex-1 flex flex-col items-center justify-center p-2 text-slate-500 active-tab">
+            <i data-lucide="home"></i>
+            <span class="text-xs mt-1">ホーム</span>
+        </button>
+        <button data-page="browse" class="nav-button flex-1 flex flex-col items-center justify-center p-2 text-slate-500">
+            <i data-lucide="layout-grid"></i>
+            <span class="text-xs mt-1">探す</span>
+        </button>
+        <button data-page="search" class="nav-button flex-1 flex flex-col items-center justify-center p-2 text-slate-500">
+            <i data-lucide="search"></i>
+            <span class="text-xs mt-1">検索</span>
+        </button>
+        <button data-page="learning" class="nav-button flex-1 flex flex-col items-center justify-center p-2 text-slate-500">
+            <i data-lucide="clapperboard"></i>
+            <span class="text-xs mt-1">学習中</span>
+        </button>
+        <button data-page="profile" class="nav-button flex-1 flex flex-col items-center justify-center p-2 text-slate-500">
+            <i data-lucide="user"></i>
+            <span class="text-xs mt-1">プロフィール</span>
+        </button>
+    </footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- DATA ---
+    // Simulating a database of courses
+    const courses = [
+        { id: 1, title: "なぜ今DX？ ―県内GDPと生産性データで見る危機感", category: "A. DXリテラシー基礎", subcategory: "1. DXの必要性と沖縄の現状", tags: { difficulty: "入門", role: "経営者", time: "15分+" }, thumbnail: "https://placehold.co/600x400/0284c7/ffffff?text=DXの必要性", description: "沖縄県の経済データを用いて、デジタルトランスフォーメーションの緊急性を解説します。", lastPlayed: 10, totalTime: 20 },
+        { id: 2, title: "請求書電子化で年間80時間削減！", category: "B. 日常業務のデジタル化", subcategory: "1. 書類・帳票ペーパーレス", tags: { difficulty: "実践", role: "現場リーダー", time: "5-15分" }, thumbnail: "https://placehold.co/600x400/16a34a/ffffff?text=ペーパーレス", description: "具体的なツールを使いながら、請求書の電子化フローをハンズオンで学びます。", lastPlayed: 0, totalTime: 12 },
+        { id: 3, title: "ChatGPTで5分でメール作成術", category: "C. AI & データ活用", subcategory: "1. 生成AI超入門", tags: { difficulty: "入門", role: "新人", time: "<5分" }, thumbnail: "https://placehold.co/600x400/7c3aed/ffffff?text=ChatGPT", description: "プロンプトの基本から、丁寧なビジネスメールを瞬時に作成するテクニックまで。", lastPlayed: 0, totalTime: 4 },
+        { id: 4, title: "LINE公式でリピーター率＋20%計画", category: "D. 部門別DX", subcategory: "1. 売上拡大（営業・マーケ）", tags: { difficulty: "応用", role: "管理職", time: "15分+" }, thumbnail: "https://placehold.co/600x400/db2777/ffffff?text=LINEマーケ", description: "顧客セグメントに合わせたメッセージ配信で、効果的にリピート率を高める方法。", lastPlayed: 15, totalTime: 30 },
+        { id: 5, title: "ゼロから学ぶISMS/Pマークライト", category: "E. セキュリティ & ガバナンス", subcategory: "1. サイバーリスク基礎", tags: { difficulty: "入門", role: "管理職", time: "15分+" }, thumbnail: "https://placehold.co/600x400/f97316/ffffff?text=セキュリティ", description: "中小企業がまず取り組むべき情報セキュリティ対策の第一歩を解説します。", lastPlayed: 0, totalTime: 25 },
+        { id: 6, title: "糸満水産がクラウド在庫を導入した舞台裏", category: "F. ケーススタディ", subcategory: "1. 沖縄企業事例", tags: { difficulty: "実践", role: "経営者", time: "5-15分" }, thumbnail: "https://placehold.co/600x400/0891b2/ffffff?text=沖縄事例", description: "地元の成功事例から、導入の壁とそれを乗り越えた工夫を学びます。", lastPlayed: 0, totalTime: 10 },
+        { id: 7, title: "デジタル資格を人事評価に活かす方法", category: "G. スキルアップ & キャリア", subcategory: "1. 資格ロードマップ", tags: { difficulty: "実践", role: "管理職", time: "5-15分" }, thumbnail: "https://placehold.co/600x400/4d7c0f/ffffff?text=キャリア", description: "社員の学習モチベーションを高める、公平な評価制度の作り方。", lastPlayed: 0, totalTime: 13 },
+        { id: 8, title: "自社の紙業務を列挙してみよう", category: "H. 実践ワークショップ", subcategory: "1. ワークシートDL", tags: { difficulty: "入門", role: "全員", time: "<5分" }, thumbnail: "https://placehold.co/600x400/71717a/ffffff?text=ワークショップ", description: "付属のワークシートを使って、あなたの会社のDX化ポイントを見つけましょう。", lastPlayed: 0, totalTime: 5 },
+        { id: 9, title: "Google Workspaceで変わる共同作業", category: "B. 日常業務のデジタル化", subcategory: "2. コラボ・コミュニケーション", tags: { difficulty: "入門", role: "新人", time: "5-15分" }, thumbnail: "https://placehold.co/600x400/f59e0b/ffffff?text=コラボ", description: "共有ドキュメントやスプレッドシートを使った効率的な情報共有術。", lastPlayed: 0, totalTime: 10 },
+        { id: 10, title: "BIツール初歩：Excelデータを地図にプロット", category: "C. AI & データ活用", subcategory: "2. データ可視化／BI", tags: { difficulty: "実践", role: "現場リーダー", time: "15分+" }, thumbnail: "https://placehold.co/600x400/84cc16/ffffff?text=データ可視化", description: "顧客データを地図上に可視化して、新たな営業戦略のヒントを得る方法。", lastPlayed: 0, totalTime: 18 },
+    ];
+    
+    const categories = {
+        "A. DXリテラシー基礎": "DXの全体像とマインドセットを学びます。",
+        "B. 日常業務のデジタル化": "ペーパーレスやコミュニケーションツールで業務を効率化します。",
+        "C. AI & データ活用": "AIやBIツールを使いこなし、データに基づいた意思決定を支援します。",
+        "D. 部門別DX": "営業、経理、製造など、各部門に特化したDX手法を学びます。",
+        "E. セキュリティ & ガバナンス": "DXを進める上で不可欠なセキュリティ知識と体制づくりを学びます。",
+        "F. ケーススタディ": "県内・国内の具体的な成功事例から、実践のヒントを得ます。",
+        "G. スキルアップ & キャリア": "DX時代に求められるスキルと、キャリアパスを考えます。",
+        "H. 実践ワークショップ": "手を動かしながら、自社の課題解決に直結するスキルを習得します。",
+    };
+
+    const userState = {
+        currentPage: 'home',
+        onboardingComplete: false,
+        filters: { difficulty: 'すべて', role: 'すべて', time: 'すべて' },
+        currentLearning: null, // Holds the ID of the course being watched
+    };
+
+    // --- TEMPLATES ---
+    const getPageHTML = (pageName) => {
+        switch (pageName) {
+            case 'home': return `
+                <div class="p-4 space-y-6 fade-in">
+                    <header class="flex justify-between items-center">
+                        <div>
+                            <h1 class="text-2xl font-bold text-slate-800">ホーム</h1>
+                            <p class="text-sm text-slate-500">学習を再開しましょう！</p>
+                        </div>
+                        <div class="w-10 h-10 bg-slate-200 rounded-full">
+                            <img src="https://placehold.co/40x40/e2e8f0/334155?text=U" class="w-10 h-10 rounded-full object-cover">
+                        </div>
+                    </header>
+                    
+                    <!-- Resume Card -->
+                    ${generateResumeCard()}
+                    
+                    <!-- AI Recommended -->
+                    ${generateCourseShelf('あなたへのおすすめ', courses.slice(1, 5))}
+
+                    <!-- New Courses -->
+                    ${generateCourseShelf('本日追加された新着', courses.slice(5, 9).reverse())}
+                    
+                    <!--沖縄企業事例 -->
+                    ${generateCourseShelf('沖縄のケーススタディ', courses.filter(c => c.category === 'F. ケーススタディ'))}
+                </div>`;
+            
+            case 'browse': return `
+                <div class="p-4 space-y-6 fade-in">
+                    <header>
+                        <h1 class="text-2xl font-bold text-slate-800">コースを探す</h1>
+                        <p class="text-sm text-slate-500">興味のあるカテゴリから見つけよう</p>
+                    </header>
+                    ${Object.keys(categories).map(cat => 
+                        generateCourseShelf(cat, courses.filter(c => c.category === cat), categories[cat])
+                    ).join('')}
+                </div>`;
+            
+            case 'search': return `
+                <div class="p-4 space-y-4 fade-in">
+                    <header>
+                        <h1 class="text-2xl font-bold text-slate-800">絞り込み検索</h1>
+                    </header>
+                    <div class="relative">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                        <input id="search-input" type="text" placeholder="キーワード、タグ、講師名で検索" class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="space-y-3">
+                        ${generateFilterGroup('難易度', ['すべて', '入門', '実践', '応用'], 'difficulty')}
+                        ${generateFilterGroup('役割', ['すべて', '経営者', '管理職', '現場リーダー', '新人'], 'role')}
+                        ${generateFilterGroup('所要時間', ['すべて', '<5分', '5-15分', '15分+'], 'time')}
+                    </div>
+
+                    <!-- Search Results -->
+                    <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <!-- Results will be injected here -->
+                    </div>
+                </div>`;
+
+            case 'learning': return `
+                <div id="learning-page-content" class="fade-in">
+                    <!-- Content will be injected by showLearningPage -->
+                </div>
+            `;
+            
+            case 'profile': return `
+                <div class="p-4 space-y-6 fade-in">
+                    <h1 class="text-2xl font-bold text-slate-800">プロフィール</h1>
+                    <div class="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center text-center">
+                        <img src="https://placehold.co/80x80/e2e8f0/334155?text=U" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-blue-200">
+                        <h2 class="text-xl font-bold">田中 太郎</h2>
+                        <p class="text-slate-500">株式会社おきなわ商事 / 営業部</p>
+                        <div class="mt-6 w-full space-y-4">
+                            <div class="flex justify-between items-center text-left">
+                                <span class="text-slate-600">完了コース</span>
+                                <span class="font-bold text-blue-600">12</span>
+                            </div>
+                            <div class="flex justify-between items-center text-left">
+                                <span class="text-slate-600">獲得バッジ</span>
+                                <span class="font-bold text-amber-500">5</span>
+                            </div>
+                             <div class="flex justify-between items-center text-left">
+                                <span class="text-slate-600">総学習時間</span>
+                                <span class="font-bold">8時間 24分</span>
+                            </div>
+                        </div>
+                        <button class="mt-6 w-full bg-slate-100 text-slate-700 font-bold py-3 rounded-lg hover:bg-slate-200 transition">設定</button>
+                    </div>
+                    <!-- Admin Dashboard Link -->
+                    <div class="bg-white p-4 rounded-2xl shadow-md">
+                         <button id="admin-dashboard-btn" class="w-full flex items-center justify-between text-left">
+                            <div>
+                                <h3 class="font-bold text-lg">管理者ダッシュボード</h3>
+                                <p class="text-sm text-slate-500">チームの学習状況を確認</p>
+                            </div>
+                             <i data-lucide="shield" class="text-slate-400"></i>
+                         </button>
+                    </div>
+                </div>`;
+
+            case 'admin': return `
+                <div class="p-4 space-y-6 fade-in">
+                    <header class="flex items-center space-x-3">
+                        <button id="back-to-profile-btn"><i data-lucide="arrow-left"></i></button>
+                        <div>
+                            <h1 class="text-2xl font-bold text-slate-800">管理者ダッシュボード</h1>
+                            <p class="text-sm text-slate-500">株式会社おきなわ商事</p>
+                        </div>
+                    </header>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-xl shadow">
+                            <h3 class="text-sm text-slate-500">受講率</h3>
+                            <p class="text-2xl font-bold text-blue-600">85%</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow">
+                            <h3 class="text-sm text-slate-500">完了率</h3>
+                            <p class="text-2xl font-bold text-green-600">62%</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow col-span-2">
+                            <h3 class="text-sm text-slate-500">平均視聴時間</h3>
+                            <p class="text-2xl font-bold">12分30秒</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Rankings -->
+                    <div class="bg-white p-4 rounded-xl shadow">
+                        <h3 class="font-bold mb-3">部署別ランキング (完了コース数)</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <span class="font-bold text-lg mr-3">🥇</span>
+                                <div><p class="font-semibold">営業部</p><p class="text-sm text-slate-500">平均 8.5コース</p></div>
+                            </div>
+                             <div class="flex items-center">
+                                <span class="font-bold text-lg mr-3">🥈</span>
+                                <div><p class="font-semibold">開発部</p><p class="text-sm text-slate-500">平均 6.1コース</p></div>
+                            </div>
+                             <div class="flex items-center">
+                                <span class="font-bold text-lg mr-3">🥉</span>
+                                <div><p class="font-semibold">総務部</p><p class="text-sm text-slate-500">平均 4.2コース</p></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="space-y-3">
+                        <button class="w-full flex items-center justify-center space-x-2 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition"><i data-lucide="download"></i><span>CSVダウンロード</span></button>
+                        <button class="w-full flex items-center justify-center space-x-2 bg-slate-600 text-white font-bold py-3 rounded-lg hover:bg-slate-700 transition"><i data-lucide="send"></i><span>Slackでリマインド</span></button>
+                    </div>
+                </div>`;
+            default: return `<div class="p-4">ページが見つかりません</div>`;
+        }
+    };
+
+    const getOnboardingHTML = (step) => {
+        switch (step) {
+            case 1: return `
+                <div class="p-6 text-center">
+                    <i data-lucide="building-2" class="mx-auto w-12 h-12 text-blue-500 mb-4"></i>
+                    <h2 class="text-xl font-bold mb-2">あなたの業界を教えてください</h2>
+                    <p class="text-slate-500 mb-6">最適なコースをおすすめします。</p>
+                    <div class="space-y-3">
+                        ${['建設業', '製造業', '情報通信業', '卸売・小売業', '観光・宿泊業', 'その他'].map(item => `<button class="onboarding-next w-full bg-slate-100 text-slate-700 font-bold py-3 rounded-lg hover:bg-slate-200 transition">${item}</button>`).join('')}
+                    </div>
+                </div>`;
+            case 2: return `
+                <div class="p-6 text-center">
+                    <i data-lucide="users" class="mx-auto w-12 h-12 text-blue-500 mb-4"></i>
+                    <h2 class="text-xl font-bold mb-2">あなたの役割は？</h2>
+                    <p class="text-slate-500 mb-6">役割に合ったスキルを提案します。</p>
+                    <div class="space-y-3">
+                        ${['経営者', '管理職', '現場リーダー', '新人'].map(item => `<button class="onboarding-next w-full bg-slate-100 text-slate-700 font-bold py-3 rounded-lg hover:bg-slate-200 transition">${item}</button>`).join('')}
+                    </div>
+                </div>`;
+            case 3: return `
+                <div class="p-6 text-center">
+                    <i data-lucide="sparkles" class="mx-auto w-12 h-12 text-blue-500 mb-4"></i>
+                    <h2 class="text-xl font-bold mb-2">興味のある分野は？ (複数選択可)</h2>
+                    <p class="text-slate-500 mb-6">関心から学習を始めましょう。</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        ${['業務効率化', '売上アップ', 'AI活用', 'チーム管理', 'セキュリティ', 'キャリア'].map(item => `<button class="onboarding-interest w-full bg-slate-100 text-slate-700 font-bold py-3 rounded-lg hover:bg-slate-200 transition data-[selected=true]:bg-blue-500 data-[selected=true]:text-white" data-selected="false">${item}</button>`).join('')}
+                    </div>
+                    <button id="onboarding-submit-interests" class="mt-6 w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">次へ</button>
+                </div>`;
+            case 4: return `
+                <div class="p-8 text-center">
+                    <i data-lucide="check-circle-2" class="mx-auto w-16 h-16 text-green-500 mb-4"></i>
+                    <h2 class="text-2xl font-bold mb-2">準備ができました！</h2>
+                    <p class="text-slate-500 mb-6">あなたにパーソナライズされた学習プランが作成されました。</p>
+                    <button id="start-learning-btn" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">学習を始める</button>
+                </div>`;
+        }
+    };
+
+    // --- COMPONENT GENERATORS ---
+    const generateCourseCard = (course, isHorizontal = false) => {
+        const widthClass = isHorizontal ? 'w-60 sm:w-72' : 'w-full';
+        return `
+            <div class="course-card bg-white rounded-2xl shadow-md overflow-hidden flex-shrink-0 ${widthClass} snap-start cursor-pointer" data-course-id="${course.id}">
+                <img src="${course.thumbnail}" alt="${course.title}" class="w-full h-32 object-cover">
+                <div class="p-3">
+                    <h3 class="font-bold text-sm truncate">${course.title}</h3>
+                    <div class="flex items-center space-x-2 text-xs text-slate-500 mt-1">
+                        <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">${course.tags.difficulty}</span>
+                        <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full">${course.tags.role}</span>
+                        <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">${course.tags.time}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+
+    const generateCourseShelf = (title, courses, description = '') => {
+        if (courses.length === 0) return '';
+        return `
+            <section>
+                <h2 class="text-xl font-bold text-slate-800">${title}</h2>
+                ${description ? `<p class="text-sm text-slate-500 mb-3">${description}</p>` : '<div class="mb-3"></div>'}
+                <div class="flex space-x-4 overflow-x-auto pb-4 hide-scrollbar snap-x-mandatory">
+                    ${courses.map(course => generateCourseCard(course, true)).join('')}
+                </div>
+            </section>
+        `;
+    };
+    
+    const generateResumeCard = () => {
+        const resumeCourse = courses.find(c => c.lastPlayed > 0);
+        if (!resumeCourse) return `
+            <div class="bg-white p-4 rounded-2xl shadow-md text-center">
+                <h3 class="font-bold">新しいコースを始めよう！</h3>
+                <p class="text-sm text-slate-500">「探す」タブから興味のあるコースを見つけましょう。</p>
+            </div>
+        `;
+
+        const progress = (resumeCourse.lastPlayed / resumeCourse.totalTime) * 100;
+        return `
+            <div class="course-card bg-white p-4 rounded-2xl shadow-lg cursor-pointer" data-course-id="${resumeCourse.id}">
+                <p class="text-sm font-bold text-blue-600 mb-2">続きから再生</p>
+                <div class="flex items-center space-x-4">
+                    <img src="${resumeCourse.thumbnail}" alt="${resumeCourse.title}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-md">${resumeCourse.title}</h3>
+                        <p class="text-xs text-slate-500">${resumeCourse.subcategory}</p>
+                        <div class="w-full bg-slate-200 rounded-full h-2 mt-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                    <i data-lucide="play-circle" class="w-8 h-8 text-blue-500"></i>
+                </div>
+            </div>
+        `;
+    };
+
+    const generateFilterGroup = (label, options, filterKey) => `
+        <div>
+            <h3 class="text-sm font-semibold text-slate-600 mb-2">${label}</h3>
+            <div class="flex flex-wrap gap-2">
+                ${options.map(option => `
+                    <button class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold transition
+                        ${userState.filters[filterKey] === option 
+                            ? 'bg-blue-600 text-white' 
+                            : 'bg-white text-slate-700 hover:bg-slate-100'}"
+                        data-filter-key="${filterKey}" data-filter-value="${option}">
+                        ${option}
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+    `;
+
+    // --- PAGE RENDERING LOGIC ---
+    const appContainer = document.getElementById('app-container');
+
+    const renderPage = (pageName) => {
+        userState.currentPage = pageName;
+        appContainer.innerHTML = getPageHTML(pageName);
+        lucide.createIcons();
+        updateActiveTab();
+        addPageEventListeners(pageName);
+        window.scrollTo(0, 0);
+
+        if (pageName === 'search') {
+            renderSearchResults();
+        }
+    };
+    
+    const showLearningPage = (courseId) => {
+        const course = courses.find(c => c.id == courseId);
+        if (!course) return;
+
+        userState.currentLearning = courseId;
+        appContainer.innerHTML = `
+            <div class="fade-in">
+                 <!-- 1. Video Player Area -->
+                <div class="relative bg-black aspect-video">
+                    <video class="w-full h-full" poster="${course.thumbnail}" controls>
+                        <!-- In a real app, HLS source would go here -->
+                    </video>
+                    <div class="absolute top-4 left-4">
+                        <button id="back-to-previous" class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="arrow-left"></i>
+                        </button>
+                    </div>
+                     <div class="absolute top-4 right-4">
+                        <button class="w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="picture-in-picture-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Info and Controls -->
+                <div class="p-4 bg-white">
+                    <h1 class="text-xl font-bold">${course.title}</h1>
+                    <p class="text-sm text-slate-500">${course.subcategory}</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex space-x-2">
+                            <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs">${course.tags.difficulty}</span>
+                            <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs">${course.tags.time}</span>
+                        </div>
+                         <select id="playback-speed" class="bg-slate-100 border-none rounded-md text-sm px-2 py-1">
+                            <option value="1">1.0x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                            <option value="2">2.0x</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3. Interactive Transcript -->
+                <div class="p-4">
+                    <h2 class="font-bold mb-2">インタラクティブ字幕</h2>
+                    <div class="bg-white p-4 rounded-lg h-64 overflow-y-auto space-y-3">
+                        ${generateTranscript(course)}
+                    </div>
+                </div>
+
+                 <!-- 4. "やってみる"シート -->
+                <div class="p-4">
+                    <div class="bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-r-lg">
+                        <h3 class="font-bold text-yellow-800">やってみるシート</h3>
+                        <p class="text-sm text-yellow-700 mt-1">「自社の紙業務を5つ書き出してみよう」</p>
+                        <button id="task-complete-btn" class="mt-3 bg-yellow-400 text-yellow-900 font-bold px-4 py-2 rounded-lg text-sm hover:bg-yellow-500 transition">完了チェック</button>
+                    </div>
+                </div>
+            </div>`;
+
+        lucide.createIcons();
+
+        document.getElementById('back-to-previous').addEventListener('click', () => {
+            renderPage('home'); // or whichever page they came from
+        });
+
+        document.getElementById('task-complete-btn').addEventListener('click', showCompletionPopup);
+    };
+
+    const generateTranscript = (course) => {
+        // Dummy transcript data
+        const dummyTranscript = [
+            { time: "0:05", text: "皆さん、こんにちは。本日は「" + course.title + "」についてお話しします。" },
+            { time: "0:15", text: "まず、基本となる考え方から説明します。DXとは単なるデジタル化ではありません。" },
+            { time: "0:28", text: "重要なのは、ビジネスモデルそのものを変革することです。" },
+            { time: "0:40", text: "このグラフをご覧ください。これは..." },
+            { time: "0:55", text: "つまり、このデータを活用することで、新たな顧客価値を創造できるのです。" },
+            { time: "1:10", text: "具体的な事例を見ていきましょう。沖縄のA社では..." },
+            { time: "1:25", text: "この結果、年間でおよそ80時間の業務削減に成功しました。" },
+        ];
+        return dummyTranscript.map(line => `
+            <div class="flex cursor-pointer hover:bg-slate-100 p-1 rounded">
+                <span class="w-16 font-mono text-sm text-blue-600">${line.time}</span>
+                <p class="flex-1 text-sm text-slate-700">${line.text}</p>
+            </div>
+        `).join('');
+    };
+    
+    const showCompletionPopup = () => {
+        const popup = document.createElement('div');
+        popup.className = 'fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4';
+        popup.innerHTML = `
+            <div class="bg-white rounded-2xl p-6 text-center shadow-xl transform scale-95 transition-transform duration-300 w-full max-w-sm">
+                <i data-lucide="badge-check" class="w-16 h-16 text-green-500 mx-auto mb-3"></i>
+                <h2 class="text-xl font-bold">ナイスアクション！</h2>
+                <p class="text-slate-500 my-2">新しいバッジを獲得しました！</p>
+                
+                <div class="bg-slate-100 p-4 rounded-lg mt-4 text-left">
+                    <p class="text-sm font-bold text-slate-800">次にやるべき1分タスク</p>
+                    <p class="text-sm text-slate-600">書き出した紙業務の中で、明日から電子化できそうなものを1つ選んでチームに共有しよう。</p>
+                </div>
+
+                <div class="flex gap-3 mt-6">
+                    <button id="share-btn" class="flex-1 bg-blue-500 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2"><i data-lucide="share-2"></i><span>共有</span></button>
+                    <button id="close-popup-btn" class="flex-1 bg-slate-200 text-slate-800 font-bold py-3 rounded-lg">閉じる</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(popup);
+        lucide.createIcons();
+
+        // Animate entrance
+        setTimeout(() => popup.querySelector('div').classList.remove('scale-95'), 10);
+        
+        popup.querySelector('#close-popup-btn').addEventListener('click', () => {
+            popup.remove();
+            renderPage('home');
+        });
+         popup.querySelector('#share-btn').addEventListener('click', () => {
+            alert('共有リンクがクリップボードにコピーされました (モック)');
+        });
+    };
+
+    // --- SEARCH & FILTER LOGIC ---
+    const renderSearchResults = () => {
+        const resultsContainer = document.getElementById('search-results');
+        if (!resultsContainer) return;
+        
+        const searchTerm = document.getElementById('search-input')?.value.toLowerCase() || '';
+        
+        const filtered = courses.filter(course => {
+            const matchesSearch = searchTerm === '' || 
+                                  course.title.toLowerCase().includes(searchTerm) ||
+                                  course.description.toLowerCase().includes(searchTerm) ||
+                                  Object.values(course.tags).some(tag => tag.toLowerCase().includes(searchTerm));
+
+            const matchesDifficulty = userState.filters.difficulty === 'すべて' || course.tags.difficulty === userState.filters.difficulty;
+            const matchesRole = userState.filters.role === 'すべて' || course.tags.role === userState.filters.role || course.tags.role === '全員';
+            const matchesTime = userState.filters.time === 'すべて' || course.tags.time === userState.filters.time;
+            
+            return matchesSearch && matchesDifficulty && matchesRole && matchesTime;
+        });
+
+        if (filtered.length > 0) {
+            resultsContainer.innerHTML = filtered.map(course => generateCourseCard(course, false)).join('');
+        } else {
+            resultsContainer.innerHTML = `<div class="text-center text-slate-500 col-span-full py-8">
+                <i data-lucide="frown" class="w-12 h-12 mx-auto text-slate-400 mb-2"></i>
+                <p>条件に合うコースが見つかりませんでした。</p>
+            </div>`;
+            lucide.createIcons();
+        }
+        addCourseCardListeners();
+    };
+
+    // --- EVENT LISTENERS ---
+    const addPageEventListeners = (pageName) => {
+        addCourseCardListeners();
+
+        if (pageName === 'search') {
+            document.getElementById('search-input').addEventListener('keyup', renderSearchResults);
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const key = e.currentTarget.dataset.filterKey;
+                    const value = e.currentTarget.dataset.filterValue;
+                    userState.filters[key] = value;
+                    
+                    // Update button styles
+                    document.querySelectorAll(`.filter-btn[data-filter-key="${key}"]`).forEach(btn => {
+                        btn.classList.remove('bg-blue-600', 'text-white');
+                        btn.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-100');
+                    });
+                    e.currentTarget.classList.add('bg-blue-600', 'text-white');
+                    e.currentTarget.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-100');
+                    
+                    renderSearchResults();
+                });
+            });
+        }
+        
+        if (pageName === 'profile') {
+            document.getElementById('admin-dashboard-btn').addEventListener('click', () => renderPage('admin'));
+        }
+
+        if (pageName === 'admin') {
+            document.getElementById('back-to-profile-btn').addEventListener('click', () => renderPage('profile'));
+        }
+    };
+
+    const addCourseCardListeners = () => {
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const courseId = e.currentTarget.dataset.courseId;
+                showLearningPage(courseId);
+            });
+        });
+    };
+
+    const updateActiveTab = () => {
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.classList.remove('active-tab');
+            if (button.dataset.page === userState.currentPage) {
+                button.classList.add('active-tab');
+            }
+        });
+    };
+
+    // --- ONBOARDING LOGIC ---
+    const onboardingModal = document.getElementById('onboarding-modal');
+    const onboardingContent = document.getElementById('onboarding-content');
+    let currentStep = 1;
+
+    const showOnboardingStep = (step) => {
+        currentStep = step;
+        onboardingContent.innerHTML = getOnboardingHTML(step);
+        lucide.createIcons();
+        
+        if (step < 3) {
+            onboardingContent.querySelectorAll('.onboarding-next').forEach(btn => {
+                btn.addEventListener('click', () => showOnboardingStep(step + 1));
+            });
+        } else if (step === 3) {
+            onboardingContent.querySelectorAll('.onboarding-interest').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const isSelected = btn.dataset.selected === 'true';
+                    btn.dataset.selected = !isSelected;
+                });
+            });
+             onboardingContent.querySelector('#onboarding-submit-interests').addEventListener('click', () => showOnboardingStep(4));
+        } else if (step === 4) {
+             onboardingContent.querySelector('#start-learning-btn').addEventListener('click', () => {
+                onboardingModal.style.display = 'none';
+                userState.onboardingComplete = true;
+                renderPage('home');
+             });
+        }
+    };
+
+    // --- INITIALIZATION ---
+    // Bottom Nav
+    document.querySelectorAll('.nav-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const page = e.currentTarget.dataset.page;
+            if (page === 'learning') {
+                if (userState.currentLearning) {
+                    showLearningPage(userState.currentLearning);
+                } else {
+                    appContainer.innerHTML = `
+                    <div class="p-4 text-center text-slate-500 fade-in h-screen flex flex-col justify-center items-center">
+                        <i data-lucide="play-circle" class="w-16 h-16 text-slate-300 mb-4"></i>
+                        <h2 class="text-xl font-bold">学習中のコースはありません</h2>
+                        <p class="mt-2">コースを選択すると、ここに表示されます。</p>
+                    </div>`;
+                    lucide.createIcons();
+                    userState.currentPage = 'learning';
+                    updateActiveTab();
+                }
+            } else {
+                renderPage(page);
+            }
+        });
+    });
+
+    // Initial Render
+    if (!userState.onboardingComplete) {
+        showOnboardingStep(1);
+    } else {
+        onboardingModal.style.display = 'none';
+        renderPage('home');
+    }
+});
+</script>
+
+</body>
+</html>
