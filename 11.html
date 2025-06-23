@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第11回講義：数字で読むユーザー行動</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #0059ff;
+            --text-color-primary: #1a1a1a;
+            --text-color-secondary: #595959;
+            --bg-color-light: #f7f9fc;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--text-color-primary);
+            background-color: #fff;
+        }
+
+        .section-padding {
+            padding: 100px 24px;
+        }
+        @media (min-width: 768px) {
+            .section-padding {
+                padding: 160px 24px;
+            }
+        }
+
+        .section-container {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 900;
+            text-align: center;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-color-secondary);
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 5rem auto;
+            line-height: 1.8;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .accent-icon {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .table-custom {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        .table-custom th, .table-custom td {
+            padding: 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .table-custom th {
+            color: var(--text-color-secondary);
+            font-weight: 500;
+        }
+        .table-custom tr:last-child td {
+            border-bottom: none;
+        }
+        .table-custom tr > td:first-child, .table-custom tr > th:first-child {
+            padding-left: 0;
+        }
+        .table-custom tr > td:last-child, .table-custom tr > th:last-child {
+            padding-right: 0;
+        }
+
+        /* Animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .fade-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <section class="section-padding text-center">
+        <div class="section-container">
+            <h1 class="text-6xl md:text-8xl font-black text-gray-800 mb-8 leading-tight fade-up">
+                広告の成果を<br>
+                <span class="text-blue-600">"数字で見る"</span>チカラ
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-500 mb-16 max-w-3xl mx-auto fade-up" style="transition-delay: 0.1s;">
+                成功か失敗か、感覚で判断していませんか？<br>
+                データに基づいた意思決定が、ビジネスを次のステージへ導きます。
+            </p>
+            <div class="inline-block bg-blue-50 border border-blue-200 rounded-lg p-8 text-blue-800 font-bold text-2xl md:text-3xl fade-up" style="transition-delay: 0.2s;">
+                『数字を見る＝分析』ではなく<br>
+                <span class="text-blue-600">『数字を見る＝問いを立てる』</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-gray-50">
+        <div class="section-container">
+            <h2 class="section-title fade-up">今日のゴール</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                この講義を終える頃には、あなたはデータと対話するための3つの重要なスキルを身につけています。
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card text-center fade-up">
+                    <i class="fas fa-chart-line accent-icon"></i>
+                    <h3 class="text-2xl font-bold mb-3">広告指標を理解する</h3>
+                    <p class="text-gray-500 leading-relaxed">CTR、CVR、CPAといった基本指標の意味を正確に読み解き、広告の健康状態を診断できるようになります。</p>
+                </div>
+                <div class="card text-center fade-up" style="transition-delay: 0.1s;">
+                    <i class="fas fa-brain accent-icon"></i>
+                    <h3 class="text-2xl font-bold mb-3">数字から仮説を立てる</h3>
+                    <p class="text-gray-500 leading-relaxed">数字の裏に隠されたユーザーの行動や心理を想像し、「なぜ？」を考えることで、改善のための仮説を立てます。</p>
+                </div>
+                <div class="card text-center fade-up" style="transition-delay: 0.2s;">
+                    <i class="fas fa-eye accent-icon"></i>
+                    <h3 class="text-2xl font-bold mb-3">成果を見える化する</h3>
+                    <p class="text-gray-500 leading-relaxed">データをシンプルで分かりやすいグラフに変換し、チームやクライアントに説得力のある報告ができます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section-padding">
+        <div class="section-container">
+            <h2 class="section-title fade-up">広告分析の基本指標</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                まず最初に覚えるべき、最も重要な指標です。これらで広告の「表現力」「説得力」「費用対効果」、そして「売上への貢献度」が見えてきます。
+            </p>
+            <div class="card fade-up text-lg" style="transition-delay: 0.2s;">
+                <table class="table-custom">
+                    <tbody>
+                        <tr>
+                            <td class="w-1/4">
+                                <div class="flex items-center">
+                                    <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mr-6"><i class="fas fa-mouse-pointer text-blue-600 text-2xl"></i></div>
+                                    <div>
+                                        <div class="text-3xl font-bold text-blue-600">CTR</div>
+                                        <div class="text-sm text-gray-500">Click Through Rate</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="w-1/4"><div class="font-semibold text-xl">クリックスルー率</div></td>
+                            <td><p class="leading-relaxed">広告がユーザーの目に留まり、興味を引けたか（<span class="font-bold">＝表現力</span>）を測る指標。「表示されたうち、どれだけクリックされたか」を示します。</p></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="flex items-center">
+                                    <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mr-6"><i class="fas fa-bullseye text-green-600 text-2xl"></i></div>
+                                     <div>
+                                        <div class="text-3xl font-bold text-green-600">CVR</div>
+                                        <div class="text-sm text-gray-500">Conversion Rate</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><div class="font-semibold text-xl">コンバージョン率</div></td>
+                            <td><p class="leading-relaxed">LPの内容がユーザーの心に響いたか（<span class="font-bold">＝説得力</span>）を測る指標。「クリックした人のうち、どれだけ成果に至ったか」を示します。</p></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="flex items-center">
+                                    <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mr-6"><i class="fas fa-yen-sign text-red-600 text-2xl"></i></div>
+                                     <div>
+                                        <div class="text-3xl font-bold text-red-600">CPA</div>
+                                         <div class="text-sm text-gray-500">Cost Per Acquisition</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><div class="font-semibold text-xl">顧客獲得単価</div></td>
+                            <td><p class="leading-relaxed">その成果がビジネス的に見合っているか（<span class="font-bold">＝費用対効果</span>）を測る指標。「1件の成果を得るために、いくらかかったか」を示します。</p></td>
+                        </tr>
+                         <tr>
+                            <td>
+                                <div class="flex items-center">
+                                    <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mr-6"><i class="fas fa-hand-holding-usd text-purple-600 text-2xl"></i></div>
+                                     <div>
+                                        <div class="text-3xl font-bold text-purple-600">ROAS</div>
+                                         <div class="text-sm text-gray-500">Return On Ad Spend</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><div class="font-semibold text-xl">広告費用対効果</div></td>
+                            <td><p class="leading-relaxed">投資した広告費に対してどれだけの売上があったか（<span class="font-bold">＝売上貢献度</span>）を測る指標。「広告費1円あたりの売上」を示します。</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-gray-50">
+        <div class="section-container">
+            <h2 class="section-title fade-up">CPA vs ROAS: どちらを重視すべきか？</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                CPAとROASは、どちらも重要な指標ですが、役割が異なります。キャンペーンの目的によって、どちらを重視すべきか判断しましょう。
+            </p>
+            <div class="grid md:grid-cols-2 gap-10 mb-10">
+                <div class="card text-center fade-up" style="transition-delay: 0.2s;">
+                    <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fas fa-yen-sign text-5xl text-red-500"></i></div>
+                    <h3 class="text-3xl font-bold mb-4">CPA (顧客獲得単価)</h3>
+                    <p class="text-lg text-gray-600 mb-6">「いかに<strong class="text-red-600">安く</strong>獲得できたか」を見る<br><strong class="text-red-600">コスト重視</strong>の指標。</p>
+                    <div class="text-left bg-gray-100 p-6 rounded-lg">
+                        <h4 class="font-bold text-xl mb-2">重視すべきケース：</h4>
+                        <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                            <li>見込み顧客リストの獲得 (リード獲得)</li>
+                            <li>無料トライアルへの登録促進</li>
+                            <li>資料請求や問い合わせの増加</li>
+                        </ul>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <h5 class="font-semibold text-gray-800">例：</h5>
+                            <p class="text-gray-600">広告費10万円で10件の資料請求があれば、CPAは<strong class="text-red-600">1万円</strong>です。<br>(10万円 ÷ 10件 = 1万円)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card text-center fade-up" style="transition-delay: 0.3s;">
+                    <div class="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fas fa-hand-holding-usd text-5xl text-purple-500"></i></div>
+                    <h3 class="text-3xl font-bold mb-4">ROAS (広告費用対効果)</h3>
+                    <p class="text-lg text-gray-600 mb-6">「いくら<strong class="text-purple-600">儲かった</strong>か」を見る<br><strong class="text-purple-600">売上重視</strong>の指標。</p>
+                    <div class="text-left bg-gray-100 p-6 rounded-lg">
+                        <h4 class="font-bold text-xl mb-2">重視すべきケース：</h4>
+                        <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                            <li>ECサイトでの商品販売</li>
+                            <li>有料サービスの申し込み促進</li>
+                            <li>扱う商材の価格帯が幅広い場合</li>
+                        </ul>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <h5 class="font-semibold text-gray-800">例：</h5>
+                            <p class="text-gray-600">広告費10万円で50万円の売上があれば、ROASは<strong class="text-purple-600">500%</strong>です。<br>(50万円 ÷ 10万円 × 100 = 500%)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-blue-600 text-blue-50 p-10 fade-up" style="transition-delay: 0.4s;">
+                <h3 class="font-bold text-2xl text-center mb-4 text-black">結論：両方の視点を持つことが重要</h3>
+                <p class="text-lg text-blue-900 leading-relaxed text-center max-w-3xl mx-auto">
+                    例えばECサイトでは、まず「許容CPA」の範囲内で獲得できているかを確認し、赤字のリスクを管理します。その上で、利益を最大化するために「ROAS」の向上を目指す、というように両方の指標を組み合わせて使うのが理想的です。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW ICEBREAKER SECTION -->
+    <section class="section-padding">
+        <div class="section-container text-center">
+            <h2 class="section-title fade-up">アイスブレイク：日常に隠れる「数字」</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                本題に入る前に、少しだけ頭の体操です。最近、あなたが日常で「数字」を意識して何かを判断した経験はありますか？隣の人と話し合ってみましょう。
+            </p>
+            <div class="card max-w-4xl mx-auto fade-up" style="transition-delay: 0.2s;">
+                <div class="grid md:grid-cols-3 gap-8 items-center justify-center">
+                     <div class="text-center">
+                        <i class="fas fa-shopping-cart text-6xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">「1つ買ったら1つ無料」</h3>
+                        <p class="text-gray-600">実質いくら？本当に得？</p>
+                    </div>
+                     <div class="text-center">
+                        <i class="fas fa-percent text-6xl text-green-500 mb-4"></i>
+                         <h3 class="text-xl font-bold">「30% OFF」</h3>
+                         <p class="text-gray-600">元の値段は？いくら安くなる？</p>
+                    </div>
+                     <div class="text-center">
+                        <i class="fas fa-star text-6xl text-yellow-500 mb-4"></i>
+                         <h3 class="text-xl font-bold">レビュー「星4.3」</h3>
+                         <p class="text-gray-600">この評価、信じていい？</p>
+                    </div>
+                </div>
+                <p class="mt-8 text-gray-700 text-lg border-t pt-8">私たちは無意識のうちに、日々数字を読み解いて判断しています。広告分析も、その延長線上にあるのです。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-gray-50">
+        <div class="section-container">
+            <h2 class="section-title fade-up">数字を"読む"とは？</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">『CTRが高い＝良い』とは限りません。数字の表面的な意味に惑わされず、その裏側にあるユーザーの物語を読み解くことが重要です。</p>
+            
+            <div class="card p-10 md:p-16 text-center mb-16 fade-up" style="transition-delay: 0.2s;">
+                <i class="fas fa-ban text-6xl text-red-400 mb-6"></i>
+                <h3 class="text-3xl md:text-4xl font-bold mb-4">なぜ、クリックされたのに成果が出ないのか？</h3>
+                <p class="text-xl text-gray-600">この問いこそが、データ分析の出発点です。</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-12">
+                <div class="card bg-gray-800 p-10 fade-up" style="transition-delay: 0.3s;">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="text-left">
+                            <div class="text-md text-gray-400">たくさんクリック</div>
+                            <div class="text-5xl font-bold text-gray-900">CTR: 8.0%</div>
+                        </div>
+                        <i class="fas fa-mouse-pointer text-5xl text-green-400"></i>
+                    </div>
+                     <div class="flex justify-between items-center border-t border-gray-600 pt-6">
+                        <div class="text-left">
+                            <div class="text-md text-gray-400">成果は少ない</div>
+                            <div class="text-5xl font-bold text-gray-900">CVR: 0.5%</div>
+                        </div>
+                         <i class="fas fa-bullseye text-5xl text-red-400"></i>
+                    </div>
+                </div>
+                 <div class="text-center fade-up" style="transition-delay: 0.4s;">
+                     <i class="fas fa-question text-9xl text-yellow-400 mb-6"></i>
+                     <h3 class="text-6xl font-black text-gray-700">なぜ？</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section-padding">
+        <div class="section-container">
+            <h2 class="section-title fade-up">課題を分解する思考法：ロジックツリー</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                「CVRが低い」という漠然とした問題を解決するために、その原因を要素分解していくのがロジックツリーです。大きな問題を具体的な小さな課題に切り分けることで、打ち手が見えてきます。
+            </p>
+            <div class="card p-8 md:p-12 fade-up" style="transition-delay: 0.2s;">
+                <figure class="text-center">
+                    <img src="https://s.yimg.jp/images/ads-promo_edit/learningportal/DL/logictree.jpg" alt="ロジックツリーの図解" class="mx-auto rounded-lg shadow-md"
+                         onerror="this.onerror=null; this.src='https://placehold.co/1200x600/e2e8f0/4a5568?text=Image+Not+Found';">
+                    <figcaption class="text-sm text-gray-500 mt-4">
+                        ※LINEヤフー for Business「検索広告 運用課題の8割が解決する“ロジックツリー”を一挙大公開」より
+                    </figcaption>
+                </figure>
+                 <p class="text-center text-gray-600 text-lg mt-8 max-w-3xl mx-auto">このように分解することで、「CVRが低いのは、もしかしたら入力フォームが使いにくいせいかもしれない」といった、検証可能な具体的な仮説が生まれるのです。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section-padding bg-gray-50">
+        <div class="section-container">
+            <h2 class="section-title fade-up">仮説を検証する科学的アプローチ：A/Bテスト</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                仮説を立てたら、次はそれを検証する番です。「きっとこうに違いない」という思い込みではなく、データで優劣を判断するためにA/Bテストを行います。
+            </p>
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="card fade-up" style="transition-delay: 0.2s;">
+                    <h3 class="font-bold text-2xl mb-4 text-center">LPのキャッチコピーを変えたら？</h3>
+                    <div class="flex justify-around items-center">
+                        <div class="text-center p-4 border-2 border-blue-500 rounded-lg bg-blue-50">
+                            <div class="text-lg font-bold">パターンA (オリジナル)</div>
+                            <i class="fas fa-file-alt text-6xl my-4 text-blue-500"></i>
+                            <p class="font-semibold">「高品質なコーヒー豆」</p>
+                        </div>
+                        <div class="font-bold text-2xl text-gray-400">VS</div>
+                        <div class="text-center p-4 border-2 border-green-500 rounded-lg bg-green-50">
+                             <div class="text-lg font-bold">パターンB (テスト)</div>
+                            <i class="fas fa-file-alt text-6xl my-4 text-green-500"></i>
+                            <p class="font-semibold">「朝が変わる一杯」</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-up" style="transition-delay: 0.3s;">
+                    <h3 class="font-bold text-2xl mb-4"><i class="fas fa-vial text-blue-600 mr-2"></i>A/Bテストとは？</h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        一部の要素だけが異なる2つのパターン（AとB）を用意し、どちらがより高い成果（例：CVR）を出すかを実際に試して比較するテストです。
+                        これにより、どの変更が本当に効果的だったのかを客観的に判断できます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="section-container">
+            <h2 class="section-title fade-up">ワークショップ①：どちらが成功？</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                以下の2つのキャンペーン結果を見て、どちらがより「効果的」だったか考えてみましょう。正解はありません。あなたの論理的な思考が試されます。
+            </p>
+            <div class="card overflow-x-auto fade-up" style="transition-delay: 0.2s;">
+                <table class="w-full min-w-max text-lg">
+                    <thead>
+                        <tr class="text-gray-500">
+                            <th class="py-4 px-6 font-medium">キャンペーン</th>
+                            <th class="py-4 px-6 font-medium text-right">表示数</th>
+                            <th class="py-4 px-6 font-medium text-right">クリック数</th>
+                            <th class="py-4 px-6 font-medium text-right">CTR</th>
+                            <th class="py-4 px-6 font-medium text-right">CV数</th>
+                            <th class="py-4 px-6 font-medium text-right">CVR</th>
+                            <th class="py-4 px-6 font-medium text-right">CPA</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-bold">
+                        <tr class="border-b">
+                            <td class="py-5 px-6"><i class="fas fa-search text-blue-500 mr-3"></i>A (検索広告)</td>
+                            <td class="py-5 px-6 text-right">10,000</td>
+                            <td class="py-5 px-6 text-right">300</td>
+                            <td class="py-5 px-6 text-right">3.0%</td>
+                            <td class="py-5 px-6 text-right">15</td>
+                            <td class="py-5 px-6 text-right text-green-600">5.0%</td>
+                            <td class="py-5 px-6 text-right text-green-600">1,000円</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5 px-6"><i class="fab fa-facebook text-blue-700 mr-3"></i>B (SNS広告)</td>
+                            <td class="py-5 px-6 text-right">30,000</td>
+                            <td class="py-5 px-6 text-right">1,200</td>
+                            <td class="py-5 px-6 text-right text-blue-600">4.0%</td>
+                            <td class="py-5 px-6 text-right">18</td>
+                            <td class="py-5 px-6 text-right">1.5%</td>
+                            <td class="py-5 px-6 text-right">2,000円</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section-padding bg-gray-50">
+        <div class="section-container">
+            <h2 class="section-title fade-up">ワークショップ②：仮説立案トレーニング</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">今度は、あなた自身がマーケターとして課題解決に挑戦します。以下の状況で、どんな打ち手が考えられるでしょうか？</p>
+
+            <div class="text-center mb-16 fade-up" style="transition-delay: 0.2s;">
+                 <div class="card inline-block">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3"><i class="fab fa-facebook text-blue-600 mr-2"></i>SNS広告の成果</h3>
+                    <p class="text-7xl font-black text-red-500">CVR: 1.0%</p>
+                    <p class="text-gray-500 mt-2">目標の3%に遠く及ばない...</p>
+                 </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10 text-center">
+                 <div class="fade-up" style="transition-delay: 0.3s;">
+                     <div class="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6 font-bold text-3xl">1</div>
+                     <h3 class="font-bold text-2xl mb-3">「なぜ？」を問う</h3>
+                     <p class="text-gray-500 leading-relaxed">CVRが低い根本的な原因は何か？ロジックツリーを使って考えられる可能性を洗い出します。</p>
+                 </div>
+                 <div class="fade-up" style="transition-delay: 0.4s;">
+                     <div class="w-20 h-20 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 font-bold text-3xl">2</div>
+                     <h3 class="font-bold text-2xl mb-3">原因を3つに絞る</h3>
+                     <p class="text-gray-500 leading-relaxed">洗い出した原因の中から、最も影響が大きく、かつ改善可能なものを3つ特定します。</p>
+                 </div>
+                 <div class="fade-up" style="transition-delay: 0.5s;">
+                     <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 font-bold text-3xl">3</div>
+                     <h3 class="font-bold text-2xl mb-3">改善策を考える</h3>
+                     <p class="text-gray-500 leading-relaxed">特定した3つの原因それぞれに対し、具体的な改善アクションを立案します。</p>
+                 </div>
+            </div>
+             <div class="mt-20 card bg-blue-600 fade-up" style="transition-delay: 0.6s;">
+                <h3 class="font-bold text-center mb-6 text-2xl text-blue-900">思考のフレームワーク</h3>
+                <div class="grid grid-cols-3 gap-4 text-center text-blue-900">
+                    <div><i class="fas fa-users text-5xl mb-3"></i><p class="font-semibold text-lg">誰に (ターゲット)</p></div>
+                    <div><i class="fas fa-comment-dots text-5xl mb-3"></i><p class="font-semibold text-lg">何を (メッセージ)</p></div>
+                    <div><i class="fas fa-ad text-5xl mb-3"></i><p class="font-semibold text-lg">どう見せたか (クリエイティブ)</p></div>
+                </div>
+             </div>
+        </div>
+    </section>
+    
+    <section class="section-padding">
+        <div class="section-container">
+            <h2 class="section-title fade-up">データを「絵」にする力</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                数字の羅列では伝わらないことも、グラフにすることで一瞬で伝わります。複雑な状況をシンプルに表現しましょう。
+            </p>
+            <div class="grid md:grid-cols-5 gap-12 items-center">
+                <div class="md:col-span-3 card fade-up" style="transition-delay: 0.2s;">
+                    <h3 class="text-center font-bold text-xl mb-6">CVRとCPAの比較</h3>
+                    <div class="h-96"><canvas id="comparisonChart"></canvas></div>
+                </div>
+                <div class="md:col-span-2 space-y-6 fade-up" style="transition-delay: 0.3s;">
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 text-xl mt-1 mr-4"></i>
+                        <div>
+                            <h4 class="font-bold text-lg">一目で差がわかる</h4>
+                            <p class="text-gray-500 leading-relaxed">AはCPAが低く効率的、BはCVRが低いことが直感的に理解できます。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 text-xl mt-1 mr-4"></i>
+                        <div>
+                            <h4 class="font-bold text-lg">議論が活発になる</h4>
+                            <p class="text-gray-500 leading-relaxed">「なぜAはこんなにCVRが高いんだろう？」など、次のアクションに繋がる問いが生まれます。</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 text-xl mt-1 mr-4"></i>
+                        <div>
+                            <h4 class="font-bold text-lg">判断が速くなる</h4>
+                            <p class="text-gray-500 leading-relaxed">レポートを読む時間を短縮し、より本質的な改善策の検討に時間を使えます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding bg-gray-50">
+        <div class="section-container">
+            <h2 class="section-title fade-up">まとめ</h2>
+            <p class="section-subtitle fade-up" style="transition-delay: 0.1s;">
+                今日学んだことを振り返りましょう。
+            </p>
+            <div class="flex justify-center">
+                <div class="fade-up max-w-2xl" style="transition-delay: 0.2s;">
+                    <h3 class="font-bold text-2xl mb-6 text-center">今日の重要ポイント</h3>
+                    <ul class="space-y-5 text-lg">
+                        <li class="flex items-start"><i class="fas fa-key text-yellow-500 text-xl mt-1 mr-4"></i><span><span class="font-bold">数字は"結果"である</span><br><span class="text-gray-600 text-base">事実の裏にある「なぜ？」を問い続けることが、分析の第一歩です。</span></span></li>
+                        <li class="flex items-start"><i class="fas fa-key text-yellow-500 text-xl mt-1 mr-4"></i><span><span class="font-bold">指標は"つなげて"読む</span><br><span class="text-gray-600 text-base">ユーザーの行動フローに沿って指標を繋げ、ボトルネックを発見します。</span></span></li>
+                        <li class="flex items-start"><i class="fas fa-key text-yellow-500 text-xl mt-1 mr-4"></i><span><span class="font-bold">ロジックツリーで分解する</span><br><span class="text-gray-600 text-base">漠然とした問題を具体的な仮説に分解し、打ち手を明確にします。</span></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-24 text-center fade-up">
+                <p class="text-3xl md:text-4xl font-bold max-w-4xl mx-auto leading-relaxed">
+                    「広告は出して終わりではなく、<br><span class="text-blue-600">読み解き、学び、改善する</span>ことで価値が出る」
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-10 bg-gray-50 border-t">
+        <p class="text-gray-400">© 2025 Marketing Lecture Series. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Intersection Observer for scroll animations ---
+            const animatedElements = document.querySelectorAll('.fade-up');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+             // --- Chart.js ---
+            const ctx = document.getElementById('comparisonChart')?.getContext('2d');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['キャンペーンA (検索)', 'キャンペーンB (SNS)'],
+                        datasets: [
+                            {
+                                label: 'CVR (%)',
+                                data: [5.0, 1.5],
+                                backgroundColor: 'rgba(37, 99, 235, 0.8)', /* blue-600 */
+                                yAxisID: 'yCVR',
+                            },
+                            {
+                                label: 'CPA (円)',
+                                data: [1000, 2000],
+                                backgroundColor: 'rgba(239, 68, 68, 0.8)', /* red-500 */
+                                yAxisID: 'yCPA',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            if (context.dataset.label === 'CVR (%)') {
+                                               label += context.parsed.y + '%';
+                                            } else {
+                                               label += new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(context.parsed.y);
+                                            }
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            yCVR: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'CVR (%)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%'
+                                    }
+                                }
+                            },
+                            yCPA: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'CPA (円)'
+                                },
+                                grid: {
+                                    drawOnChartArea: false, // only show the grid for the first Y axis
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return (value / 1000) + 'k'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
