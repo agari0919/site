@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>UGC施策 結果ページ</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; }
+    .score-box {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .score-box h2 {
+      font-size: 48px;
+      color: #2e8b57;
+    }
+    .chart-box {
+      width: 100%;
+      margin: 30px auto;
+    }
+    .data-table, .comment-section, .memo-section {
+      margin: 30px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td, th {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #2e8b57;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="report">
+  <h1>UGC施策 スコア結果</h1>
+
+  <div class="score-box">
+    <p>あなたのスコアは…</p>
+    <h2>84点</h2>
+    <p>ランク：<strong>A</strong>｜評価：UGCのポテンシャル高！</p>
+  </div>
+
+  <div class="chart-box">
+    <canvas id="scoreChart"></canvas>
+  </div>
+
+  <div class="data-table">
+    <h3>成果データ</h3>
+    <table>
+      <tr><th>インプレッション数</th><th>CTR</th><th>クリック数</th><th>予算</th><th>CPA</th></tr>
+      <tr><td>450,000</td><td>1.84%</td><td>8,280</td><td>¥252,000</td><td>¥30.4</td></tr>
+    </table>
+  </div>
+
+  <div class="comment-section">
+    <h3>講評</h3>
+    <p>ユーザーの共感をしっかりとらえた訴求・媒体設計が成功。今後はクリエイティブの多様化で更なる拡散も狙える。</p>
+  </div>
+
+  <div class="memo-section">
+    <h3>ふりかえりメモ（チーム記入用）</h3>
+    <textarea placeholder="どうしてこの結果になったか？ 次回どう改善するか？"></textarea>
+  </div>
+
+  <div style="text-align:center;">
+    <button onclick="downloadPDF()">PDF保存</button>
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById('scoreChart');
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['ターゲット適合度', '訴求力', '媒体選定', 'クリエイティブ効果', 'コスパ'],
+      datasets: [{
+        label: 'スコア',
+        data: [17, 18, 16, 17, 16],
+        fill: true,
+        backgroundColor: 'rgba(46,139,87,0.2)',
+        borderColor: 'rgba(46,139,87,1)',
+        pointBackgroundColor: 'rgba(46,139,87,1)'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: { display: false }
+      },
+      scales: {
+        r: {
+          min: 0,
+          max: 20,
+          ticks: { stepSize: 5 }
+        }
+      }
+    }
+  });
+
+  function downloadPDF() {
+    const element = document.getElementById("report");
+    html2pdf().from(element).save("UGC_Score_Report.pdf");
+  }
+</script>
+
+</body>
+</html>
