@@ -11,6 +11,7 @@
     .step{background:#fff;padding:20px;border-radius:8px;max-width:800px;margin:0 auto 30px;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
     .btn{padding:10px 20px;background:#2e8b57;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:20px}
     .option{margin:8px 0}
+    .budget-input{margin-left:10px;width:100px;}
   </style>
 </head>
 <body>
@@ -38,12 +39,13 @@
   </div>
 
   <div class="step" id="step3" style="display:none">
-    <h2>③媒体を選ぼう（2つまで）</h2>
-    <label class="option"><input type="checkbox" name="media" value="Instagram"/> Instagram</label><br>
-    <label class="option"><input type="checkbox" name="media" value="TikTok"/> TikTok</label><br>
-    <label class="option"><input type="checkbox" name="media" value="X"/> X（旧Twitter）</label><br>
-    <label class="option"><input type="checkbox" name="media" value="LINE"/> LINE公式</label><br>
-    <label class="option"><input type="checkbox" name="media" value="Shorts"/> YouTube Shorts</label><br>
+    <h2>③媒体を選ぼう（2つまで）＆予算配分（合計100万円）</h2>
+    <label class="option"><input type="checkbox" name="media" value="Instagram" onchange="toggleBudget(this)"/> Instagram <input type="number" name="budget_Instagram" class="budget-input" disabled /> 万円</label><br>
+    <label class="option"><input type="checkbox" name="media" value="TikTok" onchange="toggleBudget(this)"/> TikTok <input type="number" name="budget_TikTok" class="budget-input" disabled /> 万円</label><br>
+    <label class="option"><input type="checkbox" name="media" value="X" onchange="toggleBudget(this)"/> X（旧Twitter） <input type="number" name="budget_X" class="budget-input" disabled /> 万円</label><br>
+    <label class="option"><input type="checkbox" name="media" value="LINE" onchange="toggleBudget(this)"/> LINE公式 <input type="number" name="budget_LINE" class="budget-input" disabled /> 万円</label><br>
+    <label class="option"><input type="checkbox" name="media" value="Shorts" onchange="toggleBudget(this)"/> YouTube Shorts <input type="number" name="budget_Shorts" class="budget-input" disabled /> 万円</label><br>
+    <p>※合計が100万円になるようにしてください。</p>
     <button class="btn" onclick="nextStep(3,4)">次へ</button>
   </div>
 
@@ -58,15 +60,19 @@
   <div class="step" id="result" style="display:none"></div>
 
 <script>
+function toggleBudget(checkbox){
+  const input = document.querySelector(`input[name=budget_${checkbox.value}]`);
+  input.disabled = !checkbox.checked;
+  if (!checkbox.checked) input.value = '';
+}
+
 function nextStep(cur,next){
   document.getElementById('step'+cur).style.display='none';
   document.getElementById('step'+next).style.display='block';
 }
 
-// --- 基礎データ ---
 const imp={Instagram:300000,TikTok:250000,X:200000,LINE:100000,Shorts:150000};
 const cpc={Instagram:35,TikTok:30,X:20,LINE:15,Shorts:25};
-// 基礎CTRテーブル（簡易版）：キー "T|Appeal|Media"
 const baseCTR={
   'T1|映え|Instagram':1.8,'T1|映え|TikTok':2.0,'T1|コスパ|X':1.6,'T1|スピード|X':1.6,'T1|スピード|LINE':1.6,
   'T2|映え|Instagram':2.0,'T2|映え|TikTok':2.2,'T2|限定性|TikTok':2.0,'T2|参加型|TikTok':2.1,
@@ -76,40 +82,44 @@ const baseCTR={
 const creativeBonus={A:1.2,B:1.0,C:0.8};
 
 function calculateScore(){
-  // 取得
   const target=document.querySelector('input[name=target]:checked')?.value;
   const appeals=[...document.querySelectorAll('input[name=appeal]:checked')].map(e=>e.value);
   const medias=[...document.querySelectorAll('input[name=media]:checked')].map(e=>e.value);
   const creative=document.querySelector('input[name=creative]:checked')?.value;
   if(!target||appeals.length===0||medias.length===0||!creative){alert('すべて選択してください');return;}
 
-  let totalClicks=0,totalCost=0,score=50; // 基本点
+  let budgetTotal = 0;
+  const mediaBudgets = {};
+  medias.forEach(m => {
+    const val = parseFloat(document.querySelector(`input[name=budget_${m}]`).value);
+    if (isNaN(val) || val < 0) { alert(`${m}の予算が不正です`); return; }
+    mediaBudgets[m] = val * 10000; // 万円→円
+    budgetTotal += val;
+  });
+  if (budgetTotal !== 100) { alert('予算合計は100万円にしてください'); return; }
+
+  let totalClicks=0,totalCost=0,score=50;
   medias.forEach(m=>{
     let bestCTR=0;
     appeals.forEach(a=>{
       const key=`${target}|${a}|${m}`;
       if(baseCTR[key] && baseCTR[key]>bestCTR) bestCTR=baseCTR[key];
     });
-    if(bestCTR===0) score-=5; // マッチしなかったペナルティ
+    if(bestCTR===0) score-=5;
     const finalCTR=bestCTR*creativeBonus[creative];
-    const clicks=imp[m]*finalCTR/100; // CTR%→クリック数
-    const cost=clicks*cpc[m];
+    const cost=mediaBudgets[m];
+    const clicks=cost/cpc[m];
     totalClicks+=clicks;
     totalCost+=cost;
   });
 
-  // クリック目標5000
   if(totalClicks>=5000) score+=20; else score-=10;
-  // コスパ評価
   const cpa=totalCost/totalClicks;
   if(cpa<25) score+=10; else if(cpa>40) score-=5;
-  // CTRボーナス
   if(creative==='A') score+=5; if(creative==='C') score-=5;
-
   if(score>100) score=100; if(score<0) score=0;
   let rank='C'; if(score>=85) rank='S'; else if(score>=70) rank='A'; else if(score>=55) rank='B';
 
-  // 結果表示
   const res=document.getElementById('result');
   res.innerHTML=`<h2>結果</h2>
   <p><strong>スコア：${Math.round(score)}点</strong>（ランク：${rank}）</p>
