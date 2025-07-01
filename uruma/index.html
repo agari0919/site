@@ -1,245 +1,468 @@
-<html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
-
-    <title>Stitch Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div class="relative flex size-full min-h-screen flex-col bg-white justify-between group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
-      <div>
-        <div class="flex items-center bg-white p-4 pb-2 justify-between">
-          <h2 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">うるま市商工会</h2>
-          <div class="flex w-12 items-center justify-end">
-            <button
-              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-[#111418] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
-            >
-              <div class="text-[#111418]" data-icon="List" data-size="24px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path
-                    d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"
-                  ></path>
-                </svg>
-              </div>
-            </button>
-          </div>
-        </div>
-        <div class="px-4 py-3">
-          <label class="flex flex-col min-w-40 h-12 w-full">
-            <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-              <div
-                class="text-[#637588] flex border-none bg-[#f0f2f4] items-center justify-center pl-4 rounded-l-xl border-r-0"
-                data-icon="MagnifyingGlass"
-                data-size="24px"
-                data-weight="regular"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
-                </svg>
-              </div>
-              <input
-                placeholder="検索"
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#637588] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-                value=""
-              />
-            </div>
-          </label>
-        </div>
-        <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">商工会からのお知らせ</h2>
-        <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
-          <div class="flex items-stretch p-4 gap-3">
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD69S4F3OiRLbDLhKBu1zFmycIkJS6YcL1eXr8rsGVL_7w0ZspHIJUrWHDQHuBh1XNoNjUQ6iM8ctGTugDXf7V3KIgCUINY7kEqEjdoofxzxhUxXhKDCtNOQg-47pjHqAooGisf0vRUHmLrrZCSySzGvgrHCuZwwFTS121rxJ14xEws6cw-tBMvLi9-ILX9os_1bfIg_k1MpE8eT52tjf3140ViWy278aOGJiBUF6G8L6BZuQw_B6tUDP-PnoUayv11g-moshHhkmU");'
-              ></div>
-              <div>
-                <p class="text-[#111418] text-base font-medium leading-normal">イベント名1</p>
-                <p class="text-[#637588] text-sm font-normal leading-normal">イベント説明1</p>
-              </div>
-            </div>
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBWwHmnRD2Bd-30YVzTlfomdzybWUNjY6erGHnRbnP5kPAluML-8THZqPkvxzRFqDUxQKxLO7uV3J558umWHmh8GCIkZAqEq1Mthe8ZM3jOxcHgFvpYjiereCD0oo9G3RAoDzaYLHfZeA1p25cU9kC6fMaUOUeFFrTBrhWHGe2t5fnyvUipSYG91MJ8t4b3hUuf-yCYvtCXRPypQjxGPXbcWJNOkbEqCVTwpgfqurTaFyZr7q7VhlgEGWlpP0X5VgJKdvHPJlKvI0");'
-              ></div>
-              <div>
-                <p class="text-[#111418] text-base font-medium leading-normal">イベント名2</p>
-                <p class="text-[#637588] text-sm font-normal leading-normal">イベント説明2</p>
-              </div>
-            </div>
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBp8Uw2k2BjWDgsxlKR5WHdJEPs2o1n-MV36Fk9UUx_r_onE7VUGhHOPmOuh7fbmCdq5TsVTRhE7NHHhZGVw7gqT5E-OaKjBrO9BRQqZFPgtgNW2Ps9EbdziwRy03rqm1DQ3ZqPAnbLD4Jdv8DmegsUwgXhDTwoqywvXMuvLz1r75dfJ9LsBvZsAdJOLpmjJdTavaDtsVQsBK8iK0RhFmgd2lV9LE3bfovpWm5mUVtQTRKVv-9jNRdo-TRIikaQs0yMM5ZX1g_VKkw");'
-              ></div>
-              <div>
-                <p class="text-[#111418] text-base font-medium leading-normal">イベント名3</p>
-                <p class="text-[#637588] text-sm font-normal leading-normal">イベント説明3</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">会員のウェブサイトからの情報</h2>
-        <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
-          <div class="flex items-stretch p-4 gap-3">
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCS_3NtMhJ0BSKe10SFt_pEKnLdFZ6Z40lte14n0Lokadruleeq-PHmJ8Ydh6H8uRuA4amxAt1q34va1OutwZJL8LKoRgPAN28hT6haW2f_CFpMzashdt4f57KpI7ehkSKc4jszsYa2f8xhXm9rNnbysxVlEpqg0ktiRGAFVzmqmrnI8-ID28R4EYhwM3ilcrgJJH8qUDah0WpdeSka6up_UuQYyHvhF7Wm8bhQGj7Yi1cZ8zK0nLAwkcDItAMQrcevCXjEAURnf8g");'
-              ></div>
-              <div>
-                <p class="text-[#111418] text-base font-medium leading-normal">会員ウェブサイト名1</p>
-                <p class="text-[#637588] text-sm font-normal leading-normal">会員ウェブサイト説明1</p>
-              </div>
-            </div>
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDALcS4eIXhZGFQn9yhoPXOCKzdtPtWW1sQdeJ_gvPNq_wrs0IZ6d6swaCataxNtZuFGtUraUHLXB_vou8bao8AcvZwDOPCxJvY7zn2XmChPKomFWxWWMcT3yXHDIAXU-ziMg2FcefAfaGmk7k81e7HIjYExBoGxCgiVHGKuMib61w8eOB8tA9r3m2Vj8XMZLWSEv4oSP0SLq5tl9eyik6p_ZfAFg3eUc8FhNITXNtPslWOy61g1sVw0s44oM4dcENaQSQohZ7RGb8");'
-              ></div>
-              <div>
-                <p class="text-[#111418] text-base font-medium leading-normal">会員ウェブサイト名2</p>
-                <p class="text-[#637588] text-sm font-normal leading-normal">会員ウェブサイト説明2</p>
-              </div>
-            </div>
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDUjGqRGh93_RtcfgoDzOJU8h3_YqPa1bHXy2ZwEpT-C_-e854O8Ti8OfT6LU0l_8dwHFaHJ7VuEN4hrnPG3qkmhpG7BRwWj_zCPD1pxFDgbJ1nxqHoPA-8QXWf1qVw9-g4snzej9OjwFk4qDeETNGKHAfgkL4p0zcOcqRbOyQdFs1ffjkpqkyDO71y_2EUj2debiHNQiBPZWi53RfUVHjtbstLqgtqqLhDSALlI5DE1HA8y_guUzpEaUQ-YBpwvE5KUdBXo3d7Ovo");'
-              ></div>
-              <div>
-                <p class="text-[#111418] text-base font-medium leading-normal">会員ウェブサイト名3</p>
-                <p class="text-[#637588] text-sm font-normal leading-normal">会員ウェブサイト説明3</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">注目記事</h2>
-        <div class="p-4">
-          <div class="flex items-stretch justify-between gap-4 rounded-xl">
-            <div class="flex flex-col gap-1 flex-[2_2_0px]">
-              <p class="text-[#637588] text-sm font-normal leading-normal">注目記事のタイトル</p>
-              <p class="text-[#111418] text-base font-bold leading-tight">注目記事の説明</p>
-              <p class="text-[#637588] text-sm font-normal leading-normal">2024年5月1日</p>
-            </div>
-            <div
-              class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB4DvDN1nV8RzeI_HdLGDLBjf6u3qAo9QbGVJSd98Hg4R6O3V20Ic-prIzlBmPwxAHIiEvJLfLNOBkdNXlIjpP1H2qflsHylZaz2AlXW8FX80XsdL-IGoxGtYhBArDsHArl6R8hUmY3m3ICCGjCeIox8le7u_vULu9i4L-5hoHS3fVIRuBktQEJg-gUsG2ipKvKCiEix8ixP-eDPCz_nDHBhAdobKgYTeQz4dGO-6SqiDxsCDmsTvmJSBjME3cWOKhNNUMoN3DmqKs");'
-            ></div>
-          </div>
-        </div>
-        <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">カテゴリ一覧</h2>
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-          <div class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center">
-            <div class="text-[#111418]" data-icon="Briefcase" data-size="24px" data-weight="regular">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z"
-                ></path>
-              </svg>
-            </div>
-            <h2 class="text-[#111418] text-base font-bold leading-tight">経営・労務</h2>
-          </div>
-          <div class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center">
-            <div class="text-[#111418]" data-icon="Users" data-size="24px" data-weight="regular">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"
-                ></path>
-              </svg>
-            </div>
-            <h2 class="text-[#111418] text-base font-bold leading-tight">共済・年金</h2>
-          </div>
-          <div class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center">
-            <div class="text-[#111418]" data-icon="Coins" data-size="24px" data-weight="regular">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M184,89.57V84c0-25.08-37.83-44-88-44S8,58.92,8,84v40c0,20.89,26.25,37.49,64,42.46V172c0,25.08,37.83,44,88,44s88-18.92,88-44V132C248,111.3,222.58,94.68,184,89.57ZM232,132c0,13.22-30.79,28-72,28-3.73,0-7.43-.13-11.08-.37C170.49,151.77,184,139,184,124V105.74C213.87,110.19,232,122.27,232,132ZM72,150.25V126.46A183.74,183.74,0,0,0,96,128a183.74,183.74,0,0,0,24-1.54v23.79A163,163,0,0,1,96,152,163,163,0,0,1,72,150.25Zm96-40.32V124c0,8.39-12.41,17.4-32,22.87V123.5C148.91,120.37,159.84,115.71,168,109.93ZM96,56c41.21,0,72,14.78,72,28s-30.79,28-72,28S24,97.22,24,84,54.79,56,96,56ZM24,124V109.93c8.16,5.78,19.09,10.44,32,13.57v23.37C36.41,141.4,24,132.39,24,124Zm64,48v-4.17c2.63.1,5.29.17,8,.17,3.88,0,7.67-.13,11.39-.35A121.92,121.92,0,0,0,120,171.41v23.46C100.41,189.4,88,180.39,88,172Zm48,26.25V174.4a179.48,179.48,0,0,0,24,1.6,183.74,183.74,0,0,0,24-1.54v23.79a165.45,165.45,0,0,1-48,0Zm64-3.38V171.5c12.91-3.13,23.84-7.79,32-13.57V172C232,180.39,219.59,189.4,200,194.87Z"
-                ></path>
-              </svg>
-            </div>
-            <h2 class="text-[#111418] text-base font-bold leading-tight">融資</h2>
-          </div>
-          <div class="flex flex-1 gap-3 rounded-lg border border-[#dce0e5] bg-white p-4 items-center">
-            <div class="text-[#111418]" data-icon="File" data-size="24px" data-weight="regular">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"
-                ></path>
-              </svg>
-            </div>
-            <h2 class="text-[#111418] text-base font-bold leading-tight">手続き・共済</h2>
-          </div>
-        </div>
-        <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">書類ダウンロード</h2>
-        <div class="p-4">
-          <div class="flex items-stretch justify-between gap-4 rounded-xl">
-            <div class="flex flex-col gap-1 flex-[2_2_0px]">
-              <p class="text-[#637588] text-sm font-normal leading-normal">書類ダウンロードのタイトル</p>
-              <p class="text-[#111418] text-base font-bold leading-tight">書類ダウンロードの説明</p>
-              <p class="text-[#637588] text-sm font-normal leading-normal">2024年5月1日</p>
-            </div>
-            <div
-              class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdxrlycNUCyZCoXrnRpplAvc4Wlye_IRvDFO2g0ujSo4pJaCstu3BY0nib19A6sK4iQOPicMO5cAsLOEeSk0L35qHs7VlR3A_kR0G7Kh1_ojA4sgLChWU2XO_8SiwefGlJ3SR3x0WMNt-B2OlM9aD5sEthnWTRtoF5UG2hVL2x2clVokWkwI-9CZrWa82_BB_6aUuidpkaWfuJ6Gz1Zo2LESbltPeIlCc8vEXIDHfS8dJ2JjA4ez9KOA-EbLI5MCRt7Sb9-3rztOE");'
-            ></div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="flex gap-2 border-t border-[#f0f2f4] bg-white px-4 pb-3 pt-2">
-          <a class="just flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-[#111418]" href="#">
-            <div class="text-[#111418] flex h-8 items-center justify-center" data-icon="House" data-size="24px" data-weight="fill">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"
-                ></path>
-              </svg>
-            </div>
-            <p class="text-[#111418] text-xs font-medium leading-normal tracking-[0.015em]">ホーム</p>
+<html><head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;family=Public+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>うるま市商工会</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    :root {
+      --primary-color: #005A9C;--secondary-color: #4A90E2;--accent-color: #F5A623;--primary-text-color: #333333;
+      --secondary-text-color: #555555;
+      --background-color: #F4F7FA;--card-background-color: #FFFFFF;
+      --border-color: #D1D5DB;
+      --category-color-1: #FF6B6B;--category-color-2: #4ECDC4;--category-color-3: #FFD166;--category-color-4: #A06CD5;--category-color-5: #45B7D1;}
+    body {
+      font-family: "Noto Sans JP", "Public Sans", sans-serif;
+      background-color: var(--background-color);
+      color: var(--primary-text-color);
+    }
+    h1, h2, h3, .font-strong {
+      font-family: "Noto Sans JP", "Public Sans", sans-serif;
+      font-weight: 700;}
+    .nav-link-hover:hover {
+      color: var(--accent-color);
+      background-color: rgba(245, 166, 35, 0.1);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .nav-link-active {
+      color: var(--accent-color);
+      font-weight: 700;
+      border-bottom: 3px solid var(--accent-color);
+    }
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border-radius: 20px;padding: 10px 20px;}
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      background-color: var(--secondary-color);
+    }
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border-radius: 20px;padding: 10px 20px;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      background-color: var(--primary-color);
+    }
+    .btn-accent {
+      background-color: var(--accent-color);
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border-radius: 20px;padding: 10px 20px;
+    }
+    .btn-accent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      background-color: #E49B20;}
+    .btn-icon {
+      background-color: var(--card-background-color);color: var(--secondary-color);border: 2px solid var(--secondary-color);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .btn-icon:hover {
+      background-color: var(--secondary-color);
+      color: white;
+      transform: scale(1.1);
+    }
+    .tab-active {
+      border-bottom-color: var(--accent-color);
+      color: var(--accent-color);
+      font-weight: 700;font-size: 1.1em;}
+    .tab-inactive {
+      border-bottom-color: transparent;
+      color: var(--secondary-text-color);
+    }
+    .tab-inactive:hover {
+      border-bottom-color: var(--border-color);
+      color: var(--primary-text-color);
+    }
+    .animate-scroll {
+      animation: scroll 30s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .colorful-shadow {
+      box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2), 0 6px 20px rgba(245, 166, 35, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-[var(--background-color)]">
+<div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-white px-6 md:px-10 py-3 shadow-md">
+<div class="flex items-center gap-3 text-[var(--primary-text-color)]">
+<div class="size-8 text-[var(--primary-color)] transform hover:rotate-12 transition-transform duration-300">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z" fill="currentColor" stroke="var(--secondary-color)" stroke-width="2"></path>
+<circle cx="10" cy="10" fill="var(--accent-color)" r="3"></circle>
+<circle cx="38" cy="38" fill="var(--secondary-color)" r="4"></circle>
+<rect fill="var(--primary-color)" height="8" transform="rotate(45 24 24)" width="8" x="20" y="20"></rect>
+</svg>
+</div>
+<h1 class="text-[var(--primary-text-color)] text-2xl font-bold leading-tight tracking-[-0.015em] font-strong">うるま市商工会</h1>
+</div>
+<nav class="hidden md:flex items-center gap-2">
+<a class="text-lg font-medium leading-normal px-3 py-2 rounded-lg nav-link-hover nav-link-active" href="#">ホーム</a>
+<a class="text-[var(--secondary-text-color)] text-lg font-medium leading-normal px-3 py-2 rounded-lg nav-link-hover" href="#">会員紹介</a>
+<a class="text-[var(--secondary-text-color)] text-lg font-medium leading-normal px-3 py-2 rounded-lg nav-link-hover" href="#">事業案内</a>
+<a class="text-[var(--secondary-text-color)] text-lg font-medium leading-normal px-3 py-2 rounded-lg nav-link-hover" href="#">加入案内</a>
+<a class="text-[var(--secondary-text-color)] text-lg font-medium leading-normal px-3 py-2 rounded-lg nav-link-hover" href="#">お問い合わせ</a>
+</nav>
+<div class="flex items-center gap-3">
+<button aria-label="検索" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-10 w-10 btn-icon">
+<div class="text-inherit" data-icon="MagnifyingGlass" data-size="20px" data-weight="bold">
+<svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</div>
+</button>
+<button aria-label="言語切り替え" class="hidden md:flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-10 w-10 btn-icon">
+<div class="text-inherit" data-icon="Globe" data-size="20px" data-weight="bold">
+<svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM101.63,168h52.74C149,186.34,140,202.87,128,215.89,116,202.87,107,186.34,101.63,168ZM98,152a145.72,145.72,0,0,1,0-48h60a145.72,145.72,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.79a161.79,161.79,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154.37,88H101.63C107,69.66,116,53.13,128,40.11,140,53.13,149,69.66,154.37,88Zm19.84,16h38.46a88.15,88.15,0,0,1,0,48H174.21a161.79,161.79,0,0,0,0-48Zm32.16-16H170.94a142.39,142.39,0,0,0-20.26-45A88.37,88.37,0,0,1,206.37,88ZM105.32,43A142.39,142.39,0,0,0,85.06,88H49.63A88.37,88.37,0,0,1,105.32,43ZM49.63,168H85.06a142.39,142.39,0,0,0,20.26,45A88.37,88.37,0,0,1,49.63,168Zm101.05,45a142.39,142.39,0,0,0,20.26-45h35.43A88.37,88.37,0,0,1,150.68,213Z"></path>
+</svg>
+</div>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-[var(--accent-color)] shadow-md" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtRX5KqEF1Tbv0ZnENNT330xDBsOxAyt4llAxkgMpUq3Uj9rTdC6K1GBFgSpEYXjMkyVZ_oIQPrIe6ZA9dcforLAJHxIqphX0ELF5J-ufbiqo-u11FHKxx7qyBwl9SKRRyMYNXeIEOOxIJ-iFMeEXDEMpTs-gc4soO3YlNOlslifprjsdE1vxtk_h-AaQCMN_aTOIRI2ls0N8YrgZFaxf_S_cDEQ26YD2Dp6SuF0hGp6_YFWz_-lBSfshuDJkBQe-wmgU4f_p6bxA");'></div>
+<button aria-label="メニューを開く" class="md:hidden flex items-center justify-center rounded-md h-10 w-10 btn-icon">
+<svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,88H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path>
+</svg>
+</button>
+</div>
+</header>
+<div class="bg-white py-8 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 border-b border-[var(--border-color)]">
+<div class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4">
+<a class="btn-primary text-center text-base font-semibold shadow-lg hover:shadow-xl flex items-center justify-center gap-2 transform hover:scale-105 transition-transform duration-300" href="#">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+<circle cx="9" cy="7" r="4"></circle>
+<line x1="19" x2="19" y1="8" y2="14"></line>
+<line x1="22" x2="16" y1="11" y2="11"></line>
+</svg>
+            加入案内
           </a>
-          <a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#637588]" href="#">
-            <div class="text-[#637588] flex h-8 items-center justify-center" data-icon="Megaphone" data-size="24px" data-weight="regular">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M240,120a48.05,48.05,0,0,0-48-48H152.2c-2.91-.17-53.62-3.74-101.91-44.24A16,16,0,0,0,24,40V200a16,16,0,0,0,26.29,12.25c37.77-31.68,77-40.76,93.71-43.3v31.72A16,16,0,0,0,151.12,214l11,7.33A16,16,0,0,0,186.5,212l11.77-44.36A48.07,48.07,0,0,0,240,120ZM40,199.93V40h0c42.81,35.91,86.63,45,104,47.24v65.48C126.65,155,82.84,164.07,40,199.93Zm131,8,0,.11-11-7.33V168h21.6ZM192,152H160V88h32a32,32,0,1,1,0,64Z"
-                ></path>
-              </svg>
-            </div>
-            <p class="text-[#637588] text-xs font-medium leading-normal tracking-[0.015em]">お知らせ</p>
+<a class="btn-secondary text-center text-base font-semibold shadow-lg hover:shadow-xl flex items-center justify-center gap-2 transform hover:scale-105 transition-transform duration-300" href="#">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+<polyline points="14 2 14 8 20 8"></polyline>
+<line x1="16" x2="8" y1="13" y2="13"></line>
+<line x1="16" x2="8" y1="17" y2="17"></line>
+<line x1="10" x2="8" y1="9" y2="9"></line>
+</svg>
+            申請一覧
           </a>
-          <a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#637588]" href="#">
-            <div class="text-[#637588] flex h-8 items-center justify-center" data-icon="Calendar" data-size="24px" data-weight="regular">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-96-88v64a8,8,0,0,1-16,0V132.94l-4.42,2.22a8,8,0,0,1-7.16-14.32l16-8A8,8,0,0,1,112,120Zm59.16,30.45L152,176h16a8,8,0,0,1,0,16H136a8,8,0,0,1-6.4-12.8l28.78-38.37A8,8,0,1,0,145.07,132a8,8,0,1,1-13.85-8A24,24,0,0,1,176,136,23.76,23.76,0,0,1,171.16,150.45Z"
-                ></path>
-              </svg>
-            </div>
-            <p class="text-[#637588] text-xs font-medium leading-normal tracking-[0.015em]">イベント</p>
+<a class="btn-primary text-center text-base font-semibold shadow-lg hover:shadow-xl flex items-center justify-center gap-2 transform hover:scale-105 transition-transform duration-300" href="#">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+<circle cx="9" cy="7" r="4"></circle>
+<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+</svg>
+            会員紹介
           </a>
-          <a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#637588]" href="#">
-            <div class="text-[#637588] flex h-8 items-center justify-center" data-icon="UsersThree" data-size="24px" data-weight="regular">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                <path
-                  d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"
-                ></path>
-              </svg>
-            </div>
-            <p class="text-[#637588] text-xs font-medium leading-normal tracking-[0.015em]">会員一覧</p>
+<a class="btn-secondary text-center text-base font-semibold shadow-lg hover:shadow-xl flex items-center justify-center gap-2 transform hover:scale-105 transition-transform duration-300" href="#">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="10"></circle>
+<line x1="12" x2="12" y1="16" y2="12"></line>
+<line x1="12" x2="12.01" y1="8" y2="8"></line>
+</svg>
+            商工会について
           </a>
+</div>
+</div>
+<main class="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-5xl flex-1 w-full">
+<div class="@container mb-12">
+<div class="relative">
+<div class="bg-cover bg-center flex flex-col justify-end overflow-hidden rounded-3xl min-h-[280px] @[480px]:min-h-[320px] @[768px]:min-h-[380px] shadow-xl" style='background-image: linear-gradient(0deg, rgba(0, 90, 156, 0.7) 0%, rgba(0, 90, 156, 0.1) 50%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_lEYhX6grfCKUuZvavfgyaIRw9YMo2J_8qYGZToaJuEylKGRuedMEagPK_AhNaM5vWCKnebknXA_6b6Mi7czrNdZ9uTmoQX8xNplPum9cmEa9IodVo2GjSIC8xYd2WFMyjcGXBNtAkjCAD0EsG_Z2U5HZmFm4arZXJsK9MSjJLR6tlUI8ULD11B5eeRODQb2dCS4dz3iYGPhuYsPeKnrbIoyrGO0P4v-xnsb9JJKVdr31KNMnMLpWpxIVqx4VWxarb_DDbzKmrFE");'>
+<div class="p-8 @[480px]:p-10">
+<h1 class="text-white text-4xl @[480px]:text-5xl font-bold leading-tight tracking-tight font-strong">うるま市商工会</h1>
+<p class="text-gray-100 mt-3 text-xl font-medium">地域経済の発展と会員企業の繁栄をサポートします！</p>
+</div>
+</div>
+</div>
+</div>
+<section class="mb-16">
+<h2 class="text-[var(--primary-color)] text-3xl font-bold leading-tight tracking-tight px-4 pb-4 pt-2 border-b-4 border-[var(--accent-color)] inline-block mb-8 font-strong">
+              会員紹介
+            </h2>
+<div class="relative overflow-hidden group">
+<div class="flex animate-scroll group-hover:pause-animation">
+<div class="flex space-x-6 py-4">
+<div class="flex-none w-72 bg-[var(--card-background-color)] rounded-2xl shadow-lg p-5 border-2 border-dashed border-[var(--category-color-1)] transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+<div class="relative">
+<img alt="会員企業ロゴ1" class="h-20 w-auto mx-auto mb-4 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxxP-48zcrPWccOn4Abm5ve_IbHd5LYnx7QTiN70zmNvnRWc7l6y1p8Zli-cg5ILqmzxsEMshgMi3lqrTzbBSnF8aqQOlx0_17hFyD-KX0tLRaqLnU-ptfLXTOgJ0QpYbie--mZrXlMHI-ktok-wjyRoPVPnjYhW1Au-6zZBGZHRZMdqKtzx2VU1qtwy1xrJB48Rk2erm2FietbIKBqC5MSlacuBpeOwoHi0BlNaZtyaaxGVRbIxVbJ5Iph19UTbhfaUEQrZ8jMUA"/>
+<span class="absolute top-0 right-0 bg-[var(--category-color-1)] text-white text-xs font-bold px-2 py-1 rounded-bl-lg rounded-tr-xl">-人気-</span>
+</div>
+<h3 class="text-lg font-semibold text-[var(--primary-text-color)] text-center font-strong">株式会社グルメクリエイト</h3>
+<p class="text-sm text-[var(--secondary-text-color)] text-center mt-1">飲食店経営</p>
+</div>
+<div class="flex-none w-72 bg-[var(--card-background-color)] rounded-2xl shadow-lg p-5 border-2 border-dashed border-[var(--category-color-2)] transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+<img alt="会員企業ロゴ2" class="h-20 w-auto mx-auto mb-4 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-CdDHJ-KyJmr10ODi4QbSsXnqu2DR2j3Z3KEWbnPHFyrolaLT_qKcQBZ22eGN16AdXGlR7UJ28XE2Gt5sB4lAK7jKmkuwId5605Se6i0YdcHwLWoSmjJRkvvOdGVmiK5YJEK3pqwzPmGbxnElshbN-vH4arZ4H_gp7cu-muMtwHQVzoBIk-TtnvWUinBkiTX_GzpDewt4w0A02575gen8VFqkQQF2MPFvAy7AyMOTTmMdl1Mcv-Jglxg2H4GW_efOdDKrxwZrNKA"/>
+<h3 class="text-lg font-semibold text-[var(--primary-text-color)] text-center font-strong">ネクストステップソリューションズ</h3>
+<p class="text-sm text-[var(--secondary-text-color)] text-center mt-1">ITコンサルティング</p>
+</div>
+<div class="flex-none w-72 bg-[var(--card-background-color)] rounded-2xl shadow-lg p-5 border-2 border-dashed border-[var(--category-color-3)] transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+<img alt="会員企業ロゴ3" class="h-20 w-auto mx-auto mb-4 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVGphwazJy7jjjPOTlVnNw0UJz_jP6alGnAuOMoR9f6HkDXFlxrW8m_6Cy0xizxPdeOIhZKCNo-mzXRVPOni6J7WrTzlgzJgAs9QP4UFNo1qRieKS2mPxy45RyGzqzJF4bgJG0YbwJXk-9qUahjlRzgDXP5cnY3PxAOAiE6abosQ8MlKtUF2F-sbr9U0dirlAE-KAM75PWk7JwHQsE8Ty6rPGEjrYCKvDxFEBfJigBaegBpt-pVmST3oiKXQtZumXJ3rJFh-silP0"/>
+<h3 class="text-lg font-semibold text-[var(--primary-text-color)] text-center font-strong">沖縄建設パートナーズ</h3>
+<p class="text-sm text-[var(--secondary-text-color)] text-center mt-1">建設業</p>
+</div>
+<div class="flex-none w-72 bg-[var(--card-background-color)] rounded-2xl shadow-lg p-5 border-2 border-dashed border-[var(--category-color-4)] transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+<img alt="会員企業ロゴ4" class="h-20 w-auto mx-auto mb-4 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH6PVCZdvUGt7IXLd2F5a1-2qwloffubbrrPUk8-C8mlxyGttQn_BA05SvM8gkKGIEvQklqWWfuuQqYI2VyMATzoGSA1TS0_eKjOxpGTEXC9FU9RWoyK8-9mhQidoB7M3QdEad0Vnhm6VmxNQxBIdKy8zjVQL_EX_rxxO8mf0EAk1ZHFgTkzSEwd30R4a3aF_7mn2K8r_w72PL2f8lqtPHCL9QmbklRk2U8e-hKY_zGwksPSWgXP8gfUeXfetGc06WSoY-rGNNGUg"/>
+<h3 class="text-lg font-semibold text-[var(--primary-text-color)] text-center font-strong">琉球スタイルファッション</h3>
+<p class="text-sm text-[var(--secondary-text-color)] text-center mt-1">アパレル</p>
+</div>
+<div class="flex-none w-72 bg-[var(--card-background-color)] rounded-2xl shadow-lg p-5 border-2 border-dashed border-[var(--category-color-5)] transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+<img alt="会員企業ロゴ5" class="h-20 w-auto mx-auto mb-4 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBehBBjyNfExCXO69oFKpeZGMNA1oCDW69-uIrAU1h1qAF4lF5LoqKu5ABGPHuhMDmGMjbuDBaPkeiEf-ikjRYaTWb83Z3bwXlNUnpvi636D7xid1z6nVRT0V4Y6kMk-Qnm671g0ZmgwcQiCVKDp7Af0jDgA2iNfXvbEghGK7hqVhC_zE_ioJE2BDNTtJd7sKvw0hQiNhxU1eeUG4VpTLV6oZppVJKJkE2Y-v-v1yqYseD9UhLLHH7_bDiFiv2L8WZSlj6ToudnNgw"/>
+<h3 class="text-lg font-semibold text-[var(--primary-text-color)] text-center font-strong">グローバル貿易沖縄</h3>
+<p class="text-sm text-[var(--secondary-text-color)] text-center mt-1">貿易業</p>
+</div>
+</div>
+<div aria-hidden="true" class="flex space-x-6 py-4">
+<div class="flex-none w-72 bg-[var(--card-background-color)] rounded-2xl shadow-lg p-5 border-2 border-dashed border-[var(--category-color-1)] transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+<img alt="会員企業ロゴ1" class="h-20 w-auto mx-auto mb-4 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_VUHs5G3gghEmOzh8anpBGyPS35TecryOmseJWaGenRfy5v_Wl1rhfRnhmw69FQPYLqR3DBuIZWdsWRlJurdlmx00UwNMgHnzOLMDw49od2EUQvI_W-253AHzPSHL_T6Ymz6XWYBYJKss1N6j-HzXC2mUa6CHsVTX3lnvPrvRTNMRRxEeHt5GGCGRD99Magn19im80kIKJn1RSn9kOIkWea64-4zpJ1jOO2WMaP3o-1JWJO1x0GJk0fL_TTXoLUA1l3Xe2SBmnn0"/>
+<h3 class="text-lg font-semibold text-[var(--primary-text-color)] text-center font-strong">株式会社グルメクリエイト</h3>
+<p class="text-sm text-[var(--secondary-text-color)] text-center mt-1">飲食店経営</p>
+</div>
+<div class="flex-none w-72 bg-[var(--card-background-color)] rounded-2xl shadow-lg p-5 border-2 border-dashed border-[var(--category-color-2)] transform hover:scale-105 hover:shadow-xl transition-all duration-300">
+<img alt="会員企業ロゴ2" class="h-20 w-auto mx-auto mb-4 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIJhaOxXlfPCGCCTnbCcELbPyzBdtmiLgY0iDpJjsT2kLfEtwxsZwmDUFFck5xYcqMMa_gMBQKrI3S9Z4yUlg56t6oeFta_wBsyfoN8DYF7TOdiiO4qkJTJ7v5wUedkPaj4VhsXPjKV1ZIFlJzyzJAvgdtAc5-xkb69DiXXINUjQp9FMh_Hi25OnQBPuQvxIStLaIacqn_ITgT8jC7fH3Ue7sg0DZfgHhtJb1LJNmb8I12RphFrnz7EO2kgY1xA-_HY_YjlrfKRKU"/>
+<h3 class="text-lg font-semibold text-[var(--primary-text-color)] text-center font-strong">ネクストステップソリューションズ</h3>
+<p class="text-sm text-[var(--secondary-text-color)] text-center mt-1">ITコンサルティング</p>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-10">
+<a class="btn-accent px-8 py-4 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105" href="#">
+                すべての会員を見る
+              </a>
+</div>
+</section>
+<section class="mb-16 bg-white p-8 rounded-2xl shadow-xl">
+<div class="border-b-2 border-[var(--border-color)] mb-8">
+<nav aria-label="Tabs" class="-mb-px flex space-x-8 justify-center">
+<button class="whitespace-nowrap py-4 px-3 border-b-4 font-semibold text-lg tab-active" data-tab="oshirase">
+                  お知らせ 🎉
+                </button>
+<button class="whitespace-nowrap py-4 px-3 border-b-4 font-semibold text-lg tab-inactive" data-tab="shokokai">
+                  商工会情報 🏢
+                </button>
+<button class="whitespace-nowrap py-4 px-3 border-b-4 font-semibold text-lg tab-inactive" data-tab="kaiin">
+                  会員情報 🤝
+                </button>
+</nav>
+</div>
+<div id="oshirase-content">
+<div class="grid gap-8 md:grid-cols-1 lg:grid-cols-1">
+<article class="bg-[var(--card-background-color)] rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row hover:shadow-xl transition-shadow duration-300 border-l-8 border-[var(--accent-color)]">
+<div class="w-full md:w-1/3 h-56 md:h-auto bg-center bg-no-repeat bg-cover rounded-r-2xl md:rounded-r-none md:rounded-l-2xl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1GjMArI-vB-ccVuS7YmlkWQizEyA6S8xOrf-rTuF2oxwF66aebpvj8DBtfRJDxNycIzyRtt1JPXKGZFrgRcyHYz7aZgHjqX7Q-2EtIIb9mcK80CzCo8h5-MVVpYU0UGZQ57MKp-DH9sb4iN-HOzO_dPOwMObseZoa8riwXuJGNDB7EErhGhiOkxrL5N0CLVped_XrxDlXtiPwRoeB7FWAq4EnxrKvChM4F38Wch0YN1pdK1UiEVRjeInlIKS_NLk4niOZvTA2zMs");'></div>
+<div class="p-6 flex flex-col justify-between flex-1">
+<div>
+<p class="text-[var(--secondary-text-color)] text-sm font-medium uppercase tracking-wider">2023年11月20日</p>
+<h3 class="text-[var(--primary-text-color)] text-xl font-bold leading-tight mt-1 mb-3 hover:text-[var(--accent-color)] transition-colors font-strong">
+<a href="#">「小規模事業者持続化認定補助金」について</a>
+</h3>
+<p class="text-[var(--secondary-text-color)] text-base font-normal leading-relaxed line-clamp-3">
+                        小規模事業者が取り組む経営計画に基づく販路開拓や生産性向上の取り組みを支援するための補助金です。チャンスをお見逃しなく！
+                      </p>
+</div>
+<a class="text-[var(--accent-color)] text-base font-semibold mt-5 inline-flex items-center group" href="#">
+                      続きを読む ✨
+                      <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1.5 transition-transform" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</article>
+<article class="bg-[var(--card-background-color)] rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row hover:shadow-xl transition-shadow duration-300 border-l-8 border-[var(--secondary-color)]">
+<div class="w-full md:w-1/3 h-56 md:h-auto bg-center bg-no-repeat bg-cover rounded-r-2xl md:rounded-r-none md:rounded-l-2xl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCbXkyNcQ62mOz1ACoV6TpeSJwvvOMMBSaTc853ZtfsjwJRe_Tvshkoq46okf5CNKWEXr3jte7RXXDGsCbEuR6Ttuw1M7j9abc1XfNQbFq1SH9mW9uV1YeMGUOZ6YidAHZWRjhy1p8_OfibMeiSBj0GwD2gzMLehHJenxij-XsXTyDyukVFZ1CmGyzS24_Q8ZGY89g9zYC-B0etNOe_5lu7yUuaUGlKM6Bb1pmRgu5zCakT1GARYSt3l5Ax4iBqU3RBrvdKuNa1isM");'></div>
+<div class="p-6 flex flex-col justify-between flex-1">
+<div>
+<p class="text-[var(--secondary-text-color)] text-sm font-medium uppercase tracking-wider">2023年11月20日</p>
+<h3 class="text-[var(--primary-text-color)] text-xl font-bold leading-tight mt-1 mb-3 hover:text-[var(--secondary-color)] transition-colors font-strong">
+<a href="#">「うるま市商工会パーティ」開催について</a>
+</h3>
+<p class="text-[var(--secondary-text-color)] text-base font-normal leading-relaxed line-clamp-3">
+                        うるま市商工会パーティーを開催いたします。多くの会員の方のご参加お待ちしております。楽しい企画が盛りだくさん！
+                      </p>
+</div>
+<a class="text-[var(--secondary-color)] text-base font-semibold mt-5 inline-flex items-center group" href="#">
+                      続きを読む 🥳
+                      <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1.5 transition-transform" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</article>
+</div>
+</div>
+<div class="hidden" id="shokokai-content">
+<div class="space-y-6">
+<article class="bg-[var(--card-background-color)] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-t-8 border-[var(--primary-color)]">
+<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+<div class="flex-1">
+<p class="text-[var(--secondary-text-color)] text-sm font-medium uppercase tracking-wider">2023年11月15日</p>
+<h3 class="text-[var(--primary-text-color)] text-xl font-bold leading-tight mt-1 mb-2 hover:text-[var(--primary-color)] transition-colors font-strong">
+<a href="#">年末年始の業務時間について</a>
+</h3>
+<p class="text-[var(--secondary-text-color)] text-base font-normal leading-relaxed line-clamp-2">
+                        年末年始のうるま市商工会の業務時間に関するお知らせです。ご確認の上、お問い合わせください。
+                      </p>
+</div>
+<a class="text-[var(--primary-color)] text-base font-semibold mt-2 sm:mt-0 inline-flex items-center group whitespace-nowrap" href="#">
+                      詳細を見る 🗓️
+                      <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1.5 transition-transform" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</article>
+<article class="bg-[var(--card-background-color)] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-t-8 border-[var(--primary-color)]">
+<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+<div class="flex-1">
+<p class="text-[var(--secondary-text-color)] text-sm font-medium uppercase tracking-wider">2023年10月28日</p>
+<h3 class="text-[var(--primary-text-color)] text-xl font-bold leading-tight mt-1 mb-2 hover:text-[var(--primary-color)] transition-colors font-strong">
+<a href="#">商工会役員選挙のお知らせ</a>
+</h3>
+<p class="text-[var(--secondary-text-color)] text-base font-normal leading-relaxed line-clamp-2">
+                        次期商工会役員選挙に関する公示です。立候補受付期間や投票日をご確認ください。
+                      </p>
+</div>
+<a class="text-[var(--primary-color)] text-base font-semibold mt-2 sm:mt-0 inline-flex items-center group whitespace-nowrap" href="#">
+                      詳細を見る 🗳️
+                      <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1.5 transition-transform" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</article>
+</div>
+</div>
+<div class="hidden" id="kaiin-content">
+<div class="space-y-6">
+<article class="bg-[var(--card-background-color)] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-t-8 border-[var(--primary-color)]">
+<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+<div class="flex-1">
+<p class="text-[var(--secondary-text-color)] text-sm font-medium uppercase tracking-wider">2023年11月10日</p>
+<h3 class="text-[var(--primary-text-color)] text-xl font-bold leading-tight mt-1 mb-2 hover:text-[var(--primary-color)] transition-colors font-strong">
+<a href="#">会員企業向けセミナー「DX推進の第一歩」開催</a>
+</h3>
+<p class="text-[var(--secondary-text-color)] text-base font-normal leading-relaxed line-clamp-2">
+                        会員企業の皆様を対象に、デジタルトランスフォーメーション（DX）に関する入門セミナーを開催します。
+                      </p>
+</div>
+<a class="text-[var(--primary-color)] text-base font-semibold mt-2 sm:mt-0 inline-flex items-center group whitespace-nowrap" href="#">
+                      詳細を見る 💡
+                      <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1.5 transition-transform" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</article>
+<article class="bg-[var(--card-background-color)] rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border-t-8 border-[var(--primary-color)]">
+<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+<div class="flex-1">
+<p class="text-[var(--secondary-text-color)] text-sm font-medium uppercase tracking-wider">2023年10月25日</p>
+<h3 class="text-[var(--primary-text-color)] text-xl font-bold leading-tight mt-1 mb-2 hover:text-[var(--primary-color)] transition-colors font-strong">
+<a href="#">新会員交流会のご案内</a>
+</h3>
+<p class="text-[var(--secondary-text-color)] text-base font-normal leading-relaxed line-clamp-2">
+                        新たに入会された会員様同士の交流を深めるための会を開催いたします。ぜひご参加ください。
+                      </p>
+</div>
+<a class="text-[var(--primary-color)] text-base font-semibold mt-2 sm:mt-0 inline-flex items-center group whitespace-nowrap" href="#">
+                      詳細を見る ☕
+                      <svg class="w-5 h-5 ml-1 transform group-hover:translate-x-1.5 transition-transform" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" fill-rule="evenodd"></path>
+</svg>
+</a>
+</div>
+</article>
+</div>
+</div>
+<div class="text-center mt-10">
+<a class="btn-accent px-8 py-4 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105" href="#">
+                すべての情報を表示
+              </a>
+</div>
+</section>
+</div>
+</main>
+<footer class="bg-[var(--primary-color)] text-white py-16 px-6 md:px-10">
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+<div>
+<h3 class="text-2xl font-bold mb-5 font-strong">うるま市商工会</h3>
+<p class="text-base text-gray-100">〒XXX-XXXX 沖縄県うるま市XXXXX</p>
+<p class="text-base text-gray-100">電話: XXX-XXX-XXXX</p>
+<p class="text-base text-gray-100">Email: info@uruma-sci.or.jp</p>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-5 font-strong">クイックリンク</h3>
+<ul class="space-y-3">
+<li><a class="text-base text-gray-100 hover:text-[var(--accent-color)] transition-colors duration-300 font-medium" href="#">ホーム</a></li>
+<li><a class="text-base text-gray-100 hover:text-[var(--accent-color)] transition-colors duration-300 font-medium" href="#">会員紹介</a></li>
+<li><a class="text-base text-gray-100 hover:text-[var(--accent-color)] transition-colors duration-300 font-medium" href="#">事業案内</a></li>
+<li><a class="text-base text-gray-100 hover:text-[var(--accent-color)] transition-colors duration-300 font-medium" href="#">加入案内</a></li>
+<li><a class="text-base text-gray-100 hover:text-[var(--accent-color)] transition-colors duration-300 font-medium" href="#">お問い合わせ</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-2xl font-bold mb-5 font-strong">フォローする</h3>
+<div class="flex space-x-5">
+<a class="text-gray-100 hover:text-[var(--accent-color)] transition-colors duration-300 transform hover:scale-125" href="#">
+<svg aria-hidden="true" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+<path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path>
+</svg>
+</a>
+<a class="text-gray-100 hover:text-[var(--accent-color)] transition-colors duration-300 transform hover:scale-125" href="#">
+<svg aria-hidden="true" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-10 border-t border-white/30 text-center text-base text-gray-200">
+          © 2023 うるま市商工会. All rights reserved. ✨
         </div>
-        <div class="h-5 bg-white"></div>
-      </div>
-    </div>
-  </body>
-</html>
+</footer>
+</div>
+</div>
+<script>
+    const tabs = document.querySelectorAll('[data-tab]');
+    const tabContents = {
+      oshirase: document.getElementById('oshirase-content'),
+      shokokai: document.getElementById('shokokai-content'),
+      kaiin: document.getElementById('kaiin-content')
+    };
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const activeTab = tab.dataset.tab;
+        tabs.forEach(t => {
+          t.classList.remove('tab-active');
+          t.classList.add('tab-inactive');
+        });
+        Object.values(tabContents).forEach(content => content.classList.add('hidden'));
+        tab.classList.remove('tab-inactive');
+        tab.classList.add('tab-active');
+        if (tabContents[activeTab]) {
+          tabContents[activeTab].classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+</body></html>
