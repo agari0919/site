@@ -1,0 +1,200 @@
+<html><head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans+JP%3Awght%40400%3B500%3B700%3B900&amp;family=Public+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #2563eb;--secondary-color: #10b981;--accent-color: #f59e0b;--text-primary: #1f2937;--text-secondary: #4b5563;--background-light: #f3f4f6;--border-color: #e5e7eb;}
+      body {
+        font-family: "Noto Sans JP", "Public Sans", sans-serif;
+      }
+      .nav-link-active {
+        color: var(--accent-color);
+        border-bottom-color: var(--accent-color);
+        font-weight: 700;
+      }
+      .nav-link {
+        color: var(--text-secondary);
+        border-bottom-color: transparent;
+        transition: color 0.3s ease, border-bottom-color 0.3s ease;
+      }
+      .nav-link:hover {
+        color: var(--primary-color);
+        border-bottom-color: var(--primary-color);
+      }
+      .btn-icon {
+        background-color: var(--background-light);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .btn-icon:hover {
+        background-color: var(--accent-color);
+        color: white;
+      }
+      .colorful-button {
+        background-color: var(--primary-color);
+        color: white;
+        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+      }
+      .colorful-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        background-color: var(--secondary-color);
+      }
+      .pop-shadow {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                    4px 4px 0px 0px var(--accent-color),
+                    -4px -4px 0px 0px var(--secondary-color);
+      }
+       .pop-shadow-sm {
+        box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.04),
+                    2px 2px 0px 0px var(--primary-color),
+                    -2px -2px 0px 0px var(--accent-color);
+      }
+      .dot-pattern {
+        background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+        background-size: 10px 10px;
+        opacity: 0.5;
+      }
+    </style>
+</head>
+<body class="bg-[var(--background-light)] text-[var(--text-primary)]">
+<div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-white px-6 lg:px-10 py-4 shadow-md pop-shadow-sm">
+<div class="flex items-center gap-3 text-[var(--primary-color)]">
+<div class="size-8 text-[var(--accent-color)]">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M44 4H30.6666C30.6666 4 24 4 24 10.6667C24 17.3333 17.3333 17.3333 17.3333 17.3333V30.6666C17.3333 30.6666 17.3333 37.3333 10.6667 37.3333C4 37.3333 4 44 4 44H44V4Z" fill="currentColor" stroke="var(--primary-color)" stroke-width="2"></path><circle cx="37.3333" cy="10.6667" fill="var(--primary-color)" r="2.66667"></circle><circle cx="10.6667" cy="37.3333" fill="var(--primary-color)" r="2.66667"></circle><path d="M24 24L30.6667 17.3333" stroke="var(--primary-color)" stroke-linecap="round" stroke-width="2"></path><path d="M17.3333 30.6667L10.6667 24" stroke="var(--primary-color)" stroke-linecap="round" stroke-width="2"></path></svg>
+</div>
+<h1 class="text-[var(--primary-color)] text-2xl font-extrabold leading-tight tracking-[-0.015em]">うるま市商工会</h1>
+</div>
+<nav class="hidden lg:flex flex-1 justify-center items-center gap-8">
+<a class="text-base font-semibold leading-normal py-2 hover:text-[var(--primary-color)] transition-colors duration-200" href="#">ホーム</a>
+<a class="text-base font-semibold leading-normal py-2 hover:text-[var(--primary-color)] transition-colors duration-200" href="#">会員紹介</a>
+<a class="text-base font-semibold leading-normal py-2 hover:text-[var(--primary-color)] transition-colors duration-200" href="#">施設案内</a>
+<a class="text-base font-bold leading-normal py-2 text-[var(--accent-color)] border-b-4 border-[var(--accent-color)]" href="#">商工会について</a>
+<a class="text-base font-semibold leading-normal py-2 hover:text-[var(--primary-color)] transition-colors duration-200" href="#">お問い合わせ</a>
+</nav>
+<div class="flex items-center gap-4">
+<button aria-label="Search" class="btn-icon flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 border-2 border-[var(--secondary-color)] hover:bg-[var(--secondary-color)] hover:text-white">
+<div data-icon="MagnifyingGlass" data-size="24px" data-weight="bold">
+<svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</div>
+</button>
+<button aria-label="Menu" class="btn-icon lg:hidden flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 border-2 border-[var(--accent-color)] hover:bg-[var(--accent-color)] hover:text-white">
+<div data-icon="List" data-size="24px" data-weight="bold">
+<svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+<path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path>
+</svg>
+</div>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 border-4 border-yellow-300 shadow-lg ring-2 ring-[var(--primary-color)]" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiKj993v8WVH2bSv0504m2iQTYpG0IcvhutCnZbO0X2U3aExFAOL1sLovy6CY5wlmhBXmipvrMM_q9dhlBNFHLKyMnTDOKrYgWWgYo5fSWvmeiNDO9KM9x_GNN92o7TYvwNlWNsvOsACuA08r78R43kGhTR1cKMuyVtCbAm1tBiIRnpahaEA1ZUeBOymcsMxfC2xu2xB8bzqeQUAErlQxHPe2EF_d_upkDbKMRneRMy1pMg2USItS9SsS38CugoR7YEBmtuntCJD8");'></div>
+</div>
+</header>
+<main class="px-4 sm:px-6 md:px-16 lg:px-24 xl:px-40 flex flex-1 justify-center py-8 sm:py-12 bg-[var(--background-light)] relative">
+<div class="absolute inset-0 dot-pattern z-0"></div>
+<div class="layout-content-container flex flex-col max-w-4xl flex-1 bg-white p-6 md:p-10 rounded-2xl shadow-2xl pop-shadow relative z-10">
+<div class="flex flex-wrap justify-between items-center gap-4 mb-8 border-b-2 border-[var(--secondary-color)] pb-6">
+<h1 class="text-[var(--primary-color)] tracking-tight text-4xl md:text-5xl font-extrabold">商工会について</h1>
+<div class="flex gap-2">
+<span class="inline-block w-5 h-5 rounded-full bg-[var(--accent-color)] animate-bounce animation-delay-0"></span>
+<span class="inline-block w-5 h-5 rounded-full bg-[var(--primary-color)] animate-bounce animation-delay-200"></span>
+<span class="inline-block w-5 h-5 rounded-full bg-[var(--secondary-color)] animate-bounce animation-delay-400"></span>
+</div>
+</div>
+<div class="mb-10">
+<div class="flex border-b-2 border-[var(--border-color)] gap-2 md:gap-6 overflow-x-auto pb-1">
+<a class="flex flex-col items-center justify-center border-b-4 pb-[13px] pt-4 nav-link nav-link-active min-w-max px-3" href="#">
+<p class="text-base md:text-lg font-semibold">商工会とは</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-4 pb-[13px] pt-4 nav-link min-w-max px-3" href="#">
+<p class="text-base md:text-lg font-semibold">目的と事業</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-4 pb-[13px] pt-4 nav-link min-w-max px-3" href="#">
+<p class="text-base md:text-lg font-semibold">組織図</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-4 pb-[13px] pt-4 nav-link min-w-max px-3" href="#">
+<p class="text-base md:text-lg font-semibold">役員一覧</p>
+</a>
+</div>
+</div>
+<section class="space-y-10">
+<div class="p-6 rounded-xl bg-yellow-50 shadow-lg border-l-8 border-[var(--accent-color)]">
+<h2 class="text-[var(--primary-color)] text-2xl md:text-3xl font-bold leading-tight tracking-tight mb-4 flex items-center">
+<span class="text-[var(--accent-color)] mr-3 text-3xl">💡</span>
+    商工会とは
+</h2>
+<p class="text-[var(--text-secondary)] text-lg leading-relaxed font-medium">
+                  商工会は、地域の小規模事業者の総合的経営支援団体です。小規模事業者の経営向上や経営基盤の強化のための経営、経理、労務、税務、金融などに関する総合的な経営指導を行い、地域経済の活性化や社会一般の年金、働健、労災などの加入手続きの受付や地元商品の開発・販路拡大の支援、地域の活性化に向けたマッチングなどを行います。
+                </p>
+</div>
+<div class="p-6 rounded-xl bg-blue-50 shadow-lg border-l-8 border-[var(--primary-color)]">
+<h2 class="text-[var(--primary-color)] text-2xl md:text-3xl font-bold leading-tight tracking-tight mb-4 flex items-center">
+<span class="text-[var(--primary-color)] mr-3 text-3xl">🎯</span>
+    商工会の役割
+</h2>
+<p class="text-[var(--text-secondary)] text-lg leading-relaxed font-medium">
+                  商工会は、地域の小規模事業者の経営や生活を支援する、地域に密着した公益性の高い経営支援団体です。商工会は、小規模事業者の経営向上や経営基盤の強化のための経営、経理、労務、税務、金融などに関する総合的な経営指導を行い、地域経済の活性化や社会一般の年金、働健、労災などの加入手続きの受付や地元商品の開発・販路拡大の支援、地域の活性化に向けたマッチングなどを行います。
+                </p>
+</div>
+<div class="p-6 rounded-xl bg-emerald-50 shadow-lg border-l-8 border-[var(--secondary-color)]">
+<h2 class="text-[var(--primary-color)] text-2xl md:text-3xl font-bold leading-tight tracking-tight mb-4 flex items-center">
+<span class="text-[var(--secondary-color)] mr-3 text-3xl">🔗</span>
+    商工会の及び商工会連合会の区別
+</h2>
+<p class="text-[var(--text-secondary)] text-lg leading-relaxed font-medium">
+                  商工会は、市村を単位とした地域の経営支援団体です。商工会連合会は、都道府県を単位とした商工会の広域的な経営支援団体です。
+                </p>
+</div>
+<div class="p-6 rounded-xl bg-sky-50 shadow-lg border-l-8 border-[var(--primary-color)]">
+<h2 class="text-[var(--primary-color)] text-2xl md:text-3xl font-bold leading-tight tracking-tight mb-4 flex items-center">
+<span class="text-[var(--primary-color)] mr-3 text-3xl">⚖️</span>
+    商工会の法的性格
+</h2>
+<p class="text-[var(--text-secondary)] text-lg leading-relaxed font-medium">商工会は、商工会法に基づく設立された、公益性の高い特別許可法人です。</p>
+</div>
+</section>
+</div>
+</main>
+<footer class="bg-[var(--primary-color)] text-white py-16 px-6 lg:px-10 shadow-inner">
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+<div>
+<h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
+<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.707 14.707a1 1 0 001.414-1.414L8.414 11H14a1 1 0 100-2H8.414l1.707-1.293a1 1 0 10-1.414-1.414L6.293 8.293a1 1 0 000 1.414l2.414 2.414a1 1 0 001.414 1.414L8.707 12H5a1 1 0 100 2h3.707l-1.293 1.293a1 1 0 001.414 1.414z" fill-rule="evenodd"></path></svg>
+    うるま市商工会
+</h3>
+<p class="text-base text-gray-200 mb-1">〒XXX-XXXX 沖縄県うるま市XX XX-XX</p>
+<p class="text-base text-gray-200 mb-1">電話: XX-XXXX-XXXX</p>
+<p class="text-base text-gray-200">FAX: XX-XXXX-XXXX</p>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4">関連リンク</h3>
+<ul class="space-y-3">
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">全国商工会連合会</a></li>
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">沖縄県商工会連合会</a></li>
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">うるま市役所</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4">サイトマップ</h3>
+<ul class="space-y-3">
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">ホーム</a></li>
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">会員紹介</a></li>
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">施設案内</a></li>
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">商工会について</a></li>
+<li><a class="text-base text-gray-200 hover:text-[var(--accent-color)] transition-colors duration-200 font-medium" href="#">お問い合わせ</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 border-t border-blue-400 pt-10 text-center text-base text-gray-300">
+<p>© 2024 うるま市商工会. All rights reserved. デザイン協力: シンプルデザインズ</p>
+</div>
+</footer>
+</div>
+</div>
+</body></html>
