@@ -1,140 +1,952 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>UGC施策 結果ページ</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      background: #fff;
-      padding: 30px;
-      max-width: 800px;
-      margin: 0 auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    h1 { text-align: center; }
-    .score-box {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .score-box h2 {
-      font-size: 48px;
-      color: #2e8b57;
-    }
-    .chart-box {
-      width: 100%;
-      margin: 30px auto;
-    }
-    .data-table, .comment-section, .memo-section {
-      margin: 30px 0;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    td, th {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
-    textarea {
-      width: 100%;
-      height: 100px;
-      padding: 10px;
-      font-size: 14px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #2e8b57;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGC設計シミュレーションゲーム Ver.6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+        .step-card, .modal-content, .game-over-screen {
+            transition: all 0.5s ease-in-out;
+        }
+        .hidden-step {
+            opacity: 0;
+            transform: translateY(20px);
+            position: absolute;
+            width: 100%;
+            pointer-events: none;
+        }
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+        input[type="radio"]:checked + label,
+        input[type="checkbox"]:checked + label {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px #3b82f6;
+        }
+        input[type="radio"].quiz-option:checked + label {
+             background-color: #dbeafe;
+             border-color: #3b82f6;
+        }
+        .trust-bar-fill {
+            transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+        }
+    </style>
 </head>
-<body>
-<div class="container" id="report">
-  <h1>UGC施策 スコア結果</h1>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
 
-  <div class="score-box">
-    <p>あなたのスコアは…</p>
-    <h2>84点</h2>
-    <p>ランク：<strong>A</strong>｜評価：UGCのポテンシャル高！</p>
-  </div>
+    <div class="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-10 space-y-6">
+        
+        <header class="text-center">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-800">UGC設計シミュレーションゲーム Ver.6</h1>
+            <p class="text-sm md:text-base text-gray-500 mt-2">最強のマーケティングプランを設計し、無事にローンチせよ！</p>
+        </header>
 
-  <div class="chart-box">
-    <canvas id="scoreChart"></canvas>
-  </div>
+        <div id="previous-result-container" class="mb-6"></div>
 
-  <div class="data-table">
-    <h3>成果データ</h3>
-    <table>
-      <tr><th>インプレッション数</th><th>CTR</th><th>クリック数</th><th>予算</th><th>CPA</th></tr>
-      <tr><td>450,000</td><td>1.84%</td><td>8,280</td><td>¥252,000</td><td>¥30.4</td></tr>
-    </table>
-  </div>
+        <div class="space-y-3">
+            <div id="mission-goals-display" class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-sm"></div>
+            <div class="space-y-2">
+                <div>
+                    <span class="text-sm font-bold">進行度</span>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div id="progress-bar" class="bg-blue-500 h-4 rounded-full progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                 <div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-bold">プロジェクト信頼度</span>
+                        <span id="trust-value" class="text-sm font-bold text-gray-600">100%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div id="trust-bar" class="h-4 rounded-full trust-bar-fill bg-green-500" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-sm font-bold text-gray-600">
+            <span id="step-counter">ステップ 0 / 11</span>
+        </div>
 
-  <div class="comment-section">
-    <h3>講評</h3>
-    <p>ユーザーの共感をしっかりとらえた訴求・媒体設計が成功。今後はクリエイティブの多様化で更なる拡散も狙える。</p>
-  </div>
+        <main id="game-container" class="relative min-h-[450px]">
+             <!-- ステップ0: プロローグ & 商品選択 -->
+            <div id="step-0" class="step-card space-y-4">
+                <h2 class="text-xl font-bold text-center">プロローグ</h2>
+                <div class="bg-gray-100 p-4 rounded-lg text-center">
+                    <p class="mb-2">あなたはハンバーガーチェーン「マスバーガー」のマーケター。</p>
+                    <p class="mb-4">社長から直々に「新商品のUGCキャンペーンを成功させろ！」との特命が下った。</p>
+                    <p class="font-bold">まずは、キャンペーン対象の商品を選ぼう！</p>
+                </div>
+                <div id="product-options" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                <button onclick="nextStep(1)" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">この商品で企画を始める</button>
+            </div>
 
-  <div class="memo-section">
-    <h3>ふりかえりメモ（チーム記入用）</h3>
-    <textarea placeholder="どうしてこの結果になったか？ 次回どう改善するか？"></textarea>
-  </div>
+            <!-- ステップ1: Mission Briefing -->
+            <div id="step-1" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold text-center">今回のミッション</h2>
+                <p class="text-center">以下のKPI目標をすべて達成するキャンペーンを企画せよ！</p>
+                <div id="mission-briefing-display" class="grid grid-cols-2 gap-4 text-center"></div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(0)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(2)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">ミッション開始</button>
+                </div>
+            </div>
 
-  <div style="text-align:center;">
-    <button onclick="downloadPDF()">PDF保存</button>
-  </div>
-</div>
+            <!-- ステップ2: KGI設定 -->
+            <div id="step-2" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">② キャンペーンの最重要目的(KGI)は？</h2>
+                <div id="kgi-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(1)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(3)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+            
+            <!-- ステップ3: ターゲット選択 -->
+            <div id="step-3" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">③ ターゲットは誰？</h2>
+                <div id="target-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(2)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(4)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+
+             <!-- ステップ4: ペルソナ分析 -->
+            <div id="step-4" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">④ ターゲットを深掘り分析！</h2>
+                <div id="persona-display" class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 space-y-3"></div>
+                <p class="text-sm text-center text-gray-600">この情報は後のクイズで重要になります。チームで共有しましょう。</p>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(3)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(5)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ5: 訴求選択 -->
+            <div id="step-5" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">⑤ どんな魅力でアピールする？ (2つまで)</h2>
+                <div id="appeal-options" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+                <p id="appeal-error" class="text-red-500 text-sm hidden">2つまでしか選択できません。</p>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(4)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(6)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ6: 中間レビュー -->
+            <div id="step-6" class="step-card space-y-6 hidden-step">
+                <h2 class="text-xl font-bold text-center text-red-500">🚨 最重要関門：中間レビュー 🚨</h2>
+                <div id="review-container" class="space-y-4"></div>
+                <p id="review-error" class="text-red-600 font-bold text-center hidden"></p>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(5)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="checkReview()" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg">回答を提出</button>
+                </div>
+            </div>
+            
+            <!-- ステップ7: 媒体選択 + 予算配分 -->
+            <div id="step-7" class="step-card space-y-6 hidden-step">
+                <h2 class="text-xl font-bold">⑦ どの媒体で発信する？ (2つまで)</h2>
+                <div id="media-options" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+                 <p id="media-error" class="text-red-500 text-sm hidden">2つまでしか選択できません。</p>
+                <div id="budget-allocator" class="space-y-4 hidden">
+                    <h3 class="text-lg font-bold">広告予算配分 (合計: <span id="remaining-budget-display">1,000,000</span>円)</h3>
+                    <div id="budget-sliders" class="space-y-4"></div>
+                    <div class="text-right font-bold text-lg"><span>合計予算: </span><span id="total-budget">0</span>円</div>
+                     <p id="budget-error" class="text-red-500 text-sm text-right hidden"></p>
+                </div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(6)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(8)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ8: クリエイティブ選択 -->
+            <div id="step-8" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">⑧ どんなクリエイティブにする？</h2>
+                <div id="creative-options" class="grid grid-cols-1 gap-4"></div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(7)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(9)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+            
+            <!-- ステップ9: インフルエンサー選定 -->
+            <div id="step-9" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">⑨ 協力するインフルエンサーは？ (1名)</h2>
+                <div id="influencer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(8)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(10)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ10: インセンティブ設計 -->
+            <div id="step-10" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">⑩ UGCを促すインセンティブは？</h2>
+                <div id="incentive-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(9)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="nextStep(11)" class="w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">次へ</button>
+                </div>
+            </div>
+
+            <!-- ステップ11: UGC企画詳細 -->
+            <div id="step-11" class="step-card space-y-4 hidden-step">
+                <h2 class="text-xl font-bold">⑪ ユーザーを巻き込むUGC企画を練ろう！</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="ugc-hashtag" class="font-bold">ハッシュタグ案</label>
+                        <input type="text" id="ugc-hashtag" class="w-full p-2 border-2 border-gray-300 rounded-lg" placeholder="例：#〇〇チャレンジ">
+                    </div>
+                    <div>
+                        <label for="ugc-catchphrase" class="font-bold">キャッチコピー</label>
+                        <input type="text" id="ugc-catchphrase" class="w-full p-2 border-2 border-gray-300 rounded-lg" placeholder="例：みんなで投稿して景品をゲット！">
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <button onclick="prevStep(10)" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-lg">戻る</button>
+                    <button onclick="showResults()" class="w-1/2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg">最終結果を見る！</button>
+                </div>
+            </div>
+            
+            <!-- ステップ12: 結果表示 -->
+            <div id="step-12" class="step-card space-y-6 hidden-step">
+                <h2 id="result-title" class="text-3xl font-extrabold text-center"></h2>
+                <div id="badge-container" class="flex flex-wrap justify-center gap-4"></div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                     <h3 class="font-bold text-lg mb-2">あなたのプラン</h3>
+                     <p><strong>商品:</strong> <span id="result-product"></span></p>
+                     <p><strong>KGI:</strong> <span id="result-kgi"></span></p>
+                     <p><strong>ターゲット:</strong> <span id="result-target"></span></p>
+                     <p><strong>訴求軸:</strong> <span id="result-appeals"></span></p>
+                </div>
+                <div id="sns-preview-container" class="bg-white p-4 rounded-lg shadow-md max-w-md mx-auto"></div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-300">
+                        <thead class="bg-gray-200">
+                            <tr><th>指標</th><th>目標</th><th>結果</th><th>達成度</th></tr>
+                        </thead>
+                        <tbody id="result-kpi-table"></tbody>
+                    </table>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-300">
+                        <thead class="bg-gray-200">
+                            <tr><th>媒体</th><th>予算</th><th>Imp</th><th>クリック数</th><th>CTR</th><th>CPC</th></tr>
+                        </thead>
+                        <tbody id="result-table-body"></tbody>
+                        <tfoot class="font-bold bg-gray-100">
+                           <tr><td>合計</td><td id="total-result-budget"></td><td id="total-result-imp"></td><td id="total-result-clicks"></td><td>-</td><td id="total-result-cpc"></td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-green-100 p-4 rounded-lg">
+                        <h4 class="font-bold">ブランド好感度</h4><p id="result-brand" class="text-2xl font-bold"></p>
+                    </div>
+                    <div class="bg-yellow-100 p-4 rounded-lg">
+                        <h4 class="font-bold">話題性</h4><p id="result-buzz" class="text-2xl font-bold"></p>
+                    </div>
+                     <div class="bg-red-100 p-4 rounded-lg">
+                        <h4 class="font-bold">炎上リスク</h4><p id="result-risk" class="text-2xl font-bold"></p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">発生したイベント・レビュー結果</h3>
+                     <ul id="event-log-list" class="list-disc list-inside text-sm text-gray-700"><li>イベントは発生しませんでした。</li></ul>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">💡 総評と解説</h3>
+                    <div id="result-commentary" class="text-sm space-y-2"></div>
+                </div>
+                <button onclick="restartGame()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg">もう一度挑戦する</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- イベントモーダル -->
+    <div id="event-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden modal-backdrop opacity-0">
+        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center space-y-4 modal-content transform scale-95">
+            <h2 id="event-title" class="text-2xl font-extrabold"></h2>
+            <div id="event-icon" class="text-6xl"></div>
+            <p id="event-description" class="text-gray-600"></p>
+            <button onclick="closeEventModal()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">確認</button>
+        </div>
+    </div>
+    
+    <!-- ゲームオーバーモーダル -->
+    <div id="game-over-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden game-over-screen opacity-0">
+        <div id="game-over-content" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center space-y-4 transform scale-95">
+            <h2 class="text-4xl font-extrabold text-red-600">GAME OVER</h2>
+            <div class="text-8xl">💀</div>
+            <p id="game-over-reason" class="text-gray-700 font-bold"></p>
+            <p class="text-sm text-gray-500">プロジェクトは中止になりました。</p>
+            <button onclick="restartGame()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg">もう一度挑戦する</button>
+        </div>
+    </div>
+
 
 <script>
-  const ctx = document.getElementById('scoreChart');
-  new Chart(ctx, {
-    type: 'radar',
-    data: {
-      labels: ['ターゲット適合度', '訴求力', '媒体選定', 'クリエイティブ効果', 'コスパ'],
-      datasets: [{
-        label: 'スコア',
-        data: [17, 18, 16, 17, 16],
-        fill: true,
-        backgroundColor: 'rgba(46,139,87,0.2)',
-        borderColor: 'rgba(46,139,87,1)',
-        pointBackgroundColor: 'rgba(46,139,87,1)'
-      }]
+// --- ゲームデータ定義 ---
+const gameData = {
+    missionGoals: { imp: 800000, clicks: 7000, ctr: 1.2, cpc: 150 },
+    products: [
+        { id: 'P1', name: 'ヘルシーベジバーガー', icon: '🥗', desc: '健康志向の女性やシニア層に。', effects: { compatibility_mod: { 'T3': {'A4': 1.5, 'A2': 1.2}, 'T5': {'A4': 2.0} } } },
+        { id: 'P2', name: 'ビーフ爆弾バーガー', icon: '💣', desc: '食べ盛りの若者や男性に。', effects: { compatibility_mod: { 'T1': {'A1': 1.5, 'A6': 1.2}, 'T2': {'A2': 1.5} } } },
+        { id: 'P3', name: 'コスパ最強バーガー', icon: '💰', desc: '価格に敏感な学生やファミリーに。', effects: { compatibility_mod: { 'T2': {'A2': 2.0}, 'T1': {'A2': 1.2} } } },
+    ],
+    kgis: [
+        { id: 'K1', name: '認知度拡大 (Imp重視)', icon: '📢', desc: 'とにかく多くの人に見てもらう' },
+        { id: 'K2', name: 'エンゲージメント向上 (話題性重視)', icon: '❤️‍🔥', desc: 'いいねやコメントを増やす' },
+        { id: 'K3', name: 'サイト送客数 (クリック数重視)', icon: '🖱️', desc: 'ウェブサイトへの訪問者を増やす' }
+    ],
+    targets: [
+        { id: 'T1', name: 'Z世代トレンド好き高校生', icon: '👩‍🎓', effects: { brand: 5, buzz: 10, risk: 5 }, persona: "流行に敏感で、常に新しい情報をキャッチアップ。主な情報源はTikTokとInstagram。友人とのコミュニケーションを重視し、「映え」や「エモい」体験をSNSでシェアすることに価値を感じる。動画コンテンツを好み、長文はあまり読まない傾向。" },
+        { id: 'T2', name: 'コスパ重視の大学生', icon: '💑', effects: { brand: 5, buzz: 3, risk: 1 }, persona: "サークルやバイトで多忙な日々。賢くお金を使いたいと考えており、クーポンやセール情報に敏感。X(旧Twitter)やまとめサイトで情報収集することが多い。友人からの「口コミ」やレビューを信頼する。" },
+        { id: 'T3', name: '情報感度の高い子育てママ', icon: '👩‍👧‍👦', effects: { brand: 10, buzz: 5, risk: 3 }, persona: "子供のために、安心・安全なものを選びたい。ママ友とのLINEグループやInstagramの専門家アカウントが主な情報源。時短や便利グッズに関心が高い。「専門家のおすすめ」や「同じ悩みを抱える人の体験談」に強く惹かれる。" },
+        { id: 'T4', name: '推し活に全力なオタク女子', icon: '💖', effects: { brand: 3, buzz: 15, risk: 8 }, persona: "好きなアニメやアイドルのためなら時間もお金も惜しまない。X(旧Twitter)に常駐し、同じ趣味の仲間との交流を最も大切にする。公式からの供給だけでなく、ファン同士で作り出すコンテンツ(二次創作など)にも積極的。「推し」と関連付けられる企画には驚異的な熱量で参加する。" },
+        { id: 'T5', name: '健康志向のシニア層', icon: '👵', effects: { brand: 15, buzz: 1, risk: 1 }, persona: "新聞やテレビ、LINEでの家族とのコミュニケーションが中心。健康や孫、趣味に関する話題に関心が高い。信頼できる情報源からの推奨を重視し、派手な広告よりも、丁寧で誠実な説明を好む。インターネットの複雑な操作は苦手。" }
+    ],
+    appeals: [
+        { id: 'A1', name: '映え', icon: '📸', effects: { brand: 5, buzz: 10, risk: 2 }, keywords: ["映え", "エモい", "おしゃれ", "可愛い"] },
+        { id: 'A2', name: 'コスパ', icon: '💰', effects: { brand: 3, buzz: 3, risk: 1 }, keywords: ["コスパ", "お得", "セール", "安い", "クーポン"] },
+        { id: 'A3', name: 'タイパ', icon: '⏱️', effects: { brand: 2, buzz: 5, risk: 1 }, keywords: ["タイパ", "時短", "効率", "すぐ", "簡単"] },
+        { id: 'A4', name: '安心感', icon: '🛡️', effects: { brand: 10, buzz: 1, risk: 0 }, keywords: ["安心", "安全", "信頼", "公式", "品質"] },
+        { id: 'A5', name: '限定性', icon: '✨', effects: { brand: 5, buzz: 8, risk: 3 }, keywords: ["限定", "今だけ", "特別", "レア"] },
+        { id: 'A6', name: '参加型', icon: '🎉', effects: { brand: 8, buzz: 10, risk: 5 }, keywords: ["参加", "体験", "チャレンジ", "みんなで"] },
+        { id: 'A7', name: '推し活', icon: '🎤', effects: { brand: 5, buzz: 15, risk: 8 }, keywords: ["推し", "応援", "祭壇", "尊い", "担当"] }
+    ],
+    media: [
+        { id: 'M1', name: 'Instagram', cpc: 150, effects: { brand: 5, buzz: 10, risk: 3 } },
+        { id: 'M2', name: 'TikTok', cpc: 120, effects: { brand: 2, buzz: 15, risk: 8 } },
+        { id: 'M3', name: 'X (旧Twitter)', cpc: 100, effects: { brand: 3, buzz: 12, risk: 10 } },
+        { id: 'M4', name: 'LINE広告', cpc: 200, effects: { brand: 8, buzz: 2, risk: 1 } },
+        { id: 'M5', name: 'YouTube Shorts', cpc: 180, effects: { brand: 5, buzz: 8, risk: 5 } }
+    ],
+    creatives: [
+        { id: 'C1', name: 'ハイテンションなショート動画', multiplier: 1.2, desc: '（CTR 1.2倍）', effects: { brand: -5, buzz: 15, risk: 10 } },
+        { id: 'C2', name: '洗練された写真・グラフィック', multiplier: 1.0, desc: '（CTR 1.0倍）', effects: { brand: 10, buzz: 5, risk: 2 } },
+        { id: 'C3', name: '丁寧な長尺説明動画', multiplier: 0.8, desc: '（CTR 0.8倍）', effects: { brand: 15, buzz: 2, risk: 1 } }
+    ],
+    influencers: [
+        { id: 'I0', name: '起用しない', cost: 0, effects: { ctrMultiplier: 1.0, buzz: 0, risk: 0 }, desc: "コストをかけず自力で頑張る" },
+        { id: 'I1', name: '新人トレンド系', cost: 100000, effects: { ctrMultiplier: 1.1, buzz: 10, risk: 5 }, desc: "コストは低いが影響力は未知数" },
+        { id: 'I2', name: '中堅おもしろ系', cost: 300000, effects: { ctrMultiplier: 1.3, buzz: 20, risk: 15 }, desc: "バズる可能性はあるが炎上リスクも" },
+        { id: 'I3', name: '大御所安心系', cost: 500000, effects: { ctrMultiplier: 1.2, buzz: 5, risk: -5 }, desc: "影響力は絶大で信頼性も高いが高コスト" }
+    ],
+    incentives: [
+        { id: 'N0', name: 'インセンティブなし', cost: 0, effects: { buzz: -10, brand: -5 }, desc: "景品なしで参加を呼びかける" },
+        { id: 'N1', name: 'デジタルクーポン1000名', cost: 50000, effects: { buzz: 10, brand: 5 }, desc: "低コストで多くの人が参加しやすい" },
+        { id: 'N2', name: 'ギフト券100名', cost: 100000, effects: { buzz: 15, brand: 10 }, desc: "多くの人に喜ばれるバランス型" },
+        { id: 'N3', name: '豪華景品1名', cost: 200000, effects: { buzz: 25, brand: 15 }, desc: "大きな話題になるが、参加者は限られる" }
+    ],
+    compatibility: {
+        'T1': { 'A1': 2.0, 'A3': 1.5, 'A6': 1.5, 'A7': 1.2, 'A2': 1.0, 'A5': 1.0, 'A4': 0.5 },
+        'T2': { 'A2': 2.0, 'A5': 1.5, 'A3': 1.2, 'A1': 1.0, 'A6': 1.0, 'A4': 0.8, 'A7': 0.2 },
+        'T3': { 'A4': 2.0, 'A2': 1.8, 'A3': 1.5, 'A6': 0.8, 'A5': 0.5, 'A1': 0.2, 'A7': 0.1 },
+        'T4': { 'A7': 2.0, 'A6': 1.8, 'A5': 1.5, 'A1': 1.2, 'A2': 0.5, 'A3': 0.2, 'A4': 0.1 },
+        'T5': { 'A4': 2.0, 'A2': 1.2, 'A5': 0.5, 'A3': 0.2, 'A1': 0.1, 'A6': 0.1, 'A7': 0.1 },
     },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        title: { display: false }
-      },
-      scales: {
-        r: {
-          min: 0,
-          max: 20,
-          ticks: { stepSize: 5 }
+    reviews: {
+        'T1': { q: "上長「この企画、本当に高校生にウケるのか？もっと直接的な『お得感』を出すべきでは？」", o: ["現在の高校生は、金銭的なお得感よりもSNSで共有できる『体験価値』を重視するため、この訴求が有効です。", "はい、お得感も重要なので、そちらも追加します。", "データがないので何とも言えませんが、やってみましょう。"], a: "現在の高校生は、金銭的なお得感よりもSNSで共有できる『体験価値』を重視するため、この訴求が有効です。", trustEffect: { correct: 10, wrong: -40 } },
+        'T2': { q: "上長「コスパ訴求は良いが、安っぽいイメージが付かないか心配だ。」", o: ["価格だけでなく、品質も伴っていることを示すことで『賢い選択』だと感じさせ、安っぽさを払拭します。", "確かに安っぽいイメージはリスクですが、売上のためには仕方ありません。", "イメージよりもまず、クリックしてもらうことが重要です。"], a: "価格だけでなく、品質も伴っていることを示すことで『賢い選択』だと感じさせ、安っぽさを払拭します。", trustEffect: { correct: 10, wrong: -40 } },
+        'T3': { q: "上長「子育てママ向けなら、もっと楽しそうな企画が良いのでは？『安心感』だけだと地味じゃないか？」", o: ["子育て中のママは何よりも子供の安全を優先します。楽しさよりもまず『信頼』を勝ち取ることが購買への第一歩です。", "では、もっと楽しそうな訴求に切り替えます。", "地味な方が誠実さが伝わると思います。"], a: "子育て中のママは何よりも子供の安全を優先します。楽しさよりもまず『信頼』を勝ち取ることが購買への第一歩です。", trustEffect: { correct: 10, wrong: -40 } },
+        'T4': { q: "上長「『推し活』は一部の人にしか響かないニッチな企画だ。もっとマス向けにすべきでは？」", o: ["ニッチだからこそ、ターゲットに深く刺さり、熱狂的なUGCを生み出します。マス向け広告より高いエンゲージメントが期待できます。", "確かにニッチかもしれません。ターゲットを広げます。", "マス向けはすでに他社がやっているので、差別化のためです。"], a: "ニッチだからこそ、ターゲットに深く刺さり、熱狂的なUGCを生み出します。マス向け広告より高いエンゲージメントが期待できます。", trustEffect: { correct: 10, wrong: -40 } },
+        'T5': { q: "上長「シニア向けにSNS広告は本当に届くのか？テレビCMの方が確実じゃないか？」", o: ["近年はシニア層のSNS利用も増加しており、特にLINEは重要な情報源です。テレビより低コストで、効果測定も可能です。", "SNSが駄目ならテレビCMに切り替えるプランも用意します。", "とにかく新しいことに挑戦するべきです。"], a: "近年はシニア層のSNS利用も増加しており、特にLINEは重要な情報源です。テレビより低コストで、効果測定も可能です。", trustEffect: { correct: 10, wrong: -40 } },
+    },
+    ctrTable: {'T1':{'A1':{'M1':2.5,'M2':3,'M3':1.5,'M4':.8,'M5':2.8},'A2':{'M1':1,'M2':1.5,'M3':1.8,'M4':1.2,'M5':1.2},'A3':{'M1':1.8,'M2':2.2,'M3':1.2,'M4':.7,'M5':2.5},'A6':{'M1':2,'M2':2.5,'M3':2.2,'M4':1,'M5':2.3},'A7':{'M1':2.8,'M2':3.2,'M3':3.5,'M4':1.5,'M5':3}},'T2':{'A1':{'M1':2.2,'M2':1.8,'M3':1,'M4':.9,'M5':1.5},'A2':{'M1':2.5,'M2':2,'M3':2.2,'M4':1.8,'M5':1.8},'A5':{'M1':1.8,'M2':1.5,'M3':1.2,'M4':1,'M5':1.6}},'T3':{'A2':{'M1':2,'M2':1.2,'M3':1.8,'M4':2.5,'M5':1},'A3':{'M1':1.5,'M2':1.8,'M3':1.3,'M4':2.2,'M5':1.6},'A4':{'M1':1.8,'M2':1,'M3':2,'M4':3,'M5':.8}},'T4':{'A1':{'M1':2.8,'M2':2,'M3':3,'M4':1,'M5':2.2},'A5':{'M1':2.5,'M2':1.8,'M3':2.8,'M4':1.2,'M5':2},'A6':{'M1':2.2,'M2':2.5,'M3':3.2,'M4':1.5,'M5':2.6},'A7':{'M1':3.5,'M2':3,'M3':4,'M4':1.8,'M5':3.2}},'T5':{'A2':{'M1':.8,'M2':.5,'M3':1.2,'M4':2,'M5':.6},'A4':{'M1':1,'M2':.6,'M3':1.5,'M4':2.5,'M5':.7}}},
+    events: [
+        { title: "ポジティブイベント", icon: "🌟", description: "有名インフルエンサーが商品を紹介！話題性が大幅にアップし、CTRが1.2倍になります。", effects: { ctrMultiplier: 1.2, brand: 10, buzz: 20, risk: 0 } },
+        { title: "ポジティブイベント", icon: "👍", description: "ユーザー投稿がメディアに取り上げられた！ブランド好感度と話題性がアップします。", effects: { ctrMultiplier: 1.0, brand: 15, buzz: 15, risk: 0 } },
+        { title: "競合の動向", icon: "😥", description: "競合が大型キャンペーンを開始…！クリック単価(CPC)が1.2倍に上昇します。", effects: { cpcMultiplier: 1.2, brand: 0, buzz: -5, risk: 0 } },
+        { title: "炎上イベント", icon: "🔥", description: "不適切な企画が炎上…！ブランド好感度が大幅に低下し、広告が停止されました。", effects: { ctrMultiplier: 0.1, brand: -30, buzz: 10, risk: 20 } },
+        { title: "アルゴリズム変更", icon: "🤖", description: "SNSのアルゴリズムが変更。Impが20%減少します。", effects: { impMultiplier: 0.8, brand: 0, buzz: -10, risk: 0 } }
+    ],
+    badges: [
+        { id: 'b01', name: "バズの魔術師", icon: "🧙‍♂️", condition: (res) => res.buzz >= 100 },
+        { id: 'b02', name: "愛されブランド大賞", icon: "🏆", condition: (res) => res.brand >= 100 },
+        { id: 'b03', name: "炎上ウォッチャー", icon: "👨‍🚒", condition: (res) => res.risk >= 50 },
+        { id: 'b04', name: "コスパの神", icon: "💰", condition: (res) => res.avgCpc <= 120 && res.totalClicks > 6000 },
+        { id: 'b05', name: "ミリオンインプレッション", icon: "📢", condition: (res) => res.totalImp >= 1000000 },
+        { id: 'b06', name: "堅実マーケター", icon: "📈", condition: (res) => res.risk < 10 && res.brand > 60 },
+        { id: 'b07', name: "パーフェクトプランナー", icon: "🎓", condition: (res) => res.quizCorrectCount === res.quizTotalCount && res.quizTotalCount > 0 }
+    ]
+};
+
+// --- 状態管理 ---
+let currentStep = 0;
+let userSelection = {};
+let gameState = {};
+let previousResult = null;
+const TOTAL_STEPS = 13;
+
+// --- DOM要素 ---
+const progressBar = document.getElementById('progress-bar');
+const trustBar = document.getElementById('trust-bar');
+const trustValue = document.getElementById('trust-value');
+const stepCounter = document.getElementById('step-counter');
+const steps = Array.from({length: TOTAL_STEPS}, (_, i) => document.getElementById(`step-${i}`));
+
+// --- 初期化処理 ---
+document.addEventListener('DOMContentLoaded', () => {
+    initGame();
+});
+
+function initGame() {
+    displayPreviousResult();
+
+    currentStep = 0;
+    userSelection = {
+        product: 'P2', // デフォルト商品
+        kgi: null, target: null, appeals: [], media: [], budgets: {}, creative: null,
+        influencer: 'I0', incentive: 'N0',
+        ugc: { hashtag: '', catchphrase: '' },
+    };
+    gameState = {
+        trust: 100,
+        brand: 50, buzz: 50, risk: 10,
+        ctrMultiplier: 1.0, cpcMultiplier: 1.0, impMultiplier: 1.0,
+        eventLog: [],
+        compatibilityScore: 1.0,
+        remainingBudget: 1000000
+    };
+    // 各ステップの初期化
+    [initStep0, initStep1, initStep2, initStep3, initStep4, initStep5, initStep6, initStep7, initStep8, initStep9, initStep10, initStep11].forEach(f => f());
+    
+    document.getElementById('game-over-modal').classList.add('hidden', 'opacity-0');
+    document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => input.checked = false);
+    document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+    
+    steps.forEach((step, index) => {
+        if (step) {
+            if (index === 0) {
+                step.classList.remove('hidden-step');
+            } else {
+                step.classList.add('hidden-step');
+            }
         }
-      }
+    });
+    
+    updateProgress();
+}
+
+function displayPreviousResult() {
+    const container = document.getElementById('previous-result-container');
+    if (!container) return;
+
+    if (previousResult) {
+        const successClass = previousResult.success ? 'border-green-500' : 'border-red-500';
+        const titleClass = previousResult.success ? 'text-green-600' : 'text-red-600';
+        container.innerHTML = `
+            <div class="border-l-4 ${successClass} bg-gray-50 p-4 rounded-lg space-y-2">
+                <h3 class="font-bold text-lg ${titleClass}">前回の結果：${previousResult.title}</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white text-sm">
+                        <thead class="bg-gray-200">
+                            <tr><th>指標</th><th>目標</th><th>結果</th><th>達成度</th></tr>
+                        </thead>
+                        <tbody>${previousResult.kpiTableHTML}</tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    } else {
+        container.innerHTML = '';
     }
-  });
+}
 
-  function downloadPDF() {
-    const element = document.getElementById("report");
-    html2pdf().from(element).save("UGC_Score_Report.pdf");
-  }
+function createOptionHTML(type, item, groupName, customClass = '') {
+    const isRadio = type === 'radio';
+    const inputId = `${groupName}-${item.id || item.name.replace(/\s/g, '')}`;
+    return `
+        <div class="relative">
+            <input type="${type}" id="${inputId}" name="${groupName}" value="${item.id || item.name}" class="hidden peer ${customClass}">
+            <label for="${inputId}" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition-all duration-200 peer-checked:border-blue-500 peer-checked:shadow-lg hover:bg-gray-50 h-full">
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-base">${item.icon ? item.icon + ' ' : ''}${item.name}</span>
+                    ${isRadio ? 
+                        `<div class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center peer-checked:bg-blue-500 peer-checked:border-blue-500"><div class="w-3 h-3 bg-white rounded-full"></div></div>` :
+                        `<div class="w-6 h-6 border-2 border-gray-300 rounded-md flex items-center justify-center peer-checked:bg-blue-500 peer-checked:border-blue-500"><svg class="w-4 h-4 text-white hidden peer-checked:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>`
+                    }
+                </div>
+                ${item.desc ? `<p class="text-sm text-gray-500 mt-1">${item.desc}</p>` : ''}
+            </label>
+        </div>
+    `;
+}
+
+function initStep0(){
+    const productContainer = document.getElementById('product-options');
+    productContainer.innerHTML = gameData.products.map(p => createOptionHTML('radio', p, 'product')).join('');
+    productContainer.addEventListener('change', e => userSelection.product = e.target.value);
+    document.getElementById('product-P2').checked = true; // デフォルト選択
+    
+    const container = document.getElementById('mission-briefing-display');
+    const goals = gameData.missionGoals;
+    container.innerHTML = `
+        <div class="bg-gray-100 p-3 rounded-lg"><div class="font-bold">目標Imp</div><div class="text-xl">${goals.imp.toLocaleString()}</div></div>
+        <div class="bg-gray-100 p-3 rounded-lg"><div class="font-bold">目標クリック数</div><div class="text-xl">${goals.clicks.toLocaleString()}</div></div>
+        <div class="bg-gray-100 p-3 rounded-lg"><div class="font-bold">目標CTR</div><div class="text-xl">${goals.ctr}% 以上</div></div>
+        <div class="bg-gray-100 p-3 rounded-lg"><div class="font-bold">目標CPC</div><div class="text-xl">${goals.cpc.toLocaleString()}円 以下</div></div>
+    `;
+    const topDisplay = document.getElementById('mission-goals-display');
+    topDisplay.innerHTML = `
+        <div class="bg-gray-50 p-1 rounded-lg">目標Imp: <b>${goals.imp.toLocaleString()}</b></div>
+        <div class="bg-gray-50 p-1 rounded-lg">目標Click: <b>${goals.clicks.toLocaleString()}</b></div>
+        <div class="bg-gray-50 p-1 rounded-lg">目標CTR: <b>${goals.ctr}%</b></div>
+        <div class="bg-gray-50 p-1 rounded-lg">目標CPC: <b>${goals.cpc}円</b></div>
+    `;
+}
+function initStep1(){const c=document.getElementById("kgi-options");c.innerHTML=gameData.kgis.map(k=>createOptionHTML("radio",k,"kgi")).join(""),c.addEventListener("change",e=>userSelection.kgi=e.target.value)}
+function initStep2(){const c=document.getElementById("target-options");c.innerHTML=gameData.targets.map(t=>createOptionHTML("radio",t,"target")).join(""),c.addEventListener("change",e=>userSelection.target=e.target.value)}
+function initStep3(){}
+function initStep4(){const c=document.getElementById("appeal-options");c.innerHTML=gameData.appeals.map(a=>createOptionHTML("checkbox",a,"appeal")).join(""),c.addEventListener("change",e=>{const t=Array.from(c.querySelectorAll("input:checked"));document.getElementById("appeal-error").classList.toggle("hidden",t.length<=2),t.length>2&&e.target.checked==!1,userSelection.appeals=Array.from(c.querySelectorAll("input:checked")).map(c=>c.value)})}
+function initStep5(){}
+function initStep6(){const c=document.getElementById("media-options");c.innerHTML=gameData.media.map(m=>createOptionHTML("checkbox",m,"media")).join(""),c.addEventListener("change",e=>{const t=Array.from(c.querySelectorAll("input:checked"));document.getElementById("media-error").classList.toggle("hidden",t.length<=2),t.length>2&&e.target.checked==!1,userSelection.media=Array.from(c.querySelectorAll("input:checked")).map(c=>c.value),updateBudgetAllocator()})}
+function initStep7(){const c=document.getElementById("creative-options");c.innerHTML=gameData.creatives.map(c=>createOptionHTML("radio",c,"creative")).join(""),c.addEventListener("change",e=>userSelection.creative=e.target.value)}
+function initStep8(){const c=document.getElementById("influencer-options");c.innerHTML=gameData.influencers.map(i=>createOptionHTML("radio",i,"influencer")).join(""),c.addEventListener("change",e=>{userSelection.influencer=e.target.value,updateRemainingBudget()})}
+function initStep9(){const c=document.getElementById("incentive-options");c.innerHTML=gameData.incentives.map(i=>createOptionHTML("radio",i,"incentive")).join(""),c.addEventListener("change",e=>{userSelection.incentive=e.target.value,updateRemainingBudget()})}
+function initStep10(){["hashtag","catchphrase"].forEach(i=>{document.getElementById(`ugc-${i}`).addEventListener("input",e=>{userSelection.ugc[i]=e.target.value})})}
+function initStep11(){}
+
+function populatePersona(){const e=gameData.targets.find(t=>t.id===userSelection.target),t=document.getElementById("persona-display");e?t.innerHTML=`\n        <h3 class="font-bold text-lg">${e.icon} ${e.name}</h3>\n        <p class="text-gray-700">${e.persona}</p>\n    `:t.innerHTML='<p class="text-red-500">先にターゲットを選択してください。</p>'}
+function populateReview(){const e=gameData.reviews[userSelection.target],t=document.getElementById("review-container");e?t.innerHTML=`\n        <div class="space-y-2">\n            <h3 class="font-bold">上長からの質問：</h3>\n            <p class="bg-gray-100 p-3 rounded-lg">「${e.q}」</p>\n            <h3 class="font-bold">あなたの回答：</h3>\n            <div class="space-y-2" id="review-options">\n                ${e.o.map(o=>createOptionHTML("radio",{name:o},"review","quiz-option")).join("")}\n            </div>\n        </div>\n    `:t.innerHTML="<p>このターゲットに対するレビュー項目はありません。</p>"}
+
+function updateRemainingBudget() {
+    const influencerCost = gameData.influencers.find(i => i.id === userSelection.influencer)?.cost || 0;
+    const incentiveCost = gameData.incentives.find(i => i.id === userSelection.incentive)?.cost || 0;
+    gameState.remainingBudget = 1000000 - influencerCost - incentiveCost;
+    updateBudgetAllocator();
+}
+
+function updateBudgetAllocator(){
+    const display = document.getElementById('remaining-budget-display');
+    if(display) display.textContent = gameState.remainingBudget.toLocaleString();
+    
+    const allocator = document.getElementById('budget-allocator');
+    const slidersContainer = document.getElementById('budget-sliders');
+    allocator.classList.toggle('hidden', userSelection.media.length === 0);
+    if (userSelection.media.length === 0) return;
+
+    const maxBudget = gameState.remainingBudget;
+
+    if (userSelection.media.length === 1) {
+        const [mediaId] = userSelection.media;
+        userSelection.budgets = { [mediaId]: maxBudget };
+        slidersContainer.innerHTML = `<p class="font-bold text-center">${gameData.media.find(m=>m.id===mediaId).name}に${maxBudget.toLocaleString()}円全額を配分します。</p>`;
+    } else {
+        const [mediaId1, mediaId2] = userSelection.media;
+        userSelection.budgets[mediaId1] = userSelection.budgets[mediaId1] || Math.floor(maxBudget / 2);
+        userSelection.budgets[mediaId2] = maxBudget - userSelection.budgets[mediaId1];
+        
+        const media1 = gameData.media.find(m => m.id === mediaId1);
+        const media2 = gameData.media.find(m => m.id === mediaId2);
+        
+        slidersContainer.innerHTML = `
+            <div class="space-y-2">
+                <div class="flex justify-between font-bold"><span>${media1.name}</span><span id="budget-value-${mediaId1}">${userSelection.budgets[mediaId1].toLocaleString()}円</span></div>
+                <input type="range" id="budget-slider" min="0" max="${maxBudget}" step="10000" value="${userSelection.budgets[mediaId1]}" class="w-full h-3 bg-gray-200 rounded-lg">
+                <div class="flex justify-between font-bold"><span>${media2.name}</span><span id="budget-value-${mediaId2}">${userSelection.budgets[mediaId2].toLocaleString()}円</span></div>
+            </div>`;
+        
+        document.getElementById('budget-slider').addEventListener('input', e => {
+            const budget1 = parseInt(e.target.value);
+            userSelection.budgets[mediaId1] = budget1;
+            userSelection.budgets[mediaId2] = maxBudget - budget1;
+            document.getElementById(`budget-value-${mediaId1}`).textContent = `${budget1.toLocaleString()}円`;
+            document.getElementById(`budget-value-${mediaId2}`).textContent = `${(maxBudget - budget1).toLocaleString()}円`;
+            updateTotalBudget();
+        });
+    }
+    updateTotalBudget();
+}
+
+function updateTotalBudget(){
+    const total = Object.values(userSelection.budgets).reduce((s,c)=>s+c,0);
+    const errorEl = document.getElementById('budget-error');
+    document.getElementById('total-budget').textContent = total.toLocaleString();
+    errorEl.classList.toggle('hidden', total === gameState.remainingBudget);
+    errorEl.textContent = `合計予算を${gameState.remainingBudget.toLocaleString()}円にしてください。`;
+}
+
+function updateProgress(){const e=currentStep/(TOTAL_STEPS-2)*100;progressBar.style.width=`${e}%`,stepCounter.textContent=`ステップ ${currentStep} / ${TOTAL_STEPS-2}`;const t=gameState.trust;trustBar.style.width=`${t}%`,trustValue.textContent=`${t.toFixed(0)}%`,trustBar.classList.toggle("bg-green-500",t>60),trustBar.classList.toggle("bg-yellow-500",t<=60&&t>20),trustBar.classList.toggle("bg-red-500",t<=20)}
+
+function switchStep(from, to, force = false) {
+    if (!force) {
+        calculateHiddenParams();
+        if (checkGameOver("信頼度が低下しすぎました。")) return;
+    }
+    if(steps[from]) steps[from].classList.add('hidden-step');
+    if(steps[to]) steps[to].classList.remove('hidden-step');
+    currentStep = to;
+    updateProgress();
+    window.scrollTo(0, 0);
+
+    // 動的コンテンツの生成
+    if (to === 4) populatePersona();
+    if (to === 6) populateReview();
+}
+
+function prevStep(targetStep){switchStep(currentStep,targetStep,!0)}
+function nextStep(targetStep){if(!validateStep(currentStep))return;gameState.forcedEvent?(triggerRandomEvent(targetStep,gameState.forcedEvent),gameState.forcedEvent=null):[7,8].includes(currentStep)&&.5>Math.random()?triggerRandomEvent(targetStep):switchStep(currentStep,targetStep)}
+
+function checkReview(){const e=gameData.reviews[userSelection.target],t=document.getElementById("review-error");if(!e)return void switchStep(currentStep,7);const s=document.querySelector('input[name="review"]:checked');s?(t.classList.add("hidden"),s.value===e.a?(gameState.trust+=e.trustEffect.correct,alert("素晴らしい回答です！上長は納得し、プロジェクトへの信頼が上がりました。")):(gameState.trust+=e.trustEffect.wrong,alert("その回答では上長は納得しないでしょう…信頼度が低下しました。")),switchStep(currentStep,7)):(t.textContent="回答を選択してください。",t.classList.remove("hidden"))}
+
+function triggerRandomEvent(nextStepAfter, forceEvent) {
+    const event = forceEvent || gameData.events[Math.floor(Math.random() * gameData.events.length)];
+    if (event.title === "炎上イベント" && gameState.eventLog.some(e => e.title === "炎上イベント")) {
+       if (nextStepAfter !== null) switchStep(currentStep, nextStepAfter);
+       return;
+    }
+    gameState.eventLog.push(event);
+    for (const key in event.effects) {
+        if (key.includes('Multiplier')) gameState[key] *= event.effects[key];
+        else gameState[key] += event.effects[key];
+    }
+    document.getElementById('event-title').textContent = event.title;
+    document.getElementById('event-icon').textContent = event.icon;
+    document.getElementById('event-description').textContent = event.description;
+    const modal = document.getElementById('event-modal');
+    const modalContent = modal.querySelector('.modal-content');
+    modal.dataset.nextStep = nextStepAfter;
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.add('opacity-100');
+        if (modalContent) modalContent.classList.add('scale-100');
+    }, 10);
+}
+
+function closeEventModal() {
+    const modal = document.getElementById('event-modal');
+    const modalContent = modal.querySelector('.modal-content');
+    const nextStepAfter = modal.dataset.nextStep;
+    modal.classList.remove('opacity-100');
+    if (modalContent) {
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+    }
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        if (checkGameOver("イベントによりプロジェクトが危機に瀕しました。")) return;
+        if (nextStepAfter !== null) switchStep(currentStep, parseInt(nextStepAfter));
+    }, 300);
+}
+
+function checkGameOver(reason) {
+    if (gameState.trust <= 0) {
+        const modal = document.getElementById('game-over-modal');
+        const content = document.getElementById('game-over-content');
+        if (!modal || !content) return true;
+
+        document.getElementById('game-over-reason').textContent = reason;
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.add('opacity-100');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }, 10);
+        return true;
+    }
+    // KPI予測チェック
+    if (currentStep === 8) { // クリエイティブ選択後
+        const projected = calculatePerformance(true);
+        const goals = gameData.missionGoals;
+        if (projected.totalImp < goals.imp * 0.5 || projected.totalClicks < goals.clicks * 0.5) {
+            const modal = document.getElementById('game-over-modal');
+            const content = document.getElementById('game-over-content');
+            if (!modal || !content) return true;
+            document.getElementById('game-over-reason').textContent = "KPI予測が目標を大幅に下回るため、プロジェクトは中止となりました。";
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+            return true;
+        }
+    }
+    return false;
+}
+
+function validateStep(step) {
+    let message = '';
+    switch(step) {
+        case 0: if (!userSelection.product) message = '商品を選択してください。'; break;
+        case 2: if (!userSelection.kgi) message = '目的(KGI)を選択してください。'; break;
+        case 3: if (!userSelection.target) message = 'ターゲットを選択してください。'; break;
+        case 5: if (userSelection.appeals.length === 0) message = '訴求軸を1つ以上選択してください。'; break;
+        case 7:
+            if (userSelection.media.length === 0) message = '媒体を1つ以上選択してください。';
+            else if (Math.abs(Object.values(userSelection.budgets).reduce((s, b) => s + b, 0) - gameState.remainingBudget) > 1) message = `合計予算を${gameState.remainingBudget.toLocaleString()}円にしてください。`;
+            break;
+        case 8: if (!userSelection.creative) message = 'クリエイティブを選択してください。'; break;
+        case 9: if (!userSelection.influencer) message = 'インフルエンサーを選択してください。'; break;
+        case 10: if (!userSelection.incentive) message = 'インセンティブを選択してください。'; break;
+        case 11: if (!userSelection.ugc.hashtag) message = 'ハッシュタグを入力してください。'; break;
+    }
+    if (message) {
+        alert(message);
+        return false;
+    }
+    return true;
+}
+
+function calculateHiddenParams() {
+    gameState.brand = 50; gameState.buzz = 50; gameState.risk = 10;
+    const influencer = gameData.influencers.find(i => i.id === userSelection.influencer);
+    const incentive = gameData.incentives.find(i => i.id === userSelection.incentive);
+    
+    const selections = [
+        gameData.targets.find(i => i.id === userSelection.target),
+        ...gameData.appeals.filter(i => userSelection.appeals.includes(i.id)),
+        ...gameData.media.filter(i => userSelection.media.includes(i.id)),
+        gameData.creatives.find(i => i.id === userSelection.creative),
+        influencer,
+        incentive
+    ];
+    for (const item of selections) {
+        if (item && item.effects) {
+            gameState.brand += item.effects.brand || 0;
+            gameState.buzz += item.effects.buzz || 0;
+            gameState.risk += item.effects.risk || 0;
+        }
+    }
+    
+    if (userSelection.appeals.length > 0) {
+        const appealKeywords = userSelection.appeals.flatMap(id => gameData.appeals.find(a=>a.id === id)?.keywords || []);
+        const ugcText = `${userSelection.ugc.hashtag} ${userSelection.ugc.catchphrase}`.toLowerCase();
+        const matchCount = appealKeywords.filter(kw => ugcText.includes(kw)).length;
+        gameState.buzz += matchCount * 10;
+    }
+
+    // 商品による相性補正
+    const product = gameData.products.find(p => p.id === userSelection.product);
+    const productCompatibilityMod = product?.effects?.compatibility_mod || {};
+
+    if (userSelection.target && userSelection.appeals.length > 0) {
+        let totalCompatibility = 0;
+        userSelection.appeals.forEach(appealId => {
+            let baseScore = gameData.compatibility[userSelection.target]?.[appealId] || 0.5;
+            let modScore = productCompatibilityMod[userSelection.target]?.[appealId] || 1.0;
+            totalCompatibility += baseScore * modScore;
+        });
+        gameState.compatibilityScore = totalCompatibility / userSelection.appeals.length;
+    } else {
+        gameState.compatibilityScore = 1.0;
+    }
+
+    if (gameState.risk > 60 && (userSelection.creative === 'C1' || userSelection.media.includes('M2') || userSelection.media.includes('M3'))) {
+        if (Math.random() < 0.5) {
+            const fireEvent = gameData.events.find(e => e.title === "炎上イベント");
+            if (fireEvent) gameState.forcedEvent = fireEvent;
+        }
+    }
+}
+
+function calculatePerformance(isProjection = false) {
+    if (!isProjection) calculateHiddenParams();
+    
+    const target = gameData.targets.find(t => t.id === userSelection.target);
+    const creative = gameData.creatives.find(c => c.id === userSelection.creative);
+    const influencer = gameData.influencers.find(i => i.id === userSelection.influencer);
+
+    let totalBudget = 0, totalImp = 0, totalClicks = 0;
+
+    if (!target || !creative || !influencer || userSelection.media.length === 0) {
+        return { totalBudget, totalImp, totalClicks, avgCpc: 0 };
+    }
+
+    const influencerCtrMultiplier = influencer.effects.ctrMultiplier || 1.0;
+
+    for (const mediaId of userSelection.media) {
+        const media = gameData.media.find(m => m.id === mediaId);
+        const budget = userSelection.budgets[mediaId] || 0;
+        const cpc = media.cpc * gameState.cpcMultiplier;
+        let bestCtr = userSelection.appeals.reduce((max, appealId) => Math.max(max, gameData.ctrTable[target.id]?.[appealId]?.[mediaId] || 0.5), 0);
+        const finalCtr = bestCtr * creative.multiplier * gameState.ctrMultiplier * gameState.compatibilityScore * influencerCtrMultiplier;
+        const clicks = cpc > 0 ? Math.round(budget / cpc) : 0;
+        const impressions = finalCtr > 0 ? Math.round((clicks / (finalCtr / 100)) * gameState.impMultiplier) : 0;
+        totalBudget += budget; totalImp += impressions; totalClicks += clicks;
+    }
+    const avgCpc = totalClicks > 0 ? Math.round(totalBudget / totalClicks) : 0;
+    return { totalBudget, totalImp, totalClicks, avgCpc };
+}
+
+
+function showResults() {
+    if (validateStep(11)) {
+        calculateAndDisplayResults();
+        switchStep(11, 12);
+    }
+}
+
+function calculateAndDisplayResults() {
+    if (gameState.forcedEvent) {
+        triggerRandomEvent(null, gameState.forcedEvent);
+        gameState.forcedEvent = null;
+    }
+    
+    const finalPerformance = calculatePerformance();
+    const { totalBudget, totalImp, totalClicks, avgCpc } = finalPerformance;
+
+    const product = gameData.products.find(p => p.id === userSelection.product);
+    const target = gameData.targets.find(t => t.id === userSelection.target);
+    const kgiData = gameData.kgis.find(k => k.id === userSelection.kgi);
+
+    document.getElementById('result-product').textContent = product ? product.name : '（未選択）';
+    document.getElementById('result-kgi').textContent = kgiData ? kgiData.name : '（未選択）';
+    document.getElementById('result-target').textContent = target ? target.name : '（未選択）';
+    document.getElementById('result-appeals').textContent = userSelection.appeals.length > 0 ? gameData.appeals.filter(a => userSelection.appeals.includes(a.id)).map(a => a.name).join(', ') : '（未選択）';
+    
+    const tableBody = document.getElementById('result-table-body');
+    tableBody.innerHTML = '';
+    
+    document.getElementById('total-result-budget').textContent = `${totalBudget.toLocaleString()}円`;
+    document.getElementById('total-result-imp').textContent = totalImp.toLocaleString();
+    document.getElementById('total-result-clicks').textContent = totalClicks.toLocaleString();
+    document.getElementById('total-result-cpc').textContent = `${avgCpc.toLocaleString()}円`;
+    
+    const kpiTable = document.getElementById('result-kpi-table');
+    const goals = gameData.missionGoals;
+    const results = { imp: totalImp, clicks: totalClicks, ctr: totalImp > 0 ? (totalClicks / totalImp * 100) : 0, cpc: avgCpc };
+    let missionSuccess = true;
+
+    const kpiTableHTML = `
+        <tr>
+            <td class="p-2 border">Imp</td>
+            <td class="p-2 border">${goals.imp.toLocaleString()}</td>
+            <td class="p-2 border">${results.imp.toLocaleString()}</td>
+            ${renderGoalCell(results.imp, goals.imp, false)}
+        </tr>
+        <tr>
+            <td class="p-2 border">Clicks</td>
+            <td class="p-2 border">${goals.clicks.toLocaleString()}</td>
+            <td class="p-2 border">${results.clicks.toLocaleString()}</td>
+            ${renderGoalCell(results.clicks, goals.clicks, false)}
+        </tr>
+        <tr>
+            <td class="p-2 border">CTR</td>
+            <td class="p-2 border">${goals.ctr.toFixed(2)}%</td>
+            <td class="p-2 border">${results.ctr.toFixed(2)}%</td>
+            ${renderGoalCell(results.ctr, goals.ctr, false)}
+        </tr>
+        <tr>
+            <td class="p-2 border">CPC</td>
+            <td class="p-2 border">${goals.cpc.toLocaleString()}円</td>
+            <td class="p-2 border">${results.cpc.toLocaleString()}円</td>
+            ${renderGoalCell(results.cpc, goals.cpc, true)}
+        </tr>
+    `;
+    kpiTable.innerHTML = kpiTableHTML;
+    
+    function renderGoalCell(result, goal, isLowerBetter) {
+        if (isLowerBetter && result === 0) result = Infinity; // Handle CPC 0 case
+        let success = isLowerBetter ? result <= goal : result >= goal;
+        if (!success) missionSuccess = false;
+        const percentage = (isLowerBetter && result !== Infinity && result > 0) ? (goal / result * 100) : (result / goal * 100);
+        return `<td class="p-2 border font-bold ${success ? 'text-green-600' : 'text-red-600'}">${percentage.toFixed(0)}% ${success ? '✅' : '❌'}</td>`;
+    }
+
+    const resultTitleText = missionSuccess ? "🎉ミッション成功！🎉" : "ミッション失敗…";
+    document.getElementById('result-title').textContent = resultTitleText;
+    document.getElementById('result-title').className = `text-3xl font-extrabold text-center ${missionSuccess ? 'text-green-600' : 'text-red-600'}`;
+    
+    previousResult = {
+        title: resultTitleText,
+        success: missionSuccess,
+        kpiTableHTML: kpiTableHTML
+    };
+
+    document.getElementById('result-brand').textContent = gameState.brand.toFixed(0);
+    document.getElementById('result-buzz').textContent = gameState.buzz.toFixed(0);
+    document.getElementById('result-risk').textContent = gameState.risk.toFixed(0);
+    createSnsPreview();
+    const eventLogList = document.getElementById('event-log-list');
+    eventLogList.innerHTML = gameState.eventLog.length > 0 ? gameState.eventLog.map(e => `<li>${e.description}</li>`).join('') : '<li>イベントは発生しませんでした。</li>';
+    const resultMetrics = { totalImp, totalClicks, avgCpc, ...gameState };
+    const acquiredBadges = gameData.badges.filter(b => b.condition(resultMetrics));
+    const badgeContainer = document.getElementById('badge-container');
+    badgeContainer.innerHTML = acquiredBadges.length > 0 ? acquiredBadges.map(b => `<div class="bg-yellow-400 text-white font-bold py-2 px-4 rounded-full shadow-lg text-sm">${b.icon} ${b.name}</div>`).join('') : `<p class="text-sm text-gray-500">獲得した称号はありませんでした。</p>`;
+    generateCommentary(resultMetrics);
+}
+
+function createSnsPreview() {
+    const container = document.getElementById('sns-preview-container');
+    const target = gameData.targets.find(t => t.id === userSelection.target);
+    const media = userSelection.media.length > 0 ? gameData.media.find(m => m.id === userSelection.media[0]) : {name: 'SNS'};
+    container.innerHTML = `
+        <div class="flex items-center mb-2">
+            <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-xl">${target ? target.icon : '👤'}</div>
+            <div class="ml-3">
+                <div class="font-bold">${target ? target.name : 'ターゲット'}</div>
+                <div class="text-sm text-gray-500">Sponsored by YourBrand on ${media.name}</div>
+            </div>
+        </div>
+        <p class="mb-2">${userSelection.ugc.catchphrase || 'キャンペーン実施中！'}</p>
+        <div class="bg-gray-200 aspect-square rounded-lg mb-2 flex items-center justify-center"><p class="text-gray-500 text-lg">（クリエイティブ画像）</p></div>
+        <p class="font-bold text-blue-600">${userSelection.ugc.hashtag || '#キャンペーン'}</p>
+    `;
+}
+
+function generateCommentary(res) {
+    const commentaryContainer = document.getElementById('result-commentary');
+    commentaryContainer.innerHTML = '';
+    let mainResultText = '';
+    const kgi = userSelection.kgi;
+    if (kgi === 'K1') {
+        mainResultText = res.totalImp >= gameData.missionGoals.imp ? `KGI達成！ ${res.totalImp.toLocaleString()} Impは素晴らしい結果です。` : `KGI未達…。${res.totalImp.toLocaleString()} Impでした。`;
+    } else if (kgi === 'K2') {
+        mainResultText = res.buzz >= 100 ? `KGI達成！ 話題性スコア${res.buzz.toFixed(0)}は見事です。` : `KGI未達…。話題性スコアは${res.buzz.toFixed(0)}でした。`;
+    } else {
+        mainResultText = res.totalClicks >= gameData.missionGoals.clicks ? `KGI達成！ ${res.totalClicks.toLocaleString()} クリックは素晴らしい成果です。` : `KGI未達…。${res.totalClicks.toLocaleString()} クリックでした。`;
+    }
+    commentaryContainer.innerHTML += `<p>${mainResultText}</p>`;
+    let analysisText = '';
+    const compatibilityScore = res.compatibilityScore;
+    if (compatibilityScore >= 1.8) {
+        analysisText += '<strong>分析：</strong>ターゲットと訴求の相性が<span class="text-green-600 font-bold">極めて良好</span>でした。これが高いCTRの主な要因です。';
+    } else if (compatibilityScore >= 1.2) {
+        analysisText += '<strong>分析：</strong>ターゲットと訴求の相性は<span class="text-blue-600 font-bold">良好</span>です。基本戦略は正しかったと言えるでしょう。';
+    } else {
+        analysisText += '<strong>分析：</strong>ターゲットと訴求の相性が<span class="text-red-600 font-bold">あまり良くなかった</span>ようです。ペルソナ情報を見直し、ターゲットが本当に求めているものは何かを再検討すると、結果が大きく改善します。';
+    }
+     commentaryContainer.innerHTML += `<p class="mt-2">${analysisText}</p>`;
+    const appealKeywords = userSelection.appeals.flatMap(id => gameData.appeals.find(a=>a.id === id)?.keywords || []);
+    const ugcText = `${userSelection.ugc.hashtag} ${userSelection.ugc.catchphrase}`.toLowerCase();
+    const matchCount = appealKeywords.filter(kw => ugcText.includes(kw)).length;
+    if (matchCount >= 2) {
+        commentaryContainer.innerHTML += `<p>UGC企画が素晴らしく、選んだ訴求軸のキーワードをうまく反映できていたため、話題性スコアが大きく伸びました！</p>`;
+    } else {
+        commentaryContainer.innerHTML += `<p>UGC企画が訴求軸と少しズレていたかもしれません。例えば、「${appealKeywords.join('」や「')}」といったキーワードを企画に含めると、ユーザーの参加をより促せます。</p>`;
+    }
+    if (res.risk >= 50) {
+        commentaryContainer.innerHTML += '<p class="text-red-600 font-bold">【注意】炎上リスクが高まっています。過激な訴求は短期的な話題を生みますが、長期的なブランドイメージには注意が必要です。</p>';
+    }
+}
+
+function restartGame() {
+    const gameOverModal = document.getElementById('game-over-modal');
+    const content = document.getElementById('game-over-content');
+    gameOverModal.classList.add('opacity-0');
+    if(content) {
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+    }
+    setTimeout(() => {
+        gameOverModal.classList.add('hidden');
+    }, 500);
+
+    initGame();
+}
+
 </script>
-
 </body>
 </html>
