@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バズ・ウォーズ - デジタルマーケティング体感ゲーム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'M PLUS Rounded 1c', 'Inter', sans-serif;
+            touch-action: manipulation;
+        }
+        .card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        .selected-card {
+            transform: translateY(-10px) scale(1.05);
+            border: 4px solid #4ade80;
+        }
+        .log-entry {
+            display: flex;
+            align-items: center;
+            padding: 6px 8px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            transition: background-color 0.3s;
+            animation: slideIn 0.4s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .log-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        .log-detail {
+            padding-left: 28px; /* アイコン分インデント */
+            font-size: 0.8rem;
+            color: #555;
+        }
+        .log-entry.player { background-color: #e0f2fe; } /* sky-100 */
+        .log-entry.cpu { background-color: #f1f5f9; } /* slate-100 */
+        .log-entry.system { background-color: #fafafa; } /* neutral-50 */
+        .log-entry.event { background-color: #f3e8ff; } /* purple-100 */
+        .log-entry.success { background-color: #dcfce7; } /* green-100 */
+        .log-entry.danger { background-color: #fee2e2; } /* red-100 */
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #a8a29e; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #78716c; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <div id="game-container" class="container mx-auto p-2 sm:p-4 max-w-7xl h-screen flex flex-col">
+        <!-- ヘッダー -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+            <div class="text-center md:text-left">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-700 tracking-wider">バズ・ウォーズ</h1>
+                <div id="round-info" class="mt-1">
+                    <h2 id="round-title" class="text-lg sm:text-xl font-bold text-indigo-600"></h2>
+                    <p id="round-objective" class="text-xs sm:text-sm text-slate-600"></p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center items-stretch gap-4 w-full md:w-auto">
+                <div id="target-info-display" class="bg-amber-100 border-2 border-amber-300 text-amber-800 p-3 rounded-xl hidden flex-1 text-center"></div>
+                <div id="event-card-info" class="text-sm text-purple-700 font-bold bg-purple-100/80 p-3 rounded-lg border border-purple-200 hidden flex-1 flex flex-col justify-center text-center"></div>
+            </div>
+        </header>
+
+        <!-- メインゲームエリア -->
+        <main class="grid grid-cols-1 md:grid-cols-4 gap-4 flex-grow min-h-0">
+            <!-- 左カラム: プレイヤーエリア -->
+            <div id="player-area" class="flex flex-col gap-4 md:col-span-1">
+                <div id="player-info" class="text-center bg-white p-3 rounded-xl shadow">
+                    <h3 class="text-lg font-bold">あなた</h3>
+                    <p class="text-sm">スコア: <span id="player-score" class="font-bold text-lg text-blue-600">0</span></p>
+                    <p class="text-sm">予算: <span id="player-mp" class="font-bold text-lg text-green-600">0</span> 円</p>
+                </div>
+                <div id="player-board" class="flex-grow flex flex-col gap-2 items-center bg-blue-50/50 p-2 rounded-lg"></div>
+            </div>
+
+            <!-- 中央カラム: ゲームログ -->
+            <div id="game-log-area" class="flex flex-col min-h-0 bg-slate-200/60 rounded-2xl p-4 md:col-span-2">
+                <h4 class="font-bold text-center mb-2 text-sm text-slate-600">ゲームログ</h4>
+                <div id="game-log" class="flex-grow bg-white rounded-lg p-2 overflow-y-auto text-sm text-slate-700 shadow-inner"></div>
+            </div>
+
+            <!-- 右カラム: CPUエリア -->
+            <div id="right-area" class="flex flex-col gap-4 md:col-span-1">
+                <div id="cpu-info" class="text-center bg-white p-3 rounded-xl shadow">
+                    <h3 class="text-lg font-bold">ライバル社 (CPU)</h3>
+                    <p class="text-sm">スコア: <span id="cpu-score" class="font-bold text-lg text-blue-600">0</span></p>
+                    <p class="text-sm">予算: <span id="cpu-mp" class="font-bold text-lg text-green-600">0</span> 円</p>
+                </div>
+                <div id="cpu-board" class="flex-grow flex flex-col gap-2 items-center bg-red-50/50 p-2 rounded-lg"></div>
+            </div>
+        </main>
+
+        <!-- 下部エリア: 手札、操作パネル -->
+        <footer class="mt-4">
+            <div id="player-hand" class="flex justify-center items-start gap-2 mb-4 overflow-x-auto pb-4 min-h-[125px]"></div>
+            <div id="control-panel" class="bg-white p-3 rounded-xl shadow-lg flex flex-col sm:flex-row items-center gap-3">
+                <div class="flex-grow w-full">
+                    <label for="budget-select" class="block text-sm font-medium text-slate-700 mb-1">投入予算</label>
+                    <select id="budget-select" class="w-full p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white appearance-none text-center">
+                        <option value="100000">100,000 円</option>
+                        <option value="200000">200,000 円</option>
+                        <option value="300000" selected>300,000 円</option>
+                        <option value="500000">500,000 円</option>
+                        <option value="800000">800,000 円</option>
+                    </select>
+                </div>
+                <button id="play-button" class="w-full sm:w-auto bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed shadow-md">
+                    勝負する！
+                </button>
+                <button id="pass-button" class="hidden w-full sm:w-auto bg-slate-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-slate-600 transition-colors shadow-md">
+                    パス
+                </button>
+            </div>
+        </footer>
+        
+        <!-- モーダル -->
+        <div id="alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+            <div class="bg-white p-6 rounded-2xl shadow-2xl text-center max-w-sm mx-auto transform transition-all scale-95 opacity-0">
+                <p id="alert-message" class="text-slate-700 mb-4"></p>
+                <button id="alert-ok-button" class="bg-indigo-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-indigo-700 transition-colors">OK</button>
+            </div>
+        </div>
+        <div id="game-over-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+            <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4 transform transition-all scale-95 opacity-0">
+                <h2 id="game-over-title" class="text-3xl font-extrabold mb-4"></h2>
+                <p id="game-over-message" class="text-slate-600 mb-2"></p>
+                <p id="final-player-score" class="text-lg mb-1"></p>
+                <p id="final-cpu-score" class="text-lg mb-6"></p>
+                <button id="play-again-button" class="bg-green-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition-colors shadow-md">もう一度プレイ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DOM要素の取得 ---
+        const playerHandEl = document.getElementById('player-hand');
+        const playerScoreEl = document.getElementById('player-score');
+        const playerMpEl = document.getElementById('player-mp');
+        const cpuScoreEl = document.getElementById('cpu-score');
+        const cpuMpEl = document.getElementById('cpu-mp');
+        const roundTitleEl = document.getElementById('round-title');
+        const roundObjectiveEl = document.getElementById('round-objective');
+        const eventCardInfoEl = document.getElementById('event-card-info');
+        const targetInfoDisplay = document.getElementById('target-info-display');
+        const budgetSelect = document.getElementById('budget-select');
+        const playButton = document.getElementById('play-button');
+        const passButton = document.getElementById('pass-button');
+        const playerBoardEl = document.getElementById('player-board');
+        const cpuBoardEl = document.getElementById('cpu-board');
+        const gameLog = document.getElementById('game-log');
+        const gameOverModal = document.getElementById('game-over-modal');
+        const gameOverTitle = document.getElementById('game-over-title');
+        const gameOverMessage = document.getElementById('game-over-message');
+        const finalPlayerScoreEl = document.getElementById('final-player-score');
+        const finalCpuScoreEl = document.getElementById('final-cpu-score');
+        const playAgainButton = document.getElementById('play-again-button');
+        const alertModal = document.getElementById('alert-modal');
+        const alertMessageEl = document.getElementById('alert-message');
+        const alertOkButton = document.getElementById('alert-ok-button');
+
+        // --- カードデータ定義 ---
+        const MEDIA_CARDS = [
+            { id: 1, name: 'Instagram広告', kpi: '認知・興味', desc: 'ビジュアル重視の若年層に強い。', color: 'bg-gradient-to-br from-pink-500 to-yellow-500' },
+            { id: 2, name: 'X (旧Twitter) 広告', kpi: '認知・拡散', desc: 'リアルタイム性と拡散力が魅力。', color: 'bg-sky-500' },
+            { id: 3, name: 'TikTok広告', kpi: '認知', desc: 'エンタメ性の高い短尺動画。', color: 'bg-slate-900' },
+            { id: 4, name: 'Google検索広告', kpi: 'CV（獲得）', desc: 'ニーズが明確な層に届く。', color: 'bg-gradient-to-br from-blue-500 to-green-500' },
+            { id: 5, name: 'YouTube広告', kpi: '認知・興味', desc: '動画で多くの情報を伝えられる。', color: 'bg-red-600' },
+            { id: 6, name: 'Webメディア記事広告', kpi: '興味・比較検討', desc: '信頼性を高め、深く理解を促す。', color: 'bg-emerald-600' },
+            { id: 7, name: 'Facebook広告', kpi: '興味・CV', desc: 'ビジネス層や高年齢層に強い。', color: 'bg-blue-800' },
+            { id: 8, name: 'Yahoo!広告', kpi: '認知・CV', desc: '幅広い年齢層、特に高年齢層にリーチ。', color: 'bg-red-700' },
+        ];
+        const TARGET_CARDS = [
+            { name: '流行に敏感な女子大生', desc: 'SNSを使いこなし、ビジュアル重視。', multipliers: { 'Instagram広告': 3.0, 'TikTok広告': 2.5, 'X (旧Twitter) 広告': 1.5, 'Google検索広告': 0.8, 'YouTube広告': 1.2, 'Webメディア記事広告': 1.0, 'Facebook広告': 0.7, 'Yahoo!広告': 0.5 } },
+            { name: '情報収集に熱心な男子大学生', desc: '機能やスペックを重視。レビューを参考にする。', multipliers: { 'X (旧Twitter) 広告': 2.5, 'Google検索広告': 2.2, 'YouTube広告': 2.0, 'Webメディア記事広告': 1.8, 'Instagram広告': 1.0, 'Facebook広告': 1.0, 'TikTok広告': 0.7, 'Yahoo!広告': 1.2 } },
+            { name: '倹約家の主婦', desc: 'コスパを重視。お得な情報を探している。', multipliers: { 'Webメディア記事広告': 2.5, 'Yahoo!広告': 2.2, 'Google検索広告': 2.0, 'Facebook広告': 1.5, 'Instagram広告': 1.2, 'YouTube広告': 1.0, 'X (旧Twitter) 広告': 0.8, 'TikTok広告': 0.5 } },
+            { name: 'ビジネスマン', desc: '信頼性と効率を重視。情報収集は能動的。', multipliers: { 'Google検索広告': 2.8, 'Facebook広告': 2.5, 'Webメディア記事広告': 2.0, 'X (旧Twitter) 広告': 1.5, 'Yahoo!広告': 1.2, 'YouTube広告': 1.0, 'Instagram広告': 0.6, 'TikTok広告': 0.4 } },
+            { name: 'ITに疎いシニア層', desc: '使い慣れたメディアを信頼する。', multipliers: { 'Yahoo!広告': 3.5, 'Facebook広告': 1.8, 'Webメディア記事広告': 1.5, 'Google検索広告': 1.2, 'YouTube広告': 1.0, 'Instagram広告': 0.4, 'X (旧Twitter) 広告': 0.3, 'TikTok広告': 0.1 } }
+        ];
+        const EVENT_CARDS = [
+            { name: 'インフルエンサー登場！', desc: 'SNS媒体の効果が1.5倍！', effect: { type: 'multiplier', target: ['Instagram広告', 'X (旧Twitter) 広告', 'TikTok広告'], value: 1.5 } },
+            { name: 'Googleアルゴリズム変動', desc: 'Google検索広告の効果が半減...', effect: { type: 'multiplier', target: ['Google検索広告'], value: 0.5 } },
+            { name: '景気回復ボーナス', desc: '全員の予算が30万円増える！', effect: { type: 'budgetBonus', value: 300000 } },
+            { name: '炎上リスク', desc: '最も効果の低かった施策がマイナスに。', effect: { type: 'penalty' } },
+            { name: '通常ラウンド', desc: '特別なことは何も起こらない。', effect: null }
+        ];
+        const ROUNDS = [
+            { title: '第1ラウンド：認知度対決', objective: '新商品の認知度を最大限に広げろ！' },
+            { title: '第2ラウンド：クリック数対決', objective: '自社サイトへのクリック数を最大化せよ！' },
+            { title: '第3ラウンド：コンバージョン対決', objective: '商品の購入数(CV)を最大化せよ！' }
+        ];
+
+        // --- ゲーム状態管理 ---
+        let state = {};
+
+        // --- UI改善：アイコン定義 ---
+        const ICONS = {
+            user: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>`,
+            cpu: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V5a1 1 0 00-1.447-.894l-4 2A1 1 0 0011 7v10zM4 17a1 1 0 001.447.894l4-2A1 1 0 0010 15V5a1 1 0 00-1.447-.894l-4 2A1 1 0 004 7v10z" /></svg>`,
+            coin: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M8.433 7.418c.158-.103.346-.196.567-.267v1.698a2.5 2.5 0 00-.567-.267z" /><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.766 1.324 2.246.484.328.958.684 1.176 1.024s.22 1.121-.22 1.121c-.44 0-.64-.328-.72-.684a1 1 0 00-1.947-.45c-.324.86-.324 1.843 1.15 1.843 1.474 0 2.28-1.04 2.28-2.32 0-.99-.602-1.766-1.324-2.246A4.535 4.535 0 0011 9.092V7.151a2.5 2.5 0 01-1 .092z" clip-rule="evenodd" /></svg>`,
+            target: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 10a3 3 0 116 0 3 3 0 01-6 0z" clip-rule="evenodd" /></svg>`,
+            star: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`,
+            info: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>`,
+            chartUp: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" /></svg>`,
+            chartDown: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 10a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 01-1 1H3a1 1 0 01-1-1v-1zM8 6a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H9a1 1 0 01-1-1V6zM14 3a1 1 0 011-1h2a1 1 0 011 1v8a1 1 0 01-1 1h-2a1 1 0 01-1-1V3z" /></svg>`,
+        };
+
+        function initGameState() {
+            const mediaDeck = shuffle([...MEDIA_CARDS, ...MEDIA_CARDS.map(c => ({...c, id: c.id + 100}))]);
+            state = {
+                round: 0,
+                player: { mp: 1000000, score: 0, hand: mediaDeck.splice(0, 5), selectedCard: null, playedCards: [] },
+                cpu: { mp: 1000000, score: 0, hand: mediaDeck.splice(0, 5), playedCards: [] },
+                decks: { media: mediaDeck, target: shuffle([...TARGET_CARDS]), event: shuffle([...EVENT_CARDS]) },
+                currentEvent: null,
+                currentTarget: null,
+                gamePhase: 'initialBet', // initialBet, additionalBet, resolving, ended
+            };
+        }
+
+        // --- ゲームロジック ---
+        function startGame() {
+            initGameState();
+            gameOverModal.classList.add('hidden');
+            gameOverModal.querySelector('div').classList.add('scale-95', 'opacity-0');
+            gameLog.innerHTML = '';
+            startRound();
+        }
+
+        function startRound() {
+            state.gamePhase = 'initialBet';
+            state.player.selectedCard = null;
+            state.player.playedCards = [];
+            state.cpu.playedCards = [];
+            budgetSelect.selectedIndex = 2; // デフォルト値にリセット
+            
+            const currentRound = ROUNDS[state.round];
+            roundTitleEl.textContent = currentRound.title;
+            roundObjectiveEl.textContent = currentRound.objective;
+
+            state.currentEvent = state.decks.event.pop();
+            eventCardInfoEl.innerHTML = `🌟 <b>${state.currentEvent.name}</b><br>${state.currentEvent.desc}`;
+            eventCardInfoEl.classList.remove('hidden');
+            if(state.currentEvent.effect?.type === 'budgetBonus') {
+                state.player.mp += state.currentEvent.effect.value;
+                state.cpu.mp += state.currentEvent.effect.value;
+            }
+
+            state.currentTarget = state.decks.target.pop();
+            displayTargetInfo(state.currentTarget);
+            
+            playerBoardEl.innerHTML = '';
+            cpuBoardEl.innerHTML = '';
+            
+            updateUI();
+            logMessage(`【${currentRound.title}】 開始！`, 'system', 'info');
+            logMessage(`イベント発生: ${state.currentEvent.name}`, 'event', 'star');
+            logMessage(`ターゲットは「${state.currentTarget.name}」だ！`, 'system', 'target');
+            logMessage('最初のカードと予算を決めてください。', 'system', 'info');
+        }
+
+        function handlePlayAction() {
+            if (state.gamePhase === 'initialBet') handleInitialBet();
+            else if (state.gamePhase === 'additionalBet') handleAdditionalBet();
+        }
+
+        function handleInitialBet() {
+            const budget = validateInput();
+            if (budget === null) return;
+
+            const playerChoice = { card: state.player.selectedCard, budget: budget };
+            processPlayerMove(playerChoice);
+
+            const cpuChoice = cpuTurn(state.gamePhase);
+            processCpuMove(cpuChoice);
+
+            state.gamePhase = 'additionalBet';
+            logMessage('追加投資フェーズ！ 追加の施策を打つか決めよう。', 'system', 'info');
+            updateUI();
+        }
+
+        function handleAdditionalBet() {
+            const budget = validateInput();
+            if (budget === null) return;
+            
+            const playerChoice = { card: state.player.selectedCard, budget: budget };
+            processPlayerMove(playerChoice);
+
+            const cpuChoice = cpuTurn(state.gamePhase);
+            if(cpuChoice) processCpuMove(cpuChoice);
+
+            resolveRound();
+        }
+        
+        function handlePass() {
+            if (state.gamePhase !== 'additionalBet') return;
+            logMessage('あなたは追加投資をパスした。', 'player', 'user');
+            
+            const cpuChoice = cpuTurn(state.gamePhase);
+            if(cpuChoice) processCpuMove(cpuChoice);
+
+            resolveRound();
+        }
+
+        function validateInput() {
+            const budget = parseInt(budgetSelect.value, 10);
+            if (!state.player.selectedCard) {
+                showAlert('手札からカードを1枚選んでください。');
+                return null;
+            }
+            if (budget > state.player.mp) {
+                showAlert('予算が足りません！');
+                return null;
+            }
+            return budget;
+        }
+
+        function processPlayerMove(choice) {
+            state.player.mp -= choice.budget;
+            state.player.playedCards.push(choice);
+            state.player.hand = state.player.hand.filter(c => c.id !== choice.card.id);
+            state.player.selectedCard = null;
+            budgetSelect.selectedIndex = 2;
+            logMessage(`「${choice.card.name}」に ${choice.budget.toLocaleString()} 円投入！`, 'player', 'coin');
+        }
+
+        function processCpuMove(choice) {
+            if (!choice) return;
+            state.cpu.mp -= choice.budget;
+            state.cpu.playedCards.push(choice);
+            state.cpu.hand = state.cpu.hand.filter(c => c.id !== choice.card.id);
+            logMessage(`「${choice.card.name}」に ${choice.budget.toLocaleString()} 円投入`, 'cpu', 'coin');
+        }
+
+        function cpuTurn(phase) {
+            if (state.cpu.hand.length === 0) {
+                if(phase === 'initialBet') logMessage('ライバル社は手札がなく、行動できない！', 'cpu', 'cpu');
+                return null;
+            }
+
+            const targetMultipliers = state.currentTarget.multipliers;
+            const sortedHand = [...state.cpu.hand].sort((a, b) => (targetMultipliers[b.name] || 1) - (targetMultipliers[a.name] || 1));
+            const bestCard = sortedHand[0];
+            const bestMultiplier = targetMultipliers[bestCard.name] || 1;
+            
+            if (phase === 'initialBet') {
+                let budgetRatio = 0.1 + Math.random() * 0.05; // 10-15%
+                if (bestMultiplier > 2.0) budgetRatio = 0.25 + Math.random() * 0.15; // 25-40%
+                else if (bestMultiplier > 1.0) budgetRatio = 0.15 + Math.random() * 0.15; // 15-30%
+                const budget = Math.floor(state.cpu.mp * budgetRatio);
+                return { card: bestCard, budget: Math.min(budget, state.cpu.mp) };
+            } else {
+                let additionalBetChance = 0.2;
+                if (bestMultiplier > 2.5) additionalBetChance = 0.8;
+                else if (bestMultiplier > 1.5) additionalBetChance = 0.6;
+
+                if (Math.random() < additionalBetChance) {
+                    let budgetRatio = 0.15 + Math.random() * 0.05; // 15-20%
+                    if (bestMultiplier > 2.0) budgetRatio = 0.20 + Math.random() * 0.1; // 20-30%
+                    const budget = Math.floor(state.cpu.mp * budgetRatio);
+                    return { card: bestCard, budget: Math.min(budget, state.cpu.mp) };
+                }
+                logMessage('ライバル社は追加投資をパスした。', 'cpu', 'cpu');
+                return null;
+            }
+        }
+
+        function resolveRound() {
+            state.gamePhase = 'resolving';
+            updateUI();
+            logMessage('ラウンド結果を計算中...', 'system', 'info');
+
+            let playerTotalPoints = 0;
+            let cpuTotalPoints = 0;
+            
+            const calculatePoints = (playedCards) => {
+                let totalPoints = 0;
+                const details = [];
+                playedCards.forEach(played => {
+                    let multiplier = state.currentTarget.multipliers[played.card.name] || 1;
+                    const eventEffect = state.currentEvent.effect;
+                    if (eventEffect?.type === 'multiplier' && eventEffect.target.includes(played.card.name)) {
+                        multiplier *= eventEffect.value;
+                    }
+                    const points = Math.floor(played.budget * multiplier);
+                    totalPoints += points;
+                    details.push({card: played.card, budget: played.budget, multiplier: multiplier, points: points});
+                });
+                return {totalPoints, details};
+            };
+            
+            const playerResult = calculatePoints(state.player.playedCards);
+            const cpuResult = calculatePoints(state.cpu.playedCards);
+            playerTotalPoints = playerResult.totalPoints;
+            cpuTotalPoints = cpuResult.totalPoints;
+
+            const allPlayedDetails = [...playerResult.details, ...cpuResult.details];
+
+            if (state.currentEvent.effect?.type === 'penalty' && allPlayedDetails.length > 0) {
+                allPlayedDetails.sort((a, b) => a.points - b.points);
+                const worstCardDetail = allPlayedDetails[0];
+                if (worstCardDetail.points > 0) {
+                    const penaltyPoints = worstCardDetail.points * -2;
+                     logMessage(`🔥炎上発生！「${worstCardDetail.card.name}」の効果がマイナスに！`, 'danger', 'chartDown');
+                    
+                    const playerDetailToUpdate = playerResult.details.find(d => d.card.id === worstCardDetail.card.id);
+                    const cpuDetailToUpdate = cpuResult.details.find(d => d.card.id === worstCardDetail.card.id);
+
+                    if (playerDetailToUpdate) {
+                        playerTotalPoints += penaltyPoints;
+                        playerDetailToUpdate.points += penaltyPoints; // ログ表示用にポイントを更新
+                    } else if (cpuDetailToUpdate) {
+                        cpuTotalPoints += penaltyPoints;
+                        cpuDetailToUpdate.points += penaltyPoints; // ログ表示用にポイントを更新
+                    }
+                }
+            }
+
+            state.player.score += playerTotalPoints;
+            state.cpu.score += cpuTotalPoints;
+
+            setTimeout(() => {
+                logMessage(`あなたのラウンドスコア: ${playerTotalPoints.toLocaleString()} P`, 'success', 'chartUp');
+                playerResult.details.forEach(detail => {
+                    logMessage(`└ ${detail.card.name}: ${detail.budget.toLocaleString()} 円 × ${detail.multiplier.toFixed(1)}倍 = ${detail.points.toLocaleString()} P`, 'player', 'coin');
+                });
+
+                logMessage(`相手のラウンドスコア: ${cpuTotalPoints.toLocaleString()} P`, 'danger', 'chartDown');
+                cpuResult.details.forEach(detail => {
+                    logMessage(`└ ${detail.card.name}: ${detail.budget.toLocaleString()} 円 × ${detail.multiplier.toFixed(1)}倍 = ${detail.points.toLocaleString()} P`, 'cpu', 'coin');
+                });
+
+                updateUI();
+                setTimeout(() => nextRound(), 4000);
+            }, 2000);
+        }
+        
+        function nextRound() {
+            const playerDrawCount = state.player.playedCards.length;
+            const cpuDrawCount = state.cpu.playedCards.length;
+            for(let i=0; i<playerDrawCount && state.decks.media.length > 0; i++) state.player.hand.push(state.decks.media.pop());
+            for(let i=0; i<cpuDrawCount && state.decks.media.length > 0; i++) state.cpu.hand.push(state.decks.media.pop());
+
+            state.round++;
+            if (state.round >= ROUNDS.length) {
+                endGame();
+            } else {
+                startRound();
+            }
+        }
+
+        function endGame() {
+            state.gamePhase = 'ended';
+            state.player.score += state.player.mp;
+            state.cpu.score += state.cpu.mp;
+            logMessage(`ゲーム終了！残り予算がボーナスポイントに！`, 'system', 'info');
+            
+            let title, message;
+            if (state.player.score > state.cpu.score) {
+                title = 'あなたの勝利！'; message = '素晴らしいマーケティング戦略でした！';
+                gameOverTitle.className = 'text-3xl font-extrabold mb-4 text-green-500';
+            } else if (state.player.score < state.cpu.score) {
+                title = 'ライバル社の勝利...'; message = '次の戦いでのリベンジを期待しています！';
+                gameOverTitle.className = 'text-3xl font-extrabold mb-4 text-red-500';
+            } else {
+                title = '引き分け'; message = '互角の戦いでした！';
+                gameOverTitle.className = 'text-3xl font-extrabold mb-4 text-slate-600';
+            }
+            
+            gameOverTitle.textContent = title;
+            gameOverMessage.textContent = message;
+            finalPlayerScoreEl.textContent = `あなたの最終スコア: ${state.player.score.toLocaleString()}`;
+            finalCpuScoreEl.textContent = `相手の最終スコア: ${state.cpu.score.toLocaleString()}`;
+
+            gameOverModal.classList.remove('hidden');
+            setTimeout(() => { gameOverModal.querySelector('div').classList.remove('scale-95', 'opacity-0'); }, 10);
+            updateUI();
+        }
+
+        // --- UI更新・描画 ---
+        function updateUI() {
+            playerScoreEl.textContent = state.player.score.toLocaleString();
+            playerMpEl.textContent = state.player.mp.toLocaleString();
+            cpuScoreEl.textContent = state.cpu.score.toLocaleString();
+            cpuMpEl.textContent = state.cpu.mp.toLocaleString();
+            
+            renderPlayerHand();
+            renderBoard();
+            updateControlPanel();
+        }
+        
+        function updateControlPanel() {
+            const isPlayable = state.gamePhase === 'initialBet' || state.gamePhase === 'additionalBet';
+            playButton.disabled = !isPlayable;
+            budgetSelect.disabled = !isPlayable;
+
+            if (state.gamePhase === 'additionalBet') {
+                playButton.textContent = '追加投資！';
+                passButton.classList.remove('hidden');
+            } else {
+                playButton.textContent = '勝負する！';
+                passButton.classList.add('hidden');
+            }
+        }
+
+        function renderBoard() {
+            playerBoardEl.innerHTML = state.player.playedCards.map(p => createCardHTML(p.card, true)).join('');
+            cpuBoardEl.innerHTML = state.cpu.playedCards.map(p => createCardHTML(p.card, true)).join('');
+        }
+
+        function renderPlayerHand() {
+            playerHandEl.innerHTML = '';
+            state.player.hand.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.innerHTML = createCardHTML(card, true);
+                const cardInner = cardEl.firstElementChild;
+                if (state.player.selectedCard?.id === card.id) {
+                    cardInner.classList.add('selected-card');
+                }
+                cardInner.addEventListener('click', () => {
+                    if (state.gamePhase === 'initialBet' || state.gamePhase === 'additionalBet') {
+                        state.player.selectedCard = card;
+                        renderPlayerHand();
+                    }
+                });
+                playerHandEl.appendChild(cardEl);
+            });
+        }
+
+        function createCardHTML(card, isSmall = false) {
+            const sizeClasses = isSmall ? 'w-32 h-24' : 'w-36 h-52 sm:w-40 sm:h-56';
+            const textClasses = isSmall ? 'text-[9px]' : 'text-sm';
+            const titleClasses = isSmall ? 'text-xs' : 'text-base';
+            const cardType = '媒体';
+            
+            return `
+                <div class="card ${sizeClasses} ${card.color || 'bg-white'} rounded-lg p-2 flex flex-col justify-between text-white shadow-lg relative shrink-0">
+                    <div>
+                        <p class="font-bold ${textClasses} opacity-80">${cardType}</p>
+                        <h4 class="font-extrabold ${titleClasses}">${card.name}</h4>
+                    </div>
+                    <p class="${textClasses} font-medium">${card.desc || card.kpi}</p>
+                </div>`;
+        }
+
+        function displayTargetInfo(targetCard) {
+            targetInfoDisplay.innerHTML = `
+                <h3 class="font-bold text-base">🎯 今ラウンドのターゲット</h3>
+                <p class="text-lg font-extrabold">${targetCard.name}</p>
+                <p class="text-xs">${targetCard.desc}</p>
+            `;
+            targetInfoDisplay.classList.remove('hidden');
+        }
+        
+        function logMessage(message, type = 'system', icon = 'info') {
+            const div = document.createElement('div');
+            if (message.startsWith('└')) {
+                div.className = `log-entry log-detail ${type}`;
+                div.textContent = message;
+            } else {
+                div.className = `log-entry ${type}`;
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'log-icon';
+                iconSpan.innerHTML = ICONS[icon] || ICONS.info;
+                const textSpan = document.createElement('span');
+                textSpan.textContent = message;
+                div.appendChild(iconSpan);
+                div.appendChild(textSpan);
+            }
+            
+            gameLog.appendChild(div);
+            gameLog.scrollTop = gameLog.scrollHeight;
+        }
+
+        function showAlert(message) {
+            alertMessageEl.textContent = message;
+            alertModal.classList.remove('hidden');
+            setTimeout(() => { alertModal.querySelector('div').classList.remove('scale-95', 'opacity-0'); }, 10);
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // --- イベントリスナー ---
+        playButton.addEventListener('click', handlePlayAction);
+        passButton.addEventListener('click', handlePass);
+        playAgainButton.addEventListener('click', startGame);
+        alertOkButton.addEventListener('click', () => {
+            alertModal.querySelector('div').classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { alertModal.classList.add('hidden'); }, 200);
+        });
+
+        // --- ゲーム開始 ---
+        startGame();
+    </script>
+</body>
+</html>
