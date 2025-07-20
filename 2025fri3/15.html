@@ -66,32 +66,41 @@
 
     <div id="game-container" class="container mx-auto p-2 sm:p-4 max-w-7xl h-screen flex flex-col">
         <!-- ヘッダー -->
-        <header class="mb-2">
-            <div class="flex justify-between items-center px-1">
-                <div>
-                    <h1 class="text-xl sm:text-3xl font-extrabold text-slate-700 tracking-wider">バズ・ウォーズ</h1>
-                </div>
-                <div id="round-info" class="text-right">
-                    <h2 id="round-title" class="text-base sm:text-xl font-bold text-indigo-600"></h2>
+        <header class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 items-center mb-4">
+            <!-- Player Info -->
+            <div id="player-info" class="text-center sm:text-left bg-blue-100 p-2 rounded-xl shadow order-2 sm:order-1">
+                <h3 class="text-lg font-bold">あなた</h3>
+                <p class="text-sm">スコア: <span id="player-score" class="font-bold text-lg text-blue-600">0</span></p>
+                <p class="text-sm">予算: <span id="player-mp" class="font-bold text-lg text-green-600">0</span> 円</p>
+            </div>
+
+            <!-- Center Info -->
+            <div class="text-center order-1 sm:order-2">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-700 tracking-wider">バズ・ウォーズ</h1>
+                <div id="round-info" class="mt-1">
+                    <h2 id="round-title" class="text-lg sm:text-xl font-bold text-indigo-600"></h2>
                     <p id="round-objective" class="text-xs sm:text-sm text-slate-600"></p>
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row justify-center items-stretch gap-2 mt-1">
-                <div id="target-info-display" class="bg-amber-100 border border-amber-300 text-amber-800 p-1 rounded-lg hidden flex-1 text-center"></div>
-                <div id="event-card-info" class="text-xs text-purple-700 font-bold bg-purple-100/80 p-1 rounded-lg border border-purple-200 hidden flex-1 flex flex-col justify-center text-center"></div>
+
+            <!-- CPU Info -->
+            <div id="cpu-info" class="text-center sm:text-right bg-red-100 p-2 rounded-xl shadow order-3 sm:order-3">
+                <h3 class="text-lg font-bold">ライバル社 (CPU)</h3>
+                <p class="text-sm">スコア: <span id="cpu-score" class="font-bold text-lg text-blue-600">0</span></p>
+                <p class="text-sm">予算: <span id="cpu-mp" class="font-bold text-lg text-green-600">0</span> 円</p>
             </div>
         </header>
+
+        <div class="flex flex-col sm:flex-row justify-center items-stretch gap-2 mb-4">
+            <div id="target-info-display" class="bg-amber-100 border border-amber-300 text-amber-800 p-2 rounded-xl hidden flex-1 text-center"></div>
+            <div id="event-card-info" class="text-xs text-purple-700 font-bold bg-purple-100/80 p-2 rounded-lg border border-purple-200 hidden flex-1 flex flex-col justify-center text-center"></div>
+        </div>
 
         <!-- メインゲームエリア -->
         <main class="grid grid-cols-1 md:grid-cols-4 gap-4 flex-grow min-h-0">
             <!-- 左カラム: プレイヤーエリア -->
-            <div id="player-area" class="flex flex-col gap-4 md:col-span-1">
-                <div id="player-info" class="text-center bg-white p-3 rounded-xl shadow">
-                    <h3 class="text-lg font-bold">あなた</h3>
-                    <p class="text-sm">スコア: <span id="player-score" class="font-bold text-lg text-blue-600">0</span></p>
-                    <p class="text-sm">予算: <span id="player-mp" class="font-bold text-lg text-green-600">0</span> 円</p>
-                </div>
-                <div id="player-board" class="flex-grow flex flex-row md:flex-col gap-2 items-center bg-blue-50/50 p-2 rounded-lg overflow-x-auto md:overflow-x-hidden"></div>
+            <div id="player-board-container" class="md:col-span-1 bg-blue-50/50 p-2 rounded-lg">
+                <div id="player-board" class="flex flex-row md:flex-col gap-2 items-center h-full"></div>
             </div>
 
             <!-- 中央カラム: ゲームログ -->
@@ -101,13 +110,8 @@
             </div>
 
             <!-- 右カラム: CPUエリア -->
-            <div id="right-area" class="flex flex-col gap-4 md:col-span-1">
-                <div id="cpu-info" class="text-center bg-white p-3 rounded-xl shadow">
-                    <h3 class="text-lg font-bold">ライバル社 (CPU)</h3>
-                    <p class="text-sm">スコア: <span id="cpu-score" class="font-bold text-lg text-blue-600">0</span></p>
-                    <p class="text-sm">予算: <span id="cpu-mp" class="font-bold text-lg text-green-600">0</span> 円</p>
-                </div>
-                <div id="cpu-board" class="flex-grow flex flex-row md:flex-col gap-2 items-center bg-red-50/50 p-2 rounded-lg overflow-x-auto md:overflow-x-hidden"></div>
+            <div id="cpu-board-container" class="md:col-span-1 bg-red-50/50 p-2 rounded-lg">
+                <div id="cpu-board" class="flex flex-row md:flex-col gap-2 items-center h-full"></div>
             </div>
         </main>
 
