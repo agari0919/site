@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メーター読み取り v10</title>
+    <title>メーター読み取り v11</title>
     <!-- ▼▼▼ ファビコンを追加 ▼▼▼ -->
     <link rel="icon" href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
     <!-- ▲▲▲ ファビコンを追加 ▲▲▲ -->
@@ -21,9 +21,10 @@
 <body class="bg-gray-50 text-gray-800">
 
     <div class="container mx-auto p-4 md:p-8 max-w-2xl">
-        <header class="text-center mb-8">
+        <header class="text-center mb-8 relative">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900">メーター記録ツール</h1>
             <p class="mt-2 text-gray-600">種別を選択し、撮影または手入力で記録します。</p>
+            <span class="absolute top-0 right-0 text-xs text-gray-400">v11</span>
         </header>
 
         <main class="bg-white p-6 rounded-xl shadow-md mb-8">
@@ -241,13 +242,19 @@
                 const base64Data = imageDataUrl.split(',')[1];
                 const result = await callGeminiVisionAPI(base64Data, GEMINI_API_KEY);
                 
-                // マイナス記号を除去
+                // マイナス記号や不要な文字を除去
                 let reading = result.reading || '読み取り不可';
                 if (typeof reading === 'string') {
                     reading = reading.replace(/-/g, '');
                 }
 
-                resultNumber.textContent = result.meter_number || '読み取り不可';
+                let meterNumber = result.meter_number || '読み取り不可';
+                 if (typeof meterNumber === 'string') {
+                    // 「メ：」や括弧、マイナス記号などを除去し、数字のみを抽出
+                    meterNumber = meterNumber.replace(/[^0-9]/g, '');
+                }
+
+                resultNumber.textContent = meterNumber;
                 resultValue.textContent = reading;
 
                 loader.classList.add('hidden');
@@ -291,15 +298,15 @@
             const prompt = `
                 画像から2つの情報をJSON形式で抽出してください。
                 1. メーターの指示数（小数点含む数字）。これを "reading" キーに割り当ててください。
-                2. 括弧（）で囲まれたメーター番号。これを "meter_number" キーに割り当ててください。
+                2. 「メ：」という接頭辞の後に続くメーター番号。これを "meter_number" キーに割り当ててください。
                 
                 例:
                 {
                   "reading": "12345.6",
-                  "meter_number": "(10)"
+                  "meter_number": "431"
                 }
                 
-                どちらかが見つからない場合は、そのキーの値を null にしてください。
+                どちらかが見つからない場合は、そのキーの値を null にしてください。JSONのキーと値以外の余計な文字や説明は含めないでください。
             `;
 
             const payload = {
