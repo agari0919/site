@@ -93,7 +93,7 @@
                     </div>
                     <div>
                         <label for="manual-value" class="block text-sm font-medium text-gray-700">数値</label>
-                        <input type="number" id="manual-value" class="mt-1 w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" placeholder="12345.6">
+                        <input type="number" id="manual-value" min="0" step="0.1" class="mt-1 w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" placeholder="12345.6">
                     </div>
                     <button id="save-manual-button" class="w-full bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 shadow-lg">記録する</button>
                 </div>
@@ -103,8 +103,8 @@
 
     <script>
         // --- ▼▼▼ 管理者の方へ：ここに設定を貼り付けてください ▼▼▼ ---
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzWHU_W4LRs_MqBVyS6sUtl2HFOo8BsKJraysPuH1FuhZ_G-IeZkTmUJmBkX7abJMt4fg/exec";
-        const GEMINI_API_KEY = "AIzaSyAawQ4XWbskzVeBZnSPsggr6T1LWctXXiE";
+        const APPS_SCRIPT_URL = "";
+        const GEMINI_API_KEY = "";
         // --- ▲▲▲ 設定はここまで ▲▲▲ ---
 
         // --- DOM要素 ---
@@ -240,8 +240,16 @@
             try {
                 const base64Data = imageDataUrl.split(',')[1];
                 const result = await callGeminiVisionAPI(base64Data, GEMINI_API_KEY);
+                
+                // マイナス記号を除去
+                let reading = result.reading || '読み取り不可';
+                if (typeof reading === 'string') {
+                    reading = reading.replace(/-/g, '');
+                }
+
                 resultNumber.textContent = result.meter_number || '読み取り不可';
-                resultValue.textContent = result.reading || '読み取り不可';
+                resultValue.textContent = reading;
+
                 loader.classList.add('hidden');
                 resultContent.classList.remove('hidden');
             } catch (error) {
