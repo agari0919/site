@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>メーター記録 v13</title>
+    <title>メーター記録 v14</title>
     <link rel="icon" href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
     <div class="container mx-auto p-4 md:p-8 max-w-sm">
         <header class="text-center mb-6 relative">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-900">メーター記録ツール</h1>
-            <span class="absolute top-0 right-0 text-xs text-gray-400">v13</span>
+            <span class="absolute top-0 right-0 text-xs text-gray-400">v14</span>
         </header>
 
         <main class="bg-white p-4 sm:p-6 rounded-xl shadow-md">
@@ -44,11 +44,11 @@
             <!-- 表示エリア -->
             <div id="display-area" class="mb-4 space-y-2">
                  <div id="number-display-wrapper" class="p-3 bg-gray-100 rounded-lg border-2 border-transparent transition-all">
-                    <label class="block text-xs font-medium text-gray-500">メーター番号</label>
+                    <label class="block text-sm font-medium text-gray-400">メーター番号</label>
                     <div id="number-display" class="text-2xl font-mono text-right text-gray-800 h-8"></div>
                 </div>
                  <div id="value-display-wrapper" class="p-3 bg-gray-100 rounded-lg border-2 border-transparent transition-all">
-                    <label class="block text-xs font-medium text-gray-500">数値</label>
+                    <label class="block text-sm font-medium text-gray-400">数値</label>
                     <div id="value-display" class="text-2xl font-mono text-right text-gray-800 h-8"></div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="1">1</button>
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="2">2</button>
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="3">3</button>
-                <button class="keypad-btn bg-blue-500 text-white row-span-2 p-4 rounded-lg font-semibold flex items-center justify-center" data-key="Enter">記録</button>
+                <button id="enter-button" class="keypad-btn bg-blue-500 text-white row-span-2 p-4 rounded-lg font-semibold flex items-center justify-center" data-key="Enter">次へ</button>
                 
                 <button class="keypad-btn bg-gray-200 col-span-2 p-4 rounded-lg font-semibold" data-key="0">0</button>
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key=".">.</button>
@@ -94,6 +94,7 @@
         const numberWrapper = document.getElementById('number-display-wrapper');
         const valueWrapper = document.getElementById('value-display-wrapper');
         const loaderContainer = document.getElementById('loader-container');
+        const enterButton = document.getElementById('enter-button');
 
         // --- グローバル変数 ---
         let activeMeterType = '';
@@ -114,6 +115,8 @@
 
             numberWrapper.classList.toggle('display-active', currentInputMode === 'number');
             valueWrapper.classList.toggle('display-active', currentInputMode === 'value');
+            
+            enterButton.textContent = (currentInputMode === 'number') ? '次へ' : '記録';
         }
         
         function resetAll() {
