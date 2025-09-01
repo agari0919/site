@@ -2,102 +2,79 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メーター読み取り v11</title>
-    <!-- ▼▼▼ ファビコンを追加 ▼▼▼ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>メーター記録 v13</title>
     <link rel="icon" href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
-    <!-- ▲▲▲ ファビコンを追加 ▲▲▲ -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Noto Sans JP', 'Inter', sans-serif; }
+        body { font-family: 'Noto Sans JP', 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         .loader { border-top-color: #3498db; -webkit-animation: spin 1s linear infinite; animation: spin 1s linear infinite; }
         @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .tab-btn.active { background-color: #4f46e5; color: white; }
         .meter-btn.active { background-color: #16a34a; color: white; border-color: #16a34a; }
+        .keypad-btn { transition: background-color 0.2s; }
+        .keypad-btn:active { background-color: #d1d5db; }
+        .display-active { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4); }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <div class="container mx-auto p-4 md:p-8 max-w-2xl">
-        <header class="text-center mb-8 relative">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">メーター記録ツール</h1>
-            <p class="mt-2 text-gray-600">種別を選択し、撮影または手入力で記録します。</p>
-            <span class="absolute top-0 right-0 text-xs text-gray-400">v11</span>
+    <div class="container mx-auto p-4 md:p-8 max-w-sm">
+        <header class="text-center mb-6 relative">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900">メーター記録ツール</h1>
+            <span class="absolute top-0 right-0 text-xs text-gray-400">v13</span>
         </header>
 
-        <main class="bg-white p-6 rounded-xl shadow-md mb-8">
+        <main class="bg-white p-4 sm:p-6 rounded-xl shadow-md">
             <div id="main-error-message" class="hidden"></div>
             <div id="main-success-message" class="hidden"></div>
 
-            <!-- モード切替タブ -->
-            <div class="mb-6 flex border border-gray-300 rounded-lg p-1 bg-gray-100">
-                <button id="camera-mode-btn" class="tab-btn w-1/2 p-2 rounded-md text-center font-semibold transition-colors duration-300 active">カメラで読み取り</button>
-                <button id="manual-mode-btn" class="tab-btn w-1/2 p-2 rounded-md text-center font-semibold transition-colors duration-300">手入力</button>
-            </div>
-
             <!-- メーター種別選択 -->
-            <div class="mb-6">
-                <h3 class="text-lg font-semibold mb-2 text-gray-800">1. メーター種別を選択</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <button class="meter-btn border-2 border-gray-300 p-3 rounded-lg font-medium transition-colors duration-200" data-type="電気">電気</button>
-                    <button class="meter-btn border-2 border-gray-300 p-3 rounded-lg font-medium transition-colors duration-200" data-type="水道">水道</button>
-                    <button class="meter-btn border-2 border-gray-300 p-3 rounded-lg font-medium transition-colors duration-200" data-type="下水道">下水道</button>
-                    <button class="meter-btn border-2 border-gray-300 p-3 rounded-lg font-medium transition-colors duration-200" data-type="ガス">ガス</button>
+            <div class="mb-4">
+                <h3 class="text-md font-semibold mb-2 text-gray-700">1. メーター種別を選択</h3>
+                <div class="grid grid-cols-4 gap-2">
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="電気">電気</button>
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="水道">水道</button>
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="下水道">下水道</button>
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="ガス">ガス</button>
                 </div>
             </div>
 
-            <!-- カメラモード -->
-            <div id="camera-mode-view">
-                <h3 class="text-lg font-semibold mb-2 text-gray-800">2. メーターを撮影</h3>
-                <div class="text-center">
-                    <div id="step1">
-                        <label for="image-upload" class="cursor-pointer w-full inline-block bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 shadow-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /></svg>
-                            番号と数値を撮影 / 選択
-                        </label>
-                        <input id="image-upload" type="file" accept="image/*" capture="environment" class="hidden">
-                    </div>
-                    <div id="step2" class="hidden mt-4">
-                        <p class="font-bold mb-4">プレビュー</p>
-                        <img id="image-preview" src="" alt="メーターのプレビュー" class="max-w-full mx-auto rounded-lg shadow-md mb-4 max-h-64">
-                        <button id="read-button" class="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 shadow-lg flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                            読み取る
-                        </button>
-                         <button id="reset-button" class="mt-2 w-full bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600">別の写真を撮る</button>
-                    </div>
+            <!-- 表示エリア -->
+            <div id="display-area" class="mb-4 space-y-2">
+                 <div id="number-display-wrapper" class="p-3 bg-gray-100 rounded-lg border-2 border-transparent transition-all">
+                    <label class="block text-xs font-medium text-gray-500">メーター番号</label>
+                    <div id="number-display" class="text-2xl font-mono text-right text-gray-800 h-8"></div>
                 </div>
-                <div id="result-area" class="mt-6 hidden">
-                    <div id="loader" class="hidden flex justify-center items-center py-4"><div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-24 w-24"></div></div>
-                    <div id="result-content" class="hidden text-center">
-                        <h3 class="text-lg font-bold mb-2">読み取り結果</h3>
-                        <div class="bg-gray-100 p-4 rounded-lg">
-                            <p class="text-sm text-gray-600">メーター番号</p>
-                            <p id="result-number" class="text-3xl font-bold text-indigo-600 mb-2"></p>
-                            <p class="text-sm text-gray-600">数値</p>
-                            <p id="result-value" class="text-3xl font-bold text-indigo-600"></p>
-                        </div>
-                        <button id="save-camera-button" class="mt-4 w-full bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 shadow-lg">記録する</button>
-                    </div>
+                 <div id="value-display-wrapper" class="p-3 bg-gray-100 rounded-lg border-2 border-transparent transition-all">
+                    <label class="block text-xs font-medium text-gray-500">数値</label>
+                    <div id="value-display" class="text-2xl font-mono text-right text-gray-800 h-8"></div>
                 </div>
             </div>
 
-            <!-- 手入力モード -->
-            <div id="manual-mode-view" class="hidden">
-                <h3 class="text-lg font-semibold mb-2 text-gray-800">2. 番号と数値を入力</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label for="manual-number" class="block text-sm font-medium text-gray-700">メーター番号</label>
-                        <input type="text" id="manual-number" class="mt-1 w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" placeholder="10">
-                    </div>
-                    <div>
-                        <label for="manual-value" class="block text-sm font-medium text-gray-700">数値</label>
-                        <input type="number" id="manual-value" min="0" step="0.1" class="mt-1 w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm" placeholder="12345.6">
-                    </div>
-                    <button id="save-manual-button" class="w-full bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 shadow-lg">記録する</button>
-                </div>
+            <!-- キーパッド -->
+            <div class="grid grid-cols-4 gap-2 text-xl">
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="7">7</button>
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="8">8</button>
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="9">9</button>
+                <button class="keypad-btn bg-yellow-400 p-4 rounded-lg font-semibold" data-key="C">C</button>
+                
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="4">4</button>
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="5">5</button>
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="6">6</button>
+                <button class="keypad-btn bg-red-400 p-4 rounded-lg font-semibold text-white" data-key="BS">⌫</button>
+                
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="1">1</button>
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="2">2</button>
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="3">3</button>
+                <button class="keypad-btn bg-blue-500 text-white row-span-2 p-4 rounded-lg font-semibold flex items-center justify-center" data-key="Enter">記録</button>
+                
+                <button class="keypad-btn bg-gray-200 col-span-2 p-4 rounded-lg font-semibold" data-key="0">0</button>
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key=".">.</button>
+            </div>
+             <div id="loader-container" class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center">
+                <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
             </div>
         </main>
     </div>
@@ -105,74 +82,55 @@
     <script>
         // --- ▼▼▼ 管理者の方へ：ここに設定を貼り付けてください ▼▼▼ ---
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzWHU_W4LRs_MqBVyS6sUtl2HFOo8BsKJraysPuH1FuhZ_G-IeZkTmUJmBkX7abJMt4fg/exec";
-        const GEMINI_API_KEY = "AIzaSyAawQ4XWbskzVeBZnSPsggr6T1LWctXXiE";
         // --- ▲▲▲ 設定はここまで ▲▲▲ ---
 
         // --- DOM要素 ---
-        const cameraModeBtn = document.getElementById('camera-mode-btn');
-        const manualModeBtn = document.getElementById('manual-mode-btn');
-        const cameraModeView = document.getElementById('camera-mode-view');
-        const manualModeView = document.getElementById('manual-mode-view');
         const meterBtns = document.querySelectorAll('.meter-btn');
+        const keypadBtns = document.querySelectorAll('.keypad-btn');
         const mainErrorMessage = document.getElementById('main-error-message');
         const mainSuccessMessage = document.getElementById('main-success-message');
-        // Camera Mode
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const imageUpload = document.getElementById('image-upload');
-        const imagePreview = document.getElementById('image-preview');
-        const readButton = document.getElementById('read-button');
-        const resetButton = document.getElementById('reset-button');
-        const resultArea = document.getElementById('result-area');
-        const loader = document.getElementById('loader');
-        const resultContent = document.getElementById('result-content');
-        const resultNumber = document.getElementById('result-number');
-        const resultValue = document.getElementById('result-value');
-        const saveCameraButton = document.getElementById('save-camera-button');
-        // Manual Mode
-        const manualNumberInput = document.getElementById('manual-number');
-        const manualValueInput = document.getElementById('manual-value');
-        const saveManualButton = document.getElementById('save-manual-button');
+        const numberDisplay = document.getElementById('number-display');
+        const valueDisplay = document.getElementById('value-display');
+        const numberWrapper = document.getElementById('number-display-wrapper');
+        const valueWrapper = document.getElementById('value-display-wrapper');
+        const loaderContainer = document.getElementById('loader-container');
 
         // --- グローバル変数 ---
-        let imageDataUrl = null;
         let activeMeterType = '';
+        let currentInputMode = 'number'; // 'number' or 'value'
+        let meterNumber = '';
+        let meterValue = '';
 
         // --- UIロジック ---
         function showMessage(element, message, isError = false) {
             element.textContent = message;
-            element.className = isError ? 'block text-center text-red-500 bg-red-100 p-4 rounded-lg mb-4' : 'block text-center text-green-500 bg-green-100 p-4 rounded-lg mb-4';
-            setTimeout(() => { element.className = 'hidden'; }, 5000);
+            element.className = isError ? 'block text-center text-red-500 bg-red-100 p-3 rounded-lg mb-4 text-sm' : 'block text-center text-green-500 bg-green-100 p-3 rounded-lg mb-4 text-sm';
+            setTimeout(() => { element.className = 'hidden'; }, 3000);
+        }
+
+        function updateDisplay() {
+            numberDisplay.textContent = meterNumber || '';
+            valueDisplay.textContent = meterValue || '';
+
+            numberWrapper.classList.toggle('display-active', currentInputMode === 'number');
+            valueWrapper.classList.toggle('display-active', currentInputMode === 'value');
         }
         
-        function resetCameraView() {
-            step1.classList.remove('hidden');
-            step2.classList.add('hidden');
-            resultArea.classList.add('hidden');
-            imageUpload.value = '';
-            imageDataUrl = null;
+        function resetAll() {
+            meterNumber = '';
+            meterValue = '';
+            activeMeterType = '';
+            currentInputMode = 'number';
+            meterBtns.forEach(b => b.classList.remove('active'));
+            updateDisplay();
         }
 
         function initApp() {
-            if (!APPS_SCRIPT_URL || !GEMINI_API_KEY) {
-                showMessage(mainErrorMessage, '【管理者の方へ】アプリの設定が完了していません。HTMLファイルを編集して、URLとAPIキーを設定してください。', true);
+            if (!APPS_SCRIPT_URL) {
+                showMessage(mainErrorMessage, '【管理者の方へ】アプリの設定が完了していません。', true);
                 document.querySelector('main').style.pointerEvents = 'none';
                 return;
             }
-
-            // モード切替
-            cameraModeBtn.addEventListener('click', () => {
-                cameraModeBtn.classList.add('active');
-                manualModeBtn.classList.remove('active');
-                cameraModeView.classList.remove('hidden');
-                manualModeView.classList.add('hidden');
-            });
-            manualModeBtn.addEventListener('click', () => {
-                manualModeBtn.classList.add('active');
-                cameraModeBtn.classList.remove('active');
-                manualModeView.classList.remove('hidden');
-                cameraModeView.classList.add('hidden');
-            });
 
             // メーター種別選択
             meterBtns.forEach(btn => {
@@ -183,148 +141,76 @@
                 });
             });
 
-            // カメラモードのイベント
-            imageUpload.addEventListener('change', (event) => {
-                if (!activeMeterType) {
-                    showMessage(mainErrorMessage, "先にメーター種別を選択してください。", true);
-                    imageUpload.value = '';
-                    return;
-                }
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        imageDataUrl = e.target.result;
-                        imagePreview.src = imageDataUrl;
-                        step1.classList.add('hidden');
-                        step2.classList.remove('hidden');
-                        resultArea.classList.add('hidden');
-                        mainErrorMessage.classList.add('hidden');
-                    };
-                    reader.readAsDataURL(file);
-                }
+            // キーパッドイベント
+            keypadBtns.forEach(btn => {
+                btn.addEventListener('click', () => handleKeyPress(btn.dataset.key));
             });
-            resetButton.addEventListener('click', resetCameraView);
-            readButton.addEventListener('click', handleReadButtonClick);
-            saveCameraButton.addEventListener('click', () => {
-                const meterNumber = resultNumber.textContent;
-                const value = resultValue.textContent;
-                saveData(activeMeterType, meterNumber, value, imageDataUrl, saveCameraButton);
-            });
+            
+            updateDisplay();
+        }
+        
+        function handleKeyPress(key) {
+            if (/\d/.test(key)) { // 数字キー
+                if (currentInputMode === 'number') {
+                    meterNumber += key;
+                } else {
+                    meterValue += key;
+                }
+            } else if (key === '.') {
+                if (currentInputMode === 'value' && !meterValue.includes('.')) {
+                    meterValue += key;
+                }
+            } else if (key === 'C') { // クリア
+                resetAll();
+            } else if (key === 'BS') { // バックスペース
+                if (currentInputMode === 'number') {
+                    meterNumber = meterNumber.slice(0, -1);
+                } else {
+                    meterValue = meterValue.slice(0, -1);
+                }
+            } else if (key === 'Enter') {
+                handleEnterPress();
+            }
+            updateDisplay();
+        }
 
-            // 手入力モードのイベント
-            saveManualButton.addEventListener('click', () => {
+        function handleEnterPress() {
+            if (currentInputMode === 'number') {
+                if (meterNumber) {
+                    currentInputMode = 'value';
+                    updateDisplay();
+                }
+            } else if (currentInputMode === 'value') {
                 if (!activeMeterType) {
                     showMessage(mainErrorMessage, "先にメーター種別を選択してください。", true);
                     return;
                 }
-                const meterNumber = manualNumberInput.value.trim();
-                const value = manualValueInput.value.trim();
-                if (!meterNumber || !value) {
-                    showMessage(mainErrorMessage, "メーター番号と数値を両方入力してください。", true);
+                if (!meterNumber || !meterValue) {
+                    showMessage(mainErrorMessage, "番号と数値を両方入力してください。", true);
                     return;
                 }
-                saveData(activeMeterType, meterNumber, value, null, saveManualButton);
-            });
+                saveData(activeMeterType, meterNumber, meterValue);
+            }
         }
 
         // --- 機能ロジック ---
-        async function handleReadButtonClick() {
-            if (!imageDataUrl) return;
-            resultArea.classList.remove('hidden');
-            loader.classList.remove('hidden');
-            resultContent.classList.add('hidden');
-            mainErrorMessage.classList.add('hidden');
-            readButton.disabled = true;
-            readButton.classList.add('opacity-50');
+        function saveData(meterType, number, value) {
+            loaderContainer.classList.remove('hidden');
 
-            try {
-                const base64Data = imageDataUrl.split(',')[1];
-                const result = await callGeminiVisionAPI(base64Data, GEMINI_API_KEY);
-                
-                // マイナス記号や不要な文字を除去
-                let reading = result.reading || '読み取り不可';
-                if (typeof reading === 'string') {
-                    reading = reading.replace(/-/g, '');
-                }
-
-                let meterNumber = result.meter_number || '読み取り不可';
-                 if (typeof meterNumber === 'string') {
-                    // 「メ：」や括弧、マイナス記号などを除去し、数字のみを抽出
-                    meterNumber = meterNumber.replace(/[^0-9]/g, '');
-                }
-
-                resultNumber.textContent = meterNumber;
-                resultValue.textContent = reading;
-
-                loader.classList.add('hidden');
-                resultContent.classList.remove('hidden');
-            } catch (error) {
-                showMessage(mainErrorMessage, '読み取りエラー: ' + error.message, true);
-                resetCameraView();
-            } finally {
-                readButton.disabled = false;
-                readButton.classList.remove('opacity-50');
-            }
-        }
-
-        async function saveData(meterType, meterNumber, value, imageData, buttonElement) {
-            const originalButtonText = buttonElement.textContent;
-            buttonElement.disabled = true;
-            buttonElement.innerHTML = `<div class="loader border-t-white ease-linear rounded-full border-4 border-gray-200 h-6 w-6 mx-auto"></div>`;
-
-            try {
-                const payload = { meterType, meterNumber, value, imageData };
-                await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload),
-                    headers: { 'Content-Type': 'application/json' },
-                    mode: 'no-cors'
-                });
-                showMessage(mainSuccessMessage, 'スプレッドシートに記録しました！', false);
-                resetCameraView();
-                manualNumberInput.value = '';
-                manualValueInput.value = '';
-            } catch (error) {
-                showMessage(mainErrorMessage, '保存エラーが発生しました。', true);
-            } finally {
-                buttonElement.disabled = false;
-                buttonElement.innerHTML = originalButtonText;
-            }
-        }
-
-        async function callGeminiVisionAPI(base64ImageData, apiKey) {
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const prompt = `
-                画像から2つの情報をJSON形式で抽出してください。
-                1. メーターの指示数（小数点含む数字）。これを "reading" キーに割り当ててください。
-                2. 「メ：」という接頭辞の後に続くメーター番号。これを "meter_number" キーに割り当ててください。
-                
-                例:
-                {
-                  "reading": "12345.6",
-                  "meter_number": "431"
-                }
-                
-                どちらかが見つからない場合は、そのキーの値を null にしてください。JSONのキーと値以外の余計な文字や説明は含めないでください。
-            `;
-
-            const payload = {
-                contents: [{ parts: [{ text: prompt }, { inlineData: { mimeType: "image/jpeg", data: base64ImageData } }] }],
-                generationConfig: { "responseMimeType": "application/json" }
-            };
+            const payload = { meterType, meterNumber: number, value, imageData: null };
             
-            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload),
+                headers: { 'Content-Type': 'application/json' },
+                mode: 'no-cors'
+            }).catch(console.warn);
 
-            if (!response.ok) {
-                throw new Error(`APIリクエスト失敗(ステータス: ${response.status})`);
-            }
-            const result = await response.json();
-            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
-                return JSON.parse(result.candidates[0].content.parts[0].text);
-            } else {
-                throw new Error('APIから予期しない形式の応答がありました。');
-            }
+            setTimeout(() => {
+                loaderContainer.classList.add('hidden');
+                showMessage(mainSuccessMessage, '記録されました！', false);
+                resetAll();
+            }, 1000);
         }
 
         window.addEventListener('load', initApp);
