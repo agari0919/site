@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>メーター記録 v14</title>
+    <title>メーター記録 v16</title>
     <link rel="icon" href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
         .keypad-btn { transition: background-color 0.2s; }
         .keypad-btn:active { background-color: #d1d5db; }
         .display-active { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4); }
+        #value-display { word-wrap: break-word; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -23,7 +24,7 @@
     <div class="container mx-auto p-4 md:p-8 max-w-sm">
         <header class="text-center mb-6 relative">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-900">メーター記録ツール</h1>
-            <span class="absolute top-0 right-0 text-xs text-gray-400">v14</span>
+            <span class="absolute top-0 right-0 text-xs text-gray-400">v16</span>
         </header>
 
         <main class="bg-white p-4 sm:p-6 rounded-xl shadow-md">
@@ -49,7 +50,7 @@
                 </div>
                  <div id="value-display-wrapper" class="p-3 bg-gray-100 rounded-lg border-2 border-transparent transition-all">
                     <label class="block text-sm font-medium text-gray-400">数値</label>
-                    <div id="value-display" class="text-2xl font-mono text-right text-gray-800 h-8"></div>
+                    <div id="value-display" class="text-2xl font-mono text-right text-gray-800 min-h-[32px]"></div>
                 </div>
             </div>
 
@@ -68,10 +69,11 @@
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="1">1</button>
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="2">2</button>
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="3">3</button>
-                <button id="enter-button" class="keypad-btn bg-blue-500 text-white row-span-2 p-4 rounded-lg font-semibold flex items-center justify-center" data-key="Enter">次へ</button>
-                
+                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="+">+</button>
+
                 <button class="keypad-btn bg-gray-200 col-span-2 p-4 rounded-lg font-semibold" data-key="0">0</button>
                 <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key=".">.</button>
+                <button id="enter-button" class="keypad-btn bg-blue-500 text-white p-4 rounded-lg font-semibold flex items-center justify-center" data-key="Enter">次へ</button>
             </div>
              <div id="loader-container" class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center">
                 <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
@@ -100,7 +102,7 @@
         let activeMeterType = '';
         let currentInputMode = 'number'; // 'number' or 'value'
         let meterNumber = '';
-        let meterValue = '';
+        let valueExpression = '';
 
         // --- UIロジック ---
         function showMessage(element, message, isError = false) {
@@ -111,7 +113,7 @@
 
         function updateDisplay() {
             numberDisplay.textContent = meterNumber || '';
-            valueDisplay.textContent = meterValue || '';
+            valueDisplay.textContent = valueExpression || '';
 
             numberWrapper.classList.toggle('display-active', currentInputMode === 'number');
             valueWrapper.classList.toggle('display-active', currentInputMode === 'value');
@@ -121,7 +123,7 @@
         
         function resetAll() {
             meterNumber = '';
-            meterValue = '';
+            valueExpression = '';
             activeMeterType = '';
             currentInputMode = 'number';
             meterBtns.forEach(b => b.classList.remove('active'));
@@ -134,8 +136,6 @@
                 document.querySelector('main').style.pointerEvents = 'none';
                 return;
             }
-
-            // メーター種別選択
             meterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     meterBtns.forEach(b => b.classList.remove('active'));
@@ -143,36 +143,59 @@
                     activeMeterType = btn.dataset.type;
                 });
             });
-
-            // キーパッドイベント
             keypadBtns.forEach(btn => {
                 btn.addEventListener('click', () => handleKeyPress(btn.dataset.key));
             });
-            
             updateDisplay();
         }
         
         function handleKeyPress(key) {
-            if (/\d/.test(key)) { // 数字キー
-                if (currentInputMode === 'number') {
-                    meterNumber += key;
-                } else {
-                    meterValue += key;
-                }
-            } else if (key === '.') {
-                if (currentInputMode === 'value' && !meterValue.includes('.')) {
-                    meterValue += key;
-                }
-            } else if (key === 'C') { // クリア
+            if (currentInputMode === 'number') {
+                handleNumberInput(key);
+            } else {
+                handleValueInput(key);
+            }
+            updateDisplay();
+        }
+
+        function handleNumberInput(key) {
+            if (/\d/.test(key)) {
+                meterNumber += key;
+            } else if (key === '.' && !meterNumber.includes('.')) {
+                meterNumber += key;
+            } else if (key === 'BS') {
+                meterNumber = meterNumber.slice(0, -1);
+            }
+        }
+
+        function handleValueInput(key) {
+            const lastChar = valueExpression.trim().slice(-1);
+            if (/\d/.test(key)) {
+                valueExpression += key;
+            } else if (key === '.' && !/\./.test(valueExpression.split('+').pop())) {
+                valueExpression += key;
+            } else if (key === '+' && valueExpression && !isNaN(lastChar)) {
+                 valueExpression += ' + ';
+            } else if (key === 'BS') {
+                valueExpression = valueExpression.trimEnd().slice(0, -1).trimEnd();
+            }
+        }
+
+        function handleGlobalKeys(key) {
+            if (key === 'C') {
                 resetAll();
-            } else if (key === 'BS') { // バックスペース
-                if (currentInputMode === 'number') {
-                    meterNumber = meterNumber.slice(0, -1);
-                } else {
-                    meterValue = meterValue.slice(0, -1);
-                }
             } else if (key === 'Enter') {
                 handleEnterPress();
+            }
+        }
+
+        function handleKeyPress(key) {
+            if (key === 'C' || key === 'Enter') {
+                handleGlobalKeys(key);
+            } else if (currentInputMode === 'number') {
+                handleNumberInput(key);
+            } else {
+                handleValueInput(key);
             }
             updateDisplay();
         }
@@ -181,18 +204,25 @@
             if (currentInputMode === 'number') {
                 if (meterNumber) {
                     currentInputMode = 'value';
-                    updateDisplay();
                 }
             } else if (currentInputMode === 'value') {
                 if (!activeMeterType) {
                     showMessage(mainErrorMessage, "先にメーター種別を選択してください。", true);
                     return;
                 }
-                if (!meterNumber || !meterValue) {
+                if (!meterNumber || !valueExpression) {
                     showMessage(mainErrorMessage, "番号と数値を両方入力してください。", true);
                     return;
                 }
-                saveData(activeMeterType, meterNumber, meterValue);
+                
+                try {
+                    // 安全のため、式を評価する前に簡単なサニタイズ
+                    const sanitizedExpression = valueExpression.replace(/[^-()\d/*+.]/g, '');
+                    const sum = new Function('return ' + sanitizedExpression)();
+                    saveData(activeMeterType, meterNumber, sum);
+                } catch (e) {
+                    showMessage(mainErrorMessage, "計算式が正しくありません。", true);
+                }
             }
         }
 
@@ -200,7 +230,7 @@
         function saveData(meterType, number, value) {
             loaderContainer.classList.remove('hidden');
 
-            const payload = { meterType, meterNumber: number, value, imageData: null };
+            const payload = { meterType, meterNumber: number, value: value, imageData: null };
             
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
@@ -220,3 +250,4 @@
     </script>
 </body>
 </html>
+
