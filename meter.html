@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>メーター記録 v16</title>
+    <title>メーター記録 v17</title>
     <link rel="icon" href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -13,10 +13,8 @@
         @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .meter-btn.active { background-color: #16a34a; color: white; border-color: #16a34a; }
-        .keypad-btn { transition: background-color 0.2s; }
-        .keypad-btn:active { background-color: #d1d5db; }
-        .display-active { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4); }
-        #value-display { word-wrap: break-word; }
+        /* iOSでの入力欄のスタイル崩れを防ぐ */
+        input[type="number"], input[type="text"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -24,58 +22,49 @@
     <div class="container mx-auto p-4 md:p-8 max-w-sm">
         <header class="text-center mb-6 relative">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-900">メーター記録ツール</h1>
-            <span class="absolute top-0 right-0 text-xs text-gray-400">v16</span>
+            <span class="absolute top-0 right-0 text-xs text-gray-400">v17</span>
         </header>
 
-        <main class="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+        <main id="app-container" class="bg-white p-4 sm:p-6 rounded-xl shadow-md space-y-6">
             <div id="main-error-message" class="hidden"></div>
             <div id="main-success-message" class="hidden"></div>
 
-            <!-- メーター種別選択 -->
-            <div class="mb-4">
-                <h3 class="text-md font-semibold mb-2 text-gray-700">1. メーター種別を選択</h3>
+            <!-- ステップ１：メーター種別 -->
+            <div>
+                <h3 class="text-md font-semibold mb-3 text-gray-700">1. メーター種別を選択</h3>
                 <div class="grid grid-cols-4 gap-2">
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="電気">電気</button>
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="水道">水道</button>
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="下水道">下水道</button>
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium" data-type="ガス">ガス</button>
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="電気">電気</button>
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="水道">水道</button>
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="下水道">下水道</button>
+                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="ガス">ガス</button>
                 </div>
             </div>
 
-            <!-- 表示エリア -->
-            <div id="display-area" class="mb-4 space-y-2">
-                 <div id="number-display-wrapper" class="p-3 bg-gray-100 rounded-lg border-2 border-transparent transition-all">
-                    <label class="block text-sm font-medium text-gray-400">メーター番号</label>
-                    <div id="number-display" class="text-2xl font-mono text-right text-gray-800 h-8"></div>
-                </div>
-                 <div id="value-display-wrapper" class="p-3 bg-gray-100 rounded-lg border-2 border-transparent transition-all">
-                    <label class="block text-sm font-medium text-gray-400">数値</label>
-                    <div id="value-display" class="text-2xl font-mono text-right text-gray-800 min-h-[32px]"></div>
+            <!-- ステップ２：番号と数値 -->
+            <div>
+                <h3 class="text-md font-semibold mb-3 text-gray-700">2. 番号と数値を入力</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label for="meter-number" class="block text-sm font-medium text-gray-600">メーター番号</label>
+                        <input type="text" id="meter-number" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg" inputmode="decimal">
+                    </div>
+                    <div id="value-inputs-container">
+                        <!-- ここに数値入力欄が動的に追加される -->
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <div class="text-lg font-bold">
+                            合計: <span id="total-value" class="ml-2 text-blue-600">0</span>
+                        </div>
+                        <button id="add-value-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-colors">+</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- キーパッド -->
-            <div class="grid grid-cols-4 gap-2 text-xl">
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="7">7</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="8">8</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="9">9</button>
-                <button class="keypad-btn bg-yellow-400 p-4 rounded-lg font-semibold" data-key="C">C</button>
-                
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="4">4</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="5">5</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="6">6</button>
-                <button class="keypad-btn bg-red-400 p-4 rounded-lg font-semibold text-white" data-key="BS">⌫</button>
-                
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="1">1</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="2">2</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="3">3</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key="+">+</button>
-
-                <button class="keypad-btn bg-gray-200 col-span-2 p-4 rounded-lg font-semibold" data-key="0">0</button>
-                <button class="keypad-btn bg-gray-200 p-4 rounded-lg font-semibold" data-key=".">.</button>
-                <button id="enter-button" class="keypad-btn bg-blue-500 text-white p-4 rounded-lg font-semibold flex items-center justify-center" data-key="Enter">次へ</button>
+            <!-- ステップ３：記録 -->
+            <div>
+                <button id="submit-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition-colors">記録する</button>
             </div>
-             <div id="loader-container" class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center">
+             <div id="loader-container" class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
                 <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
             </div>
         </main>
@@ -88,54 +77,78 @@
 
         // --- DOM要素 ---
         const meterBtns = document.querySelectorAll('.meter-btn');
-        const keypadBtns = document.querySelectorAll('.keypad-btn');
         const mainErrorMessage = document.getElementById('main-error-message');
         const mainSuccessMessage = document.getElementById('main-success-message');
-        const numberDisplay = document.getElementById('number-display');
-        const valueDisplay = document.getElementById('value-display');
-        const numberWrapper = document.getElementById('number-display-wrapper');
-        const valueWrapper = document.getElementById('value-display-wrapper');
+        const meterNumberInput = document.getElementById('meter-number');
+        const valueInputsContainer = document.getElementById('value-inputs-container');
+        const addValueBtn = document.getElementById('add-value-btn');
+        const totalValueSpan = document.getElementById('total-value');
+        const submitBtn = document.getElementById('submit-btn');
         const loaderContainer = document.getElementById('loader-container');
-        const enterButton = document.getElementById('enter-button');
+        const appContainer = document.getElementById('app-container');
 
         // --- グローバル変数 ---
         let activeMeterType = '';
-        let currentInputMode = 'number'; // 'number' or 'value'
-        let meterNumber = '';
-        let valueExpression = '';
 
         // --- UIロジック ---
         function showMessage(element, message, isError = false) {
             element.textContent = message;
-            element.className = isError ? 'block text-center text-red-500 bg-red-100 p-3 rounded-lg mb-4 text-sm' : 'block text-center text-green-500 bg-green-100 p-3 rounded-lg mb-4 text-sm';
+            element.className = isError ? 'block text-center text-red-500 bg-red-100 p-3 rounded-lg text-sm' : 'block text-center text-green-500 bg-green-100 p-3 rounded-lg text-sm';
             setTimeout(() => { element.className = 'hidden'; }, 3000);
         }
-
-        function updateDisplay() {
-            numberDisplay.textContent = meterNumber || '';
-            valueDisplay.textContent = valueExpression || '';
-
-            numberWrapper.classList.toggle('display-active', currentInputMode === 'number');
-            valueWrapper.classList.toggle('display-active', currentInputMode === 'value');
-            
-            enterButton.textContent = (currentInputMode === 'number') ? '次へ' : '記録';
-        }
         
+        function createValueInput() {
+            const inputId = `value-input-${valueInputsContainer.children.length}`;
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex items-center space-x-2';
+            
+            const label = document.createElement('label');
+            label.htmlFor = inputId;
+            label.className = 'text-sm font-medium text-gray-600';
+            label.textContent = `数値 ${valueInputsContainer.children.length + 1}`;
+
+            const input = document.createElement('input');
+            input.type = 'text'; // textで幅広い入力を許可
+            input.id = inputId;
+            input.className = 'value-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg';
+            input.inputMode = 'decimal'; // スマートフォンで数字キーパッドを優先的に表示
+
+            wrapper.appendChild(label);
+            wrapper.appendChild(input);
+            valueInputsContainer.appendChild(wrapper);
+
+            input.addEventListener('input', calculateTotal);
+        }
+
+        function calculateTotal() {
+            const inputs = document.querySelectorAll('.value-input');
+            let total = 0;
+            inputs.forEach(input => {
+                const value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+            totalValueSpan.textContent = total.toLocaleString(); // 3桁区切り
+        }
+
         function resetAll() {
-            meterNumber = '';
-            valueExpression = '';
             activeMeterType = '';
-            currentInputMode = 'number';
             meterBtns.forEach(b => b.classList.remove('active'));
-            updateDisplay();
+            meterNumberInput.value = '';
+            valueInputsContainer.innerHTML = '';
+            createValueInput();
+            calculateTotal();
         }
 
         function initApp() {
             if (!APPS_SCRIPT_URL) {
                 showMessage(mainErrorMessage, '【管理者の方へ】アプリの設定が完了していません。', true);
-                document.querySelector('main').style.pointerEvents = 'none';
+                appContainer.style.pointerEvents = 'none';
                 return;
             }
+
+            // メーター種別選択
             meterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     meterBtns.forEach(b => b.classList.remove('active'));
@@ -143,87 +156,35 @@
                     activeMeterType = btn.dataset.type;
                 });
             });
-            keypadBtns.forEach(btn => {
-                btn.addEventListener('click', () => handleKeyPress(btn.dataset.key));
-            });
-            updateDisplay();
-        }
-        
-        function handleKeyPress(key) {
-            if (currentInputMode === 'number') {
-                handleNumberInput(key);
-            } else {
-                handleValueInput(key);
-            }
-            updateDisplay();
+
+            // 最初の数値入力欄を作成
+            createValueInput();
+
+            // 「＋」ボタンのイベント
+            addValueBtn.addEventListener('click', createValueInput);
+            
+            // 「記録する」ボタンのイベント
+            submitBtn.addEventListener('click', handleSubmit);
         }
 
-        function handleNumberInput(key) {
-            if (/\d/.test(key)) {
-                meterNumber += key;
-            } else if (key === '.' && !meterNumber.includes('.')) {
-                meterNumber += key;
-            } else if (key === 'BS') {
-                meterNumber = meterNumber.slice(0, -1);
+        function handleSubmit() {
+            // バリデーション
+            if (!activeMeterType) {
+                showMessage(mainErrorMessage, "1. メーター種別を選択してください。", true);
+                return;
             }
-        }
-
-        function handleValueInput(key) {
-            const lastChar = valueExpression.trim().slice(-1);
-            if (/\d/.test(key)) {
-                valueExpression += key;
-            } else if (key === '.' && !/\./.test(valueExpression.split('+').pop())) {
-                valueExpression += key;
-            } else if (key === '+' && valueExpression && !isNaN(lastChar)) {
-                 valueExpression += ' + ';
-            } else if (key === 'BS') {
-                valueExpression = valueExpression.trimEnd().slice(0, -1).trimEnd();
+            const meterNumber = meterNumberInput.value.trim();
+            if (!meterNumber) {
+                showMessage(mainErrorMessage, "2. メーター番号を入力してください。", true);
+                return;
             }
-        }
-
-        function handleGlobalKeys(key) {
-            if (key === 'C') {
-                resetAll();
-            } else if (key === 'Enter') {
-                handleEnterPress();
+            const total = parseFloat(totalValueSpan.textContent.replace(/,/g, ''));
+            if (isNaN(total) || total === 0) {
+                 showMessage(mainErrorMessage, "2. 1つ以上の数値を入力してください。", true);
+                return;
             }
-        }
-
-        function handleKeyPress(key) {
-            if (key === 'C' || key === 'Enter') {
-                handleGlobalKeys(key);
-            } else if (currentInputMode === 'number') {
-                handleNumberInput(key);
-            } else {
-                handleValueInput(key);
-            }
-            updateDisplay();
-        }
-
-        function handleEnterPress() {
-            if (currentInputMode === 'number') {
-                if (meterNumber) {
-                    currentInputMode = 'value';
-                }
-            } else if (currentInputMode === 'value') {
-                if (!activeMeterType) {
-                    showMessage(mainErrorMessage, "先にメーター種別を選択してください。", true);
-                    return;
-                }
-                if (!meterNumber || !valueExpression) {
-                    showMessage(mainErrorMessage, "番号と数値を両方入力してください。", true);
-                    return;
-                }
-                
-                try {
-                    // 安全のため、式を評価する前に簡単なサニタイズ
-                    const sanitizedExpression = valueExpression.replace(/[^-()\d/*+.]/g, '');
-                    const sum = new Function('return ' + sanitizedExpression)();
-                    saveData(activeMeterType, meterNumber, sum);
-                } catch (e) {
-                    showMessage(mainErrorMessage, "計算式が正しくありません。", true);
-                }
-            }
+            
+            saveData(activeMeterType, meterNumber, total);
         }
 
         // --- 機能ロジック ---
@@ -236,9 +197,10 @@
                 method: 'POST',
                 body: JSON.stringify(payload),
                 headers: { 'Content-Type': 'application/json' },
-                mode: 'no-cors'
-            }).catch(console.warn);
+                mode: 'no-cors' // GAS Web AppへのPOSTはCORSエラーが出るためno-corsモードで送信
+            }).catch(console.warn); // no-corsモードではエラーが常に発生するが、リクエストは送信される
 
+            // no-corsでは成功レスポンスを取得できないため、タイムアウトで処理を完了させる
             setTimeout(() => {
                 loaderContainer.classList.add('hidden');
                 showMessage(mainSuccessMessage, '記録されました！', false);
