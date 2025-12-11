@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>メーター記録 v21</title>
+    <title>メーター記録 v23</title>
     <link rel="icon" href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
         .loader { border-top-color: #3498db; -webkit-animation: spin 1s linear infinite; animation: spin 1s linear infinite; }
         @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .meter-btn.active { background-color: #16a34a; color: white; border-color: #16a34a; }
+        .meter-btn.active, .location-btn.active { background-color: #16a34a; color: white; border-color: #16a34a; }
         /* iOSでの入力欄のスタイル崩れを防ぐ */
         input[type="number"], input[type="text"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
     </style>
@@ -22,7 +22,7 @@
     <div class="container mx-auto p-4 md:p-8 max-w-sm">
         <header class="text-center mb-6 relative">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-900">メーター記録ツール</h1>
-            <span class="absolute top-0 right-0 text-xs text-gray-400">v21</span>
+            <span class="absolute top-0 right-0 text-xs text-gray-400">v23</span>
         </header>
 
         <main id="app-container" class="bg-white p-4 sm:p-6 rounded-xl shadow-md space-y-6">
@@ -40,15 +40,23 @@
                 </div>
             </div>
 
+            <!-- ステップ１.５：場所選択（動的に表示） -->
+            <div id="location-section" class="hidden">
+                <h3 class="text-md font-semibold mb-3 text-gray-700">2. 場所を選択</h3>
+                <div id="location-buttons-container" class="flex flex-wrap gap-2">
+                    <!-- 場所ボタンがここに動的に追加される -->
+                </div>
+            </div>
+
             <!-- ステップ２：番号と数値 -->
-            <div>
-                <h3 class="text-md font-semibold mb-3 text-gray-700">2. 番号と数値を入力</h3>
+            <div id="input-section" class="opacity-50 pointer-events-none transition-opacity duration-300">
+                <h3 class="text-md font-semibold mb-3 text-gray-700">3. 番号と数値を入力</h3>
                 <div id="meters-container" class="space-y-4">
-                    <!-- メーターブロックを静的に配置 -->
+                    <!-- メーターブロック -->
                     <div class="meter-block border p-3 rounded-lg space-y-2 bg-gray-50">
                         <div>
                             <label class="text-sm font-medium text-gray-600">メーター番号</label>
-                            <input type="text" class="meter-number-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg" inputmode="decimal" placeholder="番号 1">
+                            <input type="text" class="meter-number-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg" inputmode="decimal" placeholder="番号">
                         </div>
                         <div>
                             <div class="flex items-center justify-between mt-2">
@@ -63,9 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 静的ブロックここまで -->
                 </div>
-                <!-- ＋メーターを追加 ボタンを削除 -->
             </div>
 
             <!-- ステップ３：記録 -->
@@ -87,8 +93,19 @@
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGaW0HS6Asr8VsiYPFpA6rCDPW2MKU4kFY3xvGHqyrUJLg9H5MTRORGArjPs_oIRKUpg/exec"; // ここに手順4でコピーしたウェブアプリのURLを貼り付けてください
         // --- ▲▲▲ 設定はここまで ▲▲▲ ---
 
+        // --- 設定データ ---
+        const LOCATION_MAP = {
+            '電気': ['千原'],
+            '水道': ['西原', '中城'],
+            '下水道': ['西原'],
+            'ガス': ['千原']
+        };
+
         // --- DOM要素 ---
         const meterBtns = document.querySelectorAll('.meter-btn');
+        const locationSection = document.getElementById('location-section');
+        const locationButtonsContainer = document.getElementById('location-buttons-container');
+        const inputSection = document.getElementById('input-section');
         const mainErrorMessage = document.getElementById('main-error-message');
         const mainSuccessMessage = document.getElementById('main-success-message');
         const reEntryCheckbox = document.getElementById('re-entry-checkbox');
@@ -98,12 +115,55 @@
 
         // --- グローバル変数 ---
         let activeMeterType = '';
+        let activeLocation = '';
 
         // --- UIロジック ---
         function showMessage(element, message, isError = false) {
             element.textContent = message;
             element.className = isError ? 'block text-center text-red-500 bg-red-100 p-3 rounded-lg text-sm mb-4' : 'block text-center text-green-500 bg-green-100 p-3 rounded-lg text-sm mb-4';
             setTimeout(() => { element.className = 'hidden'; }, 3000);
+        }
+
+        function updateLocationOptions(type) {
+            locationButtonsContainer.innerHTML = '';
+            activeLocation = '';
+            
+            const locations = LOCATION_MAP[type] || [];
+            
+            if (locations.length > 0) {
+                locationSection.classList.remove('hidden');
+                locations.forEach(loc => {
+                    const btn = document.createElement('button');
+                    btn.className = 'location-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors min-w-[80px]';
+                    btn.textContent = loc;
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.location-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        activeLocation = loc;
+                        enableInputSection();
+                    });
+                    locationButtonsContainer.appendChild(btn);
+                });
+                
+                // 選択肢が1つしかない場合は自動選択
+                if (locations.length === 1) {
+                    locationButtonsContainer.firstChild.click();
+                } else {
+                    disableInputSection();
+                }
+            } else {
+                locationSection.classList.add('hidden');
+                activeLocation = '-'; // 場所指定なし
+                enableInputSection();
+            }
+        }
+
+        function enableInputSection() {
+            inputSection.classList.remove('opacity-50', 'pointer-events-none');
+        }
+
+        function disableInputSection() {
+            inputSection.classList.add('opacity-50', 'pointer-events-none');
         }
 
         function createValueInput(container) {
@@ -128,37 +188,36 @@
             block.querySelector('.sub-total-value').textContent = total.toLocaleString();
         }
 
-        // 静的メーターブロックを初期化する関数
         function initMeterBlock() {
             const block = document.querySelector('.meter-block');
             if (block) {
                 const valueContainer = block.querySelector('.value-inputs-container-local');
-                createValueInput(valueContainer); // 最初の数値入力欄を作成
+                createValueInput(valueContainer);
                 block.querySelector('.add-value-btn-local').addEventListener('click', () => createValueInput(valueContainer));
             }
         }
 
         function resetAll() {
             activeMeterType = '';
+            activeLocation = '';
             meterBtns.forEach(b => b.classList.remove('active'));
+            locationSection.classList.add('hidden');
+            disableInputSection();
             reEntryCheckbox.checked = false;
 
-            // 静的ブロックの内容をリセット
             const block = document.querySelector('.meter-block');
             if (block) {
                 block.querySelector('.meter-number-input').value = '';
                 const valueContainer = block.querySelector('.value-inputs-container-local');
                 valueContainer.innerHTML = '';
-                createValueInput(valueContainer); // 新しい最初の入力欄
+                createValueInput(valueContainer);
                 block.querySelector('.sub-total-value').textContent = '0';
             }
         }
 
         function initApp() {
             if (!APPS_SCRIPT_URL) {
-                showMessage(mainErrorMessage, '【管理者の方へ】アプリの設定が完了していません。', true);
-                appContainer.style.pointerEvents = 'none';
-                return;
+                showMessage(mainErrorMessage, '【確認用モード】連携URLが未設定です。画面操作のみお試しいただけます。', true);
             }
 
             meterBtns.forEach(btn => {
@@ -166,24 +225,31 @@
                     meterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     activeMeterType = btn.dataset.type;
+                    updateLocationOptions(activeMeterType);
                 });
             });
 
-            initMeterBlock(); // 静的ブロックを初期化
+            initMeterBlock();
             submitBtn.addEventListener('click', handleSubmit);
         }
 
         function handleSubmit() {
+            if (!APPS_SCRIPT_URL) {
+                showMessage(mainErrorMessage, "連携URLが設定されていないため、記録できません。", true);
+                return;
+            }
+
             if (!activeMeterType) {
                 showMessage(mainErrorMessage, "1. メーター種別を選択してください。", true);
                 return;
             }
-
-            const block = document.querySelector('.meter-block');
-            if (!block) {
-                showMessage(mainErrorMessage, "メーターブロックがありません。", true);
+            if (!activeLocation && !locationSection.classList.contains('hidden')) {
+                showMessage(mainErrorMessage, "2. 場所を選択してください。", true);
                 return;
             }
+
+            const block = document.querySelector('.meter-block');
+            if (!block) return;
             
             loaderContainer.classList.remove('hidden');
 
@@ -192,15 +258,14 @@
             const total = parseFloat(totalText.replace(/,/g, ''));
             
             if (!meterNumber || (isNaN(total) || (total === 0 && block.querySelector('.value-input').value.trim() === ''))) {
-                showMessage(mainErrorMessage, "メーター番号と数値を入力してください。", true);
+                showMessage(mainErrorMessage, "番号と数値を入力してください。", true);
                 loaderContainer.classList.add('hidden');
                 return;
             }
             
             const isReEntry = reEntryCheckbox.checked;
             
-            // 単一データを送信
-            saveData(activeMeterType, meterNumber, total, isReEntry);
+            saveData(activeMeterType, activeLocation, meterNumber, total, isReEntry);
 
             setTimeout(() => {
                 loaderContainer.classList.add('hidden');
@@ -210,8 +275,8 @@
         }
 
         // --- 機能ロジック ---
-        function saveData(meterType, number, value, isReEntry) {
-            const payload = { meterType, meterNumber: number, value, isReEntry };
+        function saveData(meterType, location, number, value, isReEntry) {
+            const payload = { meterType, location, meterNumber: number, value, isReEntry };
             
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
