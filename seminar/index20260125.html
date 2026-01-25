@@ -1,582 +1,582 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { 
-  Terminal, 
-  AlertTriangle, 
-  TrendingDown, 
-  Zap, 
-  Code, 
-  ExternalLink, 
-  ArrowRight, 
-  Cpu, 
-  Users, 
-  Globe,
-  PenTool,
-  PlayCircle,
-  Lightbulb
-} from 'lucide-react';
-
-// --- Shared Components ---
-
-const FadeIn = ({ children, delay = 0, className = "" }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-// 改良版：より詳細な十徳ナイフアイコン
-const SwissArmyKnifeIcon = ({ size = 100, className = "" }) => (
-  <svg 
-    width={size} 
-    height={size} 
-    viewBox="0 0 100 100" 
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    {/* Handle Body (Red) */}
-    <rect x="35" y="20" width="30" height="60" rx="15" fill="#991b1b" stroke="#ef4444" strokeWidth="2" />
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survival Strategy & Vibe Coding</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     
-    {/* Swiss Cross */}
-    <path d="M50 35V45M45 40H55" stroke="#fca5a5" strokeWidth="3" strokeLinecap="round" />
-
-    {/* Main Blade (Top Center) */}
-    <path d="M50 20L50 5L58 10C62 14 62 18 50 20" fill="#d4d4d8" stroke="#52525b" strokeWidth="2" strokeLinejoin="round"/>
-    
-    {/* Scissors (Top Right) */}
-    <g transform="translate(60, 25) rotate(45)">
-      <path d="M0 0L15 -5M0 0L15 5" stroke="#d4d4d8" strokeWidth="2" />
-      <circle cx="15" cy="-5" r="2.5" stroke="#52525b" strokeWidth="1" fill="none"/>
-      <circle cx="15" cy="5" r="2.5" stroke="#52525b" strokeWidth="1" fill="none"/>
-    </g>
-
-    {/* Saw/Cutter (Bottom Right) */}
-    <path d="M65 50L85 55L83 58L80 56L78 59L75 57L65 60" fill="none" stroke="#d4d4d8" strokeWidth="2" strokeLinejoin="round"/>
-
-    {/* Screwdriver (Bottom Left) */}
-    <path d="M35 70L20 85L15 80L35 65" fill="#d4d4d8" stroke="#52525b" strokeWidth="2" strokeLinejoin="round"/>
-    <path d="M18 82L22 86" stroke="#52525b" strokeWidth="1"/>
-
-    {/* Corkscrew (Left Center) */}
-    <path d="M35 40C30 40 25 42 25 45C25 48 30 48 30 51C30 54 25 54 25 57" stroke="#d4d4d8" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-);
-
-// リンクを目立つデザインに変更
-const SourceLink = ({ href, label = "データソースを見る" }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]"
-  >
-    <span>{label}</span>
-    <ExternalLink size={16} />
-  </a>
-);
-
-const SectionTitle = ({ title, subtitle, color = "text-white" }) => (
-  <div className="mb-16 md:mb-24">
-    <h2 className={`text-5xl md:text-7xl font-bold tracking-tighter ${color} mb-6`}>
-      {title.toUpperCase()}
-    </h2>
-    <div className="h-2 w-32 bg-yellow-400" />
-    {subtitle && <p className="mt-6 text-zinc-300 text-xl md:text-2xl font-medium leading-relaxed">{subtitle}</p>}
-  </div>
-);
-
-// --- Main App Component ---
-
-export default function SurvivalStrategyLP() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  // QRコードの生成用URL
-  const qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://gemini.google.com/share/082a53817efa&color=000000&bgcolor=ffffff";
-
-  return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-yellow-400 selection:text-black overflow-x-hidden">
-      {/* Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-2 bg-gradient-to-r from-cyan-500 to-yellow-400 z-50 origin-left"
-        style={{ scaleX }}
-      />
-
-      {/* --- HERO SECTION --- */}
-      <header className="h-screen flex flex-col justify-center items-center relative px-6 border-b border-zinc-900">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-50" />
+    <style>
+        /* カスタム設定 */
+        ::selection {
+            background-color: #facc15; /* yellow-400 */
+            color: black;
+        }
+        body {
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+            overflow-x: hidden;
+        }
+        /* スクロールバーのカスタマイズ（Chrome/Safari/Edge） */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #18181b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525b;
+        }
         
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="z-10 text-center max-w-6xl"
-        >
-          <div className="flex justify-center mb-8">
-            <span className="px-6 py-2 border-2 border-yellow-400 text-yellow-400 text-sm md:text-base font-bold font-mono rounded-full bg-yellow-400/10 tracking-wider">
-              LECTURE: SURVIVAL_STRATEGY_2026
-            </span>
-          </div>
-          
-          <h1 className="text-6xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.95]">
-            SURVIVAL STRATEGY<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
-              & VIBE CODING
-            </span>
-          </h1>
-          
-          <p className="text-2xl md:text-4xl text-zinc-300 font-medium max-w-4xl mx-auto leading-relaxed">
-            AI時代を生き抜くために、<br className="md:hidden"/>新しいOSをインストールしましょう。
-          </p>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-            className="mt-16 animate-bounce text-zinc-500"
-          >
-            <ArrowRight className="mx-auto rotate-90" size={48} />
-          </motion.div>
-        </motion.div>
-      </header>
-
-      {/* --- SECTION 1: THE CRISIS --- */}
-      <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
-        <FadeIn>
-          <SectionTitle 
-            title="Why are we here?" 
-            subtitle="教室の外では今、無視できない「バグ」が起きています。"
-          />
-        </FadeIn>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              icon: <Users className="text-red-500" size={48} />,
-              title: "日本人の減少",
-              desc: "毎年、ひとつの県がまるごと消える勢いで人口が減っています。これは静かなる有事といえます。",
-              links: [
-                "https://www.nikkei.com/article/DGXZQOUA2898V0Y5A720C2000000/",
-                "https://www.homemate.co.jp/research/population/all/"
-              ]
-            },
-            {
-              icon: <Globe className="text-orange-500" size={48} />,
-              title: "自治体の消滅",
-              desc: "税収が減れば、インフラは維持できません。蛇口から水が出なくなる日が来るかもしれません。",
-              links: [
-                "https://www.nikkei.com/article/DGKKZO85980830S5A420C1EE8000/"
-              ]
-            },
-            {
-              icon: <TrendingDown className="text-yellow-500" size={48} />,
-              title: "労働生産性の低下",
-              desc: "人手不足よりも深刻な病です。どれだけ働いても、構造的に豊かになれない現状があります。",
-              links: [
-                "https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r04/html/nd121110.html"
-              ]
-            }
-          ].map((item, i) => (
-            <FadeIn key={i} delay={i * 0.2} className="h-full">
-              <div className="bg-zinc-900/50 border border-zinc-800 p-10 rounded-2xl hover:border-red-500/30 transition-all group h-full flex flex-col shadow-lg">
-                <div className="mb-6 p-4 bg-zinc-950 rounded-xl w-fit group-hover:bg-zinc-900 transition-colors">
-                  {item.icon}
-                </div>
-                <h3 className="text-3xl font-bold mb-4">{item.title}</h3>
-                <p className="text-zinc-300 text-lg leading-relaxed mb-8 flex-grow">{item.desc}</p>
-                <div className="flex flex-col gap-3 pt-6 border-t border-zinc-800/50">
-                  {item.links.map((link, idx) => (
-                    <SourceLink key={idx} href={link} />
-                  ))}
-                </div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-
-      {/* --- SECTION 2: THE STRUCTURE --- */}
-      <section className="py-32 bg-zinc-950 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-cyan-900/5 skew-x-12 pointer-events-none" />
+        /* アニメーション用クラス */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <FadeIn>
-            <SectionTitle 
-              title="Smart vs Clever" 
-              subtitle="OSをアップデートしましょう。「Smart」であることは、もう古くなりつつあります。"
-              color="text-yellow-400"
-            />
-          </FadeIn>
+        /* 遅延表示用 */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-yellow-400 selection:text-black">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl">
-            {/* OLD OS */}
-            <FadeIn className="bg-zinc-900 p-12 md:p-16 border-b md:border-b-0 md:border-r border-zinc-800 relative">
-              <div className="absolute top-6 left-6 text-sm font-mono text-zinc-500 font-bold">LEGACY SYSTEM (1989)</div>
-              <h3 className="text-4xl font-bold text-zinc-400 mb-8 mt-4">Smart (Old OS)</h3>
-              <ul className="space-y-6 text-zinc-400 text-xl">
-                <li className="flex items-start gap-4">
-                  <div className="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600" />
-                  <span>120%の精密さを求め、減点方式で評価される</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600" />
-                  <span>レールから逸脱せず、真面目にコツコツやる</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600" />
-                  <span>「正解は先輩が知っている」と信じる</span>
-                </li>
-              </ul>
-              <div className="mt-10">
-                <SourceLink href="https://lp.startup-db.com/media/articles/journal-startup-db-com-articles-marketcap-global-2024" label="1989年の日本企業ランキング" />
-              </div>
-            </FadeIn>
+    <!-- Progress Bar -->
+    <div id="progress-bar" class="fixed top-0 left-0 h-2 bg-gradient-to-r from-cyan-500 to-yellow-400 z-50 transition-all duration-100 ease-out" style="width: 0%;"></div>
 
-            {/* NEW OS */}
-            <FadeIn delay={0.2} className="bg-black p-12 md:p-16 relative overflow-hidden">
-              <div className="absolute inset-0 bg-yellow-400/5 pointer-events-none" />
-              <div className="absolute top-6 right-6 text-sm font-mono text-yellow-400 animate-pulse font-bold">CURRENT SYSTEM (2025)</div>
-              <h3 className="text-4xl font-bold text-yellow-400 mb-8 mt-4 flex items-center gap-4">
-                Clever (New OS) <Zap size={32} />
-              </h3>
-              <ul className="space-y-6 text-white text-xl">
-                <li className="flex items-start gap-4">
-                  <div className="mt-2 min-w-[8px] h-[8px] rounded-full bg-yellow-400" />
-                  <span className="font-bold">未完成でも世に出す「ベータ版思考」</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="mt-2 min-w-[8px] h-[8px] rounded-full bg-yellow-400" />
-                  <span className="font-bold">ネットの情報で上書きし、早さと量を重視</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="mt-2 min-w-[8px] h-[8px] rounded-full bg-yellow-400" />
-                  <span className="font-bold">「正解は市場が決める」と知っている</span>
-                </li>
-              </ul>
-            </FadeIn>
-          </div>
-
-          <FadeIn delay={0.4} className="mt-12">
-            <div className="bg-red-950/30 border-l-8 border-red-500 p-8 rounded-r-lg flex flex-col md:flex-row items-start gap-6">
-              <AlertTriangle className="text-red-500 shrink-0 mt-1" size={40} />
-              <div>
-                <h4 className="text-red-400 font-bold text-2xl mb-3">Warning</h4>
-                <p className="text-red-100 text-lg leading-relaxed">
-                  日本の「大人」たちは、まだSmartな人材を求めているかもしれません。ですが、それでは世界（OS）とFitしません。<br/>
-                  みなさんが目指すべきは、空気を読むことではなく、<strong className="text-white border-b border-red-500">コードで空気を変えること</strong>です。
-                </p>
-                <div className="flex flex-wrap gap-4 mt-6">
-                  <SourceLink href="https://www.nikkei.com/article/DGXZQOUA258D60V21C25A2000000/" />
-                  <SourceLink href="https://www.hrbrain.jp/media/labor-management/labor-productivity1" />
-                </div>
-              </div>
+    <!-- HERO SECTION -->
+    <header class="h-screen flex flex-col justify-center items-center relative px-6 border-b border-zinc-900 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-50 pointer-events-none"></div>
+        
+        <div class="z-10 text-center max-w-6xl fade-in-section is-visible">
+            <div class="flex justify-center mb-8">
+                <span class="px-6 py-2 border-2 border-yellow-400 text-yellow-400 text-sm md:text-base font-bold font-mono rounded-full bg-yellow-400/10 tracking-wider">
+                    LECTURE: SURVIVAL_STRATEGY_2026
+                </span>
             </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* --- SECTION 3: REALITY & HOPE --- */}
-      <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <FadeIn>
-            <h2 className="text-6xl md:text-8xl font-bold mb-8 text-zinc-800 leading-none">
-              OKINAWA<br />
-              <span className="text-white">REALITY</span>
-            </h2>
-            <div className="space-y-8">
-              <div className="pl-6 border-l-4 border-yellow-400">
-                <p className="text-3xl font-bold text-white leading-tight">
-                  東京を見るのはやめましょう。<br />
-                  <span className="text-cyan-400">グローバルサウス</span>を見てください。
-                </p>
-              </div>
-              <p className="text-zinc-400 text-xl leading-relaxed">
-                沖縄の賃金や産業構造の現実は厳しいものです。労働集約型から知識集約型への転換は待ったなしの状態です。
-                しかし、地理的な優位性は間違いなくここにあります。
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <SourceLink href="https://www.mhlw.go.jp/toukei/itiran/roudou/chingin/kouzou/z2022/dl/10.pdf" label="賃金構造基本統計" />
-                <SourceLink href="https://c.okinawatimes.co.jp/index.html?kijiid=1353794" label="沖縄タイムス" />
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.3}>
-            <div className="bg-gradient-to-br from-cyan-900/30 to-blue-900/20 border border-cyan-500/30 p-10 md:p-12 rounded-3xl relative shadow-[0_0_30px_rgba(8,145,178,0.2)]">
-              <Cpu className="absolute top-6 right-6 text-cyan-400/20" size={120} />
-              <h3 className="text-4xl font-bold text-cyan-400 mb-6">HOPE: AI & Robot</h3>
-              <p className="text-zinc-200 text-xl leading-relaxed mb-8">
-                人口減少を嘆く必要はありません。AIとロボットがそれを補ってくれます。<br />
-                一人当たりの生産性を爆発的に高めるチャンスが、今まさに私たちの手元にあるのです。
-              </p>
-              <div className="flex flex-col gap-4">
-                 <a href="https://gemini.google.com/share/a6f61c204983" target="_blank" rel="noopener noreferrer" className="text-cyan-300 underline underline-offset-8 hover:text-white text-lg font-bold flex items-center gap-2">
-                    新しい価値を生成する (Generate) <ExternalLink size={18}/>
-                 </a>
-                 <SourceLink href="https://www.cas.go.jp/jp/seisaku/atarashii_sihonsyugi/kaigi/dai34/shiryou14.pdf" label="内閣官房資料" />
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* --- SECTION 4: THE BARRIER --- */}
-      <section className="py-32 bg-zinc-900 border-y border-zinc-800">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <FadeIn>
-            <h2 className="text-4xl md:text-6xl font-bold mb-10">
-              Why don't you use AI?
-            </h2>
-            <div className="inline-block bg-black px-10 py-6 rounded-2xl border border-zinc-700 mb-16 shadow-xl">
-              <p className="text-zinc-300 text-xl md:text-2xl font-medium">
-                日本人は、社会人になると勉強しません。<br/>これはデータに出ています。
-              </p>
-              <div className="flex justify-center mt-4">
-                <SourceLink href="https://benesse.jp/berd/koutou/research/pdf/kokusaihikaku_tyosa_20250819_web2.pdf" />
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.2} className="relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-yellow-400/10 blur-[120px] rounded-full pointer-events-none" />
             
-            <div className="relative bg-black border border-yellow-400/30 p-10 md:p-16 rounded-3xl shadow-2xl shadow-yellow-900/20">
-              <div className="flex justify-center mb-8">
-                {/* 改良版SVG */}
-                <SwissArmyKnifeIcon size={120} className="text-yellow-400" />
-              </div>
-              <h3 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                十徳ナイフ問題
-              </h3>
-              <p className="text-xl md:text-2xl text-zinc-300 leading-relaxed mb-8">
-                みなさんのポケットには、すでに最強の武器（AI）が入っています。<br />
-                使わないのは「機能」を知らないからではありません。<br />
-                <span className="text-yellow-400 font-bold block mt-4 text-3xl md:text-4xl">「切りたいもの（課題）」が見えていないだけなのです。</span>
-              </p>
-              <div className="flex justify-center mb-12">
-               <SourceLink href="https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r06/pdf/n1510000.pdf" label="情報通信白書を参照" />
-              </div>
+            <h1 class="text-6xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.95]">
+                SURVIVAL STRATEGY<br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
+                    & VIBE CODING
+                </span>
+            </h1>
+            
+            <p class="text-2xl md:text-4xl text-zinc-300 font-medium max-w-4xl mx-auto leading-relaxed">
+                AI時代を生き抜くために、<br class="md:hidden"/>新しいOSをインストールしましょう。
+            </p>
 
-              {/* YouTube Link Block */}
-              <div className="text-left mt-16 bg-zinc-900/50 p-6 rounded-xl border border-zinc-700 hover:border-red-500/50 transition-colors group">
-                <a 
-                  href="https://www.youtube.com/watch?v=FA-dz0jrlRU" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex flex-col md:flex-row gap-6 items-center"
-                >
-                  <div className="relative shrink-0 overflow-hidden rounded-lg w-full md:w-64 aspect-video group-hover:scale-105 transition-transform duration-500">
-                    <img 
-                      src="https://img.youtube.com/vi/FA-dz0jrlRU/mqdefault.jpg" 
-                      alt="Youtube Thumbnail" 
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <PlayCircle size={48} className="text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all"/>
+            <div class="mt-16 animate-bounce text-zinc-500 flex justify-center">
+                <i data-lucide="arrow-right" class="rotate-90 w-12 h-12"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: THE CRISIS -->
+    <section class="py-32 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="fade-in-section mb-16 md:mb-24">
+            <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6">WHY ARE WE HERE?</h2>
+            <div class="h-2 w-32 bg-yellow-400"></div>
+            <p class="mt-6 text-zinc-300 text-xl md:text-2xl font-medium leading-relaxed">教室の外では今、無視できない「バグ」が起きています。</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="fade-in-section delay-100 h-full">
+                <div class="bg-zinc-900/50 border border-zinc-800 p-10 rounded-2xl hover:border-red-500/30 transition-all group h-full flex flex-col shadow-lg">
+                    <div class="mb-6 p-4 bg-zinc-950 rounded-xl w-fit group-hover:bg-zinc-900 transition-colors text-red-500">
+                        <i data-lucide="users" class="w-12 h-12"></i>
                     </div>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                       <span className="bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded">YOUTUBE</span>
-                       <span className="text-zinc-400 text-xs">大ガスエンジニアのAI活用術</span>
+                    <h3 class="text-3xl font-bold mb-4">日本人の減少</h3>
+                    <p class="text-zinc-300 text-lg leading-relaxed mb-8 flex-grow">毎年、ひとつの県がまるごと消える勢いで人口が減っています。これは静かなる有事といえます。</p>
+                    <div class="flex flex-col gap-3 pt-6 border-t border-zinc-800/50">
+                        <a href="https://www.nikkei.com/article/DGXZQOUA2898V0Y5A720C2000000/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>データソースを見る</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://www.homemate.co.jp/research/population/all/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>データソースを見る</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
                     </div>
-                    <h4 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
-                      「普通のお父さん」がAIで覚醒
-                    </h4>
-                    <p className="text-zinc-400 text-sm md:text-base">
-                      娘のダンス練習用アプリから現場マニュアル作成まで。
-                      特別なエンジニアじゃなくても、AIを使えば「欲しいシステム」を次々と生み出せる実例。
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="fade-in-section delay-200 h-full">
+                <div class="bg-zinc-900/50 border border-zinc-800 p-10 rounded-2xl hover:border-red-500/30 transition-all group h-full flex flex-col shadow-lg">
+                    <div class="mb-6 p-4 bg-zinc-950 rounded-xl w-fit group-hover:bg-zinc-900 transition-colors text-orange-500">
+                        <i data-lucide="globe" class="w-12 h-12"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">自治体の消滅</h3>
+                    <p class="text-zinc-300 text-lg leading-relaxed mb-8 flex-grow">税収が減れば、インフラは維持できません。蛇口から水が出なくなる日が来るかもしれません。</p>
+                    <div class="flex flex-col gap-3 pt-6 border-t border-zinc-800/50">
+                        <a href="https://www.nikkei.com/article/DGKKZO85980830S5A420C1EE8000/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>データソースを見る</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="fade-in-section delay-300 h-full">
+                <div class="bg-zinc-900/50 border border-zinc-800 p-10 rounded-2xl hover:border-red-500/30 transition-all group h-full flex flex-col shadow-lg">
+                    <div class="mb-6 p-4 bg-zinc-950 rounded-xl w-fit group-hover:bg-zinc-900 transition-colors text-yellow-500">
+                        <i data-lucide="trending-down" class="w-12 h-12"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">労働生産性の低下</h3>
+                    <p class="text-zinc-300 text-lg leading-relaxed mb-8 flex-grow">人手不足よりも深刻な病です。どれだけ働いても、構造的に豊かになれない現状があります。</p>
+                    <div class="flex flex-col gap-3 pt-6 border-t border-zinc-800/50">
+                        <a href="https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r04/html/nd121110.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>データソースを見る</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE STRUCTURE -->
+    <section class="py-32 bg-zinc-950 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-cyan-900/5 skew-x-12 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+            <div class="fade-in-section mb-16 md:mb-24">
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-yellow-400 mb-6">SMART VS CLEVER</h2>
+                <div class="h-2 w-32 bg-yellow-400"></div>
+                <p class="mt-6 text-zinc-300 text-xl md:text-2xl font-medium leading-relaxed">OSをアップデートしましょう。「Smart」であることは、もう古くなりつつあります。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl">
+                <!-- OLD OS -->
+                <div class="fade-in-section delay-100 bg-zinc-900 p-12 md:p-16 border-b md:border-b-0 md:border-r border-zinc-800 relative">
+                    <div class="absolute top-6 left-6 text-sm font-mono text-zinc-500 font-bold">LEGACY SYSTEM (1989)</div>
+                    <h3 class="text-4xl font-bold text-zinc-400 mb-8 mt-4">Smart (Old OS)</h3>
+                    <ul class="space-y-6 text-zinc-400 text-xl">
+                        <li class="flex items-start gap-4">
+                            <div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600"></div>
+                            <span>120%の精密さを求め、減点方式で評価される</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600"></div>
+                            <span>レールから逸脱せず、真面目にコツコツやる</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600"></div>
+                            <span>「正解は先輩が知っている」と信じる</span>
+                        </li>
+                    </ul>
+                    <div class="mt-10">
+                        <a href="https://lp.startup-db.com/media/articles/journal-startup-db-com-articles-marketcap-global-2024" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>1989年の日本企業ランキング</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NEW OS -->
+                <div class="fade-in-section delay-200 bg-black p-12 md:p-16 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-yellow-400/5 pointer-events-none"></div>
+                    <div class="absolute top-6 right-6 text-sm font-mono text-yellow-400 animate-pulse font-bold">CURRENT SYSTEM (2025)</div>
+                    <h3 class="text-4xl font-bold text-yellow-400 mb-8 mt-4 flex items-center gap-4">
+                        Clever (New OS) <i data-lucide="zap" class="w-8 h-8"></i>
+                    </h3>
+                    <ul class="space-y-6 text-white text-xl">
+                        <li class="flex items-start gap-4">
+                            <div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-yellow-400"></div>
+                            <span class="font-bold">未完成でも世に出す「ベータ版思考」</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-yellow-400"></div>
+                            <span class="font-bold">ネットの情報で上書きし、早さと量を重視</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-yellow-400"></div>
+                            <span class="font-bold">「正解は市場が決める」と知っている</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="fade-in-section delay-300 mt-12">
+                <div class="bg-red-950/30 border-l-8 border-red-500 p-8 rounded-r-lg flex flex-col md:flex-row items-start gap-6">
+                    <i data-lucide="alert-triangle" class="text-red-500 shrink-0 mt-1 w-10 h-10"></i>
+                    <div>
+                        <h4 class="text-red-400 font-bold text-2xl mb-3">Warning</h4>
+                        <p class="text-red-100 text-lg leading-relaxed">
+                            日本の「大人」たちは、まだSmartな人材を求めているかもしれません。ですが、それでは世界（OS）とFitしません。<br/>
+                            みなさんが目指すべきは、空気を読むことではなく、<strong class="text-white border-b border-red-500">コードで空気を変えること</strong>です。
+                        </p>
+                        <div class="flex flex-wrap gap-4 mt-6">
+                            <a href="https://www.nikkei.com/article/DGXZQOUA258D60V21C25A2000000/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                                <span>データソースを見る</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                            <a href="https://www.hrbrain.jp/media/labor-management/labor-productivity1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                                <span>データソースを見る</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: REALITY & HOPE -->
+    <section class="py-32 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div class="fade-in-section delay-100">
+                <h2 class="text-6xl md:text-8xl font-bold mb-8 text-zinc-800 leading-none">
+                    OKINAWA<br />
+                    <span class="text-white">REALITY</span>
+                </h2>
+                <div class="space-y-8">
+                    <div class="pl-6 border-l-4 border-yellow-400">
+                        <p class="text-3xl font-bold text-white leading-tight">
+                            東京を見るのはやめましょう。<br />
+                            <span class="text-cyan-400">グローバルサウス</span>を見てください。
+                        </p>
+                    </div>
+                    <p class="text-zinc-400 text-xl leading-relaxed">
+                        沖縄の賃金や産業構造の現実は厳しいものです。労働集約型から知識集約型への転換は待ったなしの状態です。
+                        しかし、地理的な優位性は間違いなくここにあります。
                     </p>
-                  </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://www.mhlw.go.jp/toukei/itiran/roudou/chingin/kouzou/z2022/dl/10.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>賃金構造基本統計</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://c.okinawatimes.co.jp/index.html?kijiid=1353794" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>沖縄タイムス</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-section delay-300">
+                <div class="bg-gradient-to-br from-cyan-900/30 to-blue-900/20 border border-cyan-500/30 p-10 md:p-12 rounded-3xl relative shadow-[0_0_30px_rgba(8,145,178,0.2)]">
+                    <div class="absolute top-6 right-6 text-cyan-400/20">
+                        <i data-lucide="cpu" class="w-32 h-32"></i>
+                    </div>
+                    <h3 class="text-4xl font-bold text-cyan-400 mb-6">HOPE: AI & Robot</h3>
+                    <p class="text-zinc-200 text-xl leading-relaxed mb-8">
+                        人口減少を嘆く必要はありません。AIとロボットがそれを補ってくれます。<br />
+                        一人当たりの生産性を爆発的に高めるチャンスが、今まさに私たちの手元にあるのです。
+                    </p>
+                    <div class="flex flex-col gap-4">
+                        <a href="https://gemini.google.com/share/a6f61c204983" target="_blank" rel="noopener noreferrer" class="text-cyan-300 underline underline-offset-8 hover:text-white text-lg font-bold flex items-center gap-2">
+                            <span>新しい価値を生成する (Generate)</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://www.cas.go.jp/jp/seisaku/atarashii_sihonsyugi/kaigi/dai34/shiryou14.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full w-fit hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>内閣官房資料</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: THE BARRIER -->
+    <section class="py-32 bg-zinc-900 border-y border-zinc-800">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="fade-in-section delay-100">
+                <h2 class="text-4xl md:text-6xl font-bold mb-10">Why don't you use AI?</h2>
+                <div class="inline-block bg-black px-10 py-6 rounded-2xl border border-zinc-700 mb-16 shadow-xl">
+                    <p class="text-zinc-300 text-xl md:text-2xl font-medium">
+                        日本人は、社会人になると勉強しません。<br/>これはデータに出ています。
+                    </p>
+                    <div class="flex justify-center mt-4">
+                        <a href="https://benesse.jp/berd/koutou/research/pdf/kokusaihikaku_tyosa_20250819_web2.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>データソースを見る</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-section delay-200 relative">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-yellow-400/10 blur-[120px] rounded-full pointer-events-none"></div>
+                
+                <div class="relative bg-black border border-yellow-400/30 p-10 md:p-16 rounded-3xl shadow-2xl shadow-yellow-900/20">
+                    <div class="flex justify-center mb-8">
+                        <!-- Custom Swiss Army Knife SVG -->
+                        <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-yellow-400">
+                            <!-- Handle Body (Red) -->
+                            <rect x="35" y="20" width="30" height="60" rx="15" fill="#991b1b" stroke="#ef4444" stroke-width="2" />
+                            <!-- Swiss Cross -->
+                            <path d="M50 35V45M45 40H55" stroke="#fca5a5" stroke-width="3" stroke-linecap="round" />
+                            <!-- Main Blade (Top Center) -->
+                            <path d="M50 20L50 5L58 10C62 14 62 18 50 20" fill="#d4d4d8" stroke="#52525b" stroke-width="2" stroke-linejoin="round"/>
+                            <!-- Scissors (Top Right) -->
+                            <g transform="translate(60, 25) rotate(45)">
+                              <path d="M0 0L15 -5M0 0L15 5" stroke="#d4d4d8" stroke-width="2" />
+                              <circle cx="15" cy="-5" r="2.5" stroke="#52525b" stroke-width="1" fill="none"/>
+                              <circle cx="15" cy="5" r="2.5" stroke="#52525b" stroke-width="1" fill="none"/>
+                            </g>
+                            <!-- Saw/Cutter (Bottom Right) -->
+                            <path d="M65 50L85 55L83 58L80 56L78 59L75 57L65 60" fill="none" stroke="#d4d4d8" stroke-width="2" stroke-linejoin="round"/>
+                            <!-- Screwdriver (Bottom Left) -->
+                            <path d="M35 70L20 85L15 80L35 65" fill="#d4d4d8" stroke="#52525b" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M18 82L22 86" stroke="#52525b" stroke-width="1"/>
+                            <!-- Corkscrew (Left Center) -->
+                            <path d="M35 40C30 40 25 42 25 45C25 48 30 48 30 51C30 54 25 54 25 57" stroke="#d4d4d8" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">十徳ナイフ問題</h3>
+                    <p class="text-xl md:text-2xl text-zinc-300 leading-relaxed mb-8">
+                        みなさんのポケットには、すでに最強の武器（AI）が入っています。<br />
+                        使わないのは「機能」を知らないからではありません。<br />
+                        <span class="text-yellow-400 font-bold block mt-4 text-3xl md:text-4xl">「切りたいもの（課題）」が見えていないだけなのです。</span>
+                    </p>
+                    <div class="flex justify-center mb-12">
+                        <a href="https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r06/pdf/n1510000.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                            <span>情報通信白書を参照</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <!-- YouTube Link Block -->
+                    <div class="text-left mt-16 bg-zinc-900/50 p-6 rounded-xl border border-zinc-700 hover:border-red-500/50 transition-colors group">
+                        <a href="https://www.youtube.com/watch?v=FA-dz0jrlRU" target="_blank" rel="noopener noreferrer" class="flex flex-col md:flex-row gap-6 items-center">
+                            <div class="relative shrink-0 overflow-hidden rounded-lg w-full md:w-64 aspect-video group-hover:scale-105 transition-transform duration-500">
+                                <img src="https://img.youtube.com/vi/FA-dz0jrlRU/mqdefault.jpg" alt="Youtube Thumbnail" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                    <i data-lucide="play-circle" class="text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all w-12 h-12"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded">YOUTUBE</span>
+                                    <span class="text-zinc-400 text-xs">大ガスエンジニアのAI活用術</span>
+                                </div>
+                                <h4 class="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">「普通のお父さん」がAIで覚醒</h4>
+                                <p class="text-zinc-400 text-sm md:text-base">
+                                    娘のダンス練習用アプリから現場マニュアル作成まで。
+                                    特別なエンジニアじゃなくても、AIを使えば「欲しいシステム」を次々と生み出せる実例。
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Gemini Share Link Block -->
+                    <div class="text-left mt-6">
+                        <a href="https://gemini.google.com/share/c83c23d8edfa" target="_blank" rel="noopener noreferrer" class="block bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl border border-blue-500/30 hover:border-blue-400 transition-all hover:bg-blue-900/40 group">
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="lightbulb" class="text-yellow-400 shrink-0 mt-1 group-hover:text-yellow-300 w-8 h-8"></i>
+                                <div>
+                                    <h4 class="text-xl font-bold text-blue-200 mb-1 flex items-center gap-2">
+                                        Next Step: 好奇心集約型への提案 <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </h4>
+                                    <p class="text-zinc-400 text-sm">労働集約でも知識集約でもない、新しい働き方のヒント。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: MOTIVATION -->
+    <section class="py-32 px-6 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div class="fade-in-section delay-100">
+                <h3 class="text-3xl font-bold mb-6 flex items-center gap-3 text-white">
+                    <i data-lucide="terminal" class="text-cyan-400 w-8 h-8"></i> Proven Record
+                </h3>
+                <p class="text-zinc-300 text-xl leading-relaxed mb-6">
+                    中学生でもシステムは作れます。年齢も経験も関係ありません。
+                    そこにあるのは「やるか、やらないか」というシンプルな事実だけです。
+                </p>
+                <a href="https://tasksensei-one.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 text-xl font-bold hover:text-cyan-300 hover:underline flex items-center gap-2 p-4 bg-zinc-900 rounded-lg w-fit border border-zinc-800">
+                    <span>TaskSensei の実例を見る</span>
+                    <i data-lucide="external-link" class="w-5 h-5"></i>
                 </a>
-              </div>
-
-              {/* Gemini Share Link Block */}
-              <div className="text-left mt-6">
-                 <a 
-                  href="https://gemini.google.com/share/c83c23d8edfa" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl border border-blue-500/30 hover:border-blue-400 transition-all hover:bg-blue-900/40 group"
-                 >
-                   <div className="flex items-start gap-4">
-                     <Lightbulb className="text-yellow-400 shrink-0 mt-1 group-hover:text-yellow-300" size={32} />
-                     <div>
-                       <h4 className="text-xl font-bold text-blue-200 mb-1 flex items-center gap-2">
-                         Next Step: 好奇心集約型への提案 <ExternalLink size={16} />
-                       </h4>
-                       <p className="text-zinc-400 text-sm">
-                         労働集約でも知識集約でもない、新しい働き方のヒント。
-                       </p>
-                     </div>
-                   </div>
-                 </a>
-              </div>
-              
             </div>
-          </FadeIn>
+            
+            <div class="fade-in-section delay-200">
+                <h3 class="text-3xl font-bold mb-6 flex items-center gap-3 text-white">
+                    <i data-lucide="pen-tool" class="text-yellow-400 w-8 h-8"></i> History Repeats
+                </h3>
+                <p class="text-zinc-300 text-xl leading-relaxed mb-6">
+                    新しい技術には常に反対派がいます。
+                    ですが、歴史は証明しています。先に適応した者が勝つのです。
+                </p>
+                <a href="https://x.com/nikkei/status/1929478224251146497" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-cyan-300 hover:text-white transition-all mt-4 border border-cyan-500/50 bg-cyan-950/40 px-4 py-2 rounded-full hover:bg-cyan-600 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]">
+                    <span>日経新聞 Xポスト</span>
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
         </div>
-      </section>
 
-      {/* --- SECTION 5: MOTIVATION --- */}
-      <section className="py-32 px-6 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <FadeIn>
-            <h3 className="text-3xl font-bold mb-6 flex items-center gap-3 text-white">
-              <Terminal size={32} className="text-cyan-400"/> Proven Record
-            </h3>
-            <p className="text-zinc-300 text-xl leading-relaxed mb-6">
-              中学生でもシステムは作れます。年齢も経験も関係ありません。
-              そこにあるのは「やるか、やらないか」というシンプルな事実だけです。
+        <div class="fade-in-section delay-400 mt-32 text-center">
+            <h2 class="text-5xl md:text-7xl font-black mb-8">CURIOSITY DRIVEN.</h2>
+            <p class="text-2xl md:text-3xl text-zinc-300 leading-relaxed font-medium">
+                好奇心に従いましょう。勉強しましょう。<br />
+                特に、<span class="text-cyan-400 font-bold">AI</span>を。
             </p>
-            <a 
-              href="https://tasksensei-one.vercel.app/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-cyan-400 text-xl font-bold hover:text-cyan-300 hover:underline flex items-center gap-2 p-4 bg-zinc-900 rounded-lg w-fit border border-zinc-800"
-            >
-              TaskSensei の実例を見る <ExternalLink size={20} />
-            </a>
-          </FadeIn>
-          
-          <FadeIn delay={0.2}>
-            <h3 className="text-3xl font-bold mb-6 flex items-center gap-3 text-white">
-              <PenTool size={32} className="text-yellow-400"/> History Repeats
-            </h3>
-            <p className="text-zinc-300 text-xl leading-relaxed mb-6">
-              新しい技術には常に反対派がいます。
-              ですが、歴史は証明しています。先に適応した者が勝つのです。
-            </p>
-             <SourceLink href="https://x.com/nikkei/status/1929478224251146497" label="日経新聞 Xポスト" />
-          </FadeIn>
         </div>
+    </section>
 
-        <FadeIn delay={0.4} className="mt-32 text-center">
-          <h2 className="text-5xl md:text-7xl font-black mb-8">
-            CURIOSITY DRIVEN.
-          </h2>
-          <p className="text-2xl md:text-3xl text-zinc-300 leading-relaxed font-medium">
-            好奇心に従いましょう。勉強しましょう。<br />
-            特に、<span className="text-cyan-400 font-bold">AI</span>を。
-          </p>
-        </FadeIn>
-      </section>
-
-      {/* --- SECTION 6: VIBE CODING (PRACTICAL) --- */}
-      <section className="bg-[#1e1e1e] text-zinc-300 py-32 min-h-screen relative font-mono border-t-8 border-yellow-400">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center gap-4 mb-16">
-            <div className="w-4 h-4 rounded-full bg-red-500" />
-            <div className="w-4 h-4 rounded-full bg-yellow-500" />
-            <div className="w-4 h-4 rounded-full bg-green-500" />
-            <div className="ml-6 px-4 py-2 bg-black/40 rounded text-sm text-zinc-400 font-bold">
-              ~/lecture/period_02/vibe_coding
+    <!-- SECTION 6: VIBE CODING (PRACTICAL) -->
+    <section class="bg-[#1e1e1e] text-zinc-300 py-32 min-h-screen relative font-mono border-t-8 border-yellow-400">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center gap-4 mb-16">
+                <div class="w-4 h-4 rounded-full bg-red-500"></div>
+                <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+                <div class="w-4 h-4 rounded-full bg-green-500"></div>
+                <div class="ml-6 px-4 py-2 bg-black/40 rounded text-sm text-zinc-400 font-bold">
+                    ~/lecture/period_02/vibe_coding
+                </div>
             </div>
-          </div>
 
-          <FadeIn>
-            <h2 className="text-6xl md:text-8xl font-bold text-white mb-4">Period 2</h2>
-            <h3 className="text-4xl md:text-6xl font-bold text-cyan-400 mb-20">VIBE CODING</h3>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            {/* Step 1 */}
-            <FadeIn delay={0.1}>
-              <div className="bg-[#252526] p-8 rounded-xl border-2 border-[#3e3e42] hover:border-cyan-500 transition-colors h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-6 text-cyan-400">
-                  <Code size={32} />
-                  <span className="font-bold text-3xl">01. Generate</span>
-                </div>
-                <p className="mb-4 text-base text-zinc-400 font-bold">PROMPT:</p>
-                <div className="bg-black p-6 rounded-lg text-green-400 text-base mb-6 font-mono leading-relaxed border border-zinc-700">
-                  &gt; タスク管理アプリを作って。<br/>
-                  &gt; デザインはシンプルに。<br/>
-                  &gt; Reactでコード書いて。
-                </div>
-                <p className="text-zinc-200 text-lg leading-relaxed mt-auto">
-                  まずは0から1をAIに作らせましょう。恥ずかしがる必要はありません。プロンプトエンジニアリングこそが、最初のコーディングです。
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Step 2 */}
-            <FadeIn delay={0.3}>
-              <div className="bg-[#252526] p-8 rounded-xl border-2 border-[#3e3e42] hover:border-yellow-400 transition-colors h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-6 text-yellow-400">
-                  <Cpu size={32} />
-                  <span className="font-bold text-3xl">02. Customize</span>
-                </div>
-                <p className="mb-4 text-base text-zinc-400 font-bold">THINKING:</p>
-                <div className="bg-black p-6 rounded-lg text-yellow-200 text-base mb-6 font-mono leading-relaxed border border-zinc-700">
-                  // 十徳ナイフ視点<br/>
-                  if (user == "忘れっぽい") {'{'}<br/>
-                  &nbsp;&nbsp;addFeature("Remind");<br/>
-                  {'}'}
-                </div>
-                <p className="text-zinc-200 text-lg leading-relaxed mt-auto">
-                  ここで「Clever」さが試されます。生成されたコードを自分仕様にハックしましょう。上書き保存こそが創造です。
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Step 3 */}
-            <FadeIn delay={0.5}>
-              <div className="bg-[#252526] p-8 rounded-xl border-2 border-[#3e3e42] hover:border-pink-500 transition-colors h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-6 text-pink-400">
-                  <Users size={32} />
-                  <span className="font-bold text-3xl">03. Share</span>
-                </div>
-                <p className="mb-4 text-base text-zinc-400 font-bold">ACTION:</p>
-                <div className="w-full aspect-video bg-black flex items-center justify-center rounded-lg mb-6 border border-zinc-700">
-                  <span className="text-zinc-500 text-xl font-bold">Deploy & Show</span>
-                </div>
-                <p className="text-zinc-200 text-lg leading-relaxed mt-auto">
-                  隣の人に見せましょう。フィードバックをもらいましょう。拙い（つたない）コードでも、動けば正義です。
-                </p>
-              </div>
-            </FadeIn>
-          </div>
-
-          <div className="mt-24 text-center pb-12">
-            <FadeIn delay={0.6}>
-              {/* ボタンではなくスローガンに変更（押せないように div + cursor-default） */}
-              <div className="group relative inline-flex items-center gap-4 px-12 py-6 bg-cyan-900/50 text-white font-bold text-2xl md:text-3xl rounded-full border-4 border-cyan-400/30 cursor-default select-none">
-                Don't be Smart. Be Clever.
-              </div>
-            </FadeIn>
-          </div>
-          
-          {/* QR Code Section */}
-          <FadeIn delay={0.8} className="flex flex-col items-center justify-center pb-24">
-            <p className="text-zinc-400 mb-4 text-sm font-bold tracking-widest">SHARE THIS LECTURE</p>
-            <div className="p-4 bg-white rounded-xl shadow-[0_0_40px_rgba(8,145,178,0.3)]">
-              {/* QRコード表示エリア */}
-              <img 
-                src={qrCodeUrl}
-                alt="Lecture Share QR Code" 
-                className="w-48 h-48"
-              />
+            <div class="fade-in-section delay-100">
+                <h2 class="text-6xl md:text-8xl font-bold text-white mb-4">Period 2</h2>
+                <h3 class="text-4xl md:text-6xl font-bold text-cyan-400 mb-20">VIBE CODING</h3>
             </div>
-          </FadeIn>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <!-- Step 1 -->
+                <div class="fade-in-section delay-100 h-full">
+                    <div class="bg-[#252526] p-8 rounded-xl border-2 border-[#3e3e42] hover:border-cyan-500 transition-colors h-full flex flex-col">
+                        <div class="flex items-center gap-3 mb-6 text-cyan-400">
+                            <i data-lucide="code" class="w-8 h-8"></i>
+                            <span class="font-bold text-3xl">01. Generate</span>
+                        </div>
+                        <p class="mb-4 text-base text-zinc-400 font-bold">PROMPT:</p>
+                        <div class="bg-black p-6 rounded-lg text-green-400 text-base mb-6 font-mono leading-relaxed border border-zinc-700">
+                            &gt; タスク管理アプリを作って。<br/>
+                            &gt; デザインはシンプルに。<br/>
+                            &gt; Reactでコード書いて。
+                        </div>
+                        <p class="text-zinc-200 text-lg leading-relaxed mt-auto">
+                            まずは0から1をAIに作らせましょう。恥ずかしがる必要はありません。プロンプトエンジニアリングこそが、最初のコーディングです。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="fade-in-section delay-200 h-full">
+                    <div class="bg-[#252526] p-8 rounded-xl border-2 border-[#3e3e42] hover:border-yellow-400 transition-colors h-full flex flex-col">
+                        <div class="flex items-center gap-3 mb-6 text-yellow-400">
+                            <i data-lucide="cpu" class="w-8 h-8"></i>
+                            <span class="font-bold text-3xl">02. Customize</span>
+                        </div>
+                        <p class="mb-4 text-base text-zinc-400 font-bold">THINKING:</p>
+                        <div class="bg-black p-6 rounded-lg text-yellow-200 text-base mb-6 font-mono leading-relaxed border border-zinc-700">
+                            // 十徳ナイフ視点<br/>
+                            if (user == "忘れっぽい") {<br/>
+                            &nbsp;&nbsp;addFeature("Remind");<br/>
+                            }
+                        </div>
+                        <p class="text-zinc-200 text-lg leading-relaxed mt-auto">
+                            ここで「Clever」さが試されます。生成されたコードを自分仕様にハックしましょう。上書き保存こそが創造です。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="fade-in-section delay-300 h-full">
+                    <div class="bg-[#252526] p-8 rounded-xl border-2 border-[#3e3e42] hover:border-pink-500 transition-colors h-full flex flex-col">
+                        <div class="flex items-center gap-3 mb-6 text-pink-400">
+                            <i data-lucide="users" class="w-8 h-8"></i>
+                            <span class="font-bold text-3xl">03. Share</span>
+                        </div>
+                        <p class="mb-4 text-base text-zinc-400 font-bold">ACTION:</p>
+                        <div class="w-full aspect-video bg-black flex items-center justify-center rounded-lg mb-6 border border-zinc-700">
+                            <span class="text-zinc-500 text-xl font-bold">Deploy & Show</span>
+                        </div>
+                        <p class="text-zinc-200 text-lg leading-relaxed mt-auto">
+                            隣の人に見せましょう。フィードバックをもらいましょう。拙い（つたない）コードでも、動けば正義です。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-24 text-center pb-12">
+                <div class="fade-in-section delay-400">
+                    <div class="group relative inline-flex items-center gap-4 px-12 py-6 bg-cyan-900/50 text-white font-bold text-2xl md:text-3xl rounded-full border-4 border-cyan-400/30 cursor-default select-none">
+                        Don't be Smart. Be Clever.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QR Code Section -->
+            <div class="fade-in-section delay-400 flex flex-col items-center justify-center pb-24">
+                <p class="text-zinc-400 mb-4 text-sm font-bold tracking-widest">SHARE THIS LECTURE</p>
+                <div class="p-4 bg-white rounded-xl shadow-[0_0_40px_rgba(8,145,178,0.3)]">
+                    <img 
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://gemini.google.com/share/082a53817efa&color=000000&bgcolor=ffffff" 
+                        alt="Lecture Share QR Code" 
+                        class="w-48 h-48"
+                    />
+                </div>
+            </div>
 
         </div>
-      </section>
-      
-      {/* Footer */}
-      <footer className="bg-black py-12 text-center text-zinc-500 text-base border-t border-zinc-900">
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-black py-12 text-center text-zinc-500 text-base border-t border-zinc-900">
         <p>© 2026 SURVIVAL STRATEGY LECTURE. Designed for the Future Architects.</p>
-      </footer>
-    </div>
-  );
-}
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Lucide Iconsの初期化
+        lucide.createIcons();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // スクロールプログレスバー
+            const progressBar = document.getElementById('progress-bar');
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercent = (scrollTop / scrollHeight) * 100;
+                progressBar.style.width = scrollPercent + '%';
+            });
+
+            // Intersection Observer によるフェードインアニメーション
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10%見えたら発火
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // 一度表示したら監視を終了
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
