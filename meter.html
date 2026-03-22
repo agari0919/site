@@ -1,71 +1,128 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>メーター記録 v27</title>
-    <link rel="icon" href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
+    <title>メーター記録 v29</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='16' cy='16' r='14' stroke='%233b82f6' stroke-width='3' fill='none'/%3e%3cline x1='16' y1='16' x2='26' y2='8' stroke='%23ef4444' stroke-width='3' stroke-linecap='round'/%3e%3c/svg%3e">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <style>
-        body { font-family: 'Noto Sans JP', 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .loader { border-top-color: #3498db; -webkit-animation: spin 1s linear infinite; animation: spin 1s linear infinite; }
-        @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .meter-btn.active, .location-btn.active { background-color: #16a34a; color: white; border-color: #16a34a; }
-        /* iOSでの入力欄のスタイル崩れを防ぐ */
-        input[type="number"], input[type="text"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .loader {
+            border-top-color: #3498db;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .meter-btn.active,
+        .location-btn.active {
+            background-color: #16a34a;
+            color: white;
+            border-color: #16a34a;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
     </style>
 </head>
+
 <body class="bg-gray-50 text-gray-800">
 
     <div class="container mx-auto p-4 md:p-8 max-w-sm">
         <header class="text-center mb-6 relative">
             <h1 class="text-2xl md:text-3xl font-bold text-gray-900">メーター記録ツール</h1>
-            <span class="absolute top-0 right-0 text-xs text-gray-400">v27</span>
+            <span class="absolute top-0 right-0 text-xs text-gray-400">v29</span>
         </header>
 
         <main id="app-container" class="bg-white p-4 sm:p-6 rounded-xl shadow-md space-y-6">
             <div id="main-error-message" class="hidden"></div>
             <div id="main-success-message" class="hidden"></div>
 
-            <!-- ステップ１：メーター種別 -->
             <div>
                 <h3 class="text-md font-semibold mb-3 text-gray-700">1. メーター種別を選択</h3>
                 <div class="grid grid-cols-4 gap-2">
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="電気">電気</button>
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="水道">水道</button>
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="下水道">下水道</button>
-                    <button class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors" data-type="ガス">ガス</button>
+                    <button
+                        class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors"
+                        data-type="電気">電気</button>
+                    <button
+                        class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors"
+                        data-type="水道">水道</button>
+                    <button
+                        class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors"
+                        data-type="下水道">下水道</button>
+                    <button
+                        class="meter-btn border-2 border-gray-300 p-2 text-sm rounded-lg font-medium transition-colors"
+                        data-type="ガス">ガス</button>
                 </div>
             </div>
 
-            <!-- ステップ１.５：場所選択（動的に表示） -->
             <div id="location-section" class="hidden">
                 <h3 class="text-md font-semibold mb-3 text-gray-700">2. 場所を選択</h3>
                 <div id="location-buttons-container" class="flex flex-wrap gap-2">
-                    <!-- 場所ボタンがここに動的に追加される -->
                 </div>
             </div>
 
-            <!-- ステップ２：番号と数値 -->
             <div id="input-section" class="opacity-50 pointer-events-none transition-opacity duration-300">
                 <h3 class="text-md font-semibold mb-3 text-gray-700">3. 番号と数値を入力</h3>
                 <div id="meters-container" class="space-y-4">
-                    <!-- メーターブロック -->
                     <div class="meter-block border p-3 rounded-lg space-y-2 bg-gray-50">
                         <div>
                             <label class="text-sm font-medium text-gray-600">メーター番号</label>
-                            <input type="text" class="meter-number-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg" inputmode="decimal" placeholder="番号">
+                            <div class="flex gap-2 mt-1">
+                                <input type="text"
+                                    class="meter-number-input block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg"
+                                    inputmode="decimal" placeholder="番号">
+                                <button type="button" id="history-btn"
+                                    class="bg-blue-100 text-blue-700 hover:bg-blue-200 border border-blue-300 px-3 rounded-md font-medium text-sm whitespace-nowrap transition-colors flex items-center">
+                                    履歴確認
+                                </button>
+                            </div>
                         </div>
+
+                        <div id="history-container"
+                            class="hidden bg-blue-50 border border-blue-200 rounded-md p-3 text-sm my-2 shadow-inner">
+                        </div>
+
                         <div>
                             <div class="flex items-center justify-between mt-2">
                                 <label class="text-sm font-medium text-gray-600">数値</label>
-                                <button class="add-value-btn-local bg-blue-500 hover:bg-blue-600 text-white font-bold w-7 h-7 flex items-center justify-center text-lg rounded-full transition-colors">+</button>
+                                <button
+                                    class="add-value-btn-local bg-blue-500 hover:bg-blue-600 text-white font-bold w-7 h-7 flex items-center justify-center text-lg rounded-full transition-colors">+</button>
                             </div>
-                            <div class="value-inputs-container-local space-y-2 mt-1">
-                                <!-- value inputs here -->
-                            </div>
+                            <div class="value-inputs-container-local space-y-2 mt-1"></div>
                             <div class="text-right mt-2 text-md font-bold">
                                 合計: <span class="sub-total-value ml-2 text-blue-600">0</span>
                             </div>
@@ -74,15 +131,34 @@
                 </div>
             </div>
 
-            <!-- ステップ３：記録 -->
             <div>
-                 <div class="flex items-center mb-4">
-                    <input id="re-entry-checkbox" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <div class="flex items-center mb-4">
+                    <input id="re-entry-checkbox" type="checkbox"
+                        class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                     <label for="re-entry-checkbox" class="ml-2 block text-sm text-gray-900">間違えたため再入力</label>
                 </div>
-                <button id="submit-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition-colors">記録する</button>
+                <button id="submit-btn"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition-colors">記録する</button>
             </div>
-             <div id="loader-container" class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
+
+            <div class="pt-4 mt-4 border-t border-gray-200">
+                <button id="check-last-btn"
+                    class="w-full bg-white border-2 border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded-lg text-sm transition-colors flex justify-center items-center">
+                    <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+                    </svg>
+                    最新の記録を確認する
+                </button>
+                <div id="last-record-container"
+                    class="hidden mt-3 bg-gray-100 border border-gray-300 rounded-md p-3 text-sm shadow-inner">
+                </div>
+            </div>
+
+            <div id="loader-container"
+                class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl z-50">
                 <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
             </div>
         </main>
@@ -90,10 +166,9 @@
 
     <script>
         // --- ▼▼▼ 管理者の方へ：ここに設定を貼り付けてください ▼▼▼ ---
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxME__rPuuliYlWv8lJLIbEeTzYACQfcFYTol6c0zPqJAIYs5c3S1YFCMmqMj47L0uCeQ/exec"; // ここに手順4でコピーしたウェブアプリのURLを貼り付けてください
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxME__rPuuliYlWv8lJLIbEeTzYACQfcFYTol6c0zPqJAIYs5c3S1YFCMmqMj47L0uCeQ/exec";
         // --- ▲▲▲ 設定はここまで ▲▲▲ ---
 
-        // --- 設定データ ---
         const LOCATION_MAP = {
             '電気': ['千原'],
             '水道': ['西原', '中城'],
@@ -101,7 +176,6 @@
             'ガス': ['千原']
         };
 
-        // --- DOM要素 ---
         const meterBtns = document.querySelectorAll('.meter-btn');
         const locationSection = document.getElementById('location-section');
         const locationButtonsContainer = document.getElementById('location-buttons-container');
@@ -111,25 +185,26 @@
         const reEntryCheckbox = document.getElementById('re-entry-checkbox');
         const submitBtn = document.getElementById('submit-btn');
         const loaderContainer = document.getElementById('loader-container');
-        const appContainer = document.getElementById('app-container');
+        const historyBtn = document.getElementById('history-btn');
+        const historyContainer = document.getElementById('history-container');
+        const checkLastBtn = document.getElementById('check-last-btn');
+        const lastRecordContainer = document.getElementById('last-record-container');
 
-        // --- グローバル変数 ---
         let activeMeterType = '';
         let activeLocation = '';
 
-        // --- UIロジック ---
         function showMessage(element, message, isError = false) {
             element.textContent = message;
             element.className = isError ? 'block text-center text-red-500 bg-red-100 p-3 rounded-lg text-sm mb-4' : 'block text-center text-green-500 bg-green-100 p-3 rounded-lg text-sm mb-4';
-            setTimeout(() => { element.className = 'hidden'; }, 3000);
+            setTimeout(() => { element.className = 'hidden'; }, 4000);
         }
 
         function updateLocationOptions(type) {
             locationButtonsContainer.innerHTML = '';
             activeLocation = '';
-            
+            historyContainer.classList.add('hidden');
+
             const locations = LOCATION_MAP[type] || [];
-            
             if (locations.length > 0) {
                 locationSection.classList.remove('hidden');
                 locations.forEach(loc => {
@@ -140,12 +215,11 @@
                         document.querySelectorAll('.location-btn').forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
                         activeLocation = loc;
+                        historyContainer.classList.add('hidden');
                         enableInputSection();
                     });
                     locationButtonsContainer.appendChild(btn);
                 });
-                
-                // 選択肢が1つしかない場合は自動選択
                 if (locations.length === 1) {
                     locationButtonsContainer.firstChild.click();
                 } else {
@@ -153,18 +227,13 @@
                 }
             } else {
                 locationSection.classList.add('hidden');
-                activeLocation = '-'; // 場所指定なし
+                activeLocation = '-';
                 enableInputSection();
             }
         }
 
-        function enableInputSection() {
-            inputSection.classList.remove('opacity-50', 'pointer-events-none');
-        }
-
-        function disableInputSection() {
-            inputSection.classList.add('opacity-50', 'pointer-events-none');
-        }
+        function enableInputSection() { inputSection.classList.remove('opacity-50', 'pointer-events-none'); }
+        function disableInputSection() { inputSection.classList.add('opacity-50', 'pointer-events-none'); }
 
         function createValueInput(container) {
             const input = document.createElement('input');
@@ -181,9 +250,7 @@
             let total = 0;
             inputs.forEach(input => {
                 const value = parseFloat(input.value);
-                if (!isNaN(value)) {
-                    total += value;
-                }
+                if (!isNaN(value)) total += value;
             });
             block.querySelector('.sub-total-value').textContent = total.toLocaleString();
         }
@@ -194,6 +261,10 @@
                 const valueContainer = block.querySelector('.value-inputs-container-local');
                 createValueInput(valueContainer);
                 block.querySelector('.add-value-btn-local').addEventListener('click', () => createValueInput(valueContainer));
+
+                block.querySelector('.meter-number-input').addEventListener('input', () => {
+                    historyContainer.classList.add('hidden');
+                });
             }
         }
 
@@ -204,6 +275,9 @@
             locationSection.classList.add('hidden');
             disableInputSection();
             reEntryCheckbox.checked = false;
+            historyContainer.classList.add('hidden');
+            historyContainer.innerHTML = '';
+            // 最新の記録表示は残しておいた方が便利なのでリセットしない
 
             const block = document.querySelector('.meter-block');
             if (block) {
@@ -216,12 +290,9 @@
         }
 
         function initApp() {
-            if (!APPS_SCRIPT_URL) {
-                showMessage(mainErrorMessage, '【確認用モード】連携URLが未設定です。画面操作のみお試しいただけます。', true);
-            } else if (APPS_SCRIPT_URL.indexOf('/exec') === -1) {
-                showMessage(mainErrorMessage, '⚠️ 設定されたURLが間違っている可能性があります。URLの末尾が「/exec」になっているか確認してください。', true);
+            if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('/exec') === -1) {
+                showMessage(mainErrorMessage, '⚠️ GAS連携URLが正しく設定されていません。', true);
             }
-
             meterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     meterBtns.forEach(b => b.classList.remove('active'));
@@ -230,56 +301,140 @@
                     updateLocationOptions(activeMeterType);
                 });
             });
-
             initMeterBlock();
             submitBtn.addEventListener('click', handleSubmit);
+            historyBtn.addEventListener('click', fetchHistory);
+            checkLastBtn.addEventListener('click', fetchLastRecord); // 直前記録ボタンのイベント
         }
 
-        function handleSubmit() {
+        // --- 直前の記録（スプレッドシートの最終行）を取得するロジック ---
+        async function fetchLastRecord() {
             if (!APPS_SCRIPT_URL) {
-                showMessage(mainErrorMessage, "連携URLが設定されていないため、記録できません。", true);
+                showMessage(mainErrorMessage, "連携URLが未設定です。", true);
                 return;
             }
 
-            if (!activeMeterType) {
-                showMessage(mainErrorMessage, "1. メーター種別を選択してください。", true);
-                return;
+            lastRecordContainer.innerHTML = `<div class="flex justify-center items-center py-2 text-gray-500">
+                <div class="loader ease-linear rounded-full border-2 border-t-2 border-gray-500 h-4 w-4 mr-2"></div>スプレッドシートを確認中...
+            </div>`;
+            lastRecordContainer.classList.remove('hidden');
+
+            try {
+                const url = `${APPS_SCRIPT_URL}?action=getLastRecord`;
+                const response = await fetch(url);
+                const result = await response.json();
+
+                if (result.success) {
+                    if (result.data) {
+                        const d = result.data;
+                        const locText = (d.location && d.location !== '-' && d.location !== 'undefined') ? `(${d.location})` : '';
+                        lastRecordContainer.innerHTML = `
+                            <div class="font-bold text-gray-700 mb-2 border-b border-gray-300 pb-1">直前に記録されたデータ</div>
+                            <ul class="text-gray-700 space-y-1.5">
+                                <li class="flex justify-between"><span>日時:</span> <span>${d.date}</span></li>
+                                <li class="flex justify-between"><span>種別:</span> <span>${d.type} ${locText}</span></li>
+                                <li class="flex justify-between"><span>番号:</span> <span>${d.number}</span></li>
+                                <li class="flex justify-between items-center mt-1 border-t border-gray-200 pt-1">
+                                    <span>数値:</span> 
+                                    <span class="text-blue-600 font-bold text-lg">${parseFloat(d.value).toLocaleString()}</span>
+                                </li>
+                            </ul>
+                        `;
+                    } else {
+                        lastRecordContainer.innerHTML = '<div class="text-gray-500 text-center py-1">記録されたデータがありません。</div>';
+                    }
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                lastRecordContainer.innerHTML = '<div class="text-red-500 text-center py-1">データの取得に失敗しました。</div>';
             }
-            if (!activeLocation && !locationSection.classList.contains('hidden')) {
-                showMessage(mainErrorMessage, "2. 場所を選択してください。", true);
-                return;
+        }
+
+        // --- 履歴取得ロジック（特定の番号） ---
+        async function fetchHistory() {
+            if (!APPS_SCRIPT_URL) { showMessage(mainErrorMessage, "連携URLが未設定です。", true); return; }
+            if (!activeMeterType || (!activeLocation && !locationSection.classList.contains('hidden'))) {
+                showMessage(mainErrorMessage, "メーター種別と場所を選択してください。", true); return;
             }
 
             const block = document.querySelector('.meter-block');
+            const meterNumber = block.querySelector('.meter-number-input').value.trim();
+            if (!meterNumber) {
+                showMessage(mainErrorMessage, "メーター番号を入力してから「履歴確認」を押してください。", true); return;
+            }
+
+            historyContainer.innerHTML = `<div class="flex justify-center items-center py-2 text-gray-500">
+                <div class="loader ease-linear rounded-full border-2 border-t-2 border-blue-500 h-4 w-4 mr-2"></div>取得中...
+            </div>`;
+            historyContainer.classList.remove('hidden');
+
+            try {
+                const url = `${APPS_SCRIPT_URL}?action=getHistory&type=${encodeURIComponent(activeMeterType)}&location=${encodeURIComponent(activeLocation)}&number=${encodeURIComponent(meterNumber)}`;
+                const response = await fetch(url);
+                const result = await response.json();
+
+                if (result.success) {
+                    if (!result.data || result.data.length === 0) {
+                        historyContainer.innerHTML = '<div class="text-gray-500 text-center py-1">該当する過去のデータはありません。</div>';
+                    } else {
+                        let html = '<div class="font-bold text-blue-800 mb-2 border-b border-blue-200 pb-1">過去の入力データ</div><ul class="space-y-1.5">';
+                        result.data.forEach(item => {
+                            html += `<li class="flex justify-between items-center bg-white p-2 rounded border border-blue-100 shadow-sm">
+                                        <span class="text-xs text-gray-600 font-medium">${item.label} ${item.date}</span>
+                                        <span class="font-bold text-gray-800 tracking-wide">${parseFloat(item.value).toLocaleString()}</span>
+                                     </li>`;
+                        });
+                        html += '</ul>';
+                        historyContainer.innerHTML = html;
+                    }
+                } else { throw new Error(result.message); }
+            } catch (error) {
+                console.error('Error:', error);
+                historyContainer.innerHTML = '<div class="text-red-500 text-center py-1">履歴の取得に失敗しました。</div>';
+            }
+        }
+
+        // --- 記録ロジック ---
+        function handleSubmit() {
+            if (!APPS_SCRIPT_URL) { showMessage(mainErrorMessage, "連携URLが設定されていないため、記録できません。", true); return; }
+            if (!activeMeterType) { showMessage(mainErrorMessage, "1. メーター種別を選択してください。", true); return; }
+            if (!activeLocation && !locationSection.classList.contains('hidden')) { showMessage(mainErrorMessage, "2. 場所を選択してください。", true); return; }
+
+            const block = document.querySelector('.meter-block');
             if (!block) return;
-            
             loaderContainer.classList.remove('hidden');
 
             const meterNumber = block.querySelector('.meter-number-input').value.trim();
             const totalText = block.querySelector('.sub-total-value').textContent;
             const total = parseFloat(totalText.replace(/,/g, ''));
-            
+
             if (!meterNumber || (isNaN(total) || (total === 0 && block.querySelector('.value-input').value.trim() === ''))) {
                 showMessage(mainErrorMessage, "番号と数値を入力してください。", true);
                 loaderContainer.classList.add('hidden');
                 return;
             }
-            
+
             const isReEntry = reEntryCheckbox.checked;
-            
             saveData(activeMeterType, activeLocation, meterNumber, total, isReEntry);
 
             setTimeout(() => {
                 loaderContainer.classList.add('hidden');
-                showMessage(mainSuccessMessage, `データを記録しました！`, false);
+                showMessage(mainSuccessMessage, `データを記録しました！下のボタンから確認できます。`, false);
                 resetAll();
+
+                // 記録完了時に「最新の記録確認」ボタンを少し目立たせる（アニメーション）
+                checkLastBtn.classList.add('ring-4', 'ring-green-300', 'bg-green-50');
+                setTimeout(() => {
+                    checkLastBtn.classList.remove('ring-4', 'ring-green-300', 'bg-green-50');
+                }, 2000);
+
             }, 1500);
         }
 
-        // --- 機能ロジック ---
         function saveData(meterType, location, number, value, isReEntry) {
             const payload = { meterType, location, meterNumber: number, value, isReEntry };
-            
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify(payload),
@@ -291,4 +446,5 @@
         window.addEventListener('load', initApp);
     </script>
 </body>
+
 </html>
