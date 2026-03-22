@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>305 AI Project | 社会人を、追い越しましょう。</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        [data-i18n] { transition: opacity 0.2s; }
+        
+        /* Photo Placeholder Style */
+        .photo-placeholder {
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.5rem;
+            color: #94a3b8;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+            border: 2px dashed #cbd5e1;
+            overflow: hidden;
+        }
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 px-6 py-4">
+        <nav class="max-w-7xl mx-auto flex justify-between items-center glass-card rounded-full px-6 py-3 shadow-lg">
+            <a href="#" class="flex items-center">
+                <img src="305lab_logo.png" alt="305 lab logo" class="h-6 md:h-8 w-auto">
+            </a>
+            
+            <div class="flex items-center space-x-4 md:space-x-8 font-bold text-sm">
+                <div class="hidden md:flex space-x-6">
+                    <a href="#data" class="hover:text-indigo-600 transition" data-i18n="nav-data">DATA</a>
+                    <a href="#env" class="hover:text-indigo-600 transition" data-i18n="nav-env">ENVIRONMENT</a>
+                    <a href="#work" class="hover:text-indigo-600 transition" data-i18n="nav-work">WORK</a>
+                </div>
+                <button onclick="toggleLang()" class="flex items-center space-x-1 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200 hover:bg-slate-200 transition">
+                    <i data-lucide="languages" size="14"></i>
+                    <span id="lang-label" class="text-[10px] md:text-xs uppercase">English</span>
+                </button>
+                <a href="#apply" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition shadow-md text-[10px] md:text-sm" data-i18n="nav-entry">ENTRY</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 hero-gradient opacity-10 -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 px-4 py-1 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold mb-6">
+                    <i data-lucide="sparkles" size="16"></i>
+                    <span data-i18n="hero-tag">最短2ヶ月で「ガクチカ」完成。琉大・沖国大生限定募集</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">
+                    <span data-i18n="hero-title-1">社会人を、</span><br>
+                    <span class="text-gradient" data-i18n="hero-title-2">追い越しましょう。</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium" data-i18n="hero-desc">
+                    「学生時代、何をしていましたか？」<br>
+                    その答えを、最新AIで作る2ヶ月間にしませんか？<br>
+                    琉大305号室は、一生モノの実績が手に入る現場です。
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#apply" class="w-full sm:w-auto px-10 py-5 bg-slate-900 text-white rounded-2xl font-black text-xl hover:scale-105 transition shadow-2xl" data-i18n="hero-cta-entry">
+                        エントリーする
+                    </a>
+                    <a href="#data" class="w-full sm:w-auto px-10 py-5 bg-white text-slate-900 border-2 border-slate-200 rounded-2xl font-bold text-xl hover:bg-slate-50 transition" data-i18n="hero-cta-data">
+                        実績を見る
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Hero Photo Placeholder -->
+            <div class="relative group">
+                <div class="photo-placeholder aspect-[4/3] shadow-2xl relative z-10">
+                    <span class="text-xs italic uppercase tracking-widest">[Main Visual: 305号室の活気が伝わる写真]</span>
+                    <!-- <img src="hero_photo.jpg" alt="Lab Activity"> -->
+                </div>
+                <div class="absolute -bottom-6 -right-6 w-full h-full bg-indigo-200 rounded-[1.5rem] -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition duration-500"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capacity Alert Section -->
+    <section class="py-12 bg-indigo-600 text-white">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-6 md:mb-0 text-center md:text-left">
+                <h2 class="text-3xl font-black mb-2" data-i18n="capacity-title">限定 87時間の「稼働枠」を募集しています。</h2>
+                <p class="opacity-90 font-medium text-indigo-50" data-i18n="capacity-desc">週合計87時間分のプロジェクトメンバーを編成中です。定員に達し次第、締め切ります。</p>
+            </div>
+            <div class="flex items-center space-x-4 bg-white/20 p-4 rounded-2xl backdrop-blur-md">
+                <div class="text-center px-4 border-r border-white/30">
+                    <span class="block text-4xl font-black">87h</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider">Capacity</span>
+                </div>
+                <div class="px-4 text-sm font-bold leading-tight" data-i18n="capacity-example">
+                    例：週20h × 4名<br>＋残り7h枠
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Section -->
+    <section id="data" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-sm font-bold text-indigo-600 tracking-widest uppercase mb-2">Numbers of 305</h2>
+            <p class="text-4xl font-black mb-16" data-i18n="data-title">数字で見る、私たちの実績です。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Gakuchika -->
+                <div class="p-8 rounded-3xl bg-indigo-600 text-white shadow-xl hover:shadow-2xl transition group relative overflow-hidden text-left">
+                    <div class="absolute top-0 right-0 p-4 opacity-20"><i data-lucide="award" size="64"></i></div>
+                    <div class="text-5xl font-black mb-2 tracking-tighter" data-i18n="stat-1-val">2ヶ月</div>
+                    <p class="font-bold mb-2" data-i18n="stat-1-title">最短で実績を構築</p>
+                    <p class="text-indigo-100 text-xs leading-relaxed" data-i18n="stat-1-desc">就活で語れる「AIでの課題解決実績」をわずか2ヶ月で。周りに圧倒的な差をつけられます。</p>
+                </div>
+                <!-- Hourly Wage -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition group text-left">
+                    <div class="text-5xl font-black mb-2 tracking-tighter text-indigo-600" data-i18n="stat-2-val">¥1,023~</div>
+                    <p class="font-bold mb-2 text-slate-900" data-i18n="stat-2-title">スキルに応じた時給制</p>
+                    <p class="text-slate-500 text-xs" data-i18n="stat-2-desc">1,023円からスタート。2ヶ月後にスキルが認められれば1,100円へアップします。</p>
+                </div>
+                <!-- 900h -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition group text-left">
+                    <div class="text-5xl font-black mb-2 tracking-tighter text-pink-600" data-i18n="stat-3-val">900h</div>
+                    <p class="font-bold mb-2 text-slate-900" data-i18n="stat-3-title">年間900時間を削減</p>
+                    <p class="text-slate-500 text-xs" data-i18n="stat-3-desc">AIを導入し、企業の膨大な業務時間を削減。あなたのスキルが企業の力になります。</p>
+                </div>
+                <!-- 80% -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition group text-left">
+                    <div class="text-5xl font-black mb-2 tracking-tighter text-emerald-600" data-i18n="stat-4-val">80%</div>
+                    <p class="font-bold mb-2 text-slate-900" data-i18n="stat-4-title">業務効率を大幅改善</p>
+                    <p class="text-slate-500 text-xs" data-i18n="stat-4-desc">担当業務の8割を自動化した学生も。社会人を先行するスキルを身につけましょう。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environment (LOOKBOOK Style) -->
+    <section id="env" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-indigo-600 tracking-widest uppercase mb-2">Environment</h2>
+                <p class="text-4xl font-black tracking-tight" data-i18n="env-title">最強の装備で、活動しましょう。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Photo Card 1 -->
+                <div class="space-y-4">
+                    <div class="photo-placeholder aspect-square shadow-md">
+                        <span class="text-[10px] uppercase">[Lab: 305号室の内観]</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black mb-1" data-i18n="env-1-h">AIツール使い放題</h3>
+                        <p class="text-sm text-slate-500" data-i18n="env-1-p">Gemini, ChatGPT, Genspark等の有料ツールがすべて無料です。</p>
+                    </div>
+                </div>
+                <!-- Photo Card 2 -->
+                <div class="space-y-4">
+                    <div class="photo-placeholder aspect-square shadow-md">
+                        <span class="text-[10px] uppercase">[Tool: 最強AIの操作画面]</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black mb-1" data-i18n="env-2-h">BGMも自由です</h3>
+                        <p class="text-sm text-slate-500" data-i18n="env-2-p">Apple Musicで好きな曲を。リラックスして集中できる環境です。</p>
+                    </div>
+                </div>
+                <!-- Photo Card 3 -->
+                <div class="space-y-4">
+                    <div class="photo-placeholder aspect-square shadow-md">
+                        <span class="text-[10px] uppercase">[Item: 貸出用ハイスペPC]</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black mb-1" data-i18n="env-3-h">貸出用PCあり</h3>
+                        <p class="text-sm text-slate-500" data-i18n="env-3-p">手ぶらで来ても大丈夫です。ハイスペックPCを完備しています。</p>
+                    </div>
+                </div>
+                <!-- Photo Card 4 -->
+                <div class="space-y-4">
+                    <div class="photo-placeholder aspect-square shadow-md">
+                        <span class="text-[10px] uppercase">[Life: メンバーが談笑する様子]</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black mb-1" data-i18n="env-4-h">多様なメンバー</h3>
+                        <p class="text-sm text-slate-500" data-i18n="env-4-p">留学生も在籍中。グローバルでフラットな環境です。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Styles -->
+    <section id="work" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-sm font-bold text-indigo-600 tracking-widest uppercase mb-2">Work Style</h2>
+            <p class="text-4xl font-black mb-16" data-i18n="work-title">働き方は、あなたが選べます。</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
+                <!-- Dedicated (Front Runner) -->
+                <div class="bg-slate-900 text-white p-10 md:p-14 rounded-[40px] relative overflow-hidden group transition hover:scale-[1.02] shadow-2xl">
+                    <div class="relative z-10">
+                        <span class="inline-block px-4 py-1 rounded-full bg-indigo-500 text-xs font-bold mb-6" data-i18n="work-1-tag">ガッツリ系</span>
+                        <h3 class="text-3xl font-black mb-8 italic" data-i18n="work-1-h">Front Runner</h3>
+                        <ul class="space-y-4 mb-8 text-slate-300 font-medium">
+                            <li class="flex items-start space-x-3">
+                                <i data-lucide="check-circle" class="text-indigo-400 mt-1 shrink-0"></i>
+                                <span data-i18n="work-1-l1">企業の課題をAIで直接解決</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i data-lucide="check-circle" class="text-indigo-400 mt-1 shrink-0"></i>
+                                <span data-i18n="work-1-l2">大森先生と企業を訪問しレクチャーをサポート</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i data-lucide="check-circle" class="text-indigo-400 mt-1 shrink-0"></i>
+                                <span data-i18n="work-1-l3">教材作りやシステム構築のディレクション</span>
+                            </li>
+                        </ul>
+                        <p class="text-indigo-300 text-sm italic font-bold" data-i18n="work-1-p">※社会をリードしたい、圧倒的に成長したい方向け</p>
+                    </div>
+                </div>
+                <!-- Support (Creative Support) -->
+                <div class="bg-indigo-50 p-10 md:p-14 rounded-[40px] border-2 border-indigo-100 relative overflow-hidden group transition hover:scale-[1.02]">
+                    <div class="relative z-10">
+                        <span class="inline-block px-4 py-1 rounded-full bg-indigo-200 text-indigo-700 text-xs font-bold mb-6" data-i18n="work-2-tag">週1〜裏方系</span>
+                        <h3 class="text-3xl font-black mb-8 italic text-indigo-900" data-i18n="work-2-h">Creative Support</h3>
+                        <ul class="space-y-4 mb-8 text-slate-600 font-medium">
+                            <li class="flex items-start space-x-3">
+                                <i data-lucide="check-circle" class="text-indigo-600 mt-1 shrink-0"></i>
+                                <span data-i18n="work-2-l1">SNSやWebサイトの配信・運用</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i data-lucide="check-circle" class="text-indigo-600 mt-1 shrink-0"></i>
+                                <span data-i18n="work-2-l2">AIを活用した動画編集</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i data-lucide="check-circle" class="text-indigo-600 mt-1 shrink-0"></i>
+                                <span data-i18n="work-2-l3">資料・本の裁断とスキャニング（自炊）</span>
+                            </li>
+                        </ul>
+                        <p class="text-indigo-500 text-sm italic font-bold" data-i18n="work-2-p">※まずはAIに触れてみたい、裏から支えたい方向け</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section class="py-24 bg-indigo-900 text-white overflow-hidden relative">
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-black mb-12 italic leading-tight" data-i18n="vision-h">「学生の力で、沖縄の所得を<br>底上げしたいと考えています。」</h2>
+            
+            <div class="flex flex-col items-center">
+                <!-- Professor Photo Placeholder -->
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-indigo-800 border-4 border-indigo-400 flex items-center justify-center mb-6 overflow-hidden">
+                    <span class="text-[8px] uppercase text-indigo-300">[Prof. Photo]</span>
+                    <!-- <img src="prof_omori.jpg" alt="Prof. Omori"> -->
+                </div>
+                <p class="text-indigo-100 text-lg leading-relaxed mb-12 max-w-2xl mx-auto" data-i18n="vision-p">社会のAI活用を学生がリードすることで、企業の生産性を高め、社会全体の所得を増やしていく。その第一歩を、305号室から始めましょう。</p>
+                <div>
+                    <p class="font-black text-2xl">大森 先生</p>
+                    <p class="text-indigo-400 text-sm font-bold tracking-widest uppercase">Project Director</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="apply" class="py-24 bg-white text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-4xl font-black mb-8" data-i18n="apply-h">まずは、気軽に連絡してください。</h2>
+            <div class="mb-12">
+                <p class="font-black text-xl mb-4 text-slate-700"><span data-i18n="capacity-label">残り稼働枠：</span>あと約 <span class="text-indigo-600 text-3xl">87</span> 時間分</p>
+                <div class="w-full bg-slate-200 h-3 rounded-full max-w-md mx-auto overflow-hidden">
+                    <div class="bg-indigo-600 h-full w-[25%]" id="progress-bar"></div>
+                </div>
+            </div>
+            <button onclick="handleContact()" class="px-12 py-6 bg-slate-900 text-white rounded-full font-black text-2xl hover:scale-105 transition shadow-2xl flex items-center justify-center mx-auto space-x-3">
+                <i data-lucide="message-circle"></i>
+                <span data-i18n="apply-btn">大森先生に連絡する</span>
+            </button>
+            
+            <div class="mt-16 flex flex-col items-center">
+                <img src="305lab_logo.png" alt="305 lab logo" class="h-10 md:h-12 w-auto mb-4 opacity-80">
+                <p class="text-slate-400 font-bold text-xs tracking-widest uppercase">&copy; 305 AI LAB OKINAWA</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Language & Logic Script -->
+    <script>
+        lucide.createIcons();
+
+        let currentLang = 'ja';
+        const translations = {
+            ja: {
+                "nav-data": "DATA", "nav-env": "ENVIRONMENT", "nav-work": "WORK", "nav-entry": "エントリー",
+                "hero-tag": "最短2ヶ月で「ガクチカ」完成。琉大・沖国大生限定募集",
+                "hero-title-1": "社会人を、", "hero-title-2": "追い越しましょう。",
+                "hero-desc": "「学生時代、何をしていましたか？」<br>その答えを、最新AIで作る2ヶ月間にしませんか？<br>琉大305号室は、一生モノの実績が手に入る現場です。",
+                "hero-cta-entry": "エントリーする", "hero-cta-data": "実績を見る",
+                "capacity-title": "限定 87時間の「稼働枠」を募集しています。",
+                "capacity-desc": "週合計87時間分のプロジェクトメンバーを編成中です。定員に達し次第、締め切ります。",
+                "capacity-example": "例：週20h × 4名<br>＋残り7h枠",
+                "data-title": "数字で見る、私たちの実績です。",
+                "stat-1-val": "2ヶ月", "stat-1-title": "最短で実績を構築", "stat-1-desc": "就活で語れる「AIでの課題解決実績」をわずか2ヶ月で。周りに圧倒的な差をつけられます。",
+                "stat-2-val": "¥1,023~", "stat-2-title": "スキルに応じた時給制", "stat-2-desc": "1,023円からスタート。2ヶ月後にスキルが認められれば1,100円へアップします。",
+                "stat-3-val": "900h", "stat-3-title": "年間900時間を削減", "stat-3-desc": "AIを導入し、企業の膨大な業務時間を削減。あなたのスキルが企業の力になります。",
+                "stat-4-val": "80%", "stat-4-title": "業務効率を大幅改善", "stat-4-desc": "担当業務の8割を自動化した学生も。社会人を先行するスキルを身につけましょう。",
+                "env-title": "最強の装備で、活動しましょう。",
+                "env-desc": "琉大305号室。ここは最前線のAI研究所です。",
+                "env-1-h": "AIツール使い放題", "env-1-p": "Gemini, ChatGPT, Genspark等の有料ツールがすべて無料です。",
+                "env-2-h": "BGMも自由です", "env-2-p": "Apple Musicで好きな曲を。リラックスして集中できる環境です。",
+                "env-3-h": "貸出用PCあり", "env-3-p": "手ぶらで来ても大丈夫です。ハイスペックPCを完備しています。",
+                "env-4-h": "多様なメンバー", "env-4-p": "留学生も在籍中。グローバルでフラットな環境です。",
+                "work-title": "働き方は、あなたが選べます。",
+                "work-1-tag": "ガッツリ系", "work-1-h": "Front Runner", 
+                "work-1-l1": "企業の課題をAIで直接解決", "work-1-l2": "大森先生と企業を訪問しレクチャーをサポート", "work-1-l3": "教材作りやシステム構築のディレクション",
+                "work-1-p": "※社会をリードしたい、圧倒的に成長したい方向け",
+                "work-2-tag": "週1〜裏方系", "work-2-h": "Creative Support", 
+                "work-2-l1": "SNSやWebサイトの配信・運用", "work-2-l2": "AIを活用した動画編集", "work-2-l3": "資料・本の裁断とスキャニング（自炊）",
+                "work-2-p": "※まずはAIに触れてみたい、裏から支えたい方向け",
+                "vision-h": "「学生の力で、沖縄の所得を底上げしたい。」",
+                "vision-p": "社会のAI活用を学生がリードすることで、企業の生産性を高め、社会全体の所得を増やしていく。その第一歩を、305号室から始めましょう。",
+                "apply-h": "まずは、気軽に連絡してください。",
+                "capacity-label": "残り稼働枠：", "apply-btn": "大森先生に連絡する"
+            },
+            en: {
+                "nav-data": "DATA", "nav-env": "ENVIRONMENT", "nav-work": "WORK", "nav-entry": "ENTRY",
+                "hero-tag": "Build your career in 2 months. For Ryukyu/OKIU students only.",
+                "hero-title-1": "Overtake the", "hero-title-2": "Professionals.",
+                "hero-desc": "What did you do during your university years?<br>Make your answer 'Leading the AI revolution.'<br>Room 305 at Ryukyu Univ is where real careers start.",
+                "hero-cta-entry": "Apply Now", "hero-cta-data": "See Results",
+                "capacity-title": "Recruiting 87 Hours of 'Work Capacity' Weekly.",
+                "capacity-desc": "We are assembling a team for a total of 87h/week. Applications close when full.",
+                "capacity-example": "Ex: 4 people @ 20h/week<br>+ remaining 7h slot",
+                "data-title": "Real Results, Real Impact.",
+                "stat-1-val": "2 Months", "stat-1-title": "Fast-Track Career", "stat-1-desc": "Build an 'AI problem-solving portfolio' in just 2 months. Stand out in the job market.",
+                "stat-2-val": "¥1,023~", "stat-2-title": "Skill-Based Pay", "stat-2-desc": "Starting from ¥1,023. Increases to ¥1,100 after 2 months based on skill performance.",
+                "stat-3-val": "900h", "stat-3-title": "900 Hours Saved", "stat-3-desc": "We significantly reduced business hours using AI. Your skills will empower companies.",
+                "stat-4-val": "80%", "stat-4-title": "Efficiency Hack", "stat-4-desc": "Students have automated 80% of their assigned tasks. Stay ahead of the workforce.",
+                "env-title": "Equipped with the Best Tools.",
+                "env-desc": "Room 305. The front line of AI research.",
+                "env-1-h": "Unlimited AI Access", "env-1-p": "Free access to paid tools like Gemini, ChatGPT, and Genspark.",
+                "env-2-h": "Freedom of Music", "env-2-p": "Play your favorite Apple Music. A relaxed environment for deep focus.",
+                "env-3-h": "Laptops for Rent", "env-3-p": "High-spec laptops are available. No need to bring your own.",
+                "env-4-h": "Global Diversity", "env-4-p": "International students are welcome. A flat and inclusive community.",
+                "work-title": "Choose Your Path.",
+                "work-1-tag": "Dedicated", "work-1-h": "Front Runner", 
+                "work-1-l1": "Solve business issues directly with AI", "work-1-l2": "Visit clients with Prof. Omori and support lectures", "work-1-l3": "Direct content creation and system construction",
+                "work-1-p": "For those who want to lead society and grow explosively.",
+                "work-2-tag": "Flex Support", "work-2-h": "Creative Support", 
+                "work-2-l1": "Manage social media and websites", "work-2-l2": "Video editing with AI-efficient workflows", "work-2-l3": "Document/Book digitizing (scanning)",
+                "work-2-p": "For those who want to explore AI or support from backstage.",
+                "vision-h": "Boosting Okinawa's Income via Student Power.",
+                "vision-p": "By having students lead AI adoption, we increase productivity and overall income in society. Let's start from Room 305.",
+                "apply-h": "Interested? Let's talk.",
+                "capacity-label": "Slots left: ", "apply-btn": "Contact Prof. Omori"
+            }
+        };
+
+        function toggleLang() {
+            currentLang = currentLang === 'ja' ? 'en' : 'ja';
+            const label = document.getElementById('lang-label');
+            label.innerText = currentLang === 'ja' ? 'English' : '日本語';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.style.opacity = '0';
+                    setTimeout(() => {
+                        el.innerHTML = translations[currentLang][key];
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+        }
+
+        function handleContact() {
+            const msg = currentLang === 'ja' ? 
+                "大森先生、または紹介してくれたメンバーのDMへ連絡してください！" : 
+                "Please contact Prof. Omori or any member via DM!";
+            alert(msg);
+        }
+
+        window.onload = () => {
+            const bar = document.getElementById('progress-bar');
+            bar.style.width = '0%';
+            setTimeout(() => {
+                bar.style.transition = 'width 1.5s cubic-bezier(0.65, 0, 0.35, 1)';
+                bar.style.width = '25%';
+            }, 500);
+        }
+    </script>
+</body>
+</html>
