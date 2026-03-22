@@ -2,14 +2,13 @@
 <html lang="ja">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D4990LBVDD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-D4990LBVDD');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D4990LBVDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-D4990LBVDD');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>305 AI Project | 社会人を、追い越しましょう。</title>
@@ -36,24 +35,21 @@
         }
         [data-i18n] { transition: opacity 0.2s; }
         
-        /* Photo Placeholder Style */
-        .photo-placeholder {
-            background-color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* 写真が綺麗に収まるためのスタイル設定 */
+        .photo-container {
+            position: relative;
+            width: 100%;
             border-radius: 1.5rem;
-            color: #94a3b8;
-            font-weight: bold;
-            text-align: center;
-            padding: 1rem;
-            border: 2px dashed #cbd5e1;
             overflow: hidden;
+            background-color: #f1f5f9;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
-        .photo-placeholder img {
+        .photo-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            display: block;
+            object-fit: cover; /* 枠に合わせてクロップしつつ全域をカバー */
+            object-position: center;
         }
     </style>
 </head>
@@ -110,13 +106,12 @@
                 </div>
             </div>
             
-            <!-- Hero Photo Placeholder -->
-            <div class="relative group">
-                <div class="photo-placeholder aspect-[4/3] shadow-2xl relative z-10">
-                    <span class="text-xs italic uppercase tracking-widest">[Main Visual: 305号室の活気が伝わる写真]</span>
+            <!-- Hero Photo -->
+            <div class="relative group w-full">
+                <div class="photo-container aspect-[4/3] relative z-10">
                     <img src="roomphoto.png" alt="Lab Activity">
                 </div>
-                <div class="absolute -bottom-6 -right-6 w-full h-full bg-indigo-200 rounded-[1.5rem] -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition duration-500"></div>
+                <div class="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 w-full h-full bg-indigo-200 rounded-[1.5rem] -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition duration-500"></div>
             </div>
         </div>
     </section>
@@ -187,8 +182,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Photo Card 1 -->
                 <div class="space-y-4">
-                    <div class="photo-placeholder aspect-square shadow-md">
-                        <span class="text-[10px] uppercase">[Lab: 305号室の内観]</span>
+                    <div class="photo-container aspect-square shadow-md">
+                        <img src="roomphoto.png" alt="Lab Inside">
                     </div>
                     <div>
                         <h3 class="font-black mb-1" data-i18n="env-1-h">AIツール使い放題</h3>
@@ -196,9 +191,9 @@
                     </div>
                 </div>
                 <!-- Photo Card 2 -->
-                <div class="space-y-4">
-                    <div class="photo-placeholder aspect-square shadow-md">
-                        <span class="text-[10px] uppercase">[Tool: 最強AIの操作画面]</span>
+                <div class="space-y-4 text-center lg:text-left">
+                    <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-4">
+                        <i data-lucide="music"></i>
                     </div>
                     <div>
                         <h3 class="font-black mb-1" data-i18n="env-2-h">BGMも自由です</h3>
@@ -206,9 +201,9 @@
                     </div>
                 </div>
                 <!-- Photo Card 3 -->
-                <div class="space-y-4">
-                    <div class="photo-placeholder aspect-square shadow-md">
-                        <span class="text-[10px] uppercase">[Item: 貸出用ハイスペPC]</span>
+                <div class="space-y-4 text-center lg:text-left">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-4">
+                        <i data-lucide="monitor"></i>
                     </div>
                     <div>
                         <h3 class="font-black mb-1" data-i18n="env-3-h">貸出用PCあり</h3>
@@ -216,9 +211,9 @@
                     </div>
                 </div>
                 <!-- Photo Card 4 -->
-                <div class="space-y-4">
-                    <div class="photo-placeholder aspect-square shadow-md">
-                        <span class="text-[10px] uppercase">[Life: メンバーが談笑する様子]</span>
+                <div class="space-y-4 text-center lg:text-left">
+                    <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-4">
+                        <i data-lucide="users"></i>
                     </div>
                     <div>
                         <h3 class="font-black mb-1" data-i18n="env-4-h">多様なメンバー</h3>
@@ -236,7 +231,7 @@
             <p class="text-4xl font-black mb-16" data-i18n="work-title">働き方は、あなたが選べます。</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
                 <!-- Dedicated (Front Runner) -->
-                <div class="bg-slate-900 text-white p-10 md:p-14 rounded-[40px] relative overflow-hidden group transition hover:scale-[1.02] shadow-2xl">
+                <div class="bg-slate-900 text-white p-10 md:p-14 rounded-[40px] relative overflow-hidden group transition hover:scale-[1.02] shadow-2xl text-left">
                     <div class="relative z-10">
                         <span class="inline-block px-4 py-1 rounded-full bg-indigo-500 text-xs font-bold mb-6" data-i18n="work-1-tag">ガッツリ系</span>
                         <h3 class="text-3xl font-black mb-8 italic" data-i18n="work-1-h">Front Runner</h3>
@@ -258,7 +253,7 @@
                     </div>
                 </div>
                 <!-- Support (Creative Support) -->
-                <div class="bg-indigo-50 p-10 md:p-14 rounded-[40px] border-2 border-indigo-100 relative overflow-hidden group transition hover:scale-[1.02]">
+                <div class="bg-indigo-50 p-10 md:p-14 rounded-[40px] border-2 border-indigo-100 relative overflow-hidden group transition hover:scale-[1.02] text-left">
                     <div class="relative z-10">
                         <span class="inline-block px-4 py-1 rounded-full bg-indigo-200 text-indigo-700 text-xs font-bold mb-6" data-i18n="work-2-tag">週1〜裏方系</span>
                         <h3 class="text-3xl font-black mb-8 italic text-indigo-900" data-i18n="work-2-h">Creative Support</h3>
@@ -289,15 +284,13 @@
             <h2 class="text-3xl md:text-5xl font-black mb-12 italic leading-tight" data-i18n="vision-h">「学生の力で、沖縄の所得を<br>底上げしたいと考えています。」</h2>
             
             <div class="flex flex-col items-center">
-                <!-- Professor Photo Placeholder -->
-                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-indigo-800 border-4 border-indigo-400 flex items-center justify-center mb-6 overflow-hidden">
-                    <span class="text-[8px] uppercase text-indigo-300">[Prof. Photo]</span>
-                    <!-- <img src="prof_omori.jpg" alt="Prof. Omori"> -->
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-indigo-800 border-4 border-indigo-400 flex items-center justify-center mb-6 overflow-hidden relative">
+                    <i data-lucide="user" class="text-indigo-400"></i>
                 </div>
                 <p class="text-indigo-100 text-lg leading-relaxed mb-12 max-w-2xl mx-auto" data-i18n="vision-p">社会のAI活用を学生がリードすることで、企業の生産性を高め、社会全体の所得を増やしていく。その第一歩を、305号室から始めましょう。</p>
                 <div>
                     <p class="font-black text-2xl">大森 先生</p>
-                    <p class="text-indigo-400 text-sm font-bold tracking-widest uppercase">Project Director</p>
+                    <p class="text-indigo-400 text-sm font-bold tracking-widest uppercase tracking-tighter">Project Director</p>
                 </div>
             </div>
         </div>
@@ -320,7 +313,7 @@
             
             <div class="mt-16 flex flex-col items-center">
                 <img src="305lab_logo.png" alt="305 lab logo" class="h-10 md:h-12 w-auto mb-4 opacity-80">
-                <p class="text-slate-400 font-bold text-xs tracking-widest uppercase">&copy; 305 AI LAB OKINAWA</p>
+                <p class="text-slate-400 font-bold text-xs tracking-widest uppercase tracking-widest font-bold">&copy; 305 AI LAB OKINAWA</p>
             </div>
         </div>
     </footer>
