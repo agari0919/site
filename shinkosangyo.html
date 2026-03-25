@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DX・AI実装人材育成プログラム 実施計画案 | 新光産業</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            scroll-behavior: smooth;
+        }
+        .navy-gradient {
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: #3b82f6;
+            margin-top: 10px;
+            border-radius: 2px;
+        }
+        
+        /* スケジュールグリッド */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(47, 1fr);
+            gap: 2px;
+            min-width: 1000px;
+        }
+        .week-box {
+            height: 36px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+            color: white;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        /* 基礎コース 4クール色分け */
+        .bg-b1 { background-color: #3b82f6 !important; }
+        .bg-b2 { background-color: #f59e0b !important; }
+        .bg-b3 { background-color: #8b5cf6 !important; }
+        .bg-b4 { background-color: #ec4899 !important; }
+        
+        /* 応用コース 3クール色分け */
+        .bg-a1 { background-color: #10b981 !important; }
+        .bg-a2 { background-color: #f97316 !important; }
+        .bg-a3 { background-color: #06b6d4 !important; }
+        
+        .bg-none { background-color: rgba(255, 255, 255, 0.1) !important; color: rgba(255, 255, 255, 0.3); }
+
+        .curriculum-card {
+            transition: all 0.3s ease;
+        }
+        .curriculum-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="antialiased text-slate-900">
+
+    <!-- Hero Section -->
+    <header class="navy-gradient text-white py-24 px-6 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-blue-600/10 blur-[120px] rounded-full translate-x-1/2"></div>
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="inline-block bg-blue-500/20 text-blue-300 px-4 py-1 rounded-full text-sm font-bold mb-6 border border-blue-400/30">
+                Strategic DX Proposal for Shinko Sangyo
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight">
+                現場の「属人化」を<br>
+                <span class="text-blue-400 italic">全社の「資産」へ。</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-12 max-w-4xl leading-relaxed">
+                データドリブン経営への布石。現場に埋蔵する作業を効率化・体系化する<br>精鋭35名の育成を通じ、新光産業の次世代を構築します。
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">Budget</p>
+                    <p class="text-3xl font-bold">500<span class="text-sm ml-1 font-normal">万円</span></p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">Weeks</p>
+                    <p class="text-3xl font-bold">47<span class="text-sm ml-1 font-normal">週間</span></p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">Trainees</p>
+                    <p class="text-3xl font-bold">35<span class="text-sm ml-1 font-normal">名</span></p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <p class="text-blue-400 text-xs font-bold uppercase mb-1 tracking-widest">Vision</p>
+                    <p class="text-xl font-bold leading-tight">データドリブン<br>経営の基盤構築</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Strategy Section -->
+    <section class="py-24 px-6 bg-white">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-black mb-8 section-title uppercase">戦略的背景と目的</h2>
+                <div class="space-y-6 text-slate-600 text-lg leading-relaxed">
+                    <p>新光産業におけるAI活用の本質は、単なるツールの導入ではなく、<strong>「現場に埋蔵された属人的知見をAIでシステム化すること」</strong>にあります。</p>
+                    <p>現場発の成功モデルを全社へ広げ、近い将来の<strong>データドリブン経営</strong>（データに基づいた迅速な意思決定）の基盤を創ります。</p>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xl font-bold text-blue-900 mb-2 flex items-center"><span class="w-2 h-6 bg-blue-600 mr-3"></span>属人化の解消</h3>
+                    <p class="text-slate-500">個人の手順をAIでコード化し、誰でも実行可能な組織のシステムへ。</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xl font-bold text-blue-900 mb-2 flex items-center"><span class="w-2 h-6 bg-blue-600 mr-3"></span>批判的業務見直し</h3>
+                    <p class="text-slate-500">既存のやり方をAIの視点で疑い、根本から効率化する人材を増やします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Models -->
+    <section class="py-24 px-6 bg-slate-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Successful Benchmarks</h2>
+            <p class="text-center text-2xl font-black mb-16 italic">社内に展開すべき「AI実装成功モデル」のイメージ。</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-6 flex items-center justify-center text-blue-600 font-black">販</div>
+                    <h4 class="text-xl font-bold mb-2 text-slate-800">販売管理・自動化モデル</h4>
+                    <p class="text-slate-500 text-sm">見積作成や受発注データの照合をAIで自動化。手作業を撤廃し、顧客対応時間を創出。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-6 flex items-center justify-center text-blue-600 font-black">企</div>
+                    <h4 class="text-xl font-bold mb-2 text-slate-800">事務処理・体系化モデル</h4>
+                    <p class="text-slate-500 text-sm">複雑な承認ルートや社内規程の参照をAIボット化。事務処理のボトルネックを解消。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-6 flex items-center justify-center text-blue-600 font-black">技</div>
+                    <h4 class="text-xl font-bold mb-2 text-slate-800">技術知見・資産化モデル</h4>
+                    <p class="text-slate-500 text-sm">熟練担当者のノウハウをNotebookLMでナレッジ化。若手への技術承継をデジタルで加速。</p>
+                </div>
+            </div>
+            <p class="text-center mt-12 text-slate-600 font-bold max-w-3xl mx-auto italic">
+                「定着の壁」を突破し、自律的に課題を解決するリーダーを輩出。全社的な業務フローの再構築を図ります。
+            </p>
+        </div>
+    </section>
+
+    <!-- Schedule Chart Section -->
+    <section class="py-24 px-6 bg-slate-900 text-white overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-black mb-6 text-center">隔週交互並行スケジュール</h2>
+            <p class="text-center text-slate-400 mb-16 max-w-2xl mx-auto">業務を止めない「90分・2週に1回」のサイクル。全47週間の全工程をクールごとに完全色分けしました。</p>
+
+            <div class="space-y-12">
+                <!-- 基礎コース (W1-16) -->
+                <div>
+                    <h3 class="text-blue-400 font-bold mb-4 flex items-center text-lg">
+                        <span class="w-3 h-3 bg-blue-400 rounded-full mr-3 animate-pulse"></span>
+                        基礎コース：計20名（Week 1 - 16）
+                    </h3>
+                    <div class="overflow-x-auto pb-4 scrollbar-hide">
+                        <div id="basic-timeline-container" class="space-y-1"></div>
+                    </div>
+                    <!-- 凡例 -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                        <div class="flex items-center text-[10px] font-bold text-slate-400"><span class="w-4 h-4 bg-b1 rounded mr-2"></span>1クール目 (W1,3,5,7)</div>
+                        <div class="flex items-center text-[10px] font-bold text-slate-400"><span class="w-4 h-4 bg-b2 rounded mr-2"></span>2クール目 (W2,4,6,8)</div>
+                        <div class="flex items-center text-[10px] font-bold text-slate-400"><span class="w-4 h-4 bg-b3 rounded mr-2"></span>3クール目 (W9,11,13,15)</div>
+                        <div class="flex items-center text-[10px] font-bold text-slate-400"><span class="w-4 h-4 bg-b4 rounded mr-2"></span>4クール目 (W10,12,14,16)</div>
+                    </div>
+                </div>
+
+                <!-- 応用コース (W17-47) -->
+                <div class="pt-8 border-t border-white/10">
+                    <h3 class="text-emerald-400 font-bold mb-4 flex items-center text-lg">
+                        <span class="w-3 h-3 bg-emerald-400 rounded-full mr-3 animate-pulse"></span>
+                        応用コース：計15名（Week 17 - 47）
+                    </h3>
+                    <div class="overflow-x-auto pb-4 scrollbar-hide">
+                        <div id="adv-timeline-container" class="space-y-1"></div>
+                    </div>
+                    <!-- 凡例 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div class="flex items-center text-[10px] font-bold text-slate-400"><span class="w-4 h-4 bg-a1 rounded mr-2"></span>応用 1クール目 (W17-31)</div>
+                        <div class="flex items-center text-[10px] font-bold text-slate-400"><span class="w-4 h-4 bg-a2 rounded mr-2"></span>応用 2クール目 (W18-32)</div>
+                        <div class="flex items-center text-[10px] font-bold text-slate-400"><span class="w-4 h-4 bg-a3 rounded mr-2"></span>応用 3クール目 (W33-47)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-12 text-center text-xs text-slate-500 italic">※AIの進化速度に合わせ、クールごとにカリキュラム内容を最新のものに即時アップデートします。</p>
+        </div>
+    </section>
+
+    <!-- Curriculum Detail -->
+    <section class="py-24 px-6 bg-white">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
+            <!-- Basic List -->
+            <div>
+                <div class="flex items-center mb-10">
+                    <div class="bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center font-black mr-4 shadow-lg">B</div>
+                    <h3 class="text-2xl font-black">基礎コース内容（全4回）</h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="curriculum-card bg-slate-50 p-6 rounded-2xl border-l-4 border-blue-600 shadow-sm">
+                        <h4 class="font-bold mb-1 text-slate-800">1. なぜAIをやるか・AIの本質</h4>
+                        <p class="text-sm text-slate-500">AIを理解し、自分の業務を客観的に見直すマインドを醸成。</p>
+                        <div class="mt-2 text-[9px] font-bold text-blue-600 uppercase tracking-wider">Homework: ルーティン業務の棚卸し</div>
+                    </div>
+                    <div class="curriculum-card bg-slate-50 p-6 rounded-2xl border-l-4 border-blue-600 shadow-sm">
+                        <h4 class="font-bold mb-1 text-slate-800">2. 文章作成・要約・スライド生成</h4>
+                        <p class="text-sm text-slate-500">AIを「秘書」として使い、事務作業のアウトプットを高速化。</p>
+                        <div class="mt-2 text-[9px] font-bold text-blue-600 uppercase tracking-wider">Homework: 実務文書作成の実践報告</div>
+                    </div>
+                    <div class="curriculum-card bg-slate-50 p-6 rounded-2xl border-l-4 border-blue-600 shadow-sm">
+                        <h4 class="font-bold mb-1 text-slate-800">3. NotebookLM：ソースの重要性</h4>
+                        <p class="text-sm text-slate-500">社内規定を学習させ、正確な情報を検索。根拠あるAI活用。</p>
+                        <div class="mt-2 text-[9px] font-bold text-blue-600 uppercase tracking-wider">Homework: 特定業務での運用テスト</div>
+                    </div>
+                    <div class="curriculum-card bg-slate-50 p-6 rounded-2xl border-l-4 border-blue-600 shadow-sm">
+                        <h4 class="font-bold mb-1 text-slate-800">4. Deep Research & Gem連携</h4>
+                        <p class="text-sm text-slate-500">高度な調査と自分専用AIの接続。現場自走体制の完成。</p>
+                        <div class="mt-2 text-[9px] font-bold text-blue-600 uppercase tracking-wider">Homework: オリジナルGemの作成</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced List -->
+            <div>
+                <div class="flex items-center mb-10">
+                    <div class="bg-blue-900 text-white w-10 h-10 rounded-xl flex items-center justify-center font-black mr-4 shadow-lg">A</div>
+                    <h3 class="text-2xl font-black italic">応用コース内容（全8回）</h3>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl space-y-6">
+                    <div class="flex gap-4">
+                        <span class="text-blue-200 font-black text-3xl italic">01</span>
+                        <div>
+                            <h4 class="font-bold text-slate-800">いきなりバイブコーディング体験</h4>
+                            <p class="text-xs text-slate-500 mt-1">Cursorを使い、未経験から即座にシステム構築を体験。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <span class="text-blue-200 font-black text-3xl italic">02</span>
+                        <div>
+                            <h4 class="font-bold text-slate-800">システムとデータの分離</h4>
+                            <p class="text-xs text-slate-500 mt-1">機密データはローカルで安全管理するセキュリティ技術。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <span class="text-blue-200 font-black text-3xl italic">03</span>
+                        <div>
+                            <h4 class="font-bold text-slate-800">BPMNと業務フロー可視化</h4>
+                            <p class="text-xs text-slate-500 mt-1">業務を論理的に分解。AIで解決可能な点を特定し再設計。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <span class="text-blue-200 font-black text-3xl italic">04-05</span>
+                        <div>
+                            <h4 class="font-bold text-slate-800">データ収集とGAS自動化</h4>
+                            <p class="text-xs text-slate-500 mt-1">GoogleフォームやGASを用い、入り口からのデジタル化。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <span class="text-blue-200 font-black text-3xl italic">06-08</span>
+                        <div>
+                            <h4 class="font-bold text-emerald-600 italic">自部署の課題解決アプリ開発</h4>
+                            <p class="text-xs text-slate-500 mt-1">実課題をアプリ化。現場テストと改善を繰り返し資産化。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Option Section -->
+    <section class="py-24 px-6 bg-slate-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="bg-blue-900 rounded-[3rem] p-8 md:p-16 text-white shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center mb-8">
+                        <span class="bg-blue-500 text-white px-4 py-1 rounded-lg font-black mr-4 uppercase text-sm tracking-widest">Option</span>
+                        <h2 class="text-3xl font-black">産学連携による実証サポート</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6">
+                            <p class="text-xl font-bold leading-relaxed text-blue-100">
+                                参加者からあがってくる実務上の課題に対し、<br>
+                                <span class="text-cyan-300 underline underline-offset-8">学生チームと共に解決の可能性を数件検証します。</span>
+                            </p>
+                            <p class="text-slate-300 leading-relaxed">
+                                単なるスキルの習得に留まらず、実際の現場で「本当にAIで解決できるのか」をプロトタイプレベルで実証。学生の柔軟な発想とリサーチ力を借りることで、定着と成果創出のスピードを最大化します。
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+                                <h4 class="font-bold text-cyan-300 mb-2">● 実現可能性（Feasibility）の検証</h4>
+                                <p class="text-sm text-blue-50">技術的に解決可能か、どのツールが最適かを学生が徹底調査。</p>
+                            </div>
+                            <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+                                <h4 class="font-bold text-cyan-300 mb-2">● プロトタイプの共同開発</h4>
+                                <p class="text-sm text-blue-50">現場の担当者と学生がペアになり、数件の具体的事例で動くものを作ります。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="py-32 px-6 navy-gradient text-white text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h2 class="text-4xl md:text-6xl font-black mb-12 italic tracking-tighter text-blue-400">Strategic Asset Formation</h2>
+            <div class="bg-white text-slate-900 p-12 md:p-20 rounded-[4rem] border-b-[12px] border-blue-500 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px]"></div>
+                <p class="text-xl md:text-2xl mb-12 text-slate-500 font-medium">応用コース修了者15名が「1日1時間の業務削減」を定着させれば：</p>
+                <div class="flex flex-col md:flex-row items-center justify-around gap-8">
+                    <div class="text-center">
+                        <p class="text-8xl md:text-[10rem] font-black tracking-tighter text-blue-900 leading-none">3,600</p>
+                        <p class="text-2xl font-black text-slate-400 mt-2 uppercase tracking-[0.2em]">Hours Saved / Year</p>
+                    </div>
+                </div>
+                <div class="mt-16 pt-8 border-t border-slate-100 text-lg font-bold text-slate-600 italic leading-relaxed">
+                    現場発のツール開発と実務改善が、全社的な「デジタル資産」となり、<br>
+                    現場主導の持続可能なDX体制を確立します。
+                </div>
+            </div>
+            
+            <p class="text-2xl text-blue-200 mt-16 mb-8 opacity-80 font-bold leading-relaxed">
+                ご質問などございましたら<br class="md:hidden">お気軽にお問い合わせください。
+            </p>
+            
+            <div class="mt-16 text-slate-500 text-xs tracking-widest uppercase">
+                &copy; D-Lab
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const basicW1 = [1,3,5,7];
+        const basicW2 = [2,4,6,8];
+        const basicW3 = [9,11,13,15];
+        const basicW4 = [10,12,14,16];
+        
+        const advW1 = [17,19,21,23,25,27,29,31];
+        const advW2 = [18,20,22,24,26,28,30,32];
+        const advW3 = [33,35,37,39,41,43,45,47];
+
+        function createTimeline(containerId, rowsData) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = "";
+
+            rowsData.forEach(rowData => {
+                const grid = document.createElement('div');
+                grid.className = 'schedule-grid';
+                
+                for (let w = 1; w <= 47; w++) {
+                    const box = document.createElement('div');
+                    box.className = 'week-box';
+                    box.innerText = w;
+                    
+                    let appliedColor = 'bg-none';
+                    rowData.forEach(item => {
+                        if (item.weeks.includes(w)) {
+                            appliedColor = item.color;
+                        }
+                    });
+                    
+                    box.classList.add(appliedColor);
+                    grid.appendChild(box);
+                }
+                container.appendChild(grid);
+            });
+        }
+
+        createTimeline('basic-timeline-container', [
+            [{ weeks: basicW1, color: 'bg-b1' }, { weeks: basicW3, color: 'bg-b3' }],
+            [{ weeks: basicW2, color: 'bg-b2' }, { weeks: basicW4, color: 'bg-b4' }]
+        ]);
+
+        createTimeline('adv-timeline-container', [
+            [{ weeks: advW1, color: 'bg-a1' }],
+            [{ weeks: advW2, color: 'bg-a2' }],
+            [{ weeks: advW3, color: 'bg-a3' }]
+        ]);
+    </script>
+</body>
+</html>
