@@ -111,61 +111,54 @@
                 <p class="mt-4 text-slate-500 font-medium italic">Background of the Speaker</p>
             </div>
 
-            <!-- Profile and Image Row -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start mb-16">
-                <!-- Profile Image -->
-                <div class="lg:col-span-1">
+            <!-- Profile List (Without separate Image column) -->
+            <div class="max-w-4xl mx-auto space-y-6 mb-16">
+                <h3 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <span class="w-2 h-6 bg-primary rounded-full"></span>
+                    熊谷 氏の歩み
+                </h3>
+                <div class="grid gap-4">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h4 class="font-bold text-primary mb-2">シリコンバレーでの34年・7度の起業</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            米国を拠点に、テクノロジーの最前線で計7度の起業を経験。事業の立ち上げから成長、売却まで、グローバルビジネスの現場を深く知る先駆者です。
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h4 class="font-bold text-primary mb-2">次世代への情熱</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            東北大学などの学生とも深く交流。自身の経験に基づくアドバイスが学生を動かし、新たなチャレンジを生み出すサイクルに喜びを感じ、若者への教育支援に尽力されています。
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h4 class="font-bold text-primary mb-2">沖縄への想い</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            沖縄から世界へ羽ばたこうとする若者たちの可能性を信じ、そのチャレンジ精神に「油を注ぎたい」という強い想いを持って今回の対話に臨まれます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interview Link Card (Now with Portrait) -->
+            <div class="max-w-4xl mx-auto bg-primary text-white p-8 md:p-12 rounded-3xl shadow-xl flex flex-col md:flex-row items-center gap-10">
+                <div class="w-full md:w-1/3">
                     <div class="relative group">
-                        <div class="absolute -inset-2 bg-gradient-to-r from-primary-blue to-accent-cyan rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                        <div class="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-accent-cyan rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                         <div class="relative bg-white p-2 rounded-3xl shadow-xl">
                             <!-- [熊谷氏の写真] ここに写真ファイルを指定してください -->
                             <img src="kumagai.webp" alt="熊谷氏プロフィール写真" class="w-full h-auto rounded-2xl object-cover">
                         </div>
                     </div>
                 </div>
-
-                <!-- Profile List -->
-                <div class="lg:col-span-2 space-y-6">
-                    <h3 class="text-xl font-bold text-primary flex items-center gap-2">
-                        <span class="w-2 h-6 bg-primary rounded-full"></span>
-                        熊谷 氏の歩み
-                    </h3>
-                    <div class="grid gap-4">
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                            <h4 class="font-bold text-primary mb-2">シリコンバレーでの34年・7度の起業</h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">
-                                米国を拠点に、テクノロジーの最前線で計7度の起業を経験。事業の立ち上げから成長、売却まで、グローバルビジネスの現場を深く知る先駆者です。
-                            </p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                            <h4 class="font-bold text-primary mb-2">次世代への情熱</h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">
-                                東北大学などの学生とも深く交流。自身の経験に基づくアドバイスが学生を動かし、新たなチャレンジを生み出すサイクルに喜びを感じ、若者への教育支援に尽力されています。
-                            </p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                            <h4 class="font-bold text-primary mb-2">沖縄への想い</h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">
-                                沖縄から世界へ羽ばたこうとする若者たちの可能性を信じ、そのチャレンジ精神に「油を注ぎたい」という強い想いを持って今回の対話に臨まれます。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interview Link Card -->
-            <div class="max-w-4xl mx-auto bg-primary text-white p-8 md:p-12 rounded-3xl shadow-xl flex flex-col md:flex-row items-center gap-8">
-                <div class="w-full md:w-1/3">
-                    <img src="https://placehold.co/600x400/ffffff/005bac?text=Interview+Article" alt="インタビュー記事" class="rounded-xl shadow-lg border border-white/20">
-                </div>
                 <div class="w-full md:w-2/3">
                     <h3 class="text-2xl font-bold mb-4">必読インタビュー</h3>
-                    <p class="opacity-90 mb-6 leading-relaxed">
+                    <p class="opacity-90 mb-8 leading-relaxed font-medium text-lg border-l-2 border-white/30 pl-4">
                         当日の対話をより深いものにするために、こちらのインタビュー記事を必ず事前にご一読ください。熊谷氏の仕事への哲学や、大切にされている「正直なコミュニケーション」について知ることができます。
                     </p>
-                    <a href="https://sogyotecho.jp/entrepreneur-kumagai-interview/" target="_blank" class="inline-block text-center bg-white text-primary font-bold py-3 px-8 rounded-xl transition hover:bg-cyan-50 shadow-lg">
+                    <a href="https://sogyotecho.jp/entrepreneur-kumagai-interview/" target="_blank" class="inline-block text-center bg-white text-primary font-bold py-3 px-8 rounded-full transition hover:bg-cyan-50 shadow-lg transform hover:scale-105">
                         記事を詳しく読む
                     </a>
+                    <p class="text-xs mt-4 opacity-70 italic">※背景を理解することで、当日の対話がより実りあるものになります。</p>
                 </div>
             </div>
         </div>
