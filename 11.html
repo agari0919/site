@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第11回講義：数字で読むユーザー行動</title>
+    <title>第12回講義：数字で読むユーザー行動</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -190,7 +190,7 @@
                             <td><div class="font-semibold text-xl">コンバージョン率</div></td>
                             <td><p class="leading-relaxed">LPの内容がユーザーの心に響いたか（<span class="font-bold">＝説得力</span>）を測る指標。「クリックした人のうち、どれだけ成果に至ったか」を示します。</p></td>
                         </tr>
-                        <tr>
+                         <tr>
                             <td>
                                 <div class="flex items-center">
                                     <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mr-6"><i class="fas fa-yen-sign text-red-600 text-2xl"></i></div>
@@ -536,6 +536,204 @@
                     「広告は出して終わりではなく、<br><span class="text-blue-600">読み解き、学び、改善する</span>ことで価値が出る」
                 </p>
             </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         事例課題：投影用スライド（1画面・プロジェクター向け）
+         ページ最下部までスクロールし、F11でフルスクリーンにして投影
+         ============================================================ -->
+    <style>
+        #case-slide{
+            --cs-ink:#0d1a2b;
+            --cs-panel:#16273d;
+            --cs-line:#2c4160;
+            --cs-paper:#f5f7fa;
+            --cs-dim:#9db1c9;
+            --cs-hl:#ffc53d;
+            background:var(--cs-ink);
+            color:var(--cs-paper);
+            font-family:'Noto Sans JP',"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            padding:2.2vh 3vw;
+            box-sizing:border-box;
+        }
+        #case-slide *{margin:0;padding:0;box-sizing:border-box;}
+        #case-slide .cs-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:baseline;
+            border-bottom:2px solid var(--cs-line);
+            padding-bottom:1.2vh;
+        }
+        #case-slide .cs-eyebrow{
+            font-size:clamp(14px,1.6vw,26px);
+            font-weight:700;
+            color:var(--cs-dim);
+            letter-spacing:.12em;
+        }
+        #case-slide .cs-timebox{
+            font-size:clamp(16px,1.9vw,30px);
+            font-weight:900;
+            color:var(--cs-hl);
+            letter-spacing:.06em;
+        }
+        #case-slide .cs-title{
+            font-size:clamp(34px,5.4vw,86px);
+            font-weight:900;
+            line-height:1.25;
+            margin:1.6vh 0 1vh;
+            letter-spacing:.02em;
+            color:var(--cs-paper);
+        }
+        #case-slide .cs-mark{color:var(--cs-hl);}
+        #case-slide .cs-data{
+            display:flex;
+            align-items:center;
+            gap:1.2vw;
+            background:var(--cs-panel);
+            border-left:.6vw solid var(--cs-hl);
+            padding:1.4vh 1.6vw;
+            margin-bottom:1.8vh;
+        }
+        #case-slide .cs-tag{
+            flex-shrink:0;
+            font-size:clamp(14px,1.5vw,24px);
+            font-weight:900;
+            color:var(--cs-ink);
+            background:var(--cs-hl);
+            padding:.5vh .9vw;
+            border-radius:6px;
+            letter-spacing:.08em;
+        }
+        #case-slide .cs-data p{
+            font-size:clamp(16px,2vw,32px);
+            font-weight:700;
+            line-height:1.5;
+        }
+        #case-slide .cs-data p small{
+            display:block;
+            font-size:clamp(12px,1.3vw,20px);
+            font-weight:400;
+            color:var(--cs-dim);
+            margin-top:.3vh;
+        }
+        #case-slide .cs-steps{
+            flex:1;
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr;
+            gap:1.4vw;
+            min-height:0;
+        }
+        #case-slide .cs-step{
+            background:var(--cs-panel);
+            border:1px solid var(--cs-line);
+            border-radius:14px;
+            padding:2vh 1.4vw;
+            display:flex;
+            flex-direction:column;
+        }
+        #case-slide .cs-num{
+            font-size:clamp(13px,1.4vw,22px);
+            font-weight:900;
+            color:var(--cs-hl);
+            letter-spacing:.2em;
+            margin-bottom:.8vh;
+        }
+        #case-slide .cs-step h3{
+            font-size:clamp(24px,3.2vw,52px);
+            font-weight:900;
+            line-height:1.2;
+            margin-bottom:1.2vh;
+            color:var(--cs-paper);
+        }
+        #case-slide .cs-step p{
+            font-size:clamp(15px,1.7vw,28px);
+            font-weight:700;
+            line-height:1.55;
+            color:var(--cs-paper);
+        }
+        #case-slide .cs-step p b{color:var(--cs-hl);}
+        #case-slide .cs-metrics{
+            margin-top:auto;
+            display:flex;
+            flex-wrap:wrap;
+            gap:.5vw;
+            padding-top:1.2vh;
+        }
+        #case-slide .cs-metrics span{
+            font-family:"SFMono-Regular",Consolas,"Courier New",monospace;
+            font-size:clamp(13px,1.5vw,24px);
+            font-weight:700;
+            border:1.5px solid var(--cs-line);
+            border-radius:8px;
+            padding:.4vh .7vw;
+            color:var(--cs-dim);
+        }
+        #case-slide .cs-footer{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            border-top:2px solid var(--cs-line);
+            margin-top:1.8vh;
+            padding-top:1.4vh;
+        }
+        #case-slide .cs-rule{
+            font-size:clamp(16px,2vw,32px);
+            font-weight:900;
+        }
+        #case-slide .cs-sub{
+            font-size:clamp(13px,1.4vw,22px);
+            font-weight:700;
+            color:var(--cs-dim);
+        }
+        @media (max-width: 767px){
+            #case-slide .cs-steps{grid-template-columns:1fr;}
+            #case-slide .cs-footer{flex-direction:column;gap:8px;align-items:flex-start;}
+        }
+    </style>
+
+    <section id="case-slide">
+        <div class="cs-header">
+            <div class="cs-eyebrow">第11回　数字で読むユーザー行動｜事例課題</div>
+            <div class="cs-timebox">制限時間 25分</div>
+        </div>
+
+        <h2 class="cs-title">この広告レポート、<span class="cs-mark">どこが問題か？</span></h2>
+
+        <div class="cs-data">
+            <div class="cs-tag">配布データ</div>
+            <p>実際の運用レポートに近い <b class="cs-mark">広告キャンペーンデータ</b>（表示数・クリック数・CV数・広告費・売上）
+                <small>※各自のPC・スマホに送付済み。手元で開いて分析してください。</small>
+            </p>
+        </div>
+
+        <div class="cs-steps">
+            <div class="cs-step">
+                <div class="cs-num">STEP 1</div>
+                <h3>計算する</h3>
+                <p>各キャンペーンの<b>4つの指標</b>を計算し、表を完成させる。</p>
+                <div class="cs-metrics">
+                    <span>CTR</span><span>CVR</span><span>CPA</span><span>ROAS</span>
+                </div>
+            </div>
+            <div class="cs-step">
+                <div class="cs-num">STEP 2</div>
+                <h3>見つける</h3>
+                <p>最も<b>「問題がある」</b>キャンペーンを1つ特定する。<br>どの数字を根拠にしたか、説明できるように。</p>
+            </div>
+            <div class="cs-step">
+                <div class="cs-num">STEP 3</div>
+                <h3>提案する</h3>
+                <p>ロジックツリーで原因の<b>仮説を3つ</b>挙げ、<br>改善策を<b>1つ</b>選んで提案する。</p>
+            </div>
+        </div>
+
+        <div class="cs-footer">
+            <div class="cs-rule">正解は1つではない。<span class="cs-mark">数字を根拠に語れればOK。</span></div>
+            <div class="cs-sub">隣の人との相談OK／電卓・スマホ・AI 使用OK</div>
         </div>
     </section>
 
