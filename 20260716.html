@@ -1,212 +1,357 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survival Strategy & Vibe Coding | 高度人材育成インターンシップ</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        ::selection { background-color: #facc15; color: black; }
-        body { background-color: black; color: white; font-family: sans-serif; overflow-x: hidden; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #18181b; }
-        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
-        
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AIとこれからの働き方｜高校生向けセミナー</title>
+<style>
+  :root{
+    --bg:#0b1020;--panel:#11172b;--ink:#f6f7fb;--muted:#aab3c5;--line:#293248;
+    --accent:#5eead4;--accent2:#facc15;--danger:#fb7185;--blue:#60a5fa;--white:#fff;
+    --slide-w:1280px;--slide-h:720px;
+  }
+  *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 20% 0%,#172554 0,#0b1020 38%,#050816 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;overflow:hidden}
+  a{color:inherit} .deck{width:100vw;height:100vh;display:grid;place-items:center;padding:24px}
+  .slide{width:min(100vw - 48px,var(--slide-w));height:min(calc((100vw - 48px)*9/16),calc(100vh - 72px),var(--slide-h));aspect-ratio:16/9;background:linear-gradient(135deg,rgba(17,24,39,.98),rgba(15,23,42,.96));border:1px solid rgba(148,163,184,.22);border-radius:28px;box-shadow:0 28px 90px rgba(0,0,0,.45);padding:54px 62px;position:absolute;opacity:0;transform:translateX(30px) scale(.985);transition:.28s ease;display:flex;flex-direction:column;overflow:hidden}
+  .slide.active{opacity:1;transform:translateX(0) scale(1);z-index:3}.slide.prev{transform:translateX(-30px) scale(.985)}
+  .slide::after{content:"";position:absolute;right:-120px;bottom:-160px;width:420px;height:420px;background:radial-gradient(circle,rgba(94,234,212,.18),transparent 60%);pointer-events:none}.slide.light{background:linear-gradient(135deg,#f8fafc,#e2e8f0);color:#0f172a}.slide.light .muted,.slide.light .source{color:#475569}.slide.light .card{background:rgba(255,255,255,.72);border-color:rgba(15,23,42,.12)}
+  .kicker{font-size:22px;letter-spacing:.08em;color:var(--accent);font-weight:800;text-transform:uppercase}.slide.light .kicker{color:#0f766e}
+  h1{font-size:76px;line-height:1.02;margin:16px 0 20px;letter-spacing:-.04em} h2{font-size:52px;line-height:1.08;margin:0 0 24px;letter-spacing:-.035em} h3{font-size:31px;margin:0 0 12px} p,li{font-size:25px;line-height:1.55} .lead{font-size:32px;line-height:1.42;color:#e5e7eb}.light .lead{color:#1e293b}.muted{color:var(--muted)} .small{font-size:18px}.tiny{font-size:14px}.big{font-size:96px;line-height:1;font-weight:900;letter-spacing:-.06em}.huge{font-size:150px;line-height:.9;font-weight:950;letter-spacing:-.08em}.danger{color:var(--danger)}.accent{color:var(--accent)}.yellow{color:var(--accent2)}.blue{color:var(--blue)}
+  .grid{display:grid;gap:22px}.cols2{grid-template-columns:1fr 1fr}.cols3{grid-template-columns:repeat(3,1fr)}.cols4{grid-template-columns:repeat(4,1fr)}.center{display:grid;place-items:center;text-align:center}.middle{justify-content:center}.bottom{margin-top:auto}.card{background:rgba(15,23,42,.58);border:1px solid rgba(148,163,184,.18);border-radius:22px;padding:24px}.quote{font-size:42px;line-height:1.3;font-weight:850;letter-spacing:-.03em}.tag{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(94,234,212,.35);background:rgba(94,234,212,.08);border-radius:999px;padding:8px 14px;color:#ccfbf1;font-size:18px;font-weight:700}.light .tag{color:#0f766e;background:#ccfbf1;border-color:#99f6e4}
+  .source{position:absolute;left:62px;bottom:28px;right:62px;color:#94a3b8;font-size:13px;display:flex;gap:12px;flex-wrap:wrap}.source a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}.footer{position:fixed;left:28px;right:28px;bottom:14px;height:20px;color:#94a3b8;font-size:13px;display:flex;align-items:center;gap:18px;z-index:20}.progress{height:4px;background:rgba(148,163,184,.25);border-radius:99px;flex:1;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.25s}.controls{position:fixed;right:28px;top:18px;z-index:30;display:flex;gap:8px}.btn{border:1px solid rgba(148,163,184,.25);background:rgba(15,23,42,.7);color:var(--ink);border-radius:12px;padding:9px 12px;font-size:13px;cursor:pointer}.btn:hover{background:#1f2937}.notes{display:none;position:fixed;right:24px;top:68px;width:420px;max-height:72vh;overflow:auto;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.25);border-radius:18px;padding:18px;z-index:40;box-shadow:0 20px 60px rgba(0,0,0,.35)}.notes.show{display:block}.notes h4{margin:0 0 8px}.notes p{font-size:15px;line-height:1.5;color:#cbd5e1}
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;height:100%}.statrow{display:flex;align-items:flex-end;gap:18px}.num{font-size:92px;font-weight:950;letter-spacing:-.07em;line-height:.9}.unit{font-size:28px;font-weight:800;padding-bottom:10px}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}.dotcard{border-top:4px solid var(--accent);padding-top:12px}.barChart{display:flex;align-items:flex-end;gap:18px;height:260px;margin-top:18px}.barItem{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px}.barCol{width:100%;border-radius:16px 16px 4px 4px;background:linear-gradient(180deg,rgba(94,234,212,.95),rgba(96,165,250,.45));min-height:18px}.barLabel{text-align:center;font-size:17px;color:#cbd5e1}.light .barLabel{color:#334155}.formula{font-size:62px;font-weight:950;letter-spacing:-.05em}.fraction{display:inline-grid;grid-template-rows:auto auto;align-items:center;text-align:center;vertical-align:middle;margin:0 12px}.fraction span:first-child{border-bottom:5px solid currentColor;padding:0 24px 8px}.fraction span:last-child{padding-top:6px}.work{background:linear-gradient(135deg,#0f766e,#155e75);border:none}.work .kicker{color:#ccfbf1}.timer{font-variant-numeric:tabular-nums;font-size:110px;font-weight:950;letter-spacing:-.06em}.question{font-size:38px;line-height:1.34;font-weight:850}.pillList{display:flex;gap:12px;flex-wrap:wrap}.pill{font-size:20px;border-radius:999px;padding:10px 16px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18)}.light .pill{background:#e2e8f0;border-color:#cbd5e1}.twoAxis{display:grid;grid-template-columns:1fr 1fr;gap:20px}.axisBox{min-height:260px;display:grid;place-items:center;text-align:center}.verticalLine{height:1px;background:rgba(148,163,184,.35);margin:18px 0}.stamp{position:absolute;right:58px;top:54px;transform:rotate(5deg);border:6px solid var(--danger);color:var(--danger);border-radius:18px;padding:12px 22px;font-size:35px;font-weight:950;opacity:.9}.linkcard{display:block;text-decoration:none}.linkcard:hover{transform:translateY(-2px)}
+  @media print{body{overflow:visible;background:#fff}.deck{display:block;padding:0}.slide{position:relative;opacity:1;transform:none;width:1280px;height:720px;margin:0;page-break-after:always;border-radius:0;box-shadow:none}.footer,.controls,.notes{display:none}}
+</style>
 </head>
-<body class="min-h-screen selection:bg-yellow-400 selection:text-black">
-    <!-- Progress Bar -->
-    <div id="progress-bar" class="fixed top-0 left-0 h-2 bg-gradient-to-r from-cyan-500 to-yellow-400 z-50 transition-all duration-100 ease-out" style="width: 0%;"></div>
+<body>
+<div class="controls"><button class="btn" onclick="prevSlide()">←</button><button class="btn" onclick="nextSlide()">→</button><button class="btn" onclick="toggleNotes()">Notes</button><button class="btn" onclick="toggleTimer()">Timer</button></div>
+<div id="notes" class="notes"></div>
+<div class="deck" id="deck">
 
-    <!-- HERO SECTION -->
-    <header class="h-screen flex flex-col justify-center items-center relative px-6 border-b border-zinc-900 overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-50 pointer-events-none"></div>
-        
-        <div class="z-10 text-center max-w-6xl fade-in-section is-visible">
-            <div class="flex justify-center mb-8">
-                <span class="px-6 py-2 border-2 border-yellow-400 text-yellow-400 text-sm md:text-base font-bold font-mono rounded-full bg-yellow-400/10 tracking-wider">
-                    高度人材育成インターンシップ 事前学習会
-                </span>
-            </div>
-            
-            <h1 class="text-6xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.95]">
-                SURVIVAL STRATEGY<br />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
-                    & VIBE CODING
-                </span>
-            </h1>
-            
-            <p class="text-2xl md:text-4xl text-zinc-300 font-medium max-w-4xl mx-auto leading-relaxed">
-                AI時代を生き抜くために、<br class="md:hidden"/>新しいOSをインストールしましょう。
-            </p>
+<section class="slide active" data-notes="今日は、AIの操作説明だけではなく、なぜ今AIを学ぶべきなのかを話す。危機感をあおるだけではなく、チャンスとして捉える構成にする。">
+  <div class="kicker">高度人材育成インターンシップ｜事前学習</div>
+  <h1>AIと<br>これからの働き方</h1>
+  <p class="lead">危機を知り、チャンスに変えるための90分。</p>
+  <div class="bottom pillList"><span class="pill">人口減少</span><span class="pill">生産性</span><span class="pill">AI</span><span class="pill">学び続ける力</span></div>
+  <div class="source">2026年7月16日 10:30-12:00｜沖縄産業支援センター｜講師：大森洋介</div>
+</section>
 
-            <div class="mt-16 animate-bounce text-zinc-500 flex justify-center">
-                <i data-lucide="arrow-down" class="w-12 h-12"></i>
-            </div>
-        </div>
-    </header>
+<section class="slide light" data-notes="事前学習プログラムの目的と整合させる。発見ノートに『気になったこと』を記録する前提を伝える。">
+  <div class="kicker">今日のゴール</div>
+  <h2>“働く”を、未来から逆算して考える</h2>
+  <div class="grid cols3">
+    <div class="card"><h3>1. 沖縄と日本の現状</h3><p>人口減少、産業、世界の中の日本を知る。</p></div>
+    <div class="card"><h3>2. AIが必要な理由</h3><p>努力だけでなく、生産性を上げる必要を理解する。</p></div>
+    <div class="card"><h3>3. 自分の行動に落とす</h3><p>インターンシップで何を見るか、何を聞くかを決める。</p></div>
+  </div>
+  <p class="bottom muted">今日は正解を覚える時間ではない。自分の問いを作る時間。</p>
+</section>
 
-    <!-- SECTION 1: THE CRISIS & OKINAWA REALITY -->
-    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="fade-in-section mb-16">
-            <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6">01. THE CRISIS</h2>
-            <div class="h-2 w-32 bg-red-500"></div>
-            <p class="mt-6 text-zinc-300 text-xl md:text-2xl font-medium leading-relaxed">教室の外では今、無視できない「バグ」が起きています。</p>
-        </div>
+<section class="slide" data-notes="自己紹介は長くしすぎない。『直線的なキャリアではない』ことを強みに変えた話として置く。">
+  <div class="kicker">自己紹介</div>
+  <h2>12回転職した人間が、大学教員になった</h2>
+  <div class="timeline">
+    <div class="card dotcard"><h3>転職12回</h3><p>失敗も、方向転換も、全部キャリアの材料になる。</p></div>
+    <div class="card dotcard"><h3>香港で勤務</h3><p>海外で働くと、日本の当たり前が当たり前ではないと知る。</p></div>
+    <div class="card dotcard"><h3>大学教員</h3><p>今はAI・DXの使い方を社会人や学生に教えている。</p></div>
+    <div class="card dotcard"><h3>大学院生</h3><p>教えるだけでなく、自分も研究し、学び続けている。</p></div>
+  </div>
+  <div class="source"><a href="https://docs.google.com/presentation/d/1G00t_xQZQYxPccC9ZNBlP3B-JppbSWAC_BfVnSsUhiY/edit" target="_blank">自己紹介スライド</a></div>
+</section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-            <div class="fade-in-section delay-100 bg-zinc-900/50 border border-zinc-800 p-10 rounded-2xl">
-                <h3 class="text-3xl font-bold mb-4 text-red-400">日本人の減少と自治体消滅</h3>
-                <p class="text-zinc-300 text-lg leading-relaxed mb-6">毎年、ひとつの県がまるごと消える勢いで人口が減っています。税収が減れば、インフラは維持できず、蛇口から水が出なくなる日が来るかもしれません。</p>
-            </div>
-            <div class="fade-in-section delay-200 bg-zinc-900/50 border border-zinc-800 p-10 rounded-2xl">
-                <h3 class="text-3xl font-bold mb-4 text-orange-400">沖縄の現実：グローバルサウス</h3>
-                <p class="text-zinc-300 text-lg leading-relaxed mb-6">沖縄の賃金や産業構造の現実は厳しいものです。労働集約型から知識集約型への転換は待ったなしの状態。しかし、見方を変えれば、ここには地理的な優位性と大きな課題解決の余白があります。</p>
-            </div>
-        </div>
+<section class="slide center" data-notes="最初に一度、参加者に発見ノートへメモを促す。">
+  <div>
+    <div class="kicker">最初に</div>
+    <p class="quote">今日、覚えて帰ることは1つでいい。</p>
+    <h1 class="accent">学び続ける人が、<br>未来を選べる。</h1>
+  </div>
+</section>
 
-        <!-- WORK 01 -->
-        <div class="fade-in-section delay-300 bg-gradient-to-r from-purple-900/40 to-pink-900/40 border border-pink-500/50 p-8 rounded-2xl shadow-[0_0_20px_rgba(236,72,153,0.15)] relative overflow-hidden">
-            <div class="absolute top-4 right-4 animate-pulse"><i data-lucide="music" class="w-8 h-8 text-pink-400"></i></div>
-            <h3 class="text-2xl font-bold text-pink-300 mb-2 font-mono">▶ WORK 01 (5 min) : 直感のシェア</h3>
-            <p class="text-xl text-white">「毎年県が一つ消える」「労働集約型からの脱却」という現実を聞いて、今の素直な感情（やばい、まだピンとこない等）をグループで共有してください。</p>
-        </div>
-    </section>
+<section class="slide" data-notes="大企業のAI投資・AI導入の話はトレンドとして。日経記事はリンクとして示し、詳細な数値断定は避ける。">
+  <div class="kicker">Trend</div>
+  <h2>大手企業も、もうAIを避けていない</h2>
+  <div class="split">
+    <div>
+      <p class="lead">AIは「便利なアプリ」ではなく、企業の競争力そのものになりつつある。</p>
+      <p>採用、開発、営業、資料作成、顧客対応、工場、物流。ほぼ全ての仕事に入り始めている。</p>
+    </div>
+    <div class="card center"><div class="huge">AI</div><p class="muted">使うか / 使わないか<br>ではなく<br><b>どう使うか</b>の段階へ</p></div>
+  </div>
+  <div class="source"><a href="https://www.nikkei.com/article/DGXZQOUC03A350T00C26A7000000/?type=my#QAAUAgAAMA" target="_blank">参考：日本経済新聞</a></div>
+</section>
 
-    <!-- SECTION 2: HOPE & THE BARRIER -->
-    <section class="py-24 bg-zinc-950 border-y border-zinc-800">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="fade-in-section mb-16">
-                <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6">02. HOPE & BARRIER</h2>
-                <div class="h-2 w-32 bg-yellow-400"></div>
-                <p class="mt-6 text-zinc-300 text-xl md:text-2xl font-medium leading-relaxed">人口減少を嘆く必要はありません。AIとロボットが一人当たりの生産性を爆発させます。</p>
-            </div>
+<section class="slide center" data-notes="危機という言葉の二面性。ここから前半は『危険』、後半は『チャンス』へ移る。">
+  <div>
+    <div class="kicker">危機</div>
+    <h1>危険 + 機会</h1>
+    <p class="lead">まず、危険から見よう。</p>
+  </div>
+</section>
 
-            <div class="fade-in-section delay-100 bg-black border border-yellow-400/30 p-10 md:p-16 rounded-3xl shadow-2xl mb-16">
-                <div class="flex flex-col md:flex-row gap-12 items-center">
-                    <div class="w-full md:w-1/3 flex justify-center">
-                        <i data-lucide="pocket" class="w-48 h-48 text-yellow-400 opacity-80"></i>
-                    </div>
-                    <div class="w-full md:w-2/3">
-                        <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">十徳ナイフ問題</h3>
-                        <p class="text-xl text-zinc-300 leading-relaxed mb-6">
-                            日本人は社会人になると勉強しません。<br/>
-                            そして今、みなさんのポケットにはすでに最強の武器（AI）が入っています。使わないのは機能を知らないからではなく、<strong class="text-yellow-400">「切りたいもの（課題）」が見えていないだけ</strong>なのです。
-                        </p>
-                        <p class="text-lg text-zinc-400">特別なエンジニアじゃなくても、課題さえあればAIを使って「欲しいシステム」を自ら生み出せる（Vibe Coding）時代です。</p>
-                    </div>
-                </div>
-            </div>
+<section class="slide" data-notes="自然減90万人超は高校生には大きさが掴みにくい。県人口と比較することでサイズ感を出す。">
+  <div class="kicker">危険 1｜人口減少</div>
+  <h2>日本では、1年で“県1つ分”に近い人口が減っている</h2>
+  <div class="split">
+    <div class="card center"><div class="statrow"><div class="num danger">91.8</div><div class="unit">万人</div></div><p class="muted">2025年の自然減<br>出生数より死亡数が多い人数</p></div>
+    <div><p class="lead">90万人は、和歌山県・秋田県クラスの人口に近い。</p><p>数字だけで見ると遠い話。でも、地域の学校、病院、会社、商店、行政サービスの維持に直結する。</p></div>
+  </div>
+  <div class="source"><a href="https://www.nippon.com/ja/japan-data/h02802/" target="_blank">人口動態統計に基づく整理</a> <a href="https://www.homemate.co.jp/research/population/all/" target="_blank">都道府県人口比較</a></div>
+</section>
 
-            <!-- WORK 02 -->
-            <div class="fade-in-section delay-200 bg-gradient-to-r from-purple-900/40 to-pink-900/40 border border-pink-500/50 p-8 rounded-2xl shadow-[0_0_20px_rgba(236,72,153,0.15)] relative overflow-hidden">
-                <div class="absolute top-4 right-4 animate-pulse"><i data-lucide="music" class="w-8 h-8 text-pink-400"></i></div>
-                <h3 class="text-2xl font-bold text-pink-300 mb-2 font-mono">▶ WORK 02 (5 min) : 十徳ナイフの使い道</h3>
-                <p class="text-xl text-white">あなたの手元にある『十徳ナイフ（AI）』で、学校生活や日常の「めんどくさい」「これ、誰か代わりにやってくれないかな」という身近な課題を1人1つ挙げてください。</p>
-            </div>
-        </div>
-    </section>
+<section class="slide light" data-notes="消滅可能性自治体の定義。過度に恐怖を煽らず、地域を維持する担い手の問題として説明する。">
+  <div class="kicker">危険 2｜地域が維持できない</div>
+  <h2>“消滅可能性自治体”という言葉がある</h2>
+  <div class="grid cols2">
+    <div class="card"><div class="big danger">744</div><h3>自治体</h3><p>2020年から2050年にかけて、若年女性人口が50%以上減ると推計された自治体。</p></div>
+    <div class="card"><h3>定義</h3><p>20〜39歳の女性人口が大きく減ると、出生数が減り、地域社会・行政経営の維持が難しくなる。</p><p class="muted">人口問題は「遠い未来」ではなく、地域の仕事と生活の問題。</p></div>
+  </div>
+  <div class="source"><a href="https://www.hit-north.or.jp/cms/wp-content/uploads/2024/04/01_report-1.pdf" target="_blank">人口戦略会議「令和6年・地方自治体『持続可能性』分析レポート」</a> <a href="https://www.asahi.com/special/population2024/" target="_blank">朝日新聞：消滅可能性自治体</a></div>
+</section>
 
-    <!-- SECTION 3: SMART VS CLEVER & PRESENTATION -->
-    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="fade-in-section mb-16">
-            <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-cyan-400 mb-6">03. SMART vs CLEVER</h2>
-            <div class="h-2 w-32 bg-cyan-400"></div>
-            <p class="mt-6 text-zinc-300 text-xl md:text-2xl font-medium leading-relaxed">頭のOSをアップデートし、「伝える力」を身につけましょう。</p>
-        </div>
+<section class="slide" data-notes="高校生の年齢に引き寄せて話す。5年後、35歳、45歳のタイムライン。正確な年齢より、働く人の総量が減る感覚が重要。">
+  <div class="kicker">Time machine</div>
+  <h2>君たちが社会に出る頃、働く人は減っている</h2>
+  <div class="timeline">
+    <div class="card dotcard"><h3>いま</h3><p class="big">16-18</p><p class="muted">高校生</p></div>
+    <div class="card dotcard"><h3>約5年後</h3><p>社会人になる頃。生産年齢人口は7,000万人を下回る時期に近づく。</p></div>
+    <div class="card dotcard"><h3>35歳頃</h3><p>経験を積む頃。生産年齢人口は6,000万人を割り込む時期。</p></div>
+    <div class="card dotcard"><h3>45歳頃</h3><p>部下が少ない。会社も地域も、人を増やして解決できない。</p></div>
+  </div>
+  <div class="source"><a href="https://www.ipss.go.jp/pp-zenkoku/j/zenkoku2023/pp2023_gaiyou.pdf" target="_blank">国立社会保障・人口問題研究所：日本の将来推計人口 令和5年推計</a> <a href="https://www.stat.go.jp/data/jinsui/new.html" target="_blank">総務省統計局：人口推計</a></div>
+</section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl mb-16">
-            <!-- OLD OS -->
-            <div class="fade-in-section delay-100 bg-zinc-900 p-12 relative">
-                <div class="absolute top-6 left-6 text-sm font-mono text-zinc-500 font-bold">LEGACY SYSTEM</div>
-                <h3 class="text-4xl font-bold text-zinc-400 mb-8 mt-4">Smart (古いOS)</h3>
-                <ul class="space-y-6 text-zinc-400 text-xl mb-8">
-                    <li class="flex items-start gap-4"><div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600"></div><span>120%の精密さを求め、減点方式で評価される</span></li>
-                    <li class="flex items-start gap-4"><div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-zinc-600"></div><span>「正解は先輩が知っている」と信じる</span></li>
-                </ul>
-                <div class="p-4 bg-black rounded-lg border border-zinc-800">
-                    <p class="font-bold text-red-400 mb-2">❌ 古いプレゼンスタイル</p>
-                    <p class="text-sm">スライドに文字をびっしり書き込み、一言一句間違えないように下を向いて原稿を棒読みする。</p>
-                </div>
-            </div>
+<section class="slide work center" data-notes="5分。3〜4人で話す。代表1名だけでもよいので感想を回収する。">
+  <div>
+    <div class="kicker">Group Work 1｜5 minutes</div>
+    <h2>ここまで聞いて、何が一番まずいと思った？</h2>
+    <p class="question">そして、自分たちは何を変えたらいいと思う？</p>
+    <div class="timer" id="timer1">05:00</div>
+    <p class="muted">3〜4人で話す。発見ノートに一言メモ。</p>
+  </div>
+</section>
 
-            <!-- NEW OS -->
-            <div class="fade-in-section delay-200 bg-black p-12 relative overflow-hidden">
-                <div class="absolute inset-0 bg-cyan-400/5 pointer-events-none"></div>
-                <div class="absolute top-6 right-6 text-sm font-mono text-cyan-400 animate-pulse font-bold">CURRENT SYSTEM</div>
-                <h3 class="text-4xl font-bold text-cyan-400 mb-8 mt-4 flex items-center gap-4">Clever (新しいOS) <i data-lucide="zap" class="w-8 h-8"></i></h3>
-                <ul class="space-y-6 text-white text-xl mb-8">
-                    <li class="flex items-start gap-4"><div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-cyan-400"></div><span class="font-bold">未完成でも世に出す「ベータ版思考」</span></li>
-                    <li class="flex items-start gap-4"><div class="mt-2 min-w-[8px] h-[8px] rounded-full bg-cyan-400"></div><span class="font-bold">「正解は市場（相手）が決める」と知っている</span></li>
-                </ul>
-                <div class="p-4 bg-cyan-950/30 rounded-lg border border-cyan-500/50">
-                    <p class="font-bold text-cyan-400 mb-2">💡 新しい伝える力</p>
-                    <p class="text-sm">未完成でも自分の熱量を乗せて語りかけ、聞き手の反応を見て修正する。空気を読むのではなく、自らの言葉で空気を変える。</p>
-                </div>
-            </div>
-        </div>
+<section class="slide light" data-notes="この数字はGDPや投資額ではなく、各国の上場企業の時価総額合計である。米国企業の市場評価が日本や中国より極端に大きいことを示す。">
+  <div class="kicker">世界の中の日本</div>
+  <h2>世界の企業価値は、米国に大きく集中している</h2>
+  <div class="barChart">
+    <div class="barItem"><div class="barCol" style="height:240px"></div><div class="barLabel"><b>米国</b><br>上場企業の時価総額合計<br>約79兆ドル</div></div>
+    <div class="barItem"><div class="barCol" style="height:34px"></div><div class="barLabel"><b>中国</b><br>約11兆ドル</div></div>
+    <div class="barItem"><div class="barCol" style="height:24px"></div><div class="barLabel"><b>日本</b><br>約7.6兆ドル</div></div>
+  </div>
+  <p class="bottom muted">これはGDPでも投資額でもなく、株式市場が評価する「企業価値」の合計。米国との差は極端に大きい。</p>
+  <div class="source"><a href="https://companiesmarketcap.com/all-countries/" target="_blank">CompaniesMarketCap: Countries ranked by Market Cap</a> <a href="https://www.180.co.jp/world_etf_adr/adr/ranking.htm" target="_blank">参考：世界時価総額ランキング</a></div>
+</section>
 
-        <!-- WORK 03 -->
-        <div class="fade-in-section delay-300 bg-gradient-to-r from-purple-900/40 to-pink-900/40 border border-pink-500/50 p-8 rounded-2xl shadow-[0_0_20px_rgba(236,72,153,0.15)] relative overflow-hidden">
-            <div class="absolute top-4 right-4 animate-pulse"><i data-lucide="music" class="w-8 h-8 text-pink-400"></i></div>
-            <h3 class="text-2xl font-bold text-pink-300 mb-2 font-mono">▶ WORK 03 (5 min) : Cleverな行動宣言</h3>
-            <p class="text-xl text-white">明日からのインターン先や事後学習の発表会で、失敗してもいいから「これだけは思い切って試す」というアクションをグループで宣言してください。</p>
-        </div>
-    </section>
+<section class="slide" data-notes="1989年は日本型が間違いだったのではなく、その時代に適合していたと伝える。今の時代に合わなくなった、という論旨。">
+  <div class="kicker">1989 → 2025</div>
+  <h2>日本が弱くなった理由は、努力不足だけではない</h2>
+  <div class="twoAxis">
+    <div class="card axisBox"><div><h3>1989年型</h3><p>複雑な機構を、ミスなく、チームで作る。</p><p class="muted">ノウハウの継承・品質・協調が強み。</p></div></div>
+    <div class="card axisBox"><div><h3>2025年型</h3><p>早く試し、つなげ、あとから更新する。</p><p class="muted">アイデア・冒険・アップデートが強み。</p></div></div>
+  </div>
+  <p class="bottom lead">過去の成功法則が、未来の成功法則とは限らない。</p>
+  <div class="source"><a href="https://lp.startup-db.com/media/articles/marketcap-global-2025" target="_blank">STARTUP DB：世界時価総額ランキングの変遷</a></div>
+</section>
 
-    <!-- CONCLUSION -->
-    <section class="py-32 px-6 max-w-6xl mx-auto text-center border-t border-zinc-900">
-        <div class="fade-in-section">
-            <h2 class="text-5xl md:text-7xl font-black mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">CURIOSITY DRIVEN.</h2>
-            <p class="text-2xl md:text-3xl text-zinc-300 leading-relaxed font-medium mb-12">
-                好奇心に従いましょう。学び続けましょう。<br />
-                年齢も経験も関係ありません。
-            </p>
-        </div>
-    </section>
+<section class="slide center" data-notes="ネットの強さを1枚で。『あとで直せる』はソフトウェア時代の本質。">
+  <div>
+    <div class="kicker">Software wins</div>
+    <h1>あとで直せる。</h1>
+    <p class="lead">ネットにつながっていれば、失敗してもアップデートできる。</p>
+    <p class="quote yellow">だから、早く試す人が強い。</p>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="bg-black py-12 text-center text-zinc-600 text-sm border-t border-zinc-900">
-        <p>© 2026 SURVIVAL STRATEGY LECTURE. Designed for the Future Architects.</p>
-    </footer>
+<section class="slide light" data-notes="放映権の話は、日本の購買力・通貨・マーケットの相対的な弱さの例として扱う。断定しすぎない。">
+  <div class="kicker">相対的な弱さ</div>
+  <h2>世界のコンテンツも、だんだん高く感じる</h2>
+  <div class="split">
+    <div><p class="lead">海外スポーツ、映画、ソフトウェア、クラウド。世界価格で買うものが増えるほど、日本の稼ぐ力が問われる。</p><p>邦画が増えることは良い面もある。ただ、海外作品や放映権が高く感じる構造も考える必要がある。</p></div>
+    <div class="card center"><div class="big">¥ ⇄ $</div><p class="muted">世界価格で買う時代</p></div>
+  </div>
+  <div class="source"><a href="https://www.nikkei.com/article/DGXZQOUC041DM0U5A201C2000000/" target="_blank">参考：日本経済新聞</a></div>
+</section>
 
-    <!-- JavaScript logic -->
-    <script>
-        lucide.createIcons();
-        document.addEventListener("DOMContentLoaded", () => {
-            const progressBar = document.getElementById('progress-bar');
-            window.addEventListener('scroll', () => {
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrollPercent = (scrollTop / scrollHeight) * 100;
-                progressBar.style.width = scrollPercent + '%';
-            });
+<section class="slide work center" data-notes="5分。アイデアの質より数を出させる。『正解』を求めすぎない。">
+  <div>
+    <div class="kicker">Group Work 2｜5 minutes</div>
+    <h2>日本が世界のトレンドに乗るには？</h2>
+    <p class="question">学校・企業・自分、どこから変えるべきか。</p>
+    <div class="timer" id="timer2">05:00</div>
+  </div>
+</section>
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
+<section class="slide" data-notes="働けば報われる、という感覚を揺さぶる。労働時間だけ増やしても限界がある。">
+  <div class="kicker">問い</div>
+  <h2>働いたら、本当に報われるのか？</h2>
+  <div class="split">
+    <div class="card center"><div class="huge danger">3x</div><p class="muted">もし過去の豊かさを<br>労働量だけで取り戻すなら</p></div>
+    <div><p class="lead">努力は大事。でも、努力の方向を間違えると、消耗するだけになる。</p><p>必要なのは「長く働くこと」ではなく、「同じ時間でより大きな成果を出すこと」。</p></div>
+  </div>
+  <div class="source"><a href="https://www.nikkei.com/article/DGXZQOUA258D60V21C25A2000000/" target="_blank">参考：日本経済新聞</a> <a href="https://www.youtube.com/watch?v=reCVRVRDTn0&list=RDreCVRVRDTn0&start_radio=1" target="_blank">参考動画：1980年代CM</a></div>
+</section>
 
-            document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
-        });
-    </script>
+<section class="slide light" data-notes="日本の生産性はOECDの中でも低い。賃金の話に接続する。">
+  <div class="kicker">Productivity</div>
+  <h2>日本は、働く時間のわりに成果が小さい</h2>
+  <div class="grid cols2">
+    <div class="card center"><div class="big danger">28 / 38</div><h3>OECD加盟国中</h3><p>2024年の時間当たり労働生産性。</p></div>
+    <div class="card"><h3>沖縄で考えると、さらに厳しい</h3><p>地域の賃金・産業構造を見ると、生産性向上はより切実な課題になる。</p><p class="muted">働く人が減るなら、1人あたりの成果を上げるしかない。</p></div>
+  </div>
+  <div class="source"><a href="https://www.jpc-net.jp/research/list/comparison.html" target="_blank">日本生産性本部：労働生産性の国際比較</a> <a href="https://limo.media/articles/-/90575?page=1" target="_blank">参考：都道府県別賃金</a> <a href="https://www.pref.okinawa.jp/toukeika/youran/R07/R07youran07.pdf" target="_blank">沖縄県統計年鑑</a></div>
+</section>
+
+<section class="slide center" data-notes="生産性の定義をシンプルに。ここが中盤の核心。">
+  <div>
+    <div class="kicker">生産性とは</div>
+    <div class="formula">生産性 = <span class="fraction"><span>成果</span><span>投入量</span></span></div>
+    <p class="lead">上げる方法は2つ。成果を大きくする。投入量を減らす。</p>
+  </div>
+  <div class="source"><a href="https://www.hrbrain.jp/media/labor-management/labor-productivity1" target="_blank">参考：労働生産性の基礎</a></div>
+</section>
+
+<section class="slide work center" data-notes="3〜5分。自分の身近な仕事で考えさせる。コンビニ、飲食、病院、役所、ホテルなど。">
+  <div>
+    <div class="kicker">Group Work 3｜5 minutes</div>
+    <h2>身近な仕事の生産性を上げるには？</h2>
+    <p class="question">成果を大きくする方法、投入量を減らす方法を1つずつ。</p>
+    <div class="timer" id="timer3">05:00</div>
+  </div>
+</section>
+
+<section class="slide" data-notes="労働集約型と知識集約型。人口減少下では、人海戦術が成立しにくいことを強調。">
+  <div class="kicker">Labor intensive → Knowledge intensive</div>
+  <h2>人を増やせないなら、知識で増幅する</h2>
+  <div class="grid cols2">
+    <div class="card"><h3>労働集約型</h3><p>人手と時間を増やして成果を出す。</p><p class="muted">人口減少社会では限界が早い。</p></div>
+    <div class="card"><h3>知識集約型</h3><p>知識、技術、データ、AIで成果を増幅する。</p><p class="muted">世界はこちらへ移動している。</p></div>
+  </div>
+  <p class="bottom quote">24時間働く、ではない。<br><span class="accent">24時間分の成果を、賢く作る。</span></p>
+  <div class="source"><a href="https://gemini.google.com/share/a6f61c204983" target="_blank">参考：労働集約型の整理</a></div>
+</section>
+
+<section class="slide light" data-notes="AI・ロボット・リスキリングは経産省も労働供給制約への対応として位置付けている。">
+  <div class="kicker">Policy trend</div>
+  <h2>国も、AI・ロボット・リスキリングを前提にし始めた</h2>
+  <div class="split">
+    <div><p class="lead">2040年に向けて、労働供給は減る。だからAI・ロボット活用、リスキリング、産業構造転換が必要になる。</p><p>これは理系だけの話ではない。現場、事務、接客、企画、教育、医療にも関係する。</p></div>
+    <div class="card center"><div class="big blue">2040</div><p class="muted">AI・ロボット等利活用人材<br>専門職・現場人材の不足リスク</p></div>
+  </div>
+  <div class="source"><a href="https://www.cas.go.jp/jp/seisaku/atarashii_sihonsyugi/kaigi/dai34/shiryou14.pdf" target="_blank">内閣官房：2040年の産業構造・就業構造の推計</a> <a href="https://www.meti.go.jp/shingikai/sankoshin/shin_kijiku/pdf/030_s02_00.pdf" target="_blank">経産省：2040年の就業構造推計 改訂版</a> <a href="https://newswitch.jp/p/49529" target="_blank">参考：ロボット開発</a></div>
+</section>
+
+<section class="slide" data-notes="プログラミング教育を受験勉強化しない。使う目的とセットにする。香港の英語エピソードを入れる。">
+  <div class="kicker">勉強の向き</div>
+  <h2>ただ勉強させればいい、ではない</h2>
+  <div class="split">
+    <div class="card"><h3>香港で言われたこと</h3><p class="quote">「6年間英語を勉強したのに、なぜ話せないの？」</p></div>
+    <div><p class="lead">受験のために学ぶと、試験が終われば止まる。</p><p>AIもプログラミングも同じ。点数のためではなく、現実の課題を解くために使う。</p></div>
+  </div>
+  <div class="source"><a href="https://www.zkai.co.jp/z-navi/post-89503/" target="_blank">参考：情報・プログラミング教育</a></div>
+</section>
+
+<section class="slide light" data-notes="社会人が学ばない問題。高校生はまだ学ぶ機会があるが、社会人は自分で学ばないと取り残される。">
+  <div class="kicker">Chance</div>
+  <h2>日本の社会人は、あまり勉強しない</h2>
+  <div class="split">
+    <div><p class="lead">だからこそ、学ぶ人にチャンスが集中する。</p><p>海外では、勉強は収入を上げる手段になる。日本では、受験と就職の後に「もう勉強は終わり」と思いやすい。</p></div>
+    <div class="card center"><div class="huge accent">1%</div><p class="muted">100人に1人でも本気で学べば、差は広がる</p></div>
+  </div>
+  <div class="source"><a href="https://benesse.jp/berd/koutou/research/pdf/kokusaihikaku_tyosa_20250819_web2.pdf" target="_blank">ベネッセ教育総合研究所：国際比較調査</a></div>
+</section>
+
+<section class="slide center" data-notes="ユーザー指定の動画をリンク。具体的な人物名はスライド内では出さず、話しながら紹介する。">
+  <div>
+    <div class="kicker">Role model</div>
+    <h2>学ぶと、認められる。<br>チャンスが増える。強くなれる。</h2>
+    <a class="card linkcard" href="https://www.youtube.com/watch?v=FA-dz0jrlRU" target="_blank"><p class="quote">参考動画を見る →</p><p class="muted">努力と学習が、次の機会を連れてくる例として紹介</p></a>
+  </div>
+</section>
+
+<section class="slide" data-notes="新しいテクノロジーには必ず反対派が出る。ラッダイト的に拒絶するのではなく、理解して使い方を作る。">
+  <div class="kicker">History repeats</div>
+  <h2>新しい技術が生まれると、必ず反対派も生まれる</h2>
+  <div class="split">
+    <div><p class="lead">自動車、鉄道、インターネット、スマホ。そしてAI。</p><p>反対があること自体は自然。問題は、理解せずに怖がるだけで止まること。</p></div>
+    <div class="card center"><div class="stamp">反対</div><div class="huge">⚙</div><p class="muted">技術 + 社会ルール</p></div>
+  </div>
+  <div class="source"><a href="https://x.com/nikkei/status/1929478224251146497/photo/1" target="_blank">参考：日経X投稿</a> <a href="https://news.yahoo.co.jp/expert/articles/19aa6b58d9fc3f45d7ed67ff54f035b6a42e01e4" target="_blank">参考：赤旗法</a></div>
+</section>
+
+<section class="slide light" data-notes="AI反対派への姿勢。自分の中にも慎重さがあると述べることで、単純なAI礼賛ではないことを示す。">
+  <div class="kicker">AIとの向き合い方</div>
+  <h2>だからこそ、勉強しながら正しい使い方を作る</h2>
+  <div class="grid cols3">
+    <div class="card"><h3>危険を知る</h3><p>個人情報、著作権、誤情報、偏り、依存。</p></div>
+    <div class="card"><h3>使って理解する</h3><p>触らない人は、危険も可能性も判断できない。</p></div>
+    <div class="card"><h3>ルールを作る</h3><p>高校生・若者こそ、次の使い方を作る側に回れる。</p></div>
+  </div>
+  <p class="bottom lead">レガシーな大人が全部決める時代ではない。</p>
+</section>
+
+<section class="slide" data-notes="自身の実践例。meter.htmlを開いて見せられるならここでデモ。SoftBank受賞の話は口頭で。">
+  <div class="kicker">Example</div>
+  <h2>僕は、AIの使い方を教えている</h2>
+  <div class="split">
+    <div><p class="lead">AIを使って、学習や業務改善のためのツールを作る。</p><p>「説明を聞く」だけではなく、「自分で作って試す」ことが重要。</p><p class="yellow">日本一AIを使っている企業でも評価された。</p></div>
+    <a class="card linkcard center" href="https://agari0919.github.io/site/meter.html" target="_blank"><div class="big accent">DEMO</div><p class="muted">作成物を見る</p></a>
+  </div>
+</section>
+
+<section class="slide center" data-notes="ここは強く。ユーザー指定のメッセージを言葉として残す。過剰に煽るのではなく、熱量で締める。">
+  <div>
+    <div class="kicker">Message</div>
+    <h1>飢えなさい。</h1>
+    <p class="quote">満足してはいけない。<br>貪欲に吸収し、自分の手で世界を切り開く。</p>
+  </div>
+</section>
+
+<section class="slide light" data-notes="最後の行動に落とす。インターンシップの観察につなげる。">
+  <div class="kicker">インターンシップで見ること</div>
+  <h2>会社を見る時の問い</h2>
+  <div class="grid cols2">
+    <div class="card"><h3>1. どこに人手不足があるか</h3><p>忙しい、ミスが多い、待ち時間が長い作業はどこか。</p></div>
+    <div class="card"><h3>2. どこにAIを使えそうか</h3><p>文章、集計、確認、検索、説明、予約、案内、記録。</p></div>
+    <div class="card"><h3>3. 何を学べば役に立てるか</h3><p>資格だけでなく、観察力・質問力・作る力。</p></div>
+    <div class="card"><h3>4. 自分は何をしたいか</h3><p>職業名ではなく、解決したい課題から考える。</p></div>
+  </div>
+</section>
+
+<section class="slide work center" data-notes="最後の5分。発見ノートに書かせる。余裕があれば1〜2名発表。">
+  <div>
+    <div class="kicker">Reflection｜5 minutes</div>
+    <h2>今日の一言を、発見ノートに書く</h2>
+    <p class="question">インターンシップで、あなたは何を見て、何を聞くか？</p>
+    <div class="timer" id="timer4">05:00</div>
+  </div>
+</section>
+
+<section class="slide center" data-notes="質疑応答。AI、進路、大学、海外、転職、仕事、何でも受ける。">
+  <div>
+    <div class="kicker">Q&A</div>
+    <h1>質問</h1>
+    <p class="lead">AIのこと、仕事のこと、大学のこと、海外のこと。何でも。</p>
+  </div>
+</section>
+
+<section class="slide light" data-notes="URL配布時のための出典まとめ。投影時は省略してよい。">
+  <div class="kicker">Sources</div>
+  <h2>主な出典・参考リンク</h2>
+  <div class="grid cols2" style="gap:12px">
+    <div class="card small"><b>人口</b><br><a href="https://www.nippon.com/ja/japan-data/h02802/">人口動態統計整理</a> / <a href="https://www.ipss.go.jp/pp-zenkoku/j/zenkoku2023/pp2023_gaiyou.pdf">IPSS将来推計人口</a> / <a href="https://www.hit-north.or.jp/cms/wp-content/uploads/2024/04/01_report-1.pdf">消滅可能性自治体レポート</a></div>
+    <div class="card small"><b>世界経済</b><br><a href="https://companiesmarketcap.com/all-countries/">国別時価総額</a> / <a href="https://lp.startup-db.com/media/articles/marketcap-global-2025">時価総額ランキング変遷</a></div>
+    <div class="card small"><b>生産性・沖縄</b><br><a href="https://www.jpc-net.jp/research/list/comparison.html">日本生産性本部</a> / <a href="https://www.pref.okinawa.jp/toukeika/youran/R07/R07youran07.pdf">沖縄県統計年鑑</a></div>
+    <div class="card small"><b>AI・人材政策</b><br><a href="https://www.cas.go.jp/jp/seisaku/atarashii_sihonsyugi/kaigi/dai34/shiryou14.pdf">2040年の産業構造・就業構造</a> / <a href="https://www.meti.go.jp/shingikai/sankoshin/shin_kijiku/pdf/030_s02_00.pdf">経産省改訂版</a></div>
+  </div>
+</section>
+
+</div>
+<div class="footer"><span id="count">1 / 29</span><div class="progress"><div id="bar" class="bar"></div></div><span>← → / Space：移動　N：ノート　T：タイマー</span></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let idx=0;let timerInterval=null;let seconds=300;
+function render(){slides.forEach((s,i)=>{s.classList.toggle('active',i===idx);s.classList.toggle('prev',i<idx)});document.getElementById('count').textContent=`${idx+1} / ${slides.length}`;document.getElementById('bar').style.width=`${(idx+1)/slides.length*100}%`;const n=document.getElementById('notes');n.innerHTML=`<h4>Speaker notes</h4><p>${slides[idx].dataset.notes||'メモなし'}</p>`}
+function nextSlide(){idx=Math.min(idx+1,slides.length-1);render()}function prevSlide(){idx=Math.max(idx-1,0);render()}function toggleNotes(){document.getElementById('notes').classList.toggle('show')}function format(t){const m=String(Math.floor(t/60)).padStart(2,'0');const s=String(t%60).padStart(2,'0');return `${m}:${s}`}function currentTimerEl(){return slides[idx].querySelector('.timer')}function toggleTimer(){const el=currentTimerEl();if(!el)return; if(timerInterval){clearInterval(timerInterval);timerInterval=null;return} seconds=300;el.textContent=format(seconds);timerInterval=setInterval(()=>{seconds--;el.textContent=format(Math.max(seconds,0));if(seconds<=0){clearInterval(timerInterval);timerInterval=null}},1000)}
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();nextSlide()} if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prevSlide()} if(e.key.toLowerCase()==='n')toggleNotes(); if(e.key.toLowerCase()==='t')toggleTimer(); if(e.key==='Home'){idx=0;render()} if(e.key==='End'){idx=slides.length-1;render()}});render();
+</script>
 </body>
 </html>
